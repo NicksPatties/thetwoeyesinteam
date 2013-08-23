@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		715386B317BC38D300F59B81 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 715386B217BC38D300F59B81 /* UIKit.framework */; };
+		715386B517BC38D300F59B81 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 715386B417BC38D300F59B81 /* Foundation.framework */; };
+		715386B717BC38D300F59B81 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 715386B617BC38D300F59B81 /* CoreGraphics.framework */; };
+		715386BD17BC38D300F59B81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 715386BB17BC38D300F59B81 /* InfoPlist.strings */; };
+		715386BF17BC38D300F59B81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 715386BE17BC38D300F59B81 /* main.m */; };
+		715386C317BC38D300F59B81 /* BIDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 715386C217BC38D300F59B81 /* BIDAppDelegate.m */; };
+		715386C517BC38D300F59B81 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 715386C417BC38D300F59B81 /* Default.png */; };
+		715386C717BC38D300F59B81 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 715386C617BC38D300F59B81 /* Default@2x.png */; };
+		715386C917BC38D300F59B81 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 715386C817BC38D300F59B81 /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		715386AF17BC38D300F59B81 /* Pickers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pickers.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		715386B217BC38D300F59B81 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		715386B417BC38D300F59B81 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		715386B617BC38D300F59B81 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		715386BA17BC38D300F59B81 /* Pickers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pickers-Info.plist"; sourceTree = "<group>"; };
+		715386BC17BC38D300F59B81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		715386BE17BC38D300F59B81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		715386C017BC38D300F59B81 /* Pickers-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pickers-Prefix.pch"; sourceTree = "<group>"; };
+		715386C117BC38D300F59B81 /* BIDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BIDAppDelegate.h; sourceTree = "<group>"; };
+		715386C217BC38D300F59B81 /* BIDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BIDAppDelegate.m; sourceTree = "<group>"; };
+		715386C417BC38D300F59B81 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		715386C617BC38D300F59B81 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		715386C817BC38D300F59B81 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		715386AC17BC38D300F59B81 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				715386B317BC38D300F59B81 /* UIKit.framework in Frameworks */,
+				715386B517BC38D300F59B81 /* Foundation.framework in Frameworks */,
+				715386B717BC38D300F59B81 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		715386A617BC38D300F59B81 = {
+			isa = PBXGroup;
+			children = (
+				715386B817BC38D300F59B81 /* Pickers */,
+				715386B117BC38D300F59B81 /* Frameworks */,
+				715386B017BC38D300F59B81 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		715386B017BC38D300F59B81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				715386AF17BC38D300F59B81 /* Pickers.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		715386B117BC38D300F59B81 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				715386B217BC38D300F59B81 /* UIKit.framework */,
+				715386B417BC38D300F59B81 /* Foundation.framework */,
+				715386B617BC38D300F59B81 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		715386B817BC38D300F59B81 /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				715386C117BC38D300F59B81 /* BIDAppDelegate.h */,
+				715386C217BC38D300F59B81 /* BIDAppDelegate.m */,
+				715386B917BC38D300F59B81 /* Supporting Files */,
+			);
+			path = Pickers;
+			sourceTree = "<group>";
+		};
+		715386B917BC38D300F59B81 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				715386BA17BC38D300F59B81 /* Pickers-Info.plist */,
+				715386BB17BC38D300F59B81 /* InfoPlist.strings */,
+				715386BE17BC38D300F59B81 /* main.m */,
+				715386C017BC38D300F59B81 /* Pickers-Prefix.pch */,
+				715386C417BC38D300F59B81 /* Default.png */,
+				715386C617BC38D300F59B81 /* Default@2x.png */,
+				715386C817BC38D300F59B81 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		715386AE17BC38D300F59B81 /* Pickers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 715386CC17BC38D300F59B81 /* Build configuration list for PBXNativeTarget "Pickers" */;
+			buildPhases = (
+				715386AB17BC38D300F59B81 /* Sources */,
+				715386AC17BC38D300F59B81 /* Frameworks */,
+				715386AD17BC38D300F59B81 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Pickers;
+			productName = Pickers;
+			productReference = 715386AF17BC38D300F59B81 /* Pickers.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		715386A717BC38D300F59B81 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = BID;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Lark Yan";
+			};
+			buildConfigurationList = 715386AA17BC38D300F59B81 /* Build configuration list for PBXProject "Pickers" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 715386A617BC38D300F59B81;
+			productRefGroup = 715386B017BC38D300F59B81 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				715386AE17BC38D300F59B81 /* Pickers */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		715386AD17BC38D300F59B81 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				715386BD17BC38D300F59B81 /* InfoPlist.strings in Resources */,
+				715386C517BC38D300F59B81 /* Default.png in Resources */,
+				715386C717BC38D300F59B81 /* Default@2x.png in Resources */,
+				715386C917BC38D300F59B81 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		715386AB17BC38D300F59B81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				715386BF17BC38D300F59B81 /* main.m in Sources */,
+				715386C317BC38D300F59B81 /* BIDAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		715386BB17BC38D300F59B81 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				715386BC17BC38D300F59B81 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		715386CA17BC38D300F59B81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		715386CB17BC38D300F59B81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		715386CD17BC38D300F59B81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pickers/Pickers-Prefix.pch";
+				INFOPLIST_FILE = "Pickers/Pickers-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		715386CE17BC38D300F59B81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pickers/Pickers-Prefix.pch";
+				INFOPLIST_FILE = "Pickers/Pickers-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		715386AA17BC38D300F59B81 /* Build configuration list for PBXProject "Pickers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				715386CA17BC38D300F59B81 /* Debug */,
+				715386CB17BC38D300F59B81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		715386CC17BC38D300F59B81 /* Build configuration list for PBXNativeTarget "Pickers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				715386CD17BC38D300F59B81 /* Debug */,
+				715386CE17BC38D300F59B81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 715386A717BC38D300F59B81 /* Project object */;
+}
