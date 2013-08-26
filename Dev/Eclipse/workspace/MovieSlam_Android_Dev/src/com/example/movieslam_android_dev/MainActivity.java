@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
 	private Button myButton = null;
-	private Button myButton2 = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
