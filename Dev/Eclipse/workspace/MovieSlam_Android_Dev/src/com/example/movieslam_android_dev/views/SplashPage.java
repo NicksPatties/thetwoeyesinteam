@@ -20,6 +20,7 @@ import android.widget.TextView;
 public class SplashPage extends Activity {
 
 	private Button myButton = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
