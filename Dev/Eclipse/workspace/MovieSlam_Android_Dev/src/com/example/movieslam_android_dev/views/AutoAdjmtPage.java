@@ -1,6 +1,8 @@
-package com.example.movieslam_android_dev;
+package com.example.movieslam_android_dev.views;
 
 import com.example.movieslam_android_dev.R;
+import com.example.movieslam_android_dev.R.id;
+import com.example.movieslam_android_dev.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;

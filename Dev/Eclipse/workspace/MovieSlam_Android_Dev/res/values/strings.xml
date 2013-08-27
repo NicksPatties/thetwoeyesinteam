@@ -11,9 +11,30 @@
     <string name="next_page">To See GamePlay Page</string>
     
     <string name="page3">Third page</string>
-    <string name="button1">Play</string>
-    <string name="button2">Pause</string>
-    <string name="button3">Stop</string>
-    <string name="button4">Nothing</string>
+    <string name="Q1A1">Big</string>
+    <string name="Q1A2">Me, Myself &amp; Irene</string>
+    <string name="Q1A3">A Walk In The Clouds</string>
+    <string name="Q1A4">Live Free or Die Hard</string>
+    
+    <string name="Q2A1">Button 1</string>
+    <string name="Q2A2">Button 2</string>
+    <string name="Q2A3">Button 3</string>
+    <string name="Q2A4">Button 4</string>
+    
+    <string name="Q3A1">Button 1</string>
+    <string name="Q3A2">Button 2</string>
+    <string name="Q3A3">Button 3</string>
+    <string name="Q3A4">Button 4</string>
+    
+    <string name="Q4A1">Button 1</string>
+    <string name="Q4A2">Button 2</string>
+    <string name="Q4A3">Button 3</string>
+    <string name="Q4A4">Button 4</string>
+    
+    <string name="Q5A1">Button 1</string>
+    <string name="Q5A2">Button 2</string>
+    <string name="Q5A3">Button 3</string>
+    <string name="Q5A4">Button 4</string>
+    
 
 </resources>

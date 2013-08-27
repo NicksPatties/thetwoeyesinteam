@@ -1,8 +1,9 @@
-package com.example.movieslam_android_dev;
+package com.example.movieslam_android_dev.views;
 
-import com.example.movieslam_android_dev.MainActivity;
-import com.example.movieslam_android_dev.AutoAdjmtPage;
 import com.example.movieslam_android_dev.R;
+import com.example.movieslam_android_dev.R.id;
+import com.example.movieslam_android_dev.R.layout;
+import com.example.movieslam_android_dev.views.SplashPage;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,7 +17,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class SplashPage extends Activity {
 
 	private Button myButton = null;
 	@Override
@@ -50,8 +51,8 @@ public class MainActivity extends Activity {
 		
 		public void onClick(View v){
 			Intent intent = new Intent();
-			intent.setClass(MainActivity.this, AutoAdjmtPage.class);
-			MainActivity.this.startActivity(intent);
+			intent.setClass(SplashPage.this, AutoAdjmtPage.class);
+			SplashPage.this.startActivity(intent);
 		}
 	}
 	

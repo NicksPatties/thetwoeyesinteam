@@ -1,9 +1,10 @@
-package com.example.movieslam_android_dev;
+package com.example.movieslam_android_dev.views;
 
 
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -24,8 +25,12 @@ public class Player implements OnBufferingUpdateListener,
 	private SurfaceHolder surfaceHolder;
 	private SeekBar skbProgress;
 	private Timer mTimer=new Timer();
-	public Player(SurfaceView surfaceView,SeekBar skbProgress)
+	private String _url;
+	private GamePlayPage _gp;
+	
+	public Player(SurfaceView surfaceView,SeekBar skbProgress, GamePlayPage gamePlayPage)
 	{
+		_gp = gamePlayPage;
 		this.skbProgress=skbProgress;
 		surfaceHolder=surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
@@ -66,6 +71,10 @@ public class Player implements OnBufferingUpdateListener,
 		mediaPlayer.start();
 	}
 	
+	public void setURL(String url){
+		_url = url;
+	}
+	
 	public void playUrl(String videoUrl)
 	{
 		try {
@@ -85,8 +94,7 @@ public class Player implements OnBufferingUpdateListener,
 		}
 	}
 
-	
-	public void pause()
+	public void setPause()
 	{
 		mediaPlayer.pause();
 	}
@@ -112,7 +120,10 @@ public class Player implements OnBufferingUpdateListener,
 			mediaPlayer.setDisplay(surfaceHolder);
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			mediaPlayer.setOnBufferingUpdateListener(this);
+			mediaPlayer.setOnCompletionListener(this);
 			mediaPlayer.setOnPreparedListener(this);
+			mediaPlayer.setDataSource(_url);
+			mediaPlayer.prepare();
 		} catch (Exception e) {
 			Log.e("mediaPlayer", "error", e);
 		}
@@ -140,8 +151,7 @@ public class Player implements OnBufferingUpdateListener,
 
 	@Override
 	public void onCompletion(MediaPlayer arg0) {
-		// TODO Auto-generated method stub
-		
+		_gp.showLegal();
 	}
 
 	@Override
