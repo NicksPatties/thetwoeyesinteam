@@ -1,24 +1,28 @@
 package com.example.movieslam_android_dev.views;
 
-import com.example.movieslam_android_dev.R;
-import com.example.movieslam_android_dev.R.id;
-import com.example.movieslam_android_dev.R.layout;
-import com.example.movieslam_android_dev.views.SplashPage;
 
-import android.os.Bundle;
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.DisplayMetrics;
-import android.view.Menu;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class SplashPage extends Activity {
+import com.example.movieslam_android_dev.R;
+
+public class SplashPage extends Activity implements ResponseDelegate{
 
 	private Button myButton = null;
 
@@ -30,6 +34,11 @@ public class SplashPage extends Activity {
         myButton = (Button)this.findViewById(R.id.btn_splash);
         myButton.setOnClickListener(new MyButtonLisiener());
  
+        xmlRequestHandler xrh = new xmlRequestHandler();
+        xrh.delegate = this;
+        // hardcode api to test
+		xrh.setURL("http://postpcmarketing.com/movieslam/intl/it/service/getGameInfo.php?user_id=0&fid=100000855108534");
+		xrh.execute();
         
 	}
 	/*protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +92,33 @@ public class SplashPage extends Activity {
 	        myLinearLayout.setLayoutParams(lp);
 	    }
 	    
+	}
+
+	@Override
+	public void responseLoaded(String response) {
+		
+		// could use regx for better result
+		response = response.replace("\n<?xml version=\"1.0\"?>\n", "");
+		
+		Document doc;
+		try {
+			doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(response)));
+			doc.getDocumentElement().normalize();
+			
+			
+			NodeList nodeList = doc.getElementsByTagName("user");
+			Node userNode = nodeList.item(0);
+			
+			NodeList userFnameList = ((Element)userNode).getElementsByTagName("user_fname");
+			Element userFnameElement = (Element) userFnameList.item(0);
+			userFnameList = userFnameElement.getChildNodes();			
+			
+			TextView t = (TextView)findViewById(R.id.text1); 
+		    t.setText("First Name from getGameinfo : "+ ((Node) userFnameList.item(0)).getNodeValue());
+		} catch (Exception e) {
+			Log.d("debug", "Exception");
+		}
+		
 	}
 	
     /**
