@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,15 @@ public class SplashPage extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main);
+        
+        myButton = (Button)this.findViewById(R.id.btn_splash);
+        myButton.setOnClickListener(new MyButtonLisiener());
+ 
+        
+	}
+	/*protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main); 
  
@@ -46,7 +56,7 @@ public class SplashPage extends Activity {
         lp.addRule(RelativeLayout.BELOW, R.id.btn_splash); 
  
         ((RelativeLayout) findViewById(R.id.mainActivity)).addView(new TextView(this), lp);
-	}
+	}*/
 	
 	class MyButtonLisiener implements OnClickListener{
 		
@@ -55,6 +65,24 @@ public class SplashPage extends Activity {
 			intent.setClass(SplashPage.this, AutoAdjmtPage.class);
 			SplashPage.this.startActivity(intent);
 		}
+	}
+	
+	// assuming the aspect ratio we chose is the thinnest
+	// fill the height to 100% of the screen size, then set the width accordingly
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		
+	    super.onWindowFocusChanged(hasFocus);
+	    if (hasFocus == true) {
+	    	LinearLayout myLinearLayout = (LinearLayout) findViewById(R.id.ContainerLayout);
+	        int layoutHeight = myLinearLayout.getHeight();
+	        
+	        android.view.ViewGroup.LayoutParams lp = myLinearLayout.getLayoutParams();
+	        // adjust the ratio here if thinner screen is needed
+	        lp.width = layoutHeight*9/16;
+	        myLinearLayout.setLayoutParams(lp);
+	    }
+	    
 	}
 	
     /**

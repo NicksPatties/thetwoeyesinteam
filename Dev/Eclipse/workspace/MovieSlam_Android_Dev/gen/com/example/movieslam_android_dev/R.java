@@ -22,24 +22,27 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int iphone_bg_challengeboard=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000f;
-        public static final int autoadjPage=0x7f080003;
-        public static final int btn1=0x7f08000b;
-        public static final int btn2=0x7f08000c;
-        public static final int btn3=0x7f08000d;
-        public static final int btn4=0x7f08000e;
-        public static final int btn_next=0x7f080005;
-        public static final int btn_splash=0x7f080002;
-        public static final int legalImage=0x7f080008;
-        public static final int mainActivity=0x7f080000;
-        public static final int questionTV=0x7f08000a;
-        public static final int skbProgress=0x7f080009;
-        public static final int stillImage=0x7f080006;
-        public static final int text1=0x7f080001;
-        public static final int textview_autoadj=0x7f080004;
-        public static final int videoplayer=0x7f080007;
+        public static final int ChallengeBoard=0x7f080004;
+        public static final int ContainerLayout=0x7f080001;
+        public static final int action_settings=0x7f080011;
+        public static final int autoadjPage=0x7f080005;
+        public static final int btn1=0x7f08000d;
+        public static final int btn2=0x7f08000e;
+        public static final int btn3=0x7f08000f;
+        public static final int btn4=0x7f080010;
+        public static final int btn_next=0x7f080007;
+        public static final int btn_splash=0x7f080003;
+        public static final int layout=0x7f080000;
+        public static final int legalImage=0x7f08000a;
+        public static final int questionTV=0x7f08000c;
+        public static final int skbProgress=0x7f08000b;
+        public static final int stillImage=0x7f080008;
+        public static final int text1=0x7f080002;
+        public static final int textview_autoadj=0x7f080006;
+        public static final int videoplayer=0x7f080009;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
