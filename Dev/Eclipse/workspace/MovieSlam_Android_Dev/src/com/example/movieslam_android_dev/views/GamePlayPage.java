@@ -35,6 +35,8 @@ public class GamePlayPage extends Activity {
 	private Button btn1, btn2, btn3, btn4;
 	private SeekBar skbProgress;
 	private Player player;
+	private String[] rightAnswers = new String[5];
+	private String[] buttonLabels = new String[4];
 
 	/** Called when the activity is first created. */
 	@Override
@@ -64,12 +66,50 @@ public class GamePlayPage extends Activity {
 	
 	//init the array of 20 anwsers
 	public void initAnswers(){
+		for (int i=0; i<5; i++){
+			rightAnswers[i] = TempModel._answers[i][0];
+		}
 		
+		String[] wrongAnswers = new String[3];
+		wrongAnswers[0] = TempModel._answers[TempModel.index][1];
+		wrongAnswers[1] = TempModel._answers[TempModel.index][2];
+		wrongAnswers[2] = TempModel._answers[TempModel.index][3];
+		
+		int rightAnswerPointer = (int) Math.random() * (3-0+1);
+		buttonLabels[rightAnswerPointer] = rightAnswers[TempModel.index];
+		int k=0;
+		for (int i=0; i<4; i++){
+			if (i == rightAnswerPointer){
+				
+			}else{
+				buttonLabels[i] = wrongAnswers[k++];
+			}
+		}
 	}
 	
 	//init the array of 5 questions
 	public void initQuestions(){
-		textview.setText("What is the Name of the Movie?");
+		String questionText = TempModel.getQuestion();
+		int i = 0;
+		if (questionText == "name"){
+			i = 1;
+		}else if (questionText == "actor"){
+			i = 2;
+		}else{
+			i = 3;
+		}
+		switch (i) {
+			case 1:  
+				questionText = "NAME THIS FILM";
+				break;
+			case 2:
+				questionText = "NAME AN ACTOR FROM THIS FILM";
+				break;
+			default: 
+				questionText = "NAME AN ACTOR FROM THIS SCENE";
+				break;
+		}
+		textview.setText(questionText);
 		textview.setGravity(Gravity.CENTER);
 	}
 	
@@ -81,10 +121,13 @@ public class GamePlayPage extends Activity {
 		btn4.setOnClickListener(new ClickEvent());
 	}
 	
-	//init text on the buttons
-	public void initLabels(){
-		btn4.setText("asdfasdf");
-	}
+	//init the text of buttons
+		public void initLabels(){
+			btn1.setText(buttonLabels[0]);
+			btn2.setText(buttonLabels[1]);
+			btn3.setText(buttonLabels[2]);
+			btn4.setText(buttonLabels[3]);
+		}
 	
 	//init the processing bar
 	public void initProcessingBar(){
@@ -94,7 +137,7 @@ public class GamePlayPage extends Activity {
 	
 	//init the video player
 	public void initVideoPlayer(){
-		String s = TempModel.getCurrentMediaURL();
+		String s = TempModel.getURL();
 		if (parseAsIPadURL(s) != ""){
 			surfaceView.setVisibility(View.VISIBLE);
 			imageView.setVisibility(View.INVISIBLE);

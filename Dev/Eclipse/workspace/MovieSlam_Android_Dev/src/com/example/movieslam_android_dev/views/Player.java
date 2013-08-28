@@ -74,7 +74,7 @@ public class Player implements OnBufferingUpdateListener,
 	}
 	
 	public void setURL(String url){
-		_url = TempModel.getCurrentMediaURL();
+		_url = TempModel.getURL();
 	}
 	
 	public void playUrl(String videoUrl)
@@ -124,7 +124,7 @@ public class Player implements OnBufferingUpdateListener,
 			mediaPlayer.setOnBufferingUpdateListener(this);
 			mediaPlayer.setOnCompletionListener(this);
 			mediaPlayer.setOnPreparedListener(this);
-			mediaPlayer.setDataSource(TempModel.getCurrentMediaURL());
+			mediaPlayer.setDataSource(TempModel.getURL());
 			mediaPlayer.prepare();
 		} catch (Exception e) {
 			Log.e("mediaPlayer", "error", e);

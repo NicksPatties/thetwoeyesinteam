@@ -20,13 +20,21 @@ public class TempModel {
 										{"Eva Green","Yul Brynner","Jason Bateman","Shirley Maclaine"}
 		};
 	
+	public static String[] getAnswers(){
+		return _answers[index];
+	}
+	
 	public static String[] _questions= {
 		"name","actor","name","name","actor" 
 	   };
 	
+	public static String getQuestion(){
+		return _questions[index];
+	}
+	
 	public static int index = 0;
 	
-	public static String getCurrentMediaURL()
+	public static String getURL()
 	{
 		System.out.println("-----OUR INDEX------: "+index);
 		return _urls[index];
