@@ -17,7 +17,8 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:name="com.example.movieslam_android_dev.views.SplashPage"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,11 +27,13 @@
         </activity>
         <activity
             android:name="com.example.movieslam_android_dev.views.AutoAdjmtPage"
-            android:label="@string/page2" >
+            android:label="@string/page2" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.example.movieslam_android_dev.views.GamePlayPage"
-            android:label="@string/page3" >
+            android:label="@string/page3" 
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

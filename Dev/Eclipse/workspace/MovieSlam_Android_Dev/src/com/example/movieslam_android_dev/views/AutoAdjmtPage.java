@@ -24,6 +24,7 @@ public class AutoAdjmtPage extends Activity {
 		setContentView(R.layout.autoadjmt_page);
 		
 		myTextView = (TextView)findViewById(R.id.textview_autoadj);
+		myTextView.setVisibility(View.INVISIBLE);
 //		myTextView.setText("screenWidth,,screenHeight: "+screenWidth+","+screenHeight);
 //		myTextView.setWidth(screenWidth/2);
 //	    myTextView.setBackgroundColor(0xffffffff);

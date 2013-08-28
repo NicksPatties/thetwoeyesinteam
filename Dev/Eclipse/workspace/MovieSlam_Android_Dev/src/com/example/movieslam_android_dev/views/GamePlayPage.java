@@ -2,19 +2,24 @@ package com.example.movieslam_android_dev.views;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.R.id;
 import com.example.movieslam_android_dev.R.layout;
+import com.example.movieslam_android_dev.models.TempModel;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,28 +43,84 @@ public class GamePlayPage extends Activity {
 		setContentView(R.layout.gameplay_page);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		surfaceView = (SurfaceView) this.findViewById(R.id.videoplayer);
-		
+		imageView = (ImageView) this.findViewById(R.id.stillImage);
 		textview = (TextView) this.findViewById(R.id.questionTV);
+		btn1 = (Button) this.findViewById(R.id.btn1);
+		btn2 = (Button) this.findViewById(R.id.btn2);
+		btn3 = (Button) this.findViewById(R.id.btn3);
+		btn4 = (Button) this.findViewById(R.id.btn4);
+
+		initAssets();
+	}
+	
+	public void initAssets(){
+		initAnswers();
+		initQuestions();
+		initButtons();
+		initLabels();
+		initProcessingBar();
+		initVideoPlayer();
+	}
+	
+	//init the array of 20 anwsers
+	public void initAnswers(){
+		
+	}
+	
+	//init the array of 5 questions
+	public void initQuestions(){
 		textview.setText("What is the Name of the Movie?");
 		textview.setGravity(Gravity.CENTER);
-
-		btn1 = (Button) this.findViewById(R.id.btn1);
+	}
+	
+	//init button with listeners
+	public void initButtons(){
 		btn1.setOnClickListener(new ClickEvent());
-
-		btn2 = (Button) this.findViewById(R.id.btn2);
 		btn2.setOnClickListener(new ClickEvent());
-
-		btn3 = (Button) this.findViewById(R.id.btn3);
 		btn3.setOnClickListener(new ClickEvent());
-		
-		btn4 = (Button) this.findViewById(R.id.btn4);
 		btn4.setOnClickListener(new ClickEvent());
-
+	}
+	
+	//init text on the buttons
+	public void initLabels(){
+		btn4.setText("asdfasdf");
+	}
+	
+	//init the processing bar
+	public void initProcessingBar(){
 		skbProgress = (SeekBar) this.findViewById(R.id.skbProgress);
 		skbProgress.setOnSeekBarChangeListener(new SeekBarChangeEvent());
+	}
+	
+	//init the video player
+	public void initVideoPlayer(){
+		String s = TempModel.getCurrentMediaURL();
+		if (parseAsIPadURL(s) != ""){
+			surfaceView.setVisibility(View.VISIBLE);
+			imageView.setVisibility(View.INVISIBLE);
+			player = new Player(surfaceView, skbProgress, this);
+		}else{
+			surfaceView.setVisibility(View.INVISIBLE);
+			imageView.setVisibility(View.VISIBLE);
+			try {
+				  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(s).getContent());
+				  imageView.setImageBitmap(bitmap);
+				  imageView.setVisibility(View.VISIBLE);
+				} catch (MalformedURLException e) {
+				  e.printStackTrace();
+				} catch (IOException e) {
+				  e.printStackTrace();
+				}
+		}
+	}
+	
+	private String parseAsIPadURL(String s){
+		if (s.indexOf("image")!= -1){
+			return "";
+		}else{
+			return "ipad";
+		}
 		
-		player = new Player(surfaceView, skbProgress, this);
-		player.setURL("http://screenslam.foxfilm.com/video/big_clip2_iphone.mp4");
 	}
 	
 	public void showLegal(){
@@ -75,16 +136,30 @@ public class GamePlayPage extends Activity {
 			}
 	}
 	
-	private void nextMovie(){
-		
+	private void nextMedia(){
+		TempModel.index = TempModel.index+1;
+		Intent intent = new Intent();
+		intent.setClass(GamePlayPage.this, GamePlayPage.class);
+		GamePlayPage.this.startActivity(intent);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	     if (keyCode == KeyEvent.KEYCODE_BACK) {
+	     //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
+	     return true;
+	     }
+	     return super.onKeyDown(keyCode, event);    
 	}
 	
 	class ClickEvent implements OnClickListener {
 
 		@Override
 		public void onClick(View arg0) {
-			player.setPause();
-			nextMovie();
+			if(player!=null){
+				player.setPause();
+			}
+			nextMedia();
 		}
 	}
 

@@ -14,6 +14,12 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="0dp"
 	    	android:layout_weight="0.85">
+	    	
+            	<ImageView
+			        android:id="@+id/stillImage"
+			        android:layout_width="fill_parent"
+			        android:layout_height="fill_parent"
+			        />
 		    
 		        <SurfaceView 
 		            android:id="@+id/videoplayer" 

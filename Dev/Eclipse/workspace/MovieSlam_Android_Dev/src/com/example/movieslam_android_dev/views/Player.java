@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.movieslam_android_dev.models.TempModel;
+
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -72,7 +74,7 @@ public class Player implements OnBufferingUpdateListener,
 	}
 	
 	public void setURL(String url){
-		_url = url;
+		_url = TempModel.getCurrentMediaURL();
 	}
 	
 	public void playUrl(String videoUrl)
@@ -122,7 +124,7 @@ public class Player implements OnBufferingUpdateListener,
 			mediaPlayer.setOnBufferingUpdateListener(this);
 			mediaPlayer.setOnCompletionListener(this);
 			mediaPlayer.setOnPreparedListener(this);
-			mediaPlayer.setDataSource(_url);
+			mediaPlayer.setDataSource(TempModel.getCurrentMediaURL());
 			mediaPlayer.prepare();
 		} catch (Exception e) {
 			Log.e("mediaPlayer", "error", e);
