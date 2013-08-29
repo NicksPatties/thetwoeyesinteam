@@ -7,9 +7,9 @@ public class TempModel {
 	public static String[] _urls= { 
 									"http://screenslam.foxfilm.com/image/fightclub_still4_iphone.jpg",
 									"http://screenslam.foxfilm.com/image/xfiles_still3_iphone.jpg",
+									"http://screenslam.foxfilm.com/video/big_clip2_iphone.mp4",
 									"http://screenslam.foxfilm.com/video/cleopatra_clip6_iphone.mp4", 
 								    "http://screenslam.foxfilm.com/video/kingdomofheaven_clip2_iphone.mp4",
-									"http://screenslam.foxfilm.com/video/big_clip2_iphone.mp4",
 								   };
 	
 	public static String[][] _answers= {

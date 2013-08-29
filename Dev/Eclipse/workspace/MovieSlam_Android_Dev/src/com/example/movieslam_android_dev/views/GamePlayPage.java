@@ -17,7 +17,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.SurfaceView;
@@ -25,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -32,11 +36,17 @@ public class GamePlayPage extends Activity {
 	private SurfaceView surfaceView;
 	private ImageView imageView;
 	private TextView textview;
-	private Button btn1, btn2, btn3, btn4;
-	private SeekBar skbProgress;
+//	private Button btn1, btn2, btn3, btn4;
+	private ProgressBar progressBar;
 	private Player player;
 	private String[] rightAnswers = new String[5];
 	private String[] buttonLabels = new String[4];
+	private Button[] buttons = new Button[4];
+	private int timer = 0;
+	private int rightAnswerPointer = 0;
+	
+	private Thread thread;
+	private int score;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -47,10 +57,11 @@ public class GamePlayPage extends Activity {
 		surfaceView = (SurfaceView) this.findViewById(R.id.videoplayer);
 		imageView = (ImageView) this.findViewById(R.id.stillImage);
 		textview = (TextView) this.findViewById(R.id.questionTV);
-		btn1 = (Button) this.findViewById(R.id.btn1);
-		btn2 = (Button) this.findViewById(R.id.btn2);
-		btn3 = (Button) this.findViewById(R.id.btn3);
-		btn4 = (Button) this.findViewById(R.id.btn4);
+		progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+		buttons[0] = (Button) this.findViewById(R.id.btn1);
+		buttons[1] = (Button) this.findViewById(R.id.btn2);
+		buttons[2] = (Button) this.findViewById(R.id.btn3);
+		buttons[3] = (Button) this.findViewById(R.id.btn4);
 
 		initAssets();
 	}
@@ -64,6 +75,17 @@ public class GamePlayPage extends Activity {
 		initVideoPlayer();
 	}
 	
+	private void audioPlayer(int n){
+	    //set up MediaPlayer  
+		if (n == 1){
+			MediaPlayer mp = MediaPlayer.create(this, R.raw.correct);
+		    mp.start();
+		}else{
+			MediaPlayer mp = MediaPlayer.create(this, R.raw.incorrect);
+		    mp.start();
+		}
+	}
+	
 	//init the array of 20 anwsers
 	public void initAnswers(){
 		for (int i=0; i<5; i++){
@@ -75,7 +97,8 @@ public class GamePlayPage extends Activity {
 		wrongAnswers[1] = TempModel._answers[TempModel.index][2];
 		wrongAnswers[2] = TempModel._answers[TempModel.index][3];
 		
-		int rightAnswerPointer = (int) Math.random() * (3-0+1);
+		rightAnswerPointer = (int) (Math.random()*4);
+		System.out.println("-----------right answer pointer: "+ rightAnswerPointer);
 		buttonLabels[rightAnswerPointer] = rightAnswers[TempModel.index];
 		int k=0;
 		for (int i=0; i<4; i++){
@@ -115,25 +138,56 @@ public class GamePlayPage extends Activity {
 	
 	//init button with listeners
 	public void initButtons(){
-		btn1.setOnClickListener(new ClickEvent());
-		btn2.setOnClickListener(new ClickEvent());
-		btn3.setOnClickListener(new ClickEvent());
-		btn4.setOnClickListener(new ClickEvent());
+		
+		buttons[0].setOnClickListener(new ClickEvent());
+		buttons[1].setOnClickListener(new ClickEvent());
+		buttons[2].setOnClickListener(new ClickEvent());
+		buttons[3].setOnClickListener(new ClickEvent());
 	}
 	
 	//init the text of buttons
 		public void initLabels(){
-			btn1.setText(buttonLabels[0]);
-			btn2.setText(buttonLabels[1]);
-			btn3.setText(buttonLabels[2]);
-			btn4.setText(buttonLabels[3]);
+			buttons[0].setText(buttonLabels[0]);
+			buttons[1].setText(buttonLabels[1]);
+			buttons[2].setText(buttonLabels[2]);
+			buttons[3].setText(buttonLabels[3]);
 		}
 	
 	//init the processing bar
 	public void initProcessingBar(){
-		skbProgress = (SeekBar) this.findViewById(R.id.skbProgress);
-		skbProgress.setOnSeekBarChangeListener(new SeekBarChangeEvent());
+		String s = TempModel.getURL();
+		if (parseAsIPadURL(s) == ""){
+			thread = new Thread(timerThread);
+			thread.start();
+		}
+//		progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+//		progressBar.setOnSeekBarChangeListener(new SeekBarChangeEvent());
 	}
+	
+	private Runnable timerThread = new Runnable(){
+
+		@Override
+		public void run() {
+		   // TODO Auto-generated method stub
+		   while (timer<100){
+			    try{
+				    myHandle.sendMessage(myHandle.obtainMessage());
+				    Thread.sleep(800);
+			    }
+			    	catch(Throwable t){
+			    }
+			}
+		 }
+
+		 Handler myHandle = new Handler(){
+
+		@Override
+			   public void handleMessage(Message msg) {
+				timer = timer + 10;
+				progressBar.setProgress(timer);
+			   }
+			 };
+		 };
 	
 	//init the video player
 	public void initVideoPlayer(){
@@ -141,7 +195,7 @@ public class GamePlayPage extends Activity {
 		if (parseAsIPadURL(s) != ""){
 			surfaceView.setVisibility(View.VISIBLE);
 			imageView.setVisibility(View.INVISIBLE);
-			player = new Player(surfaceView, skbProgress, this);
+			player = new Player(surfaceView, progressBar, this);
 		}else{
 			surfaceView.setVisibility(View.INVISIBLE);
 			imageView.setVisibility(View.VISIBLE);
@@ -149,9 +203,11 @@ public class GamePlayPage extends Activity {
 				  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(s).getContent());
 				  imageView.setImageBitmap(bitmap);
 				  imageView.setVisibility(View.VISIBLE);
-				} catch (MalformedURLException e) {
+				} catch (MalformedURLException e) 
+				{
 				  e.printStackTrace();
-				} catch (IOException e) {
+				} catch (IOException e) 
+				{
 				  e.printStackTrace();
 				}
 		}
@@ -163,7 +219,6 @@ public class GamePlayPage extends Activity {
 		}else{
 			return "ipad";
 		}
-		
 	}
 	
 	public void showLegal(){
@@ -172,9 +227,11 @@ public class GamePlayPage extends Activity {
 			  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL("http://screenslam.foxfilm.com/legal/legal_default.png").getContent());
 			  imageView.setImageBitmap(bitmap);
 			  imageView.setVisibility(View.VISIBLE);
-			} catch (MalformedURLException e) {
+			} catch (MalformedURLException e) 
+			{
 			  e.printStackTrace();
-			} catch (IOException e) {
+			} catch (IOException e) 
+			{
 			  e.printStackTrace();
 			}
 	}
@@ -199,12 +256,46 @@ public class GamePlayPage extends Activity {
 
 		@Override
 		public void onClick(View arg0) {
+			if (findIndex(arg0) == rightAnswerPointer)
+			{
+				audioPlayer(1);//correct answer sound
+				if(player!=null){
+					int position = player.mediaPlayer.getCurrentPosition();
+					int duration = player.mediaPlayer.getDuration();
+					System.out.println("--------------The position you got for this question: "+ position);
+					System.out.println("--------------The duration you got for this question: "+ duration);
+					System.out.println("--------------The SCORE you got for this question: "+ (100-90*position/duration));
+					score = 100-90*position/duration;
+				}else{
+					score = 100-90*timer/100;
+				}
+				System.out.println("--------------The SCORE you got for this question: "+ score);
+			}else{
+				audioPlayer(0);//incorrect answer sound
+				score = 10;
+			}
+			
 			if(player!=null){
 				player.setPause();
+			}else{
+				thread.stop();
 			}
+			
+			
 			nextMedia();
 		}
+		
+		private int findIndex(View arg0){
+			for (int i = 0; i < buttons.length; i++) {
+				  if (arg0 == buttons[i]) {
+				    return i;
+				  }
+				}
+			return 0;
+		}
 	}
+	
+	
 
 	class SeekBarChangeEvent implements SeekBar.OnSeekBarChangeListener {
 		int progress;

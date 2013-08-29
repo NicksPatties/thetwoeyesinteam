@@ -71,7 +71,7 @@ public class SplashPage extends Activity implements ResponseDelegate{
 		
 		public void onClick(View v){
 			Intent intent = new Intent();
-			intent.setClass(SplashPage.this, AutoAdjmtPage.class);
+			intent.setClass(SplashPage.this, GamePlayPage.class);
 			SplashPage.this.startActivity(intent);
 		}
 	}

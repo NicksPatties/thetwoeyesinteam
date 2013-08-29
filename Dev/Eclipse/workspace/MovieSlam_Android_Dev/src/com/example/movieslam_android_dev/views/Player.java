@@ -16,6 +16,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 
 public class Player implements OnBufferingUpdateListener,
@@ -25,15 +26,15 @@ public class Player implements OnBufferingUpdateListener,
 	private int videoHeight;
 	public MediaPlayer mediaPlayer;
 	private SurfaceHolder surfaceHolder;
-	private SeekBar skbProgress;
+	private ProgressBar progressBar;
 	private Timer mTimer=new Timer();
 	private String _url;
 	private GamePlayPage _gp;
 	
-	public Player(SurfaceView surfaceView,SeekBar skbProgress, GamePlayPage gamePlayPage)
+	public Player(SurfaceView surfaceView,ProgressBar progressBar, GamePlayPage gamePlayPage)
 	{
 		_gp = gamePlayPage;
-		this.skbProgress=skbProgress;
+		this.progressBar=progressBar;
 		surfaceHolder=surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -48,7 +49,7 @@ public class Player implements OnBufferingUpdateListener,
 		public void run() {
 			if(mediaPlayer==null)
 				return;
-			if (mediaPlayer.isPlaying() && skbProgress.isPressed() == false) {
+			if (mediaPlayer.isPlaying() && progressBar.isPressed() == false) {
 				handleProgress.sendEmptyMessage(0);
 			}
 		}
@@ -61,8 +62,8 @@ public class Player implements OnBufferingUpdateListener,
 			int duration = mediaPlayer.getDuration();
 			
 			if (duration > 0) {
-				long pos = skbProgress.getMax() * position / duration;
-				skbProgress.setProgress((int) pos);
+				long pos = progressBar.getMax() * position / duration;
+				progressBar.setProgress((int) pos);
 			}
 		};
 	};
@@ -158,8 +159,8 @@ public class Player implements OnBufferingUpdateListener,
 
 	@Override
 	public void onBufferingUpdate(MediaPlayer arg0, int bufferingProgress) {
-		skbProgress.setSecondaryProgress(bufferingProgress);
-		int currentProgress=skbProgress.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
+		progressBar.setSecondaryProgress(bufferingProgress);
+		int currentProgress = progressBar.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
 		Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
 		
 	}
