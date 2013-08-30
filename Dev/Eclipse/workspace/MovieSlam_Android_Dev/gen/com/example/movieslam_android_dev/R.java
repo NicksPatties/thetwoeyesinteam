@@ -21,28 +21,49 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int iphone_bg_challengeboard=0x7f020001;
+        public static final int bg=0x7f020000;
+        public static final int bg_challenge_history=0x7f020001;
+        public static final int bg_challenge_history_current_only=0x7f020002;
+        public static final int bg_challenge_results=0x7f020003;
+        public static final int bg_challenge_results_popup=0x7f020004;
+        public static final int bg_challengeboard=0x7f020005;
+        public static final int bg_create_new_game=0x7f020006;
+        public static final int bg_enter_userid=0x7f020007;
+        public static final int bg_help=0x7f020008;
+        public static final int bg_interstitial=0x7f020009;
+        public static final int bg_login=0x7f02000a;
+        public static final int bg_preloader=0x7f02000b;
+        public static final int bg_privacy=0x7f02000c;
+        public static final int bg_select_genre=0x7f02000d;
+        public static final int bg_terms=0x7f02000e;
+        public static final int bg_yourdata=0x7f02000f;
+        public static final int button_bg=0x7f020010;
+        public static final int button_help_f1=0x7f020011;
+        public static final int button_large_f1=0x7f020012;
+        public static final int button_large_f2=0x7f020013;
+        public static final int ic_launcher=0x7f020014;
     }
     public static final class id {
-        public static final int ChallengeBoard=0x7f090004;
         public static final int ContainerLayout=0x7f090001;
-        public static final int action_settings=0x7f090011;
-        public static final int autoadjPage=0x7f090005;
-        public static final int btn1=0x7f09000d;
-        public static final int btn2=0x7f09000e;
-        public static final int btn3=0x7f09000f;
-        public static final int btn4=0x7f090010;
-        public static final int btn_next=0x7f090007;
-        public static final int btn_splash=0x7f090003;
+        public static final int action_settings=0x7f090013;
+        public static final int autoadjPage=0x7f090007;
+        public static final int btn1=0x7f09000f;
+        public static final int btn2=0x7f090010;
+        public static final int btn3=0x7f090011;
+        public static final int btn4=0x7f090012;
+        public static final int btn_next=0x7f090009;
+        public static final int btn_splash=0x7f090006;
         public static final int layout=0x7f090000;
-        public static final int legalImage=0x7f09000a;
-        public static final int progressBar=0x7f09000b;
-        public static final int questionTV=0x7f09000c;
-        public static final int stillImage=0x7f090008;
-        public static final int text1=0x7f090002;
-        public static final int textview_autoadj=0x7f090006;
-        public static final int videoplayer=0x7f090009;
+        public static final int legalImage=0x7f09000c;
+        public static final int progressBar=0x7f09000d;
+        public static final int questionTV=0x7f09000e;
+        public static final int stillImage=0x7f09000a;
+        public static final int textview_autoadj=0x7f090008;
+        public static final int userID_txt=0x7f090004;
+        public static final int userName_txt=0x7f090003;
+        public static final int userScore_txt=0x7f090005;
+        public static final int userThumbnail_iv=0x7f090002;
+        public static final int videoplayer=0x7f09000b;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

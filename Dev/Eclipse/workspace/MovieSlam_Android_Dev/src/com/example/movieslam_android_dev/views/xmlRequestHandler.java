@@ -13,7 +13,7 @@ import org.apache.http.util.EntityUtils;
 import android.os.AsyncTask;
 import android.util.Log;
 
-class xmlRequestHandler extends AsyncTask<Object, Object, Object> {
+class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
 	
 	public ResponseDelegate delegate = null;
 	private String _url;
@@ -30,8 +30,10 @@ class xmlRequestHandler extends AsyncTask<Object, Object, Object> {
     		_xmlData = EntityUtils.toString(he);
     	} catch (ClientProtocolException e) {
     		Log.d("error", "ClientProtocolException");
+    		return null;
     	} catch (IOException e) {
     		Log.d("error", "IOException");
+    		return null;
     	}    			
     			
     	return null;

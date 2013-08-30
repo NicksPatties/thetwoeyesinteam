@@ -6,37 +6,178 @@
     tools:context=".MainActivity" >
     
     <LinearLayout
-    android:background="@drawable/iphone_bg_challengeboard"
-    android:orientation="vertical"
+    android:background="@drawable/bg_challengeboard"
+    android:orientation="horizontal"
     android:id="@+id/ContainerLayout"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true">
     
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="6"
-        android:text="@string/splash"
-        android:textColor="#000000"
-        android:textSize="20sp" />
-    
-    <Button 
-        android:id="@+id/btn_splash" 
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:text="@string/letsgo"/>
+        
+    <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="fill_parent"
+    android:layout_weight="60">
+    </LinearLayout> 
     
     <LinearLayout
     android:orientation="vertical"
-    android:id="@+id/ChallengeBoard"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="24">
+    android:layout_width="0dp"
+    android:layout_height="fill_parent"
+    android:layout_weight="960">
+    
+        <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="100">    	
+	    </LinearLayout>
+	    
+        <LinearLayout
+        android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="216">
+	    	
+            <LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="212">
+		    
+	            <ImageView
+			    android:id="@+id/userThumbnail_iv"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"/>	    	
+                
+		    </LinearLayout> 
+		    		
+		    <LinearLayout
+		    android:orientation="vertical"
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="748">
+		    	
+		        <LinearLayout
+		        
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+			    android:layout_weight="89">
+			    
+				    <TextView				    
+			        android:id="@+id/userName_txt"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/splash"
+			        android:textColor="#ffffff"
+			        android:textSize="20sp" />
+				    
+				    
+				    
+			    </LinearLayout>
+			    
+		        <LinearLayout
+		        android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+			    android:layout_weight="87">
+				    
+		            <LinearLayout
+				    android:layout_width="0dp"
+				    android:layout_height="fill_parent"
+				    android:layout_weight="172">
+				    </LinearLayout>
+				    
+		            <LinearLayout
+		            android:orientation="vertical"
+				    android:layout_width="0dp"
+				    android:layout_height="fill_parent"
+				    android:layout_weight="576">
+				    
+				    	<TextView
+				        android:id="@+id/userID_txt"
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_weight="43.5"
+				        android:text="@string/splash"
+				        android:textColor="#ffffff"
+				        android:textSize="11sp" />
+				    	
+				    	<TextView				    
+				        android:id="@+id/userScore_txt"
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_weight="43.5"
+				        android:text="@string/splash"
+				        android:textColor="#ffffff"
+				        android:textSize="11sp" />
+				    	
+				    </LinearLayout>
+		            
+			    </LinearLayout>
+			    
+		        <LinearLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+			    android:layout_weight="40">
+			    </LinearLayout>    	
+		    	
+		    </LinearLayout>
+		    
+	    </LinearLayout>
+	    
+        <LinearLayout
+        android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="384">
+	    	
+            <LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="72">
+		    </LinearLayout>
+	    
+	    	<Button
+	        android:id="@+id/btn_splash"
+	        android:layout_weight="150"
+	        android:layout_width="fill_parent"
+	        android:layout_height="0dp"
+	        android:background="@drawable/button_bg"
+	        android:clickable="true"
+	        android:text="New Game"
+	        android:textColor="@android:color/white"
+	        android:textSize="30sp" />
+	    	
+	    	<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="72">
+		    </LinearLayout>
+		    
+	    	<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="90">
+		    </LinearLayout>
+	    
+	    </LinearLayout>
+	    
+        <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="1220">
+	    </LinearLayout>
+	    
+    	
+
+    
+    	
+    </LinearLayout> 
+    
+    <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="fill_parent"
+    android:layout_weight="60">
     </LinearLayout> 
        
          
