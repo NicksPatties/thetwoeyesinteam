@@ -11,6 +11,7 @@ import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.R.id;
 import com.example.movieslam_android_dev.R.layout;
 import com.example.movieslam_android_dev.models.TempModel;
+import com.example.movieslam_android_dev.views.component.Player;
 
 import android.app.Activity;
 import android.content.Intent;

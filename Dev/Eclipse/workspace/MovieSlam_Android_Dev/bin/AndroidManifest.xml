@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.movieslam_android_dev.views.AutoAdjmtPage"
+            android:name="com.example.movieslam_android_dev.views.ReadyToPlayPage"
             android:label="@string/page2"
             android:screenOrientation="portrait">
         </activity>

@@ -45,7 +45,7 @@ public final class R {
     }
     public static final class id {
         public static final int ContainerLayout=0x7f090001;
-        public static final int action_settings=0x7f090013;
+        public static final int action_settings=0x7f090014;
         public static final int autoadjPage=0x7f090007;
         public static final int btn1=0x7f09000f;
         public static final int btn2=0x7f090010;
@@ -57,6 +57,7 @@ public final class R {
         public static final int legalImage=0x7f09000c;
         public static final int progressBar=0x7f09000d;
         public static final int questionTV=0x7f09000e;
+        public static final int readytoplayPage=0x7f090013;
         public static final int stillImage=0x7f09000a;
         public static final int textview_autoadj=0x7f090008;
         public static final int userID_txt=0x7f090004;
@@ -69,6 +70,7 @@ public final class R {
         public static final int activity_main=0x7f030000;
         public static final int autoadjmt_page=0x7f030001;
         public static final int gameplay_page=0x7f030002;
+        public static final int readytoplay_page=0x7f030003;
     }
     public static final class menu {
         public static final int main=0x7f080000;
