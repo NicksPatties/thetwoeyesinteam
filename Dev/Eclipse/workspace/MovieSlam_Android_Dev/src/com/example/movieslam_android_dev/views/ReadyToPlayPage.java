@@ -12,7 +12,6 @@ import org.xml.sax.InputSource;
 
 import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.models.TempModel;
-import com.example.movieslam_android_dev.views.SplashPage.MyButtonLisiener;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
