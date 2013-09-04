@@ -200,17 +200,17 @@ public class GamePlayPage extends Activity {
 		}else{
 			surfaceView.setVisibility(View.INVISIBLE);
 			imageView.setVisibility(View.VISIBLE);
-			try {
-				  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(s).getContent());
-				  imageView.setImageBitmap(bitmap);
-				  imageView.setVisibility(View.VISIBLE);
-				} catch (MalformedURLException e) 
-				{
-				  e.printStackTrace();
-				} catch (IOException e) 
-				{
-				  e.printStackTrace();
-				}
+//			try {
+//				  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(s).getContent());
+//				  imageView.setImageBitmap(bitmap);
+//				  imageView.setVisibility(View.VISIBLE);
+//				} catch (MalformedURLException e) 
+//				{
+//				  e.printStackTrace();
+//				} catch (IOException e) 
+//				{
+//				  e.printStackTrace();
+//				}
 		}
 	}
 	
@@ -224,17 +224,17 @@ public class GamePlayPage extends Activity {
 	
 	public void showLegal(){
 		imageView = (ImageView) this.findViewById(R.id.legalImage);
-		try {
-			  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL("http://screenslam.foxfilm.com/legal/legal_default.png").getContent());
-			  imageView.setImageBitmap(bitmap);
-			  imageView.setVisibility(View.VISIBLE);
-			} catch (MalformedURLException e) 
-			{
-			  e.printStackTrace();
-			} catch (IOException e) 
-			{
-			  e.printStackTrace();
-			}
+//		try {
+//			  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL("http://screenslam.foxfilm.com/legal/legal_default.png").getContent());
+//			  imageView.setImageBitmap(bitmap);
+//			  imageView.setVisibility(View.VISIBLE);
+//			} catch (MalformedURLException e) 
+//			{
+//			  e.printStackTrace();
+//			} catch (IOException e) 
+//			{
+//			  e.printStackTrace();
+//			}
 	}
 	
 	private void nextMedia(){
@@ -279,7 +279,7 @@ public class GamePlayPage extends Activity {
 			if(player!=null){
 				player.setPause();
 			}else{
-				thread.stop();
+//				thread.stop();
 			}
 			
 			
