@@ -1,0 +1,152 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GenreSelection" >
+
+    <RelativeLayout
+	android:layout_width="wrap_content"
+	android:layout_height="match_parent"
+	android:layout_centerHorizontal="true"
+	android:layout_centerVertical="true">
+
+	<ImageView
+	android:id="@+id/bg"
+	android:scaleType="centerCrop"
+	android:adjustViewBounds="true"
+	android:layout_width="wrap_content"
+	android:layout_height="match_parent"
+	android:src="@drawable/bg_select_genre" >
+	</ImageView>
+	
+	<LinearLayout
+	android:orientation="vertical"
+	android:layout_width="0dp"
+	android:layout_alignLeft="@+id/bg"
+	android:layout_alignRight="@+id/bg"
+	android:layout_height="match_parent">
+	
+	    
+	    <ScrollView
+	    android:layout_marginTop="200dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+           	
+	    <LinearLayout
+	    android:id="@+id/challenges_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		android:paddingLeft="100dp"
+		android:paddingRight="100dp"
+        android:orientation="vertical">
+        	
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="Random"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:onClick="gotoNewChallenge"
+	   	    android:layout_marginBottom="30dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="Drama"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:onClick="gotoNewChallenge"
+	   	    android:layout_marginBottom="30dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="Comedy"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:onClick="gotoNewChallenge"
+	   	    android:layout_marginBottom="30dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="Sci-Fi"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:onClick="gotoNewChallenge"
+	   	    android:layout_marginBottom="30dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="Action"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:onClick="gotoNewChallenge"
+	   	    android:layout_marginBottom="30dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="Horror"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:onClick="gotoNewChallenge"
+	   	    android:layout_marginBottom="30dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="Family"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:onClick="gotoNewChallenge"
+	   	    android:layout_marginBottom="30dp" />
+	        	
+		</LinearLayout>
+        	
+	    </ScrollView>
+	
+	    
+	    
+	</LinearLayout>
+	
+	
+	</RelativeLayout>
+
+</RelativeLayout>
