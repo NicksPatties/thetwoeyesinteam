@@ -31,8 +31,6 @@ import com.example.movieslam_android_dev.R;
 
 public class SplashPage extends Activity implements ResponseDelegate, ImgRequestDelegate{
 
-	private Button myButton = null;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
@@ -46,15 +44,14 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 		xrh.execute();
 	}
 	
-	public void gotoHelp(final View view){		
+	public void gotoHelp(View view){		
 		
 		startActivity(new Intent(getApplicationContext(), HelpInfo.class));
-		//startActivity(new Intent(getApplicationContext(), HelpActivity.class));
 	}
 	
-public void gotoNewChallenge(final View view){		
+	public void gotoNewChallenge(View view){		
 		
-		startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
 	}
 	
 	/*
@@ -144,7 +141,12 @@ public void gotoNewChallenge(final View view){
 				accept_btn.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				accept_btn.setText("Accept");				
 				accept_btn.setTextColor(Color.parseColor("#FFFFFF"));
+				accept_btn.setHeight(10);
+				accept_btn.setWidth(10);
 				accept_btn.setBackgroundResource(R.drawable.button_bg);
+				
+				LinearLayout challenge_box_content = new LinearLayout(this);
+				challenge_box_content.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 				
 				RelativeLayout challenge_box = new RelativeLayout(this);
 				challenge_box.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));

@@ -6,7 +6,9 @@ import com.example.movieslam_android_dev.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 
 public class GenreSelection extends Activity {
 
@@ -14,6 +16,11 @@ public class GenreSelection extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_genre_selection);
+	}
+	
+	public void gotoGamePlayPage(View view){		
+		
+		startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
 	}
 
 	@Override
