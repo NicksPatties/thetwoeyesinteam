@@ -29,5 +29,4 @@ public class UserTypeSelection extends Activity {
 		getMenuInflater().inflate(R.menu.user_type_selection, menu);
 		return true;
 	}
-
 }

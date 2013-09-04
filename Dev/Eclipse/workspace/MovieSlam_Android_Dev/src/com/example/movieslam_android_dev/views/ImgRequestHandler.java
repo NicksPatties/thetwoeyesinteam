@@ -12,6 +12,7 @@ import android.util.Log;
 class ImgRequestHandler extends AsyncTask<Object, Object, Object> {
 	
 	public ImgRequestDelegate delegate = null;
+	private int _id;
 	private String _url;
 	private Bitmap _bitmap;
 
@@ -34,12 +35,13 @@ class ImgRequestHandler extends AsyncTask<Object, Object, Object> {
 
     @Override
     protected void onPostExecute(Object obj) {
-    	delegate.imgLoaded(_bitmap);
+    	delegate.imgLoaded(_bitmap, _id);
     	
     }
     
-    protected void setURL(String url){
+    protected void init(String url, int id){
     	_url = url;
+    	_id = id;
     }
 
  }

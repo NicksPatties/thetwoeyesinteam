@@ -54,6 +54,11 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
 	}
 	
+	public void gotoRefresh(View view){		
+		
+		
+	}
+	
 	/*
 	// assuming the aspect ratio we chose is the thinnest
 	// fill the height to 100% of the screen size, then set the width accordingly
@@ -121,7 +126,7 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			// get img from URL using another thread
 			ImgRequestHandler irh = new ImgRequestHandler();
 			irh.delegate = this;
-			irh.setURL(((Node) userThumbnailList.item(0)).getNodeValue());
+			irh.init(((Node) userThumbnailList.item(0)).getNodeValue(), R.id.userThumbnail_iv);
 			irh.execute();
 			
 			/*
@@ -163,9 +168,10 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 	}
 
 	@Override
-	public void imgLoaded(Bitmap bitmap) {
-		ImageView userThumbnail_iv = (ImageView) findViewById(R.id.userThumbnail_iv);
-		userThumbnail_iv.setImageBitmap(bitmap);
+	public void imgLoaded(Bitmap bitmap, int id) {
+		//ImageView userThumbnail_iv = (ImageView) findViewById(R.id.userThumbnail_iv);
+		ImageView iv = (ImageView) findViewById(id);
+		iv.setImageBitmap(bitmap);
 	}
 
 }
