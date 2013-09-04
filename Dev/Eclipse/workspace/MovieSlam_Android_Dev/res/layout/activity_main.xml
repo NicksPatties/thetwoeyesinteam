@@ -1,15 +1,39 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context=".MainActivity" >
+<RelativeLayout
+android:id="@+id/layout"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+<RelativeLayout
+android:layout_width="wrap_content"
+android:layout_height="match_parent"
+android:layout_centerHorizontal="true"
+android:layout_centerVertical="true">
+
+	<ImageView
+	android:id="@+id/bg"
+	android:scaleType="centerCrop"
+	android:adjustViewBounds="true"
+	android:layout_width="wrap_content"
+	android:layout_height="match_parent"
+	android:src="@drawable/bg_challengeboard" >
+	</ImageView>
+	
+	<RelativeLayout
+	android:layout_width="0dp"
+	android:layout_alignLeft="@+id/bg"
+	android:layout_alignRight="@+id/bg"
+	android:layout_height="match_parent">
+	
+	    
     
     <LinearLayout
     android:background="@drawable/bg_challengeboard"
     android:orientation="horizontal"
     android:id="@+id/ContainerLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true">
@@ -77,16 +101,15 @@
 			    android:layout_height="0dp"
 			    android:layout_weight="76">
 			    
-				    <TextView				    
-			        android:id="@+id/userName_txt"
-			        android:layout_width="wrap_content"
-			        android:layout_height="fill_parent"
-			        android:gravity="center"
-			        android:text="@string/splash"
-			        android:textSize="25sp"
-			        android:textColor="#18305c"/>
-				    
-				    
+				    <TextView
+				        android:id="@+id/userName_txt"
+				        android:layout_width="wrap_content"
+				        android:layout_height="fill_parent"
+				        android:gravity="left"
+				        android:text="@string/splash"
+				        android:textColor="#18305c"
+				        android:textSize="25sp"
+				        android:textStyle="bold" />
 				    
 			    </LinearLayout>
 			    
@@ -97,15 +120,16 @@
 			    android:layout_weight="110">
 				    
 		            <TextView
-				    	    android:id="@+id/userID_txt"
-				    	    android:layout_width="match_parent"
-				    	    android:layout_height="0dp"
-				    	    android:layout_weight="10"
-				    	    android:paddingLeft="80dip"
-				    	    android:gravity="left"
-				    	    android:text="fpo"
-				    	    android:textColor="#18305c"
-				    	    android:textSize="20sp" />
+		                android:id="@+id/userID_txt"
+		                android:layout_width="match_parent"
+		                android:layout_height="0dp"
+		                android:layout_weight="10"
+		                android:gravity="left"
+		                android:paddingLeft="80dip"
+		                android:text="fpo"
+		                android:textColor="#18305c"
+		                android:textSize="20sp"
+		                android:textStyle="bold" />
 				    	
 				    	<LinearLayout
 					    android:layout_width="match_parent"
@@ -149,27 +173,64 @@
 		    </LinearLayout>
 	    
 	    	<Button
-	        android:id="@+id/btn_splash"
-	        android:layout_weight="150"
-	        android:layout_width="fill_parent"
-	        android:layout_height="0dp"
-	        android:background="@drawable/button_bg"
-	        android:clickable="true"
-	        android:text="New Game"
-	        android:textColor="@android:color/white"
-	        android:textSize="30sp" />
+	    	    android:id="@+id/btn_splash"
+	    	    android:layout_width="fill_parent"
+	    	    android:layout_height="0dp"
+	    	    android:layout_weight="150"
+	    	    android:background="@drawable/button_bg"
+	    	    android:clickable="true"
+	    	    android:text="START NEW CHALLENGE"
+	    	    android:textColor="@android:color/white"
+	    	    android:textSize="30sp"
+	    	    android:textStyle="bold"
+	    	    android:onClick="gotoNewChallenge" />
 	    	
 	    	<LinearLayout
 		    android:layout_width="fill_parent"
 		    android:layout_height="0dp"
-		    android:layout_weight="72">
+		    android:layout_weight="62">
 		    </LinearLayout>
 		    
 	    	<LinearLayout
+	    	android:orientation="horizontal"
 		    android:layout_width="fill_parent"
 		    android:layout_height="0dp"
-		    android:layout_weight="90">
+		    android:layout_weight="80">
+		        
+	    	    <Button
+		        android:id="@+id/btn_splash"
+		        android:layout_weight="1"
+		        android:layout_width="0dp"
+		        android:layout_height="fill_parent"
+		        android:background="@drawable/help_button_bg"
+		        android:clickable="true"
+		        android:textColor="@android:color/white"
+		        android:onClick="gotoHelp" />	    	    
+	    	    
+	    	    <LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:layout_weight="10">
+				</LinearLayout>	    	    
+	    	    
+	    	    <Button
+		        android:id="@+id/btn_splash"
+		        android:layout_weight="1"
+		        android:layout_width="0dp"
+		        android:layout_height="fill_parent"
+		        android:background="@drawable/refresh_button_bg"
+		        android:clickable="true"
+		        android:textColor="@android:color/white"
+		        android:onClick="gotoRefresh" />	    	    
+	    	    
 		    </LinearLayout>
+		    
+	    	<LinearLayout
+	    	android:orientation="horizontal"
+		    android:layout_width="fill_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="20">
+	    	</LinearLayout>
 	    
 	    </LinearLayout>
 	    
@@ -177,6 +238,18 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="1220">
+	    	<ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+           	
+	            <LinearLayout
+	            android:id="@+id/challenges_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">	        	
+		    	</LinearLayout>
+        	
+	    	</ScrollView>
 	    </LinearLayout>
     	
     </LinearLayout> 
@@ -192,10 +265,12 @@
 
     
     
-    
+  
+</RelativeLayout>
 
 </RelativeLayout>
 
+</RelativeLayout>
 
 
 

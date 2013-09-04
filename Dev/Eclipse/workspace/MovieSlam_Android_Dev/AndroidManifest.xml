@@ -7,10 +7,10 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -19,9 +19,8 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:name="com.example.movieslam_android_dev.views.SplashPage"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
-            <!-- landscape  portrait -->
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,12 +30,30 @@
         <activity
             android:name="com.example.movieslam_android_dev.views.ReadyToPlayPage"
             android:label="@string/page2"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.movieslam_android_dev.views.GamePlayPage"
-            android:label="@string/page3" 
-            android:screenOrientation="portrait">
+            android:label="@string/page3"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.movieslam_android_dev.views.GenreSelection"
+            android:label="@string/title_activity_genre_selection" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.movieslam_android_dev.views.HelpInfo"
+            android:label="@string/title_activity_help_info" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

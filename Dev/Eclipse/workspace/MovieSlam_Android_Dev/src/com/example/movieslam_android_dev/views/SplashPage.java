@@ -14,13 +14,17 @@ import org.xml.sax.InputSource;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.movieslam_android_dev.R;
@@ -34,14 +38,13 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
-        myButton = (Button)this.findViewById(R.id.btn_splash);
-        myButton.setOnClickListener(new MyButtonLisiener());
  
         XmlRequestHandler xrh = new XmlRequestHandler();
         xrh.delegate = this;
         // hardcode api to test
 		xrh.setURL("http://postpcmarketing.com/movieslam/intl/it/service/getGameInfo.php?user_id=0&fid=100000855108534");
 		xrh.execute();
+		
         
 	}
 	/*protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,18 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 		}
 	}
 	
+	public void gotoHelp(final View view){		
+		
+		startActivity(new Intent(getApplicationContext(), HelpInfo.class));
+		//startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+	}
+	
+public void gotoNewChallenge(final View view){		
+		
+		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
+	}
+	
+	/*
 	// assuming the aspect ratio we chose is the thinnest
 	// fill the height to 100% of the screen size, then set the width accordingly
 	@Override
@@ -96,6 +111,7 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 	    }
 	    
 	}
+	*/
 
 	@Override
 	public void responseLoaded(String response) {
@@ -145,7 +161,35 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			ImgRequestHandler irh = new ImgRequestHandler();
 			irh.delegate = this;
 			irh.setURL(((Node) userThumbnailList.item(0)).getNodeValue());
-			irh.execute();       
+			irh.execute();
+			
+			// generate challenge boxes
+			LinearLayout challenges_container = (LinearLayout) findViewById(R.id.challenges_container);
+			for(int i = 0; i < 10; i++) {
+				
+				
+				ImageView challenge_box_bg = new ImageView(this);
+				challenge_box_bg.setImageResource(R.drawable.panel_challengeboard_inactive);
+				challenge_box_bg.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+				challenge_box_bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+				challenge_box_bg.setAdjustViewBounds(true);
+				challenge_box_bg.setPadding(15, 15, 15, 0);
+				
+				
+				Button accept_btn = new Button(this);
+				accept_btn.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				accept_btn.setText("Accept");				
+				accept_btn.setTextColor(Color.parseColor("#FFFFFF"));
+				accept_btn.setBackgroundResource(R.drawable.button_bg);
+				
+				RelativeLayout challenge_box = new RelativeLayout(this);
+				challenge_box.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+				
+				challenge_box.addView(challenge_box_bg);
+				challenge_box.addView(accept_btn);
+				
+	            challenges_container.addView(challenge_box);
+	        }
 			
 		} catch (Exception e) {
 			Log.d("debug", "Exception");

@@ -5,36 +5,34 @@
     <string name="action_settings">Settings</string>
     <string name="splash">Movie Slam Splash!!!</string>
     <string name="letsgo">Let\'s Go</string>
-    
     <string name="page2">Second page</string>
     <string name="page2_text">This is page is auto-adjustment test purpose only!</string>
     <string name="next_page">To See GamePlay Page</string>
-    
     <string name="page3">Third page</string>
     <string name="Q1A1">Big</string>
     <string name="Q1A2">Me, Myself &amp; Irene</string>
     <string name="Q1A3">A Walk In The Clouds</string>
     <string name="Q1A4">Live Free or Die Hard</string>
-    
     <string name="Q2A1">Button 1</string>
     <string name="Q2A2">Button 2</string>
     <string name="Q2A3">Button 3</string>
     <string name="Q2A4">Button 4</string>
-    
     <string name="Q3A1">Button 1</string>
     <string name="Q3A2">Button 2</string>
     <string name="Q3A3">Button 3</string>
     <string name="Q3A4">Button 4</string>
-    
     <string name="Q4A1">Button 1</string>
     <string name="Q4A2">Button 2</string>
     <string name="Q4A3">Button 3</string>
     <string name="Q4A4">Button 4</string>
-    
     <string name="Q5A1">Button 1</string>
     <string name="Q5A2">Button 2</string>
     <string name="Q5A3">Button 3</string>
     <string name="Q5A4">Button 4</string>
-    
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="help_text">FPO help text</string>
+    <string name="title_activity_genre_selection">GenreSelection</string>
+    <string name="title_activity_help_info">HelpInfo</string>
 
 </resources>

@@ -39,41 +39,58 @@ public final class R {
         public static final int bg_yourdata=0x7f02000f;
         public static final int button_bg=0x7f020010;
         public static final int button_help_f1=0x7f020011;
-        public static final int button_large_f1=0x7f020012;
-        public static final int button_large_f2=0x7f020013;
-        public static final int ic_launcher=0x7f020014;
+        public static final int button_help_f2=0x7f020012;
+        public static final int button_large_f1=0x7f020013;
+        public static final int button_large_f2=0x7f020014;
+        public static final int button_refresh_f1=0x7f020015;
+        public static final int button_refresh_f2=0x7f020016;
+        public static final int help_button_bg=0x7f020017;
+        public static final int help_privacy_text=0x7f020018;
+        public static final int ic_launcher=0x7f020019;
+        public static final int panel_challengeboard_active=0x7f02001a;
+        public static final int panel_challengeboard_inactive=0x7f02001b;
+        public static final int panel_challengeboard_yellow_lighter=0x7f02001c;
+        public static final int refresh_button_bg=0x7f02001d;
     }
     public static final class id {
-        public static final int ContainerLayout=0x7f090001;
-        public static final int action_settings=0x7f090014;
-        public static final int autoadjPage=0x7f090007;
-        public static final int btn1=0x7f09000f;
-        public static final int btn2=0x7f090010;
-        public static final int btn3=0x7f090011;
-        public static final int btn4=0x7f090012;
-        public static final int btn_next=0x7f090009;
-        public static final int btn_splash=0x7f090006;
-        public static final int layout=0x7f090000;
-        public static final int legalImage=0x7f09000c;
-        public static final int progressBar=0x7f09000d;
-        public static final int questionTV=0x7f09000e;
-        public static final int readytoplayPage=0x7f090013;
-        public static final int stillImage=0x7f09000a;
-        public static final int textview_autoadj=0x7f090008;
-        public static final int userID_txt=0x7f090004;
-        public static final int userName_txt=0x7f090003;
-        public static final int userScore_txt=0x7f090005;
-        public static final int userThumbnail_iv=0x7f090002;
-        public static final int videoplayer=0x7f09000b;
+        public static final int ContainerLayout=0x7f090005;
+        public static final int ImageView01=0x7f090003;
+        public static final int action_settings=0x7f090017;
+        public static final int autoadjPage=0x7f09000a;
+        public static final int bg=0x7f090000;
+        public static final int btn1=0x7f090012;
+        public static final int btn2=0x7f090013;
+        public static final int btn3=0x7f090014;
+        public static final int btn4=0x7f090015;
+        public static final int btn_next=0x7f09000c;
+        public static final int btn_splash=0x7f090002;
+        public static final int challenges_container=0x7f090001;
+        public static final int layout=0x7f090004;
+        public static final int legalImage=0x7f09000f;
+        public static final int progressBar=0x7f090010;
+        public static final int questionTV=0x7f090011;
+        public static final int readytoplayPage=0x7f090016;
+        public static final int stillImage=0x7f09000d;
+        public static final int textview_autoadj=0x7f09000b;
+        public static final int userID_txt=0x7f090008;
+        public static final int userName_txt=0x7f090007;
+        public static final int userScore_txt=0x7f090009;
+        public static final int userThumbnail_iv=0x7f090006;
+        public static final int videoplayer=0x7f09000e;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int autoadjmt_page=0x7f030001;
-        public static final int gameplay_page=0x7f030002;
-        public static final int readytoplay_page=0x7f030003;
+        public static final int activity_genre_selection=0x7f030000;
+        public static final int activity_help_info=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int autoadjmt_page=0x7f030003;
+        public static final int gameplay_page=0x7f030004;
+        public static final int readytoplay_page=0x7f030005;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int genre_selection=0x7f080000;
+        public static final int help=0x7f080001;
+        public static final int help_info=0x7f080002;
+        public static final int main=0x7f080003;
     }
     public static final class raw {
         public static final int correct=0x7f040000;
@@ -102,12 +119,17 @@ public final class R {
         public static final int Q5A4=0x7f06001b;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
+        public static final int hello_world=0x7f06001d;
+        public static final int help_text=0x7f06001e;
         public static final int letsgo=0x7f060003;
         public static final int next_page=0x7f060006;
         public static final int page2=0x7f060004;
         public static final int page2_text=0x7f060005;
         public static final int page3=0x7f060007;
         public static final int splash=0x7f060002;
+        public static final int title_activity_genre_selection=0x7f06001f;
+        public static final int title_activity_help=0x7f06001c;
+        public static final int title_activity_help_info=0x7f060020;
     }
     public static final class style {
         /** 
