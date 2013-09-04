@@ -39,6 +39,8 @@
 		android:paddingLeft="100dp"
 		android:paddingRight="100dp"
         android:orientation="vertical">
+        
+	        
         	
 	        <Button
 		   	android:id="@+id/btn_splash"

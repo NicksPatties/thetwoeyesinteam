@@ -124,6 +124,7 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			irh.setURL(((Node) userThumbnailList.item(0)).getNodeValue());
 			irh.execute();
 			
+			/*
 			// generate challenge boxes
 			LinearLayout challenges_container = (LinearLayout) findViewById(R.id.challenges_container);
 			for(int i = 0; i < 10; i++) {
@@ -134,7 +135,7 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 				challenge_box_bg.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 				challenge_box_bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 				challenge_box_bg.setAdjustViewBounds(true);
-				challenge_box_bg.setPadding(15, 15, 15, 0);
+				challenge_box_bg.setPadding(15, 30, 15, 0);
 				
 				
 				Button accept_btn = new Button(this);
@@ -145,9 +146,6 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 				accept_btn.setWidth(10);
 				accept_btn.setBackgroundResource(R.drawable.button_bg);
 				
-				LinearLayout challenge_box_content = new LinearLayout(this);
-				challenge_box_content.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-				
 				RelativeLayout challenge_box = new RelativeLayout(this);
 				challenge_box.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 				
@@ -155,7 +153,8 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 				challenge_box.addView(accept_btn);
 				
 	            challenges_container.addView(challenge_box);
-	        }
+	            
+	        }*/
 			
 		} catch (Exception e) {
 			Log.d("debug", "Exception");
