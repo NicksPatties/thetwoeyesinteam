@@ -86,15 +86,17 @@ public final class R {
         public static final int activity_genre_selection=0x7f030000;
         public static final int activity_help_info=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int autoadjmt_page=0x7f030003;
-        public static final int gameplay_page=0x7f030004;
-        public static final int readytoplay_page=0x7f030005;
+        public static final int activity_user_type_selection=0x7f030003;
+        public static final int autoadjmt_page=0x7f030004;
+        public static final int gameplay_page=0x7f030005;
+        public static final int readytoplay_page=0x7f030006;
     }
     public static final class menu {
         public static final int genre_selection=0x7f080000;
         public static final int help=0x7f080001;
         public static final int help_info=0x7f080002;
         public static final int main=0x7f080003;
+        public static final int user_type_selection=0x7f080004;
     }
     public static final class raw {
         public static final int correct=0x7f040000;
@@ -134,6 +136,7 @@ public final class R {
         public static final int title_activity_genre_selection=0x7f06001f;
         public static final int title_activity_help=0x7f06001c;
         public static final int title_activity_help_info=0x7f060020;
+        public static final int title_activity_user_type_selection=0x7f060021;
     }
     public static final class style {
         /** 
