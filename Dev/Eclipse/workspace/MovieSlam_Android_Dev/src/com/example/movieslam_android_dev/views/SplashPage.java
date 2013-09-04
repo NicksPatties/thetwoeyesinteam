@@ -90,7 +90,7 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 	
 public void gotoNewChallenge(final View view){		
 		
-		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
+		startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
 	}
 	
 	/*
