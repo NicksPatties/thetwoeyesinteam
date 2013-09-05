@@ -11,6 +11,7 @@ import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.R.id;
 import com.example.movieslam_android_dev.R.layout;
 import com.example.movieslam_android_dev.models.TempModel;
+import com.example.movieslam_android_dev.tools.DownloadImageTask;
 import com.example.movieslam_android_dev.views.component.Player;
 
 import android.app.Activity;
@@ -200,17 +201,7 @@ public class GamePlayPage extends Activity {
 		}else{
 			surfaceView.setVisibility(View.INVISIBLE);
 			imageView.setVisibility(View.VISIBLE);
-//			try {
-//				  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(s).getContent());
-//				  imageView.setImageBitmap(bitmap);
-//				  imageView.setVisibility(View.VISIBLE);
-//				} catch (MalformedURLException e) 
-//				{
-//				  e.printStackTrace();
-//				} catch (IOException e) 
-//				{
-//				  e.printStackTrace();
-//				}
+			new DownloadImageTask(imageView).execute(s);
 		}
 	}
 	
@@ -224,17 +215,7 @@ public class GamePlayPage extends Activity {
 	
 	public void showLegal(){
 		imageView = (ImageView) this.findViewById(R.id.legalImage);
-//		try {
-//			  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL("http://screenslam.foxfilm.com/legal/legal_default.png").getContent());
-//			  imageView.setImageBitmap(bitmap);
-//			  imageView.setVisibility(View.VISIBLE);
-//			} catch (MalformedURLException e) 
-//			{
-//			  e.printStackTrace();
-//			} catch (IOException e) 
-//			{
-//			  e.printStackTrace();
-//			}
+		new DownloadImageTask(imageView).execute("http://screenslam.foxfilm.com/legal/legal_default.png");
 	}
 	
 	private void nextMedia(){
