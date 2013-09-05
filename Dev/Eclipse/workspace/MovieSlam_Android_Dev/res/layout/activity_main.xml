@@ -171,14 +171,15 @@ android:layout_centerVertical="true">
 					    android:layout_weight="1">
 					    </LinearLayout>
 				    	
-				    	<TextView				    
-				        android:id="@+id/userScore_txt"
-				        android:layout_width="match_parent"
-				        android:layout_height="0dp"
-				        android:layout_weight="10"
-				        android:text="fpo"
-				        android:textColor="#ffffff"
-				        android:textSize="20sp" />
+				    	<TextView
+				    	    android:id="@+id/userScore_txt"
+				    	    android:layout_width="match_parent"
+				    	    android:layout_height="0dp"
+				    	    android:layout_weight="10"
+				    	    android:text="fpo"
+				    	    android:textColor="#ffffff"
+				    	    android:textSize="20sp"
+				    	    android:textStyle="bold" />
 				    
 				    </LinearLayout>
 		            
@@ -319,8 +320,46 @@ android:layout_centerVertical="true">
 					            <LinearLayout
 							    android:layout_width="0dp"
 							    android:layout_height="fill_parent"
+							    android:layout_weight="3">
+							    </LinearLayout>
+							    
+					            
+					            
+					            
+					            
+					           
+							    
+									
+					                <LinearLayout
+					                android:orientation="vertical"
+									android:layout_width="0dp"
+									android:layout_height="fill_parent"
+									android:layout_weight="11">
+									
+										<ImageView					
+						                android:id="@+id/playerThumbnail1_iv"
+						                android:layout_width="fill_parent"
+						                android:layout_height="0dp"
+						                android:layout_weight="10"
+						                android:scaleType="centerCrop" />
+										
+										<LinearLayout
+										android:layout_width="fill_parent"
+										android:layout_height="0dp"
+										android:layout_weight="2">
+										</LinearLayout>
+										
+									</LinearLayout>	    
+									
+						           
+					            
+					            
+					            <LinearLayout
+							    android:layout_width="0dp"
+							    android:layout_height="fill_parent"
 							    android:layout_weight="1">
 							    </LinearLayout>
+					            
 					            
 					            
 			                	<TextView
@@ -332,12 +371,23 @@ android:layout_centerVertical="true">
 						        android:textColor="#18305c"
 						        android:textSize="25sp"
 						        android:textStyle="bold"
-						        android:layout_weight="21" />
+						        android:layout_weight="24" />
 			                	
 			                	<LinearLayout
 							    android:layout_width="0dp"
 							    android:layout_height="fill_parent"
-							    android:layout_weight="1">
+							    android:layout_weight="6">
+										
+			                	    <TextView
+							        android:layout_width="wrap_content"
+							        android:layout_height="fill_parent"
+							        android:gravity="left"
+							        android:text="2:4"
+							        android:textColor="#18305c"
+							        android:textSize="20sp"
+							        android:textStyle="bold"
+							        android:layout_weight="1" />
+										
 							    </LinearLayout>
 		                	
 		                </LinearLayout>
@@ -362,7 +412,8 @@ android:layout_centerVertical="true">
 		                        android:background="@drawable/button_bg"
 		                        android:text="Accept"
 		                        android:textStyle="bold"
-		                        android:textColor="#FFFFFF" />
+		                        android:textColor="#FFFFFF"
+		                        android:textSize="18sp" />
 		                    
 		                    <LinearLayout
 						    android:layout_width="0dp"
@@ -378,12 +429,13 @@ android:layout_centerVertical="true">
 				                android:background="@drawable/button_bg"
 				                android:text="Decline"
 				                android:textStyle="bold"
-				                android:textColor="#FFFFFF" />
+				                android:textColor="#FFFFFF"
+				                android:textSize="18sp" />
 				            
 				            <LinearLayout
 						    android:layout_width="0dp"
 						    android:layout_height="fill_parent"
-						    android:layout_weight="1">
+						    android:layout_weight="8">
 						    </LinearLayout>
 				            
 						    			            

@@ -129,6 +129,18 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			irh.init(((Node) userThumbnailList.item(0)).getNodeValue(), R.id.userThumbnail_iv);
 			irh.execute();
 			
+			
+			ImgRequestHandler play_iv1 = new ImgRequestHandler();
+			play_iv1.delegate = this;
+			play_iv1.init("http://graph.facebook.com/639473268/picture?type=large", R.id.playerThumbnail1_iv);
+			play_iv1.execute();
+			
+			/*
+			ImgRequestHandler play_iv2 = new ImgRequestHandler();
+			play_iv2.delegate = this;
+			play_iv2.init("http://screenslam.foxfilm.com/include/images/avatar.png", R.id.playerThumbnail2_iv);
+			play_iv2.execute();*/
+			
 			/*
 			// generate challenge boxes
 			LinearLayout challenges_container = (LinearLayout) findViewById(R.id.challenges_container);
