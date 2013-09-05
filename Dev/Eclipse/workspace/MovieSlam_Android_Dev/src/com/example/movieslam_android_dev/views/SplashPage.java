@@ -53,6 +53,11 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 		
 //		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
 		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
+		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
+	}
+	
+	public void gotoRefresh(View view){		
+		
 	}
 	
 	/*
@@ -122,8 +127,30 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			// get img from URL using another thread
 			ImgRequestHandler irh = new ImgRequestHandler();
 			irh.delegate = this;
-			irh.setURL(((Node) userThumbnailList.item(0)).getNodeValue());
+			irh.init(((Node) userThumbnailList.item(0)).getNodeValue(), R.id.userThumbnail_iv);
 			irh.execute();
+			
+			
+			ImgRequestHandler play_iv1 = new ImgRequestHandler();
+			play_iv1.delegate = this;
+			play_iv1.init("http://graph.facebook.com/639473268/picture?type=large", R.id.playerThumbnail1_iv);
+			play_iv1.execute();
+			
+			
+			ImgRequestHandler play_iv2 = new ImgRequestHandler();
+			play_iv2.delegate = this;
+			play_iv2.init("http://screenslam.foxfilm.com/include/images/avatar.png", R.id.playerThumbnail2_iv);
+			play_iv2.execute();
+			
+			ImgRequestHandler play_iv3 = new ImgRequestHandler();
+			play_iv3.delegate = this;
+			play_iv3.init("http://graph.facebook.com/1185978290/picture?type=large", R.id.playerThumbnail3_iv);
+			play_iv3.execute();
+			
+			ImgRequestHandler play_iv4 = new ImgRequestHandler();
+			play_iv4.delegate = this;
+			play_iv4.init("http://graph.facebook.com/100000659852503/picture?type=large", R.id.playerThumbnail4_iv);
+			play_iv4.execute();
 			
 			/*
 			// generate challenge boxes
@@ -164,9 +191,10 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 	}
 
 	@Override
-	public void imgLoaded(Bitmap bitmap) {
-		ImageView userThumbnail_iv = (ImageView) findViewById(R.id.userThumbnail_iv);
-		userThumbnail_iv.setImageBitmap(bitmap);
+	public void imgLoaded(Bitmap bitmap, int id) {
+		//ImageView userThumbnail_iv = (ImageView) findViewById(R.id.userThumbnail_iv);
+		ImageView iv = (ImageView) findViewById(id);
+		iv.setImageBitmap(bitmap);
 	}
 
 }

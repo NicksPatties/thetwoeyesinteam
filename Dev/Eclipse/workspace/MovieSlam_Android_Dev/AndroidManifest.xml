@@ -40,20 +40,14 @@
         <activity
             android:name="com.example.movieslam_android_dev.views.GenreSelection"
             android:label="@string/title_activity_genre_selection" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.movieslam_android_dev.views.HelpInfo"
             android:label="@string/title_activity_help_info" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.movieslam_android_dev.views.UserTypeSelection"
+            android:label="@string/title_activity_user_type_selection" >
         </activity>
     </application>
 

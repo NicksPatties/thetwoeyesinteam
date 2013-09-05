@@ -91,7 +91,7 @@ public class ReadyToPlayPage extends Activity  implements ResponseDelegate, ImgR
 	}
 
 	@Override
-	public void imgLoaded(Bitmap bitmap) {
+	public void imgLoaded(Bitmap bitmap, int id) {
 		// TODO Auto-generated method stub
 		
 	}

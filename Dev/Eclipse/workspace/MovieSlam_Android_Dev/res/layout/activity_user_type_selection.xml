@@ -1,0 +1,139 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserTypeSelection" >
+
+    <RelativeLayout
+	android:layout_width="wrap_content"
+	android:layout_height="match_parent"
+	android:layout_centerHorizontal="true"
+	android:layout_centerVertical="true">
+
+	<ImageView
+	android:id="@+id/bg"
+	android:scaleType="centerCrop"
+	android:adjustViewBounds="true"
+	android:layout_width="wrap_content"
+	android:layout_height="match_parent"
+	android:src="@drawable/bg_create_new_game" >
+	</ImageView>
+	
+	<LinearLayout
+	android:orientation="vertical"
+	android:layout_width="0dp"
+	android:layout_alignLeft="@+id/bg"
+	android:layout_alignRight="@+id/bg"
+	android:layout_height="match_parent">
+	
+	    <LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="12">
+		</LinearLayout>
+           	
+	    <LinearLayout
+	    android:id="@+id/challenges_container"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+		android:paddingLeft="160dp"
+		android:paddingRight="160dp"
+        android:orientation="vertical"
+        android:layout_weight="5">
+        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="FACEBOOK"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:layout_marginBottom="12dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="USER ID"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:layout_marginBottom="12dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="RANDOM"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:onClick="gotoGenreSelection"
+	   	    android:layout_marginBottom="12dp" />
+	        	
+		</LinearLayout>
+	    
+	     <LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="3">
+		</LinearLayout>
+		
+	    <LinearLayout
+	    android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="3"
+		android:paddingLeft="160dp"
+		android:paddingRight="160dp">
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="EMAIL"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:layout_marginBottom="12dp" />
+	        
+	        <Button
+		   	android:id="@+id/btn_splash"
+		    android:layout_width="fill_parent"
+	   	    android:layout_height="0dp"
+	   	    android:layout_weight="150"
+	   	    android:background="@drawable/button_bg"
+	   	    android:clickable="true"
+	   	    android:text="SMS"
+	   	    android:textColor="@android:color/white"
+	   	    android:textSize="30sp"
+	   	    android:textStyle="bold"
+	   	    android:layout_marginBottom="12dp" />
+	        
+		</LinearLayout>
+		
+	    <LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="4">
+		</LinearLayout>
+	    
+	</LinearLayout>
+	
+	
+	</RelativeLayout>
+
+</RelativeLayout>
