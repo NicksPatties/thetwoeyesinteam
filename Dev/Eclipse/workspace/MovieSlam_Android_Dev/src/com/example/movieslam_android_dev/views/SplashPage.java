@@ -25,8 +25,9 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.movieslam_android_dev.R;
+import com.example.movieslam_android_dev.tools.DownloadImageTask;
 
-public class SplashPage extends Activity implements ResponseDelegate, ImgRequestDelegate{
+public class SplashPage extends Activity implements ResponseDelegate{
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
 
 	@Override
@@ -129,11 +130,7 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			TextView userScore_txt = (TextView)findViewById(R.id.userScore_txt); 
 			userScore_txt.setText(((Node) userScoreList.item(0)).getNodeValue());
 			
-			// get img from URL using another thread
-			ImgRequestHandler irh = new ImgRequestHandler();
-			irh.delegate = this;
-			irh.init(((Node) userThumbnailList.item(0)).getNodeValue(), R.id.userThumbnail_iv);
-			irh.execute();
+			new DownloadImageTask((ImageView) findViewById(R.id.userThumbnail_iv)).execute(((Node) userThumbnailList.item(0)).getNodeValue());
 			
 			
 			// parse player challenges
@@ -142,11 +139,12 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			for (int i = 0; i < 8; i++){
 				View player_challenge_cell = layoutInflater.inflate(R.layout.player_challenge_cell, score_table, false);
 				score_table.addView(player_challenge_cell);
-				ImgRequestHandler challenge_player_tn = new ImgRequestHandler();
-				challenge_player_tn.delegate = this;
-				ImageView player_iv = (ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn);
-				challenge_player_tn.init("http://graph.facebook.com/639473268/picture?type=large", player_iv.getId());
-				challenge_player_tn.execute();
+				
+				if (i%2 ==0){
+					new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute("http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/HsTZSDw4avx.gif");
+				}else{
+					new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute("http://graph.facebook.com/639473268/picture?type=large");
+				}
 				
 				TextView player_name_txt = (TextView) player_challenge_cell.findViewById(R.id.player_name_txt);
 				player_name_txt.setText("Osk Osk"+i);
@@ -156,13 +154,6 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			Log.d("debug", "Exception");
 		}
 		
-	}
-
-	@Override
-	public void imgLoaded(Bitmap bitmap, int id) {
-		//ImageView userThumbnail_iv = (ImageView) findViewById(R.id.userThumbnail_iv);
-		ImageView iv = (ImageView) findViewById(id);
-		iv.setImageBitmap(bitmap);
 	}
 
 }
