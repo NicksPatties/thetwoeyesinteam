@@ -10,6 +10,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -18,6 +20,12 @@ class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
 	public ResponseDelegate delegate = null;
 	private String _url;
 	private String _xmlData;
+	private ProgressDialog progress;
+	
+	public XmlRequestHandler(Context cxt) {
+		progress = ProgressDialog.show(cxt, "Loading", "Please wait...", true);
+	}
+
 
     protected Void doInBackground(Object... params) {
 
@@ -42,7 +50,7 @@ class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
     @Override
     protected void onPostExecute(Object obj) {
     	delegate.responseLoaded(_xmlData);
-    	
+    	progress.dismiss();  	
     }
     
     protected void setURL(String url){

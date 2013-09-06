@@ -28,7 +28,7 @@ public class ReadyToPlayPage extends Activity  implements ResponseDelegate{
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
  
-        XmlRequestHandler xrh = new XmlRequestHandler();
+        XmlRequestHandler xrh = new XmlRequestHandler(this);
         xrh.delegate = this;
         // hardcode api to test
 		xrh.setURL("http://screenslam.foxfilm.com/service/getMedia.php?&type=drama&user_id=8");

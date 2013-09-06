@@ -149,7 +149,9 @@ tools:context=".MainActivity">
 		    	    
 				            <TableLayout android:id="@+id/score_table"
 					        android:layout_width="fill_parent"
-					        android:layout_height="fill_parent"/>
+					        android:layout_height="fill_parent">
+				                
+				            </TableLayout>
 			            
 				    	</LinearLayout>
 		        	
