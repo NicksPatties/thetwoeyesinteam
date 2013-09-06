@@ -30,13 +30,13 @@ import android.widget.TextView;
 import com.example.movieslam_android_dev.R;
 
 public class SplashPage extends Activity implements ResponseDelegate, ImgRequestDelegate{
+//  public class SplashPage extends Activity{ // used for testing game play page quickly
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
- 
         XmlRequestHandler xrh = new XmlRequestHandler();
         xrh.delegate = this;
         // hardcode api to test
@@ -51,9 +51,9 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 	
 	public void gotoNewChallenge(View view){		
 		
-//		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
-		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
-		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
+		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
+//		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
+//		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
 	
 	public void gotoRefresh(View view){		
@@ -79,7 +79,7 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 	    
 	}
 	*/
-
+	
 	@Override
 	public void responseLoaded(String response) {
 		

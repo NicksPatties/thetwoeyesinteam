@@ -116,9 +116,9 @@ public class GamePlayPage extends Activity {
 	public void initQuestions(){
 		String questionText = TempModel.getQuestion();
 		int i = 0;
-		if (questionText == "name"){
+		if (questionText.equals("name")){
 			i = 1;
-		}else if (questionText == "actor"){
+		}else if (questionText.equals("actor")){
 			i = 2;
 		}else{
 			i = 3;
@@ -157,7 +157,7 @@ public class GamePlayPage extends Activity {
 	
 	//init the processing bar
 	public void initProcessingBar(){
-		String s = TempModel.getURL();
+		String s = TempModel.getMediaURLs();
 		if (parseAsIPadURL(s) == ""){
 			thread = new Thread(timerThread);
 			thread.start();
@@ -193,7 +193,7 @@ public class GamePlayPage extends Activity {
 	
 	//init the video player
 	public void initVideoPlayer(){
-		String s = TempModel.getURL();
+		String s = TempModel.getMediaURLs();
 		if (parseAsIPadURL(s) != ""){
 			surfaceView.setVisibility(View.VISIBLE);
 			imageView.setVisibility(View.INVISIBLE);

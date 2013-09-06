@@ -14,19 +14,19 @@ import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.models.TempModel;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ReadyToPlayPage extends Activity  implements ResponseDelegate, ImgRequestDelegate{
+public class ReadyToPlayPage extends Activity  implements ResponseDelegate{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
-        
  
         XmlRequestHandler xrh = new XmlRequestHandler();
         xrh.delegate = this;
@@ -39,10 +39,17 @@ public class ReadyToPlayPage extends Activity  implements ResponseDelegate, ImgR
 	@Override
 	public void responseLoaded(String response) {
 		// could use regx for better result
-		response = response.replace("\n<?xml version=\"1.0\"?>\n", "");
+		response = response.replace("<?xml version=1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n\n<?xml version=\"1.0\"?>\n","");
 		
 		Document doc;
 		String[] questions = new String[5];
+		String[] mediaURLs = new String[5];
+		String[] mediaLegals = new String[5];
+		String[] mediaNames = new String[5];
+		String[] mediaIDs = new String[5];
+		String[] mediaEtailers = new String[5];
+		String[][] anwsers = new String[5][4];
+		
 		try {
 			for (int i=0; i<5; i++){
 				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(response)));
@@ -59,6 +66,10 @@ public class ReadyToPlayPage extends Activity  implements ResponseDelegate, ImgR
 				Element mediaNameElement = (Element) mediaNameList.item(0);
 				mediaNameList = mediaNameElement.getChildNodes();
 				
+				NodeList mediaIDList = ((Element)mediaNode).getElementsByTagName("media_id");
+				Element mediaIDElement = (Element) mediaIDList.item(0);
+				mediaIDList = mediaIDElement.getChildNodes();
+				
 				NodeList mediaLegalList = ((Element)mediaNode).getElementsByTagName("media_legal");
 				Element mediaLegalElement = (Element) mediaLegalList.item(0);
 				mediaLegalList = mediaLegalElement.getChildNodes();
@@ -67,32 +78,50 @@ public class ReadyToPlayPage extends Activity  implements ResponseDelegate, ImgR
 				Element questionElement = (Element) questionList.item(0);
 				questionList = questionElement.getChildNodes();
 				
+				NodeList mediaEtailerList = ((Element)mediaNode).getElementsByTagName("media_etailer");
+				Element mediaEtailerElement = (Element) mediaEtailerList.item(0);
+				mediaEtailerList = mediaEtailerElement.getChildNodes();
+				
+				NodeList anwsersList = ((Element)mediaNode).getElementsByTagName("choice_value");
+				Element anwsersElement0 = (Element) anwsersList.item(0);
+				Element anwsersElement1 = (Element) anwsersList.item(1);
+				Element anwsersElement2 = (Element) anwsersList.item(2);
+				Element anwsersElement3 = (Element) anwsersList.item(3);
+				NodeList anwsersList0 = anwsersElement0.getChildNodes();
+				NodeList anwsersList1 = anwsersElement1.getChildNodes();
+				NodeList anwsersList2 = anwsersElement2.getChildNodes();
+				NodeList anwsersList3 = anwsersElement3.getChildNodes();
+				anwsers[i][0] = ((Node) anwsersList0.item(0)).getNodeValue();
+				anwsers[i][1] = ((Node) anwsersList1.item(0)).getNodeValue();
+				anwsers[i][2] = ((Node) anwsersList2.item(0)).getNodeValue();
+				anwsers[i][3] = ((Node) anwsersList3.item(0)).getNodeValue();
+				
+				mediaEtailers[i] = ((Node) mediaEtailerList.item(0)).getNodeValue();
 				questions[i] = ((Node) questionList.item(0)).getNodeValue();
+				mediaURLs[i] = ((Node) mediaUrlList.item(0)).getNodeValue();
+				mediaLegals[i] = ((Node) mediaLegalList.item(0)).getNodeValue();
+				mediaNames[i] = ((Node) mediaNameList.item(0)).getNodeValue();
+				mediaIDs[i] = ((Node) mediaIDList.item(0)).getNodeValue();
+				
+				System.out.println("movie question "+i+": "+questions[i]);
 			}
 			
-//			TextView userName_txt = (TextView)findViewById(R.id.userName_txt); 
-//			userName_txt.setText(((Node) userFnameList.item(0)).getNodeValue() + " " + ((Node) userLnameList.item(0)).getNodeValue());
-//			
-//			TextView userID_txt = (TextView)findViewById(R.id.userID_txt); 
-//			userID_txt.setText(((Node) userIDList.item(0)).getNodeValue());
-//			
-//			TextView userScore_txt = (TextView)findViewById(R.id.userScore_txt); 
-//			userScore_txt.setText(((Node) userScoreList.item(0)).getNodeValue());
 			
-			// get img from URL using another thread
-//			ImgRequestHandler irh = new ImgRequestHandler();
-//			irh.delegate = this;
-//			irh.setURL(((Node) userThumbnailList.item(0)).getNodeValue());
-//			irh.execute();       
+			//set properties for model
+			TempModel.setQuestion(questions);
+			TempModel.setAnswers(anwsers);
+			TempModel.setMediaEtailers(mediaEtailers);
+			TempModel.setMediaURLs(mediaURLs);
+			TempModel.setMediaLegals(mediaURLs);
+			TempModel.setMediaNames(mediaNames);
+			TempModel.setMediaIDs(mediaIDs);
+			
+			Intent intent = new Intent();
+			intent.setClass(ReadyToPlayPage.this, GamePlayPage.class);
+			ReadyToPlayPage.this.startActivity(intent);   
 			
 		} catch (Exception e) {
 			Log.d("debug", "Exception");
 		}
-	}
-
-	@Override
-	public void imgLoaded(Bitmap bitmap, int id) {
-		// TODO Auto-generated method stub
-		
 	}
 }

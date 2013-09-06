@@ -1,43 +1,77 @@
 package com.example.movieslam_android_dev.models;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class TempModel {
-	public static String[] _urls= { 
-									"http://screenslam.foxfilm.com/image/fightclub_still4_ipad.jpg",
-									"http://screenslam.foxfilm.com/image/xfiles_still3_ipad.jpg",
-									"http://screenslam.foxfilm.com/video/big_clip2_ipad.mp4",
-									"http://screenslam.foxfilm.com/video/cleopatra_clip6_ipad.mp4", 
-								    "http://screenslam.foxfilm.com/video/kingdomofheaven_clip2_ipad.mp4",
-								   };
 	
-	public static String[][] _answers= {
-										{"Fight Club","The Descendants","The X-Files: Fight The Future","The Last King of Scotland"},
-										{"Gillian Anderson","John Hurt","Tom Wilkinson","Allison Janney"},
-										{"Big","Me, Myself &amp; Irene","A Walk In The Clouds","Live Free or Die Hard"},
-										{"Cleopatra","Wrong Turn 2: Dead End","Big","From Hell"},
-										{"Eva Green","Yul Brynner","Jason Bateman","Shirley Maclaine"}
-		};
-	
-	public static String[] getAnswers(){
-		return _answers[index];
+	public static void setMediaURLs(String[] s){
+		_mediaURLs = s;
 	}
 	
-	public static String[] _questions= {
-		"name","actor","name","name","actor" 
-	   };
+	public static String[] _mediaURLs;
+	
+	public static String getMediaURLs(){
+		return "http://screenslam.foxfilm.com/" + _mediaURLs[index];
+	}
+	
+	public static void setMediaLegals(String[] s){
+		_mediaLegals = s;
+	}
+	
+	public static String[] _mediaLegals;
+	
+	public static String getMediaLegals(){
+		return _mediaLegals[index];
+	}
+	
+	public static void setMediaNames(String[] s){
+		_mediaNames = s;
+	}
+	
+	public static String[] _mediaNames;
+	
+	public static String getMediaNames(){
+		return _mediaNames[index];
+	}
+	
+	public static void setMediaIDs(String[] s){
+		_mediaIDs = s;
+	}
+	
+	public static String[] _mediaIDs;
+	
+	public static String getMediaIDs(){
+		return _mediaIDs[index];
+	}
+	
+	public static void setAnswers(String[][] s){
+		_answers = s;
+	}
+	
+	public static String[][] _answers;
+	
+	public static String[][] getAnswers(){
+		return _answers;
+	}
+	
+	
+	public static void setQuestion(String[] s){
+		_questions = s;
+	}
+	
+	public static String[] _questions;
 	
 	public static String getQuestion(){
 		return _questions[index];
 	}
 	
-	public static int index = 0;
-	
-	public static String getURL()
-	{
-		System.out.println("-----OUR INDEX------: "+index);
-		return _urls[index];
+	public static void setMediaEtailers(String[] s) {
+		_mediaEtailers = s;
 	}
-
+	
+	public static String[] _mediaEtailers;
+	
+	public static String[] getMediaEtailers() {
+		return _mediaEtailers;
+	}
+	
+	public static int index = 0;
 }
