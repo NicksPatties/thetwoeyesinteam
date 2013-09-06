@@ -42,6 +42,7 @@ android:layout_marginTop="10dp" >
 
 					<ImageView					
 					android:id="@+id/challenge_player_tn"
+					android:adjustViewBounds="true"
 					android:layout_width="fill_parent"
 					android:layout_height="0dp"
 					android:layout_weight="10"
