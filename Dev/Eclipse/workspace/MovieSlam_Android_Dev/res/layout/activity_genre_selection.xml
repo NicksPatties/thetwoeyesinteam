@@ -16,7 +16,7 @@
 	android:adjustViewBounds="true"
 	android:layout_width="wrap_content"
 	android:layout_height="match_parent"
-	android:src="@drawable/bg_select_genre" >
+	android:src="@drawable/bg" >
 	</ImageView>
 	
 	<LinearLayout
@@ -28,10 +28,9 @@
 	
 	    
 	    <ScrollView
-	    android:layout_marginTop="250dp"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-           	
+        android:layout_height="fill_parent">    
+            	
 	    <LinearLayout
 	    android:id="@+id/challenges_container"
         android:layout_width="fill_parent"
@@ -40,7 +39,15 @@
 		android:paddingRight="100dp"
         android:orientation="vertical">
         
-	        
+	        <ImageView
+			android:scaleType="centerCrop"
+			android:adjustViewBounds="true"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:src="@drawable/genre_logo_and_copy"
+			android:layout_marginTop="30dp" 
+			android:layout_marginBottom="30dp"  >
+			</ImageView>
         	
 	        <Button
 		   	android:id="@+id/btn_splash"
@@ -54,7 +61,7 @@
 	   	    android:textSize="30sp"
 	   	    android:textStyle="bold"
 	   	    android:onClick="gotoGamePlayPage"
-	   	    android:layout_marginBottom="30dp" />
+	   	    android:layout_marginBottom="35dp" />
 	        
 	        <Button
 		   	android:id="@+id/btn_splash"
@@ -68,7 +75,7 @@
 	   	    android:textSize="30sp"
 	   	    android:textStyle="bold"
 	   	    android:onClick="gotoGamePlayPage"
-	   	    android:layout_marginBottom="30dp" />
+	   	    android:layout_marginBottom="35dp" />
 	        
 	        <Button
 		   	android:id="@+id/btn_splash"
@@ -82,7 +89,7 @@
 	   	    android:textSize="30sp"
 	   	    android:textStyle="bold"
 	   	    android:onClick="gotoGamePlayPage"
-	   	    android:layout_marginBottom="30dp" />
+	   	    android:layout_marginBottom="35dp" />
 	        
 	        <Button
 		   	android:id="@+id/btn_splash"
@@ -96,7 +103,7 @@
 	   	    android:textSize="30sp"
 	   	    android:textStyle="bold"
 	   	    android:onClick="gotoGamePlayPage"
-	   	    android:layout_marginBottom="30dp" />
+	   	    android:layout_marginBottom="35dp" />
 	        
 	        <Button
 		   	android:id="@+id/btn_splash"
@@ -110,7 +117,7 @@
 	   	    android:textSize="30sp"
 	   	    android:textStyle="bold"
 	   	    android:onClick="gotoGamePlayPage"
-	   	    android:layout_marginBottom="30dp" />
+	   	    android:layout_marginBottom="35dp" />
 	        
 	        <Button
 		   	android:id="@+id/btn_splash"
@@ -124,7 +131,7 @@
 	   	    android:textSize="30sp"
 	   	    android:textStyle="bold"
 	   	    android:onClick="gotoGamePlayPage"
-	   	    android:layout_marginBottom="30dp" />
+	   	    android:layout_marginBottom="35dp" />
 	        
 	        <Button
 		   	android:id="@+id/btn_splash"
@@ -138,7 +145,7 @@
 	   	    android:textSize="30sp"
 	   	    android:textStyle="bold"
 	   	    android:onClick="gotoGamePlayPage"
-	   	    android:layout_marginBottom="30dp" />
+	   	    android:layout_marginBottom="35dp" />
 	        	
 		</LinearLayout>
         	
