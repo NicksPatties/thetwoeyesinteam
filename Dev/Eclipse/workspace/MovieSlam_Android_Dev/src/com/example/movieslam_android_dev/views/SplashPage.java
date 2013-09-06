@@ -12,19 +12,16 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.movieslam_android_dev.R;
@@ -37,11 +34,19 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
+        // call backend
         XmlRequestHandler xrh = new XmlRequestHandler();
         xrh.delegate = this;
-        // hardcode api to test
 		xrh.setURL("http://postpcmarketing.com/movieslam/intl/it/service/getGameInfo.php?user_id=0&fid=100000855108534");
 		xrh.execute();
+		
+		
+		// init layout inflater
+		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		// add table content
+		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
+		user_panel.addView(layoutInflater.inflate(R.layout.user_main_board, user_panel, false));
 	}
 	
 	public void gotoHelp(View view){		
@@ -131,58 +136,21 @@ public class SplashPage extends Activity implements ResponseDelegate, ImgRequest
 			irh.execute();
 			
 			
-			ImgRequestHandler play_iv1 = new ImgRequestHandler();
-			play_iv1.delegate = this;
-			play_iv1.init("http://graph.facebook.com/639473268/picture?type=large", R.id.playerThumbnail1_iv);
-			play_iv1.execute();
-			
-			
-			ImgRequestHandler play_iv2 = new ImgRequestHandler();
-			play_iv2.delegate = this;
-			play_iv2.init("http://screenslam.foxfilm.com/include/images/avatar.png", R.id.playerThumbnail2_iv);
-			play_iv2.execute();
-			
-			ImgRequestHandler play_iv3 = new ImgRequestHandler();
-			play_iv3.delegate = this;
-			play_iv3.init("http://graph.facebook.com/1185978290/picture?type=large", R.id.playerThumbnail3_iv);
-			play_iv3.execute();
-			
-			ImgRequestHandler play_iv4 = new ImgRequestHandler();
-			play_iv4.delegate = this;
-			play_iv4.init("http://graph.facebook.com/100000659852503/picture?type=large", R.id.playerThumbnail4_iv);
-			play_iv4.execute();
-			
-			/*
-			// generate challenge boxes
-			LinearLayout challenges_container = (LinearLayout) findViewById(R.id.challenges_container);
-			for(int i = 0; i < 10; i++) {
+			// parse player challenges
+			LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
+			for (int i = 0; i < 8; i++){
+				View player_challenge_cell = layoutInflater.inflate(R.layout.player_challenge_cell, score_table, false);
+				score_table.addView(player_challenge_cell);
+				ImgRequestHandler challenge_player_tn = new ImgRequestHandler();
+				challenge_player_tn.delegate = this;
+				ImageView player_iv = (ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn);
+				challenge_player_tn.init("http://graph.facebook.com/639473268/picture?type=large", player_iv.getId());
+				challenge_player_tn.execute();
 				
-				
-				ImageView challenge_box_bg = new ImageView(this);
-				challenge_box_bg.setImageResource(R.drawable.panel_challengeboard_inactive);
-				challenge_box_bg.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-				challenge_box_bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-				challenge_box_bg.setAdjustViewBounds(true);
-				challenge_box_bg.setPadding(15, 30, 15, 0);
-				
-				
-				Button accept_btn = new Button(this);
-				accept_btn.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-				accept_btn.setText("Accept");				
-				accept_btn.setTextColor(Color.parseColor("#FFFFFF"));
-				accept_btn.setHeight(10);
-				accept_btn.setWidth(10);
-				accept_btn.setBackgroundResource(R.drawable.button_bg);
-				
-				RelativeLayout challenge_box = new RelativeLayout(this);
-				challenge_box.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-				
-				challenge_box.addView(challenge_box_bg);
-				challenge_box.addView(accept_btn);
-				
-	            challenges_container.addView(challenge_box);
-	            
-	        }*/
+				TextView player_name_txt = (TextView) player_challenge_cell.findViewById(R.id.player_name_txt);
+				player_name_txt.setText("Osk Osk"+i);
+			}
 			
 		} catch (Exception e) {
 			Log.d("debug", "Exception");
