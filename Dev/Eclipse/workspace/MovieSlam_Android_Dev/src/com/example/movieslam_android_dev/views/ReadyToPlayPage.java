@@ -21,13 +21,32 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ReadyToPlayPage extends Activity  implements ResponseDelegate{
+public class ReadyToPlayPage extends Activity implements ResponseDelegate{
 
+	private Thread thread;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
- 
+        
+        thread=  new Thread(){
+            @Override
+            public void run(){
+                try {
+                    synchronized(this){
+                        wait(1000);
+                        Intent intent = new Intent();
+            			intent.setClass(ReadyToPlayPage.this, GamePlayPage.class);
+            			ReadyToPlayPage.this.startActivity(intent);
+                    }
+                }
+                catch(InterruptedException ex){                    
+                }
+
+                // TODO              
+            }
+        };
+
         XmlRequestHandler xrh = new XmlRequestHandler(this);
         xrh.delegate = this;
         // hardcode api to test
@@ -116,9 +135,7 @@ public class ReadyToPlayPage extends Activity  implements ResponseDelegate{
 			TempModel.setMediaNames(mediaNames);
 			TempModel.setMediaIDs(mediaIDs);
 			
-			Intent intent = new Intent();
-			intent.setClass(ReadyToPlayPage.this, GamePlayPage.class);
-			ReadyToPlayPage.this.startActivity(intent);   
+			thread.start();
 			
 		} catch (Exception e) {
 			Log.d("debug", "Exception");

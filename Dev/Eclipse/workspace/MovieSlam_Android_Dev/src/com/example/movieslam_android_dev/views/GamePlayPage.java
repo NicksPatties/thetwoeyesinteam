@@ -12,7 +12,7 @@ import com.example.movieslam_android_dev.R.id;
 import com.example.movieslam_android_dev.R.layout;
 import com.example.movieslam_android_dev.models.TempModel;
 import com.example.movieslam_android_dev.tools.DownloadImageTask;
-import com.example.movieslam_android_dev.views.component.Player;
+import com.example.movieslam_android_dev.views.component.MoviePlayer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -40,7 +40,7 @@ public class GamePlayPage extends Activity {
 	private TextView textview;
 //	private Button btn1, btn2, btn3, btn4;
 	private ProgressBar progressBar;
-	private Player player;
+	private MoviePlayer player;
 	private String[] rightAnswers = new String[5];
 	private String[] buttonLabels = new String[4];
 	private Button[] buttons = new Button[4];
@@ -197,7 +197,7 @@ public class GamePlayPage extends Activity {
 		if (parseAsIPadURL(s) != ""){
 			surfaceView.setVisibility(View.VISIBLE);
 			imageView.setVisibility(View.INVISIBLE);
-			player = new Player(surfaceView, progressBar, this);
+			player = new MoviePlayer(surfaceView, progressBar, this);
 		}else{
 			surfaceView.setVisibility(View.INVISIBLE);
 			imageView.setVisibility(View.VISIBLE);
@@ -220,9 +220,11 @@ public class GamePlayPage extends Activity {
 	
 	private void nextMedia(){
 		TempModel.index = TempModel.index+1;
-		Intent intent = new Intent();
-		intent.setClass(GamePlayPage.this, GamePlayPage.class);
-		GamePlayPage.this.startActivity(intent);
+		if (TempModel.index >= 5){
+			startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
+		}else{
+			startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+		}
 	}
 	
 	@Override

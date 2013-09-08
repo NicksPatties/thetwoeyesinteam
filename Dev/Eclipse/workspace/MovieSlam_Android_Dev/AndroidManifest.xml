@@ -29,12 +29,18 @@
         </activity>
         <activity
             android:name="com.example.movieslam_android_dev.views.ReadyToPlayPage"
-            android:label="@string/page2"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.movieslam_android_dev.views.GamePlayPage"
-            android:label="@string/page3"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.movieslam_android_dev.views.InterstitialPage"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.movieslam_android_dev.views.ResultPage"
             android:screenOrientation="portrait" >
         </activity>
         <activity

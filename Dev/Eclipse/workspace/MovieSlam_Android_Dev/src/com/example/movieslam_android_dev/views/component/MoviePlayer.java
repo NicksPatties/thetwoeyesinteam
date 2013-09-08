@@ -20,7 +20,7 @@ import android.view.SurfaceView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 
-public class Player implements OnBufferingUpdateListener,
+public class MoviePlayer implements OnBufferingUpdateListener,
 		OnCompletionListener, MediaPlayer.OnPreparedListener,
 		SurfaceHolder.Callback {
 	private int videoWidth;
@@ -32,7 +32,7 @@ public class Player implements OnBufferingUpdateListener,
 	private String _url;
 	private GamePlayPage _gp;
 	
-	public Player(SurfaceView surfaceView,ProgressBar progressBar, GamePlayPage gamePlayPage)
+	public MoviePlayer(SurfaceView surfaceView,ProgressBar progressBar, GamePlayPage gamePlayPage)
 	{
 		_gp = gamePlayPage;
 		this.progressBar=progressBar;
