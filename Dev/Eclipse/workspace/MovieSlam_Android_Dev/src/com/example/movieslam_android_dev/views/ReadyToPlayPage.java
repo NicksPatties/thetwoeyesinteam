@@ -46,12 +46,8 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate{
                 // TODO              
             }
         };
-
-        XmlRequestHandler xrh = new XmlRequestHandler(this);
-        xrh.delegate = this;
-        // hardcode api to test
-		xrh.setURL("http://screenslam.foxfilm.com/service/getMedia.php?&type=drama&user_id=8");
-		xrh.execute();
+		
+		new XmlRequestHandler(this,"http://screenslam.foxfilm.com/service/getMedia.php?&type=drama&user_id=8").execute();
         
 	}
 

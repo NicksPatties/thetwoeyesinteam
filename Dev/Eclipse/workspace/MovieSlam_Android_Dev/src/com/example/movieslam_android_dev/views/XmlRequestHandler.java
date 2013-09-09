@@ -22,12 +22,6 @@ class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
 	private String _xmlData;
 	private ProgressDialog progress;
 	
-	public XmlRequestHandler(Context cxt) {
-		progress = ProgressDialog.show(cxt, "Loading", "Please wait...", true);
-		delegate = (ResponseDelegate) cxt;
-	}
-
-
     public XmlRequestHandler(Context cxt, String url) {
     	progress = ProgressDialog.show(cxt, "Loading", "Please wait...", true);
 		delegate = (ResponseDelegate) cxt;
@@ -59,10 +53,6 @@ class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
     protected void onPostExecute(Object obj) {
     	delegate.responseLoaded(_xmlData);
     	progress.dismiss();  	
-    }
-    
-    protected void setURL(String url){
-    	_url = url;
     }
 
  }
