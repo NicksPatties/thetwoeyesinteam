@@ -20,7 +20,7 @@ public class GenreSelection extends Activity {
 	
 	public void gotoGamePlayPage(View view){		
 		
-		startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
 
 	@Override

@@ -24,10 +24,18 @@ class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
 	
 	public XmlRequestHandler(Context cxt) {
 		progress = ProgressDialog.show(cxt, "Loading", "Please wait...", true);
+		delegate = (ResponseDelegate) cxt;
 	}
 
 
-    protected Void doInBackground(Object... params) {
+    public XmlRequestHandler(Context cxt, String url) {
+    	progress = ProgressDialog.show(cxt, "Loading", "Please wait...", true);
+		delegate = (ResponseDelegate) cxt;
+		_url = url;
+	}
+
+
+	protected Void doInBackground(Object... params) {
 
     	HttpClient hc = new DefaultHttpClient();
     	HttpPost hp = new HttpPost(_url);
