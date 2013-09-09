@@ -275,6 +275,7 @@ public class GamePlayPage extends Activity {
 				starses[rightAnswerPointer].setVisibility(View.VISIBLE);
 				starsAnimation[rightAnswerPointer].setOneShot(true);
 				starsAnimation[rightAnswerPointer].start();
+				buttons[rightAnswerPointer].setBackgroundResource(R.drawable.button_orange);
 				audioPlayer(1);//correct answer sound
 				if(player!=null){
 					int position = player.mediaPlayer.getCurrentPosition();
@@ -288,6 +289,7 @@ public class GamePlayPage extends Activity {
 				}
 				System.out.println("--------------The SCORE you got for this question: "+ score);
 			}else{
+				buttons[rightAnswerPointer].setBackgroundResource(R.drawable.button_orange);
 				crosses[findIndex(arg0)].setVisibility(View.VISIBLE);
 				audioPlayer(0);//incorrect answer sound
 				score = 10;

@@ -35,12 +35,12 @@ public class SplashPage extends Activity implements ResponseDelegate{
         setContentView(R.layout.activity_main);
         
         // call backend
-        getGameinfo();
+//        getGameinfo();
 				
 		// add table content
-		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
-		user_panel.addView(layoutInflater.inflate(R.layout.user_main_board, user_panel, false));
+//		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
+//		user_panel.addView(layoutInflater.inflate(R.layout.user_main_board, user_panel, false));
 	}
 	
 	private void getGameinfo() {
@@ -64,8 +64,8 @@ public class SplashPage extends Activity implements ResponseDelegate{
 	public void gotoNewChallenge(View view){		
 		
 //		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
-		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
-//		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
+//		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
+		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
 	
 	public void gotoRefresh(View view){		
