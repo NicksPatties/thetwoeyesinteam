@@ -1,4 +1,4 @@
-package com.example.movieslam_android_dev.views;
+package com.example.movieslam_android_dev.tools;
 
 public interface ResponseDelegate {
 	void responseLoaded(String response);

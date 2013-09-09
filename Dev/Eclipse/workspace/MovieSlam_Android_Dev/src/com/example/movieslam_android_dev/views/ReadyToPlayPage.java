@@ -12,6 +12,8 @@ import org.xml.sax.InputSource;
 
 import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.models.TempModel;
+import com.example.movieslam_android_dev.tools.ResponseDelegate;
+import com.example.movieslam_android_dev.tools.XmlRequestHandler;
 
 import android.app.Activity;
 import android.content.Intent;

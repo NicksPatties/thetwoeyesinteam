@@ -1,4 +1,4 @@
-package com.example.movieslam_android_dev.views;
+package com.example.movieslam_android_dev.tools;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
+public class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
 	
 	public ResponseDelegate delegate = null;
 	private String _url;

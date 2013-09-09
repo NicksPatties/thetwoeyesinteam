@@ -1,16 +1,10 @@
 package com.example.movieslam_android_dev.views;
 
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,21 +13,45 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
+import com.example.movieslam_android_dev.tools.AdvElement;
 import com.example.movieslam_android_dev.tools.DownloadImageTask;
+import com.example.movieslam_android_dev.tools.ResponseDelegate;
+import com.example.movieslam_android_dev.tools.XmlRequestHandler;
 
 public class SplashPage extends Activity implements ResponseDelegate{
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
 	
+
+	private static final String BASE_URL = "http://postpcmarketing.com/movieslam/intl/it";
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
-        // call backend
-        getGameinfo();
+        SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
+		Editor user_info_edit = user_info.edit();
+		user_info_edit.clear();
+		user_info_edit.putString("uid", "3");
+		user_info_edit.commit();
+		
+		
+        // check saved user id, create new user if user not existed
+        String uid = getUIDFromDevice();
+        if (uid != null){
+        	// check for fb connect first!!!!!!!!!!!!
+        	getGameinfo(uid, "0");
+        	Log.d("debug", "user existed");
+        }else{
+        	// check for fb connect first!!!!!!!!!!!!
+        	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
+        	Log.d("debug", "user not existed");
+        }
+        
 				
 		// add main board content
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -41,17 +59,30 @@ public class SplashPage extends Activity implements ResponseDelegate{
 		user_panel.addView(layoutInflater.inflate(R.layout.user_main_board, user_panel, false));
 	}
 	
-	private void getGameinfo() {
+	private String getUIDFromDevice() {
+		
+		SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
+		if (user_info.contains("uid") && user_info.getString("uid", "") != ""){
+			return user_info.getString("uid", "");
+		}else{
+			return null;
+		}
+		
+	}
+
+	private void getGameinfo(String uid, String fid) {
 		
 		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
 		score_table.removeAllViews();
-		/*
-		XmlRequestHandler xrh = new XmlRequestHandler(this);
-        xrh.delegate = this;
-		xrh.setURL("http://postpcmarketing.com/movieslam/intl/it/service/getGameInfo.php?user_id=0&fid=100000855108534");
-		xrh.execute();
-		*/
-		new XmlRequestHandler(this,"http://postpcmarketing.com/movieslam/intl/it/service/getGameInfo.php?user_id=0&fid=100000855108534").execute();
+		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid="+fid).execute();
+	}
+	
+	private void getGameinfo(String uid, String fid, String fname, String lname, String thumbnail) {
+		
+		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
+		score_table.removeAllViews();
+		new XmlRequestHandler(this, BASE_URL+"service/getGameInfo.php?user_id="+uid+"&fid="+fid+"&fname="+fname+"&lname="+lname+"&thumbnail="+thumbnail).execute();
+		
 	}
 
 	public void gotoHelp(View view){
@@ -59,15 +90,15 @@ public class SplashPage extends Activity implements ResponseDelegate{
 		startActivity(new Intent(getApplicationContext(), HelpInfo.class));
 	}
 	
-	public void gotoNewChallenge(View view){		
+	public void gotoNewChallenge(View view){
 		
-//		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
 		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
 //		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
 	
-	public void gotoRefresh(View view){		
-		getGameinfo();
+	public void gotoRefresh(View view){
+		String uid = getUIDFromDevice();
+		getGameinfo(uid, "0");
 	}
 	
 	@Override
@@ -75,14 +106,26 @@ public class SplashPage extends Activity implements ResponseDelegate{
 		// init root element
 		AdvElement doc = new AdvElement(response);
 		
+		
+		
 		// parse user main board
 		AdvElement user_e = doc.getElement("user");
 		
 		TextView userName_txt = (TextView)findViewById(R.id.userName_txt);
 		userName_txt.setText(user_e.getValue("user_fname") + " " + user_e.getValue("user_lname"));
 		
-		TextView userID_txt = (TextView)findViewById(R.id.userID_txt); 
-		userID_txt.setText(user_e.getValue("user_id"));
+		TextView userID_txt = (TextView)findViewById(R.id.userID_txt);
+		String uid = user_e.getValue("user_id");				
+		userID_txt.setText(uid);
+		if (this.getUIDFromDevice() != uid){
+			SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
+			Editor user_info_edit = user_info.edit();
+			user_info_edit.clear();
+			user_info_edit.putString("uid", uid);
+			user_info_edit.commit();
+			Toast.makeText(this, "uid saved", 2000).show();
+		}
+		
 		
 		TextView userScore_txt = (TextView)findViewById(R.id.userScore_txt); 
 		userScore_txt.setText(user_e.getValue("user_score"));

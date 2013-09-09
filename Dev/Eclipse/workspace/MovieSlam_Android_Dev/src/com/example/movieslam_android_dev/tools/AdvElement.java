@@ -1,4 +1,4 @@
-package com.example.movieslam_android_dev.views;
+package com.example.movieslam_android_dev.tools;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -10,7 +10,6 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import android.util.Log;
 
 public class AdvElement {
 	private Document _document = null;
