@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,16 +39,19 @@ public class GamePlayPage extends Activity {
 	private SurfaceView surfaceView;
 	private ImageView imageView;
 	private TextView textview;
-//	private Button btn1, btn2, btn3, btn4;
 	private ProgressBar progressBar;
 	private MoviePlayer player;
 	private String[] rightAnswers = new String[5];
 	private String[] buttonLabels = new String[4];
 	private Button[] buttons = new Button[4];
+	private ImageView[] crosses = new ImageView[4];
+	private ImageView[] starses = new ImageView[4];
+	private AnimationDrawable[] starsAnimation = new AnimationDrawable[4];
 	private int timer = 0;
 	private int rightAnswerPointer = 0;
 	
 	private Thread thread;
+	private Thread movieThread;
 	private int score;
 
 	/** Called when the activity is first created. */
@@ -64,6 +68,18 @@ public class GamePlayPage extends Activity {
 		buttons[1] = (Button) this.findViewById(R.id.btn2);
 		buttons[2] = (Button) this.findViewById(R.id.btn3);
 		buttons[3] = (Button) this.findViewById(R.id.btn4);
+		crosses[0] = (ImageView) this.findViewById(R.id.cross1);
+		crosses[1] = (ImageView) this.findViewById(R.id.cross2);
+		crosses[2] = (ImageView) this.findViewById(R.id.cross3);
+		crosses[3] = (ImageView) this.findViewById(R.id.cross4);
+		starses[0] = (ImageView) this.findViewById(R.id.stars1);
+		starses[1] = (ImageView) this.findViewById(R.id.stars2);
+		starses[2] = (ImageView) this.findViewById(R.id.stars3);
+		starses[3] = (ImageView) this.findViewById(R.id.stars4);
+		starsAnimation[0] = (AnimationDrawable) starses[0].getDrawable();
+		starsAnimation[1] = (AnimationDrawable) starses[1].getDrawable();
+		starsAnimation[2] = (AnimationDrawable) starses[2].getDrawable();
+		starsAnimation[3] = (AnimationDrawable) starses[3].getDrawable();
 
 		initAssets();
 	}
@@ -223,7 +239,21 @@ public class GamePlayPage extends Activity {
 		if (TempModel.index >= 5){
 			startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
 		}else{
-			startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+			movieThread=  new Thread(){
+	            @Override
+	            public void run(){
+	                try {
+	                    synchronized(this){
+	                        wait(3000);
+	                        startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+	                    }
+	                }
+	                catch(InterruptedException ex){                    
+	                }
+	            }
+	        };
+	        movieThread.start();
+//			startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
 		}
 	}
 	
@@ -242,6 +272,9 @@ public class GamePlayPage extends Activity {
 		public void onClick(View arg0) {
 			if (findIndex(arg0) == rightAnswerPointer)
 			{
+				starses[rightAnswerPointer].setVisibility(View.VISIBLE);
+				starsAnimation[rightAnswerPointer].setOneShot(true);
+				starsAnimation[rightAnswerPointer].start();
 				audioPlayer(1);//correct answer sound
 				if(player!=null){
 					int position = player.mediaPlayer.getCurrentPosition();
@@ -255,6 +288,7 @@ public class GamePlayPage extends Activity {
 				}
 				System.out.println("--------------The SCORE you got for this question: "+ score);
 			}else{
+				crosses[findIndex(arg0)].setVisibility(View.VISIBLE);
 				audioPlayer(0);//incorrect answer sound
 				score = 10;
 			}
@@ -278,31 +312,5 @@ public class GamePlayPage extends Activity {
 			return 0;
 		}
 	}
-	
-	
-
-	class SeekBarChangeEvent implements SeekBar.OnSeekBarChangeListener {
-		int progress;
-
-		@Override
-		public void onProgressChanged(SeekBar seekBar, int progress,
-				boolean fromUser) {
-			// (progress/seekBar.getMax())*player.mediaPlayer.getDuration()
-			this.progress = progress * player.mediaPlayer.getDuration()
-					/ seekBar.getMax();
-		}
-
-		@Override
-		public void onStartTrackingTouch(SeekBar seekBar) {
-
-		}
-
-		@Override
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			// seekTo()
-//			player.mediaPlayer.seekTo(progress);
-		}
-	}
-
 
 }

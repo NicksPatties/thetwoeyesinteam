@@ -60,64 +60,214 @@
 		    android:textColor="@android:color/black"
 		    android:layout_gravity="center_horizontal"/>
 
-	    <Button
-	        android:id="@+id/btn1"
+	<FrameLayout
+        android:layout_width="fill_parent"
+		android:layout_height="60dp">
+	       
+		<Button
+			    android:id="@+id/btn1"
+			    android:layout_width="fill_parent"
+		        android:layout_height="40dp"
+		        android:background="@drawable/button_bg"
+		        android:layout_marginLeft="20dp"
+			    android:layout_marginRight="20dp"
+			    android:layout_marginTop="15dp"
+			    android:layout_marginBottom="15dp"
+			    android:textColor="@android:color/white"
+		    	android:textSize="15sp"
+		    	android:textStyle="bold"
+		        android:layout_gravity="center_horizontal"
+		        android:text="Test Button"
+			    android:onClick="onClick" /> 
+	        
+	    <ImageView
+	        android:id="@+id/cross1"
 	        android:layout_width="fill_parent"
-	        android:layout_height="40dp"
-	        android:background="@drawable/button_bg"
-	        android:layout_marginLeft="20dp"
-		    android:layout_marginRight="20dp"
-		    android:layout_marginBottom="5dp"
-		    android:textColor="@android:color/white"
-	    	android:textSize="15sp"
-	    	android:textStyle="bold"
-	        android:layout_gravity="center_horizontal"
-	        android:text="@string/Q1A1" />
+	        android:layout_height="fill_parent"
+	        android:layout_gravity="center"
+	        android:visibility="gone"
+	        android:src="@drawable/wrong"/>
+	    
+	    <ImageView
+	        android:id="@+id/stars1"
+	        android:layout_width="150dp"
+	        android:layout_height="80dp"
+	        android:layout_gravity="center"
+	        android:visibility="gone"
+	        android:src="@drawable/starsanimation"/>
+    
+	</FrameLayout>
+	<FrameLayout
+        android:layout_width="fill_parent"
+		android:layout_height="60dp">
+	       
+		<Button
+			    android:id="@+id/btn2"
+			    android:layout_width="fill_parent"
+		        android:layout_height="40dp"
+		        android:background="@drawable/button_bg"
+		        android:layout_marginLeft="20dp"
+			    android:layout_marginRight="20dp"
+			    android:layout_marginTop="15dp"
+			    android:layout_marginBottom="15dp"
+			    android:textColor="@android:color/white"
+		    	android:textSize="15sp"
+		    	android:textStyle="bold"
+		        android:layout_gravity="center_horizontal"
+		        android:text="Test Button"
+			    android:onClick="onClick" /> 
+	        
+	    <ImageView
+	        android:id="@+id/cross2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_gravity="center"
+	        android:visibility="gone"
+	        android:src="@drawable/wrong"/>
+	    
+	    <ImageView
+	        android:id="@+id/stars2"
+	        android:layout_width="150dp"
+	        android:layout_height="80dp"
+	        android:layout_gravity="center"
+	        android:visibility="gone"
+	        android:src="@drawable/starsanimation"/>
+    
+	</FrameLayout>
+	<FrameLayout
+        android:layout_width="fill_parent"
+		android:layout_height="60dp">
+	       
+		<Button
+			    android:id="@+id/btn3"
+			    android:layout_width="fill_parent"
+		        android:layout_height="40dp"
+		        android:background="@drawable/button_bg"
+		        android:layout_marginLeft="20dp"
+			    android:layout_marginRight="20dp"
+			    android:layout_marginTop="15dp"
+			    android:layout_marginBottom="15dp"
+			    android:textColor="@android:color/white"
+		    	android:textSize="15sp"
+		    	android:textStyle="bold"
+		        android:layout_gravity="center_horizontal"
+		        android:text="Test Button"
+			    android:onClick="onClick" /> 
+	        
+	    <ImageView
+	        android:id="@+id/cross3"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_gravity="center"
+	        android:visibility="gone"
+	        android:src="@drawable/wrong"/>
+	    
+	    <ImageView
+	        android:id="@+id/stars3"
+	        android:layout_width="150dp"
+	        android:layout_height="80dp"
+	        android:layout_gravity="center"
+	        android:visibility="gone"
+	        android:src="@drawable/starsanimation"/>
+    
+	</FrameLayout>
+	<FrameLayout
+        android:layout_width="fill_parent"
+		android:layout_height="60dp">
+	       
+		<Button
+			    android:id="@+id/btn4"
+			    android:layout_width="fill_parent"
+		        android:layout_height="40dp"
+		        android:background="@drawable/button_bg"
+		        android:layout_marginLeft="20dp"
+			    android:layout_marginRight="20dp"
+			    android:layout_marginTop="15dp"
+			    android:layout_marginBottom="15dp"
+			    android:textColor="@android:color/white"
+		    	android:textSize="15sp"
+		    	android:textStyle="bold"
+		        android:layout_gravity="center_horizontal"
+		        android:text="Test Button"
+			    android:onClick="onClick" /> 
+	        
+	    <ImageView
+	        android:id="@+id/cross4"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_gravity="center"
+	        android:visibility="gone"
+	        android:src="@drawable/wrong"/>
+	    
+	    <ImageView
+	        android:id="@+id/stars4"
+	        android:layout_width="150dp"
+	        android:layout_height="80dp"
+	        android:layout_gravity="center"
+	        android:visibility="gone"
+	        android:src="@drawable/starsanimation"/>
+    
+	</FrameLayout>
+<!-- 	    <Button -->
+<!-- 	        android:id="@+id/btn1" -->
+<!-- 	        android:layout_width="fill_parent" -->
+<!-- 	        android:layout_height="40dp" -->
+<!-- 	        android:background="@drawable/button_bg" -->
+<!-- 	        android:layout_marginLeft="20dp" -->
+<!-- 		    android:layout_marginRight="20dp" -->
+<!-- 		    android:layout_marginBottom="5dp" -->
+<!-- 		    android:textColor="@android:color/white" -->
+<!-- 	    	android:textSize="15sp" -->
+<!-- 	    	android:textStyle="bold" -->
+<!-- 	        android:layout_gravity="center_horizontal" -->
+<!-- 	        android:text="@string/Q1A1" /> -->
 
-	    <Button
-	        android:id="@+id/btn2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="40dp"
-	        android:background="@drawable/button_bg"
-	        android:layout_marginLeft="20dp"
-		    android:layout_marginRight="20dp"
-		    android:layout_marginTop="5dp"
-		    android:layout_marginBottom="5dp"
-		    android:textColor="@android:color/white"
-	    	android:textSize="15sp"
-	    	android:textStyle="bold"
-	        android:layout_gravity="center_horizontal"
-	        android:text="@string/Q1A2" />
+<!-- 	    <Button -->
+<!-- 	        android:id="@+id/btn2" -->
+<!-- 	        android:layout_width="fill_parent" -->
+<!-- 	        android:layout_height="40dp" -->
+<!-- 	        android:background="@drawable/button_bg" -->
+<!-- 	        android:layout_marginLeft="20dp" -->
+<!-- 		    android:layout_marginRight="20dp" -->
+<!-- 		    android:layout_marginTop="5dp" -->
+<!-- 		    android:layout_marginBottom="5dp" -->
+<!-- 		    android:textColor="@android:color/white" -->
+<!-- 	    	android:textSize="15sp" -->
+<!-- 	    	android:textStyle="bold" -->
+<!-- 	        android:layout_gravity="center_horizontal" -->
+<!-- 	        android:text="@string/Q1A2" /> -->
 	
-	    <Button
-	        android:id="@+id/btn3"
-	        android:layout_width="fill_parent"
-	        android:layout_height="40dp"
-	        android:background="@drawable/button_bg"
-	        android:layout_marginLeft="20dp"
-		    android:layout_marginRight="20dp"
-		    android:layout_marginTop="5dp"
-		    android:layout_marginBottom="5dp"
-		    android:textColor="@android:color/white"
-	    	android:textSize="15sp"
-	    	android:textStyle="bold"
-	        android:layout_gravity="center_horizontal"
-	        android:text="@string/Q1A3" />
+<!-- 	    <Button -->
+<!-- 	        android:id="@+id/btn3" -->
+<!-- 	        android:layout_width="fill_parent" -->
+<!-- 	        android:layout_height="40dp" -->
+<!-- 	        android:background="@drawable/button_bg" -->
+<!-- 	        android:layout_marginLeft="20dp" -->
+<!-- 		    android:layout_marginRight="20dp" -->
+<!-- 		    android:layout_marginTop="5dp" -->
+<!-- 		    android:layout_marginBottom="5dp" -->
+<!-- 		    android:textColor="@android:color/white" -->
+<!-- 	    	android:textSize="15sp" -->
+<!-- 	    	android:textStyle="bold" -->
+<!-- 	        android:layout_gravity="center_horizontal" -->
+<!-- 	        android:text="@string/Q1A3" /> -->
 	
-	    <Button
-	        android:id="@+id/btn4"
-	        android:layout_width="fill_parent"
-	        android:layout_height="40dp"
-	        android:background="@drawable/button_bg"
-	        android:layout_marginLeft="20dp"
-		    android:layout_marginRight="20dp"
-		    android:layout_marginTop="5dp"
-		    android:layout_marginBottom="5dp"
-		    android:textColor="@android:color/white"
-	    	android:textSize="15sp"
-	    	android:textStyle="bold"
-	        android:layout_gravity="center_horizontal"
-	        android:text="@string/Q1A4" />
+<!-- 	    <Button -->
+<!-- 	        android:id="@+id/btn4" -->
+<!-- 	        android:layout_width="fill_parent" -->
+<!-- 	        android:layout_height="40dp" -->
+<!-- 	        android:background="@drawable/button_bg" -->
+<!-- 	        android:layout_marginLeft="20dp" -->
+<!-- 		    android:layout_marginRight="20dp" -->
+<!-- 		    android:layout_marginTop="5dp" -->
+<!-- 		    android:layout_marginBottom="5dp" -->
+<!-- 		    android:textColor="@android:color/white" -->
+<!-- 	    	android:textSize="15sp" -->
+<!-- 	    	android:textStyle="bold" -->
+<!-- 	        android:layout_gravity="center_horizontal" -->
+<!-- 	        android:text="@string/Q1A4" /> -->
     </LinearLayout>
 
 </LinearLayout>
+
+<!-- 	    	android:progressDrawable="@drawable/greenprogress" -->
