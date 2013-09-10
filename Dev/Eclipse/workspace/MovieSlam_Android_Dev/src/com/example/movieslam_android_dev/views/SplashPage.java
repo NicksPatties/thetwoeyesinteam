@@ -1,11 +1,15 @@
 package com.example.movieslam_android_dev.views;
 
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +32,7 @@ import com.facebook.model.GraphPlace;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.*;
 
-public class SplashPage extends Activity implements ResponseDelegate, Config {
+public class SplashPage extends FragmentActivity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
 	
 
@@ -45,13 +49,10 @@ public class SplashPage extends Activity implements ResponseDelegate, Config {
 		user_info_edit.commit();
 		
 		// FB connected
-		//LoginButton loginButton;
-        /*loginButton.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
-            @Override
-            public void onUserInfoFetched(GraphUser user) {
-            }
-        });*/
-		
+		LoginButton loginButton = (LoginButton) this.findViewById(R.id.loginButton);
+        
+        
+        
 		
         // check saved user id, create new user if user not existed
         String uid = getUIDFromDevice();

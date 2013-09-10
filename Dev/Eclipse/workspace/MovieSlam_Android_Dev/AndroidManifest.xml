@@ -59,6 +59,7 @@
             android:name="com.example.movieslam_android_dev.views.UidInputPage"
             android:label="@string/title_activity_uid_input_page" >
         </activity>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_name"/>
     </application>
 
 </manifest>

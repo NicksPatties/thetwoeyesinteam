@@ -149,17 +149,15 @@
 				android:layout_height="0dp"
 				android:layout_weight="1">
 				</LinearLayout>
-					
-<!-- 		        <Button -->
-<!-- 				android:id="@+id/player_challenge_b1" -->
-<!-- 				android:layout_width="match_parent" -->
-<!-- 				android:layout_height="0dp" -->
-<!-- 				android:background="@drawable/button_bg_small" -->
-<!-- 				android:text="LOGIN" -->
-<!-- 				android:layout_weight="2" -->
-<!-- 				android:textStyle="bold" -->
-<!-- 				android:textColor="#FFFFFF" -->
-<!-- 				android:textSize="12sp" /> -->
+
+				<com.facebook.widget.LoginButton
+				android:id="@+id/loginButton"
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:background="@drawable/button_bg_small"
+				facebook:confirm_logout="false"
+                facebook:fetch_user_info="true"
+				android:layout_weight="2"/>
 		        
 
 		        
