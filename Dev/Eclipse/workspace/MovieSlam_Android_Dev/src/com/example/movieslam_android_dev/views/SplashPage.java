@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -25,14 +27,15 @@ public class SplashPage extends Activity implements ResponseDelegate{
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
 	
 
-	private static final String BASE_URL = "http://postpcmarketing.com/movieslam/intl/it";
-
+	//private static final String BASE_URL = "http://postpcmarketing.com/movieslam/intl/it";
+	private static final String BASE_URL = "http://screenslam.foxfilm.com/";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
+        // hardcode to user id 3
         SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
 		Editor user_info_edit = user_info.edit();
 		user_info_edit.clear();
@@ -62,7 +65,7 @@ public class SplashPage extends Activity implements ResponseDelegate{
 	private String getUIDFromDevice() {
 		
 		SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
-		if (user_info.contains("uid") && user_info.getString("uid", "") != ""){
+		if (user_info.contains("uid") && !user_info.getString("uid", "").equals("")){
 			return user_info.getString("uid", "");
 		}else{
 			return null;
@@ -117,13 +120,13 @@ public class SplashPage extends Activity implements ResponseDelegate{
 		TextView userID_txt = (TextView)findViewById(R.id.userID_txt);
 		String uid = user_e.getValue("user_id");				
 		userID_txt.setText(uid);
-		if (this.getUIDFromDevice() != uid){
+		if (!this.getUIDFromDevice().equals(uid)){
 			SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
 			Editor user_info_edit = user_info.edit();
 			user_info_edit.clear();
 			user_info_edit.putString("uid", uid);
 			user_info_edit.commit();
-			Toast.makeText(this, "uid saved", 2000).show();
+			Toast.makeText(this, "UID saved.", 3000).show();
 		}
 		
 		
@@ -151,6 +154,26 @@ public class SplashPage extends Activity implements ResponseDelegate{
 			player_score_txt.setText(gameplay_e.getValue("gameplay_user_won")+":"+gameplay_e.getValue("gameplay_player_won"));
 			
 			new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
+			
+			// check challenger type
+			Button b0 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b0);			
+			Button b1 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b1);
+			String gameplay_status = gameplay_e.getValue("gameplay_status");
+			if (gameplay_status.equals("accept")){
+				b0.setText("DECLINE");
+				b1.setText("ACCEPT");
+			}else if (gameplay_status.equals("end")){
+				b0.setText("FORFEIT");
+				b0.setEnabled(false);
+				b0.setBackgroundResource(R.drawable.button_small_disabled);
+				b1.setVisibility(View.INVISIBLE);
+				player_score_txt.setText("-:-");
+			}else{
+				b0.setText("RESULT");
+				b1.setVisibility(View.INVISIBLE);
+			}
+			Log.d("debug", "["+gameplay_status+"]");
+			
 		}					
 	}
 	
