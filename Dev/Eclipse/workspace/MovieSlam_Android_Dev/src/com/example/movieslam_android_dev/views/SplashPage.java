@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,17 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
+import com.example.movieslam_android_dev.models.Config;
+import com.example.movieslam_android_dev.models.User;
 import com.example.movieslam_android_dev.tools.AdvElement;
 import com.example.movieslam_android_dev.tools.DownloadImageTask;
 import com.example.movieslam_android_dev.tools.ResponseDelegate;
 import com.example.movieslam_android_dev.tools.XmlRequestHandler;
 
-public class SplashPage extends Activity implements ResponseDelegate{
+public class SplashPage extends Activity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
 	
-
-	//private static final String BASE_URL = "http://postpcmarketing.com/movieslam/intl/it";
-	private static final String BASE_URL = "http://screenslam.foxfilm.com/";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,15 +105,18 @@ public class SplashPage extends Activity implements ResponseDelegate{
 		AdvElement doc = new AdvElement(response);
 		
 		
-		
-		// parse user main board
+		// set User variables
 		AdvElement user_e = doc.getElement("user");
-		
+		User.set_uid(user_e.getValue("user_id"));
+		User.set_fname(user_e.getValue("user_fname"));
+		User.set_lname(user_e.getValue("user_lname"));
+				
+		// parse user main board	
 		TextView userName_txt = (TextView)findViewById(R.id.userName_txt);
-		userName_txt.setText(user_e.getValue("user_fname") + " " + user_e.getValue("user_lname"));
+		userName_txt.setText(User.get_fname() + " " + User.get_lname());
 		
 		TextView userID_txt = (TextView)findViewById(R.id.userID_txt);
-		String uid = user_e.getValue("user_id");				
+		String uid = User.get_uid();		
 		userID_txt.setText(uid);
 		if (!this.getUIDFromDevice().equals(uid)){
 			SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
@@ -124,14 +124,15 @@ public class SplashPage extends Activity implements ResponseDelegate{
 			user_info_edit.clear();
 			user_info_edit.putString("uid", uid);
 			user_info_edit.commit();
-			Toast.makeText(this, "UID saved.", 3000).show();
-		}
-		
+			//Toast.makeText(this, "UID saved.", 3000).show();
+		}		
 		
 		TextView userScore_txt = (TextView)findViewById(R.id.userScore_txt); 
 		userScore_txt.setText(user_e.getValue("user_score"));
 		
 		new DownloadImageTask((ImageView) findViewById(R.id.userThumbnail_iv)).execute(user_e.getValue("user_thumbnail"));
+		
+		
 		
 		
 		// parse player challenges board

@@ -1,6 +1,8 @@
 package com.example.movieslam_android_dev.tools;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -9,6 +11,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import android.util.Log;
 
 
 public class AdvElement {
@@ -21,7 +25,15 @@ public class AdvElement {
 	
 	public AdvElement(String doc_s){
 		try {
-			doc_s = doc_s.replace("\n<?xml version=\"1.0\"?>\n", "");
+			// ignore unnecessary xml tags that might break the structure
+			Pattern pattern = Pattern.compile("<responseData>(.*?)</responseData>");
+			Matcher matcher = pattern.matcher(doc_s);
+			if (matcher.find()){
+				doc_s = "<responseData>"+matcher.group(1)+"</responseData>";
+			}else{
+				Log.d("debug", "parsing error");
+			}
+			// build xml parser element
 			_document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(doc_s)));
 			_document.getDocumentElement().normalize();
 		} catch (SAXException e) {

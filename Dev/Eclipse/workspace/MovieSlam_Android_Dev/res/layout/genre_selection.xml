@@ -46,7 +46,7 @@ tools:context=".GenreSelection" >
 					android:layout_height="wrap_content"
 					android:src="@drawable/genre_logo_and_copy"
 					android:layout_marginTop="30dp" 
-					android:layout_marginBottom="30dp"  >
+					android:layout_marginBottom="30dp">
 					</ImageView>
 		        	
 			        <Button
@@ -61,7 +61,8 @@ tools:context=".GenreSelection" >
 			   	    android:textSize="30sp"
 			   	    android:textStyle="bold"
 			   	    android:onClick="gotoGamePlayPage"
-			   	    android:layout_marginBottom="35dp" />
+			   	    android:layout_marginBottom="35dp"
+			   	    android:tag="all" />
 			        
 			        <Button
 				   	android:id="@+id/btn_splash"
@@ -75,7 +76,8 @@ tools:context=".GenreSelection" >
 			   	    android:textSize="30sp"
 			   	    android:textStyle="bold"
 			   	    android:onClick="gotoGamePlayPage"
-			   	    android:layout_marginBottom="35dp" />
+			   	    android:layout_marginBottom="35dp"
+			   	    android:tag="drama" />
 			        
 			        <Button
 				   	android:id="@+id/btn_splash"
@@ -89,7 +91,8 @@ tools:context=".GenreSelection" >
 			   	    android:textSize="30sp"
 			   	    android:textStyle="bold"
 			   	    android:onClick="gotoGamePlayPage"
-			   	    android:layout_marginBottom="35dp" />
+			   	    android:layout_marginBottom="35dp"
+			   	    android:tag="comedy" />
 			        
 			        <Button
 				   	android:id="@+id/btn_splash"
@@ -103,7 +106,8 @@ tools:context=".GenreSelection" >
 			   	    android:textSize="30sp"
 			   	    android:textStyle="bold"
 			   	    android:onClick="gotoGamePlayPage"
-			   	    android:layout_marginBottom="35dp" />
+			   	    android:layout_marginBottom="35dp"
+			   	    android:tag="scifi" />
 			        
 			        <Button
 				   	android:id="@+id/btn_splash"
@@ -117,7 +121,8 @@ tools:context=".GenreSelection" >
 			   	    android:textSize="30sp"
 			   	    android:textStyle="bold"
 			   	    android:onClick="gotoGamePlayPage"
-			   	    android:layout_marginBottom="35dp" />
+			   	    android:layout_marginBottom="35dp"
+			   	    android:tag="action" />
 			        
 			        <Button
 				   	android:id="@+id/btn_splash"
@@ -131,7 +136,8 @@ tools:context=".GenreSelection" >
 			   	    android:textSize="30sp"
 			   	    android:textStyle="bold"
 			   	    android:onClick="gotoGamePlayPage"
-			   	    android:layout_marginBottom="35dp" />
+			   	    android:layout_marginBottom="35dp"
+			   	    android:tag="horror" />
 			        
 			        <Button
 				   	android:id="@+id/btn_splash"
@@ -145,7 +151,8 @@ tools:context=".GenreSelection" >
 			   	    android:textSize="30sp"
 			   	    android:textStyle="bold"
 			   	    android:onClick="gotoGamePlayPage"
-			   	    android:layout_marginBottom="35dp" />
+			   	    android:layout_marginBottom="35dp"
+			   	    android:tag="family" />
 		        	
 				</LinearLayout>
 	        	
