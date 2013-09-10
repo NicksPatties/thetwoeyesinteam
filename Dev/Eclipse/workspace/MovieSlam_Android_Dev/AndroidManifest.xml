@@ -55,6 +55,10 @@
             android:name="com.example.movieslam_android_dev.views.UserTypeSelection"
             android:label="@string/title_activity_user_type_selection" >
         </activity>
+        <activity
+            android:name="com.example.movieslam_android_dev.views.UidInputPage"
+            android:label="@string/title_activity_uid_input_page" >
+        </activity>
     </application>
 
 </manifest>

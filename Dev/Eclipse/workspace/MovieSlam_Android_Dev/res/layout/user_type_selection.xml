@@ -46,11 +46,11 @@
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
-	   	    android:background="@drawable/button_bg"
+	   	    android:background="@drawable/button_bg_small"
 	   	    android:clickable="true"
 	   	    android:text="FACEBOOK"
 	   	    android:textColor="@android:color/white"
-	   	    android:textSize="25sp"
+	   	    android:textSize="18sp"
 	   	    android:textStyle="bold"
 	   	    android:layout_marginBottom="12dp" />
 	        
@@ -59,12 +59,13 @@
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
-	   	    android:background="@drawable/button_bg"
+	   	    android:background="@drawable/button_bg_small"
 	   	    android:clickable="true"
 	   	    android:text="USER ID"
 	   	    android:textColor="@android:color/white"
-	   	    android:textSize="25sp"
+	   	    android:textSize="18sp"
 	   	    android:textStyle="bold"
+	   	    android:onClick="gotoUIDSelection"
 	   	    android:layout_marginBottom="12dp" />
 	        
 	        <Button
@@ -72,11 +73,11 @@
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
-	   	    android:background="@drawable/button_bg"
+	   	    android:background="@drawable/button_bg_small"
 	   	    android:clickable="true"
 	   	    android:text="RANDOM"
 	   	    android:textColor="@android:color/white"
-	   	    android:textSize="25sp"
+	   	    android:textSize="18sp"
 	   	    android:textStyle="bold"
 	   	    android:onClick="gotoGenreSelection"
 	   	    android:layout_marginBottom="12dp" />
@@ -102,11 +103,11 @@
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
-	   	    android:background="@drawable/button_bg"
+	   	    android:background="@drawable/button_bg_small"
 	   	    android:clickable="true"
 	   	    android:text="EMAIL"
 	   	    android:textColor="@android:color/white"
-	   	    android:textSize="25sp"
+	   	    android:textSize="18sp"
 	   	    android:textStyle="bold"
 	   	    android:layout_marginBottom="12dp" />
 	        
@@ -115,11 +116,11 @@
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
-	   	    android:background="@drawable/button_bg"
+	   	    android:background="@drawable/button_bg_small"
 	   	    android:clickable="true"
 	   	    android:text="SMS"
 	   	    android:textColor="@android:color/white"
-	   	    android:textSize="25sp"
+	   	    android:textSize="18sp"
 	   	    android:textStyle="bold"
 	   	    android:layout_marginBottom="12dp" />
 	        

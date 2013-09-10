@@ -1,6 +1,8 @@
 package com.example.movieslam_android_dev.views;
 
 import com.example.movieslam_android_dev.R;
+import com.example.movieslam_android_dev.R.layout;
+import com.example.movieslam_android_dev.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -8,17 +10,17 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 
-public class UserTypeSelection extends Activity {
+public class UidInputPage extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.user_type_selection);
+		setContentView(R.layout.uid_input_page);
 	}
 	
-	public void gotoUIDSelection(View view){		
+	public void gotoPreviousPage(View view){		
 		
-		startActivity(new Intent(getApplicationContext(), UidInputPage.class));
+		this.finish();
 	}
 	
 	public void gotoGenreSelection(View view){		
@@ -29,7 +31,8 @@ public class UserTypeSelection extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.user_type_selection, menu);
+		getMenuInflater().inflate(R.menu.uid_input_page, menu);
 		return true;
 	}
+
 }

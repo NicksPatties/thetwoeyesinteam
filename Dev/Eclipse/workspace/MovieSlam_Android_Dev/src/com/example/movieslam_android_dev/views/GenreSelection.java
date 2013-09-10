@@ -15,7 +15,7 @@ public class GenreSelection extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_genre_selection);
+		setContentView(R.layout.genre_selection);
 	}
 	
 	public void gotoGamePlayPage(View view){		

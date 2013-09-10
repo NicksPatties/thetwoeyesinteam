@@ -48,11 +48,9 @@ public class SplashPage extends Activity implements ResponseDelegate{
         if (uid != null){
         	// check for fb connect first!!!!!!!!!!!!
         	getGameinfo(uid, "0");
-        	Log.d("debug", "user existed");
         }else{
         	// check for fb connect first!!!!!!!!!!!!
         	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
-        	Log.d("debug", "user not existed");
         }
         
 				
@@ -172,7 +170,6 @@ public class SplashPage extends Activity implements ResponseDelegate{
 				b0.setText("RESULT");
 				b1.setVisibility(View.INVISIBLE);
 			}
-			Log.d("debug", "["+gameplay_status+"]");
 			
 		}					
 	}

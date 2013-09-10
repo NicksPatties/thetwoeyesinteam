@@ -35,5 +35,6 @@
     <string name="title_activity_genre_selection">GenreSelection</string>
     <string name="title_activity_help_info">HelpInfo</string>
     <string name="title_activity_user_type_selection">UserTypeSelection</string>
+    <string name="title_activity_uid_input_page">UidInputPage</string>
 
 </resources>
