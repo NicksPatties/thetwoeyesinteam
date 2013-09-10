@@ -44,6 +44,14 @@ public class SplashPage extends Activity implements ResponseDelegate, Config {
 		user_info_edit.putString("uid", "3");
 		user_info_edit.commit();
 		
+		// FB connected
+		//LoginButton loginButton;
+        /*loginButton.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
+            @Override
+            public void onUserInfoFetched(GraphUser user) {
+            }
+        });*/
+		
 		
         // check saved user id, create new user if user not existed
         String uid = getUIDFromDevice();
@@ -86,6 +94,9 @@ public class SplashPage extends Activity implements ResponseDelegate, Config {
 		score_table.removeAllViews();
 		new XmlRequestHandler(this, BASE_URL+"service/getGameInfo.php?user_id="+uid+"&fid="+fid+"&fname="+fname+"&lname="+lname+"&thumbnail="+thumbnail).execute();
 		
+	}
+	
+	public void connectToFacebook(View view){
 	}
 
 	public void gotoHelp(View view){
