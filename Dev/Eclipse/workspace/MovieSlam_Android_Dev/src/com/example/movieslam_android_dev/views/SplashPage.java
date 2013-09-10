@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.models.Config;
@@ -22,6 +21,12 @@ import com.example.movieslam_android_dev.tools.AdvElement;
 import com.example.movieslam_android_dev.tools.DownloadImageTask;
 import com.example.movieslam_android_dev.tools.ResponseDelegate;
 import com.example.movieslam_android_dev.tools.XmlRequestHandler;
+
+import com.facebook.*;
+import com.facebook.model.GraphObject;
+import com.facebook.model.GraphPlace;
+import com.facebook.model.GraphUser;
+import com.facebook.widget.*;
 
 public class SplashPage extends Activity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly

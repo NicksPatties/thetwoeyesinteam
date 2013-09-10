@@ -16,14 +16,22 @@ public class UserTypeSelection extends Activity {
 		setContentView(R.layout.user_type_selection);
 	}
 	
+	public void gotoFBFriendSelector(View view){		
+		
+	}
+	
 	public void gotoUIDSelection(View view){		
 		
 		startActivity(new Intent(getApplicationContext(), UidInputPage.class));
 	}
 	
-	public void gotoGenreSelection(View view){		
-		
-		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
+	public void gotoGenreSelection(View view){	
+		Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
+		Bundle b = new Bundle();
+		b.putString("target_player_type", "random");
+		b.putString("target_player_id", "0");
+		intent.putExtras(b);
+		startActivity(intent);
 	}
 
 	@Override

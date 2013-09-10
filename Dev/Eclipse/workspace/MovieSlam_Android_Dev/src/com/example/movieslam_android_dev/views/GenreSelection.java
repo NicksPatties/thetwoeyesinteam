@@ -25,7 +25,6 @@ public class GenreSelection extends Activity {
 		b_out.putString("target_genre", (String) view.getTag());
 		intent.putExtras(b_out);
 		startActivity(intent);
-		finish();
 	}
 
 	@Override
