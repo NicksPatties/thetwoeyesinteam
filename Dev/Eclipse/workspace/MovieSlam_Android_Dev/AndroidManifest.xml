@@ -59,11 +59,20 @@
             android:name="views.UidInputPage"
             android:label="@string/title_activity_uid_input_page" >
         </activity>
-        <activity android:name="com.facebook.LoginActivity"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar"
-			android:label="@string/app_name">
-		</activity>
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+
+        <activity
+            android:name="views.RoundHistory"
+            android:label="@string/title_activity_round_history" >
+        </activity>
     </application>
 
 </manifest>

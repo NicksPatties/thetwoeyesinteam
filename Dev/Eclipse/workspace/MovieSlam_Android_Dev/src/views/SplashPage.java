@@ -76,7 +76,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		user_panel.addView(user_main_board);		
 		
 		// FB connected
-		LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
+		//LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
 		
         
 	}
@@ -94,31 +94,22 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 	
 	
 
-	private void getGameinfo(String uid, String fid) {
-		
-		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
-		score_table.removeAllViews();
+	private void getGameinfo(String uid, String fid) {	
 		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid="+fid).execute();
 	}
 	
-	private void getGameinfo(String uid, String fid, String fname, String lname, String thumbnail) {
-		
-		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
-		score_table.removeAllViews();
-		new XmlRequestHandler(this, BASE_URL+"service/getGameInfo.php?user_id="+uid+"&fid="+fid+"&fname="+fname+"&lname="+lname+"&thumbnail="+thumbnail).execute();
-		
+	private void getGameinfo(String uid, String fid, String fname, String lname, String thumbnail) {		
+		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid="+fid+"&fname="+fname+"&lname="+lname+"&thumbnail="+thumbnail).execute();
 	}
 	
 	public void connectToFacebook(View view){
 	}
 
-	public void gotoHelp(View view){
-		
+	public void gotoHelp(View view){		
 		startActivity(new Intent(getApplicationContext(), HelpInfo.class));
 	}
 	
-	public void gotoNewChallenge(View view){
-		
+	public void gotoNewChallenge(View view){		
 		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
 //		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
@@ -130,6 +121,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 	
 	@Override
 	public void responseLoaded(String response) {
+		
 		// init root element
 		AdvElement doc = new AdvElement(response);
 		
@@ -163,13 +155,13 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		
 		new DownloadImageTask((ImageView) findViewById(R.id.userThumbnail_iv)).execute(user_e.getValue("user_thumbnail"));
 		
-		
-		
+		// empty challenge board
+		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
+		score_table.removeAllViews();
 		
 		// parse player challenges board
 		AdvElement gameplays_e = doc.getElement("gameplays");		
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
 		
 		for (int i = 0; i < gameplays_e.getElementLength("gameplay"); i++){
 			AdvElement gameplay_e = gameplays_e.getElement("gameplay", i);
@@ -188,44 +180,59 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			// check challenger type
 			Button b0 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b0);			
 			Button b1 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b1);
+			String game_id = gameplay_e.getValue("gameplay_game_id");
+			String challenge_id = gameplay_e.getValue("challenge_id");
+			String genre_type = gameplay_e.getValue("challenge_genre_type");
 			String gameplay_status = gameplay_e.getValue("gameplay_status");
+			String gameplay_round = gameplay_e.getValue("gameplay_round");
 			if (gameplay_status.equals("accept")){
+
+				// set decline button
 				b0.setText("DECLINE");
-				b1.setText("ACCEPT");
-				
-				// set accept / Decline button				
-				OnClickListener b0_ltn = new ChallengeBoardButtonListener(gameplay_e.getValue("gameplay_game_id"), gameplay_e.getValue("challenge_id"), gameplay_e.getValue("challenge_genre_type")) {
+				OnClickListener b0_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
 					@Override
-					public void onClick(View v) {					
-						Log.d("debug", _gameplay_game_id+" "+_challenge_id+" "+_challenge_genre_type);
+					public void onClick(View v) {
+						new XmlRequestHandler(get_delegate(), BASE_URL+"/service/getGameInfo.php?user_id="+User.get_uid()+"&remove_game_id="+get_gameplay_game_id()).execute();
 					}
 				};
 				b0.setOnClickListener(b0_ltn);
 				
-				
-				OnClickListener b1_ltn = new ChallengeBoardButtonListener(gameplay_e.getValue("gameplay_game_id"), gameplay_e.getValue("challenge_id"), gameplay_e.getValue("challenge_genre_type")) {
+				// set accept button
+				b1.setText("ACCEPT");
+				OnClickListener b1_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
 					@Override
 					public void onClick(View v) {						
 						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
 						Bundle b_out = new Bundle();
 						b_out.putString("target_source_type", "cid");
-						b_out.putString("target_id", _challenge_id);
-						b_out.putString("target_genre", _challenge_genre_type);
+						b_out.putString("target_id", get_challenge_id());
+						b_out.putString("target_genre", get_challenge_genre_type());
 						intent.putExtras(b_out);
 						startActivity(intent);
-						Log.d("debug", _gameplay_game_id+" "+_challenge_id+" "+_challenge_genre_type);
 					}
 				};
 				b1.setOnClickListener(b1_ltn);
 				
-			}else if (gameplay_status.equals("end")){
+			}else if (gameplay_status.equals("end") && gameplay_round.equals("1")){
 				b0.setText("FORFEIT");
 				b0.setEnabled(false);
 				b0.setBackgroundResource(R.drawable.button_small_disabled);
 				b1.setVisibility(View.INVISIBLE);
 				player_score_txt.setText("-:-");
 			}else{
+				// set result button
 				b0.setText("RESULT");
+				OnClickListener b0_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
+					@Override
+					public void onClick(View v) {					
+						Intent intent = new Intent(getApplicationContext(), RoundHistory.class);
+						Bundle b_out = new Bundle();
+						b_out.putString("game_id", get_gameplay_game_id());
+						intent.putExtras(b_out);
+						startActivity(intent);
+					}
+				};
+				b0.setOnClickListener(b0_ltn);
 				b1.setVisibility(View.INVISIBLE);
 			}
 			

@@ -46,7 +46,6 @@ tools:context=".MainActivity">
 		android:layout_height="match_parent">
 		    
 		    <LinearLayout
-		    android:background="@drawable/bg_challengeboard"
 		    android:orientation="horizontal"
 		    android:id="@+id/ContainerLayout"
 		    android:layout_width="fill_parent"
