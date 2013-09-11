@@ -52,29 +52,29 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
         setContentView(R.layout.activity_main);
         
         // hardcode to user id 3
-//        SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
-//		Editor user_info_edit = user_info.edit();
-//		user_info_edit.clear();
-//		user_info_edit.putString("uid", "3");
-//		user_info_edit.commit();
+        SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
+		Editor user_info_edit = user_info.edit();
+		user_info_edit.clear();
+		user_info_edit.putString("uid", "3");
+		user_info_edit.commit();
 		
 		
         // User info init (check for fb connect first!!!!!!!!!!!!)
-//        String uid = getUIDFromDevice();
-//        if (uid != null){
-//        	getGameinfo(uid, "0");
-//        }else{
-//        	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
-//        }
+        String uid = getUIDFromDevice();
+        if (uid != null){
+        	getGameinfo(uid, "0");
+        }else{
+        	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
+        }
         
 		// add main board content
-//		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
-//		View user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
-//		user_panel.addView(user_main_board);		
+		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
+		View user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
+		user_panel.addView(user_main_board);		
 		
 		// FB connected
-//		LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
+		LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
 		
         
 	}
@@ -117,8 +117,8 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 	
 	public void gotoNewChallenge(View view){
 		
-//		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
-		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
+		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
+//		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
 	
 	public void gotoRefresh(View view){

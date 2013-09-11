@@ -1,6 +1,7 @@
 package models;
 
 public class TempModel {
+	//this temporary model is used to save all the data related to game play pages, like media URLs and names.
 	
 	public static void setMediaURLs(String[] s){
 		_mediaURLs = s;

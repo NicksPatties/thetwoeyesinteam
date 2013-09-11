@@ -4,6 +4,7 @@ import java.io.StringReader;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import models.Config;
 import models.TempModel;
 
 import org.w3c.dom.Document;
@@ -25,7 +26,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ReadyToPlayPage extends Activity implements ResponseDelegate{
+public class ReadyToPlayPage extends Activity implements ResponseDelegate, Config{
 
 	private Thread thread;
 	@Override
@@ -51,7 +52,7 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate{
             }
         };
 		
-		new XmlRequestHandler(this,"http://screenslam.foxfilm.com/service/getMedia.php?&type=drama&user_id=8").execute();
+		new XmlRequestHandler(this, BASE_URL+"/service/getMedia.php?&type=drama&user_id=8").execute();
         
 	}
 
