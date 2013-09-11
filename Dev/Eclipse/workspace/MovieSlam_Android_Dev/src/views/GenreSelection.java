@@ -20,8 +20,8 @@ public class GenreSelection extends Activity {
 		Bundle b_in = getIntent().getExtras();		
 		Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
 		Bundle b_out = new Bundle();
-		b_out.putString("target_player_type", b_in.getString("target_player_type"));
-		b_out.putString("target_player_id", b_in.getString("target_player_id"));
+		b_out.putString("target_source_type", b_in.getString("target_source_type"));
+		b_out.putString("target_id", b_in.getString("target_id"));
 		b_out.putString("target_genre", (String) view.getTag());
 		intent.putExtras(b_out);
 		startActivity(intent);

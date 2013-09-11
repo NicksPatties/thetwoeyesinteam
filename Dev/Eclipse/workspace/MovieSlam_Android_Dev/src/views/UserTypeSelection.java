@@ -47,8 +47,8 @@ public class UserTypeSelection extends FragmentActivity {
 	public void gotoGenreSelection(View view){	
 		Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
 		Bundle b = new Bundle();
-		b.putString("target_player_type", "random");
-		b.putString("target_player_id", "0");
+		b.putString("target_source_type", "random");
+		b.putString("target_id", "0");
 		intent.putExtras(b);
 		startActivity(intent);
 	}

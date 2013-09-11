@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tools.AdvElement;
+import tools.ChallengeBoardButtonListener;
 import tools.DownloadImageTask;
 import tools.ResponseDelegate;
 import tools.XmlRequestHandler;
@@ -27,6 +28,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -190,6 +192,32 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			if (gameplay_status.equals("accept")){
 				b0.setText("DECLINE");
 				b1.setText("ACCEPT");
+				
+				// set accept / Decline button				
+				OnClickListener b0_ltn = new ChallengeBoardButtonListener(gameplay_e.getValue("gameplay_game_id"), gameplay_e.getValue("challenge_id"), gameplay_e.getValue("challenge_genre_type")) {
+					@Override
+					public void onClick(View v) {					
+						Log.d("debug", _gameplay_game_id+" "+_challenge_id+" "+_challenge_genre_type);
+					}
+				};
+				b0.setOnClickListener(b0_ltn);
+				
+				
+				OnClickListener b1_ltn = new ChallengeBoardButtonListener(gameplay_e.getValue("gameplay_game_id"), gameplay_e.getValue("challenge_id"), gameplay_e.getValue("challenge_genre_type")) {
+					@Override
+					public void onClick(View v) {						
+						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
+						Bundle b_out = new Bundle();
+						b_out.putString("target_source_type", "cid");
+						b_out.putString("target_id", _challenge_id);
+						b_out.putString("target_genre", _challenge_genre_type);
+						intent.putExtras(b_out);
+						startActivity(intent);
+						Log.d("debug", _gameplay_game_id+" "+_challenge_id+" "+_challenge_genre_type);
+					}
+				};
+				b1.setOnClickListener(b1_ltn);
+				
 			}else if (gameplay_status.equals("end")){
 				b0.setText("FORFEIT");
 				b0.setEnabled(false);
