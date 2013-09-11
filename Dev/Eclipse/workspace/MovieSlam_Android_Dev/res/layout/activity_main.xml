@@ -185,6 +185,17 @@ tools:context=".MainActivity">
 			
 		</RelativeLayout>
 		
+		<ImageView
+		android:id="@+id/bg_preloader"
+		android:scaleType="centerCrop"
+		android:layout_alignLeft="@+id/bg"
+		android:layout_alignRight="@+id/bg"
+		android:adjustViewBounds="true"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:src="@drawable/bg_preloader" >
+		</ImageView>
+		
 	</RelativeLayout>
 	
 </RelativeLayout>

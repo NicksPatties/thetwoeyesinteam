@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import tools.AdvElement;
 import tools.ChallengeBoardButtonListener;
@@ -11,6 +13,7 @@ import tools.DownloadImageTask;
 import tools.ResponseDelegate;
 import tools.XmlRequestHandler;
 import models.Config;
+import models.Gameplay;
 import models.User;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -53,6 +57,22 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
+        // init promo image
+        final ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
+        new DownloadImageTask(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
+        Timer t = new Timer(false);
+        t.schedule(new TimerTask() {
+        @Override
+        public void run() {
+             runOnUiThread(new Runnable() {
+                  public void run() {
+                	  bg_preloader.setVisibility(View.GONE);
+                  }
+              });
+          }
+      }, 5000);
+        
+        
         // hardcode to user id 3
         SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
 		Editor user_info_edit = user_info.edit();
@@ -64,9 +84,9 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
         // User info init (check for fb connect first!!!!!!!!!!!!)
         String uid = getUIDFromDevice();
         if (uid != null){
-        	getGameinfo(uid, "0");
+        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0", false).execute();
         }else{
-        	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
+        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png", false).execute();
         }
         
 		// add main board content
@@ -92,16 +112,6 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		
 	}
 	
-	
-
-	private void getGameinfo(String uid, String fid) {	
-		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid="+fid).execute();
-	}
-	
-	private void getGameinfo(String uid, String fid, String fname, String lname, String thumbnail) {		
-		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid="+fid+"&fname="+fname+"&lname="+lname+"&thumbnail="+thumbnail).execute();
-	}
-	
 	public void connectToFacebook(View view){
 	}
 
@@ -116,7 +126,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 	
 	public void gotoRefresh(View view){
 		String uid = getUIDFromDevice();
-		getGameinfo(uid, "0");
+		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0").execute();
 	}
 	
 	@Override
@@ -125,7 +135,11 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		// init root element
 		AdvElement doc = new AdvElement(response);
 		
-		
+		// init promo info
+		AdvElement promo_e = doc.getElement("promo");
+		Gameplay.set_promo(Integer.parseInt(promo_e.getValue("display")));
+		Gameplay.set_promo_name(promo_e.getValue("name"));
+
 		// set User variables
 		AdvElement user_e = doc.getElement("user");
 		User.set_uid(user_e.getValue("user_id"));
