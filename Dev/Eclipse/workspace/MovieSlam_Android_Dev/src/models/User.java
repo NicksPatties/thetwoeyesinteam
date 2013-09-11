@@ -6,6 +6,8 @@ public class User {
 	public static String _fid;
 	public static String _fname;
 	public static String _lname;
+	public static String _thumbnail;
+	public static String _score;
 	
 	public static String get_uid() {
 		return _uid;
@@ -31,6 +33,16 @@ public class User {
 	public static void set_lname(String lname) {
 		User._lname = lname;
 	}
-	
-	
+	public static String get_thumbnail() {
+		return _thumbnail;
+	}
+	public static void set_thumbnail(String thumbnail){
+		_thumbnail = thumbnail;
+	}
+	public static void set_score(String score){
+		_score = score;
+	}
+	public static String get_score() {
+		return _score;
+	}
 }

@@ -137,6 +137,8 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		User.set_uid(user_e.getValue("user_id"));
 		User.set_fname(user_e.getValue("user_fname"));
 		User.set_lname(user_e.getValue("user_lname"));
+		User.set_thumbnail(user_e.getValue("user_thumbnail"));
+		User.set_score(user_e.getValue("user_score"));
 				
 		// parse user main board	
 		TextView userName_txt = (TextView)findViewById(R.id.userName_txt);
