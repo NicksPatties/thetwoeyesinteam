@@ -1,4 +1,4 @@
-package com.example.movieslam_android_dev.views;
+package views;
 
 import android.app.Activity;
 import android.content.Intent;

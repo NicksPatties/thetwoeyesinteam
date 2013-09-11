@@ -1,4 +1,4 @@
-package com.example.movieslam_android_dev.models;
+package models;
 
 public interface Config {
 	

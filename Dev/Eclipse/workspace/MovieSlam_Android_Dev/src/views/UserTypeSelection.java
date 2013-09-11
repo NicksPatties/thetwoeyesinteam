@@ -1,4 +1,4 @@
-package com.example.movieslam_android_dev.views;
+package views;
 
 import java.util.ArrayList;
 import java.util.List;

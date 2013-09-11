@@ -1,8 +1,10 @@
-package com.example.movieslam_android_dev.views;
+package views;
 
 import java.io.StringReader;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import models.TempModel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,10 +12,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import tools.ResponseDelegate;
+import tools.XmlRequestHandler;
+
 import com.example.movieslam_android_dev.R;
-import com.example.movieslam_android_dev.models.TempModel;
-import com.example.movieslam_android_dev.tools.ResponseDelegate;
-import com.example.movieslam_android_dev.tools.XmlRequestHandler;
 
 import android.app.Activity;
 import android.content.Intent;

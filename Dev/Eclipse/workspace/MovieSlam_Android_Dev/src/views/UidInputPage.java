@@ -1,5 +1,10 @@
-package com.example.movieslam_android_dev.views;
+package views;
 
+import tools.AdvElement;
+import tools.ResponseDelegate;
+import tools.XmlRequestHandler;
+import models.Config;
+import models.User;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -10,11 +15,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.movieslam_android_dev.R;
-import com.example.movieslam_android_dev.models.Config;
-import com.example.movieslam_android_dev.models.User;
-import com.example.movieslam_android_dev.tools.AdvElement;
-import com.example.movieslam_android_dev.tools.ResponseDelegate;
-import com.example.movieslam_android_dev.tools.XmlRequestHandler;
 
 public class UidInputPage extends Activity implements ResponseDelegate, Config {
 

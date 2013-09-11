@@ -1,13 +1,12 @@
-package com.example.movieslam_android_dev.views.component;
+package views.component;
 
 
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.example.movieslam_android_dev.models.TempModel;
-import com.example.movieslam_android_dev.views.GamePlayPage;
-
+import views.GamePlayPage;
+import models.TempModel;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;

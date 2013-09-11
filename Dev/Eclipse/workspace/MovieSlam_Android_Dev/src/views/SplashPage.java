@@ -1,10 +1,16 @@
-package com.example.movieslam_android_dev.views;
+package views;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.AdvElement;
+import tools.DownloadImageTask;
+import tools.ResponseDelegate;
+import tools.XmlRequestHandler;
+import models.Config;
+import models.User;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,12 +35,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
-import com.example.movieslam_android_dev.models.Config;
-import com.example.movieslam_android_dev.models.User;
-import com.example.movieslam_android_dev.tools.AdvElement;
-import com.example.movieslam_android_dev.tools.DownloadImageTask;
-import com.example.movieslam_android_dev.tools.ResponseDelegate;
-import com.example.movieslam_android_dev.tools.XmlRequestHandler;
 import com.facebook.FacebookException;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.FriendPickerFragment;
@@ -52,29 +52,29 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
         setContentView(R.layout.activity_main);
         
         // hardcode to user id 3
-        SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
-		Editor user_info_edit = user_info.edit();
-		user_info_edit.clear();
-		user_info_edit.putString("uid", "3");
-		user_info_edit.commit();
+//        SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
+//		Editor user_info_edit = user_info.edit();
+//		user_info_edit.clear();
+//		user_info_edit.putString("uid", "3");
+//		user_info_edit.commit();
 		
 		
         // User info init (check for fb connect first!!!!!!!!!!!!)
-        String uid = getUIDFromDevice();
-        if (uid != null){
-        	getGameinfo(uid, "0");
-        }else{
-        	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
-        }
+//        String uid = getUIDFromDevice();
+//        if (uid != null){
+//        	getGameinfo(uid, "0");
+//        }else{
+//        	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
+//        }
         
 		// add main board content
-		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
-		View user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
-		user_panel.addView(user_main_board);		
+//		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
+//		View user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
+//		user_panel.addView(user_main_board);		
 		
 		// FB connected
-		LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
+//		LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
 		
         
 	}
@@ -117,8 +117,8 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 	
 	public void gotoNewChallenge(View view){
 		
-		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
-//		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
+//		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
+		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
 	
 	public void gotoRefresh(View view){

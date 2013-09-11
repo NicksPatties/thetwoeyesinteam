@@ -1,4 +1,4 @@
-package com.example.movieslam_android_dev.views;
+package views;
 
 import com.example.movieslam_android_dev.R;
 

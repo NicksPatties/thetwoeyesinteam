@@ -1,4 +1,4 @@
-package com.example.movieslam_android_dev.views;
+package views;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,12 +7,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import tools.DownloadImageTask;
+import views.component.MoviePlayer;
+import models.TempModel;
+
 import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.R.id;
 import com.example.movieslam_android_dev.R.layout;
-import com.example.movieslam_android_dev.models.TempModel;
-import com.example.movieslam_android_dev.tools.DownloadImageTask;
-import com.example.movieslam_android_dev.views.component.MoviePlayer;
 
 import android.app.Activity;
 import android.content.Intent;
