@@ -1,14 +1,23 @@
 package com.example.movieslam_android_dev.views;
 
-import java.util.Arrays;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.models.Config;
@@ -25,15 +35,15 @@ import com.example.movieslam_android_dev.tools.AdvElement;
 import com.example.movieslam_android_dev.tools.DownloadImageTask;
 import com.example.movieslam_android_dev.tools.ResponseDelegate;
 import com.example.movieslam_android_dev.tools.XmlRequestHandler;
-
-import com.facebook.*;
-import com.facebook.model.GraphObject;
-import com.facebook.model.GraphPlace;
+import com.facebook.FacebookException;
 import com.facebook.model.GraphUser;
-import com.facebook.widget.*;
+import com.facebook.widget.FriendPickerFragment;
+import com.facebook.widget.LoginButton;
+import com.facebook.widget.PickerFragment;
 
 public class SplashPage extends FragmentActivity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
+	
 	
 
 	@Override
@@ -48,27 +58,25 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		user_info_edit.putString("uid", "3");
 		user_info_edit.commit();
 		
-		// FB connected
-		LoginButton loginButton = (LoginButton) this.findViewById(R.id.loginButton);
-        
-        
-        
 		
-        // check saved user id, create new user if user not existed
+        // User info init (check for fb connect first!!!!!!!!!!!!)
         String uid = getUIDFromDevice();
         if (uid != null){
-        	// check for fb connect first!!!!!!!!!!!!
         	getGameinfo(uid, "0");
         }else{
-        	// check for fb connect first!!!!!!!!!!!!
         	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
         }
         
-				
 		// add main board content
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
-		user_panel.addView(layoutInflater.inflate(R.layout.user_main_board, user_panel, false));
+		View user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
+		user_panel.addView(user_main_board);		
+		
+		// FB connected
+		LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
+		
+        
 	}
 	
 	private String getUIDFromDevice() {
@@ -81,6 +89,8 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		}
 		
 	}
+	
+	
 
 	private void getGameinfo(String uid, String fid) {
 		
@@ -191,5 +201,22 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			
 		}					
 	}
+	
+	// generate hash for facebook auth
+	public void printHashKey() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.example.movieslam_android_dev", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("debug", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (NameNotFoundException e) {
+        	Log.d("debug", "NameNotFoundException");
+        } catch (NoSuchAlgorithmException e) {
+        	Log.d("debug", "NoSuchAlgorithmException");
+        }
+
+    }
 	
 }

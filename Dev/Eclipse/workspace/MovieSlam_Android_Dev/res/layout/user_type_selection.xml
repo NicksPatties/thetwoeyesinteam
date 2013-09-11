@@ -30,6 +30,10 @@
 		android:layout_width="fill_parent"
 		android:layout_height="0dp"
 		android:layout_weight="12">
+			<FrameLayout
+			android:id="@+id/fpoContainer"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"/>
 		</LinearLayout>
            	
 	    <LinearLayout
@@ -42,7 +46,7 @@
         android:layout_weight="5">
         
 	        <Button
-		   	android:id="@+id/btn_splash"
+		   	android:id="@+id/friendSelector"
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"

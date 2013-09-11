@@ -154,12 +154,9 @@
 				android:id="@+id/loginButton"
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
-				android:background="@drawable/button_bg_small"
-				facebook:confirm_logout="false"
+				facebook:confirm_logout="true"
                 facebook:fetch_user_info="true"
-				android:layout_weight="2"/>
-		        
-
+				android:layout_weight="2"/>		 
 		        
 		        <LinearLayout
 				android:layout_width="fill_parent"

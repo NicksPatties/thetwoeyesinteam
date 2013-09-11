@@ -28,8 +28,8 @@ android:layout_centerVertical="true">
 	
 	<ScrollView	
 	android:paddingTop="100dp"
-	android:paddingLeft="30dp"
-	android:paddingRight="30dp"
+	android:paddingLeft="60dp"
+	android:paddingRight="60dp"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	            	
@@ -41,9 +41,8 @@ android:layout_centerVertical="true">
 		<ImageView
 		android:id="@+id/ImageView01"
 		android:layout_width="match_parent"
-		android:layout_height="1500dp"
-		android:scaleType="fitXY"
-		android:src="@drawable/button_help_f1" >
+		android:layout_height="wrap_content"
+		android:src="@drawable/fpo_help_text" >
 		</ImageView>
 				        	
 		</LinearLayout>
