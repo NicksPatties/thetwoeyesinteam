@@ -39,7 +39,7 @@ public class UserTypeSelection extends FragmentActivity {
 		
 	}
 	
-	public void gotoUIDSelection(View view){		
+	public void gotoUIDSelection(View view){	
 		
 		startActivity(new Intent(getApplicationContext(), UidInputPage.class));
 	}
