@@ -15,6 +15,7 @@ import tools.XmlRequestHandler;
 import models.Config;
 import models.Gameplay;
 import models.User;
+import android.R.string;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -194,7 +195,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			
 			new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
 			
-			// add listener to table row
+			// Game history
 			player_challenge_cell.setTag(gameplay_e.getValue("player_user_id"));
 			player_challenge_cell.setClickable(true);
 			player_challenge_cell.setOnClickListener(new OnClickListener() {
@@ -255,7 +256,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 				b0.setText("RESULT");
 				OnClickListener b0_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
 					@Override
-					public void onClick(View v) {					
+					public void onClick(View v) {
 						Intent intent = new Intent(getApplicationContext(), RoundHistory.class);
 						Bundle b_out = new Bundle();
 						b_out.putString("game_id", get_gameplay_game_id());
