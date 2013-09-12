@@ -242,25 +242,44 @@ public class GamePlayPage extends Activity {
 	
 	private void nextMedia(){
 		Gameplay.index = Gameplay.index+1;
-		if (Gameplay.index >= 5){
-			startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
-		}else{
-			movieThread=  new Thread(){
-	            @Override
-	            public void run(){
-	                try {
-	                    synchronized(this){
-	                        wait(3000);
-	                        startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
-	                    }
-	                }
-	                catch(InterruptedException ex){                    
-	                }
-	            }
-	        };
-	        movieThread.start();
-//			startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
-		}
+		movieThread=  new Thread(){
+            @Override
+            public void run(){
+                try {
+                    synchronized(this){
+                        wait(3000);
+                        if (Gameplay.index >= 5){
+                			startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
+                		}else{
+                			startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+                		}
+                    }
+                }
+                catch(InterruptedException ex){                    
+                }
+            }
+        };
+        
+        movieThread.start();
+//		if (Gameplay.index >= 5){
+//			startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
+//		}else{
+//			movieThread=  new Thread(){
+//	            @Override
+//	            public void run(){
+//	                try {
+//	                    synchronized(this){
+//	                        wait(3000);
+//	                        startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+//	                    }
+//	                }
+//	                catch(InterruptedException ex){                    
+//	                }
+//	            }
+//	        };
+//	        movieThread.start();
+////			startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+//		}
 	}
 	
 	@Override
