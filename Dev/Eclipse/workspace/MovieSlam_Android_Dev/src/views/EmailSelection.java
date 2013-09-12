@@ -87,10 +87,10 @@ public class EmailSelection extends Activity  implements ThreadResponseDelegate{
 
 
 	@Override
-	public void threadResponseLoaded(ArrayList<String> response) {
+	public void threadResponseLoaded(Object response) {
 		
 		// generate email list
-		ArrayList<String> emails = response;
+		ArrayList<String> emails = (ArrayList<String>)response;
 		LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		TableLayout round_info_wrapper = (TableLayout) findViewById(R.id.email_info_wrapper);
     	for (int i = 0; i < emails.size(); i++){

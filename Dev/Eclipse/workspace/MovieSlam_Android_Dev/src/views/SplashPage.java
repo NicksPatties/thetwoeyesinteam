@@ -49,8 +49,6 @@ import com.facebook.widget.PickerFragment;
 
 public class SplashPage extends FragmentActivity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
-	
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

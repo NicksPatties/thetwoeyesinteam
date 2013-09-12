@@ -1,14 +1,12 @@
 package tools;
 
-import java.util.ArrayList;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
 public class AdvLoaderThread  extends AsyncTask<Object, Object, Object> {
 	public ThreadResponseDelegate _delegate;
-	protected ArrayList<String> _data;
+	protected Object _data;
 	private ProgressDialog _progress;
 
 	public AdvLoaderThread(Context delegate) {
