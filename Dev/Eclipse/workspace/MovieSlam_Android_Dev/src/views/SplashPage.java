@@ -55,6 +55,9 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
+        startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
+        
+        /**
         // init promo image
         final ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
         new DownloadImageTask(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
@@ -95,8 +98,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		
 		// FB connected
 		//LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
-		
-        
+		*/
 	}
 	
 	private String getUIDFromDevice() {

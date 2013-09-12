@@ -5,10 +5,11 @@
 	android:id="@+id/tableRow_result"
 	android:layout_width="fill_parent"
 	android:layout_height="25dp"
-	android:layout_marginLeft="5dp"
-	android:layout_marginRight="5dp"
-	android:layout_marginTop="5dp"
-	android:layout_marginBottom="5dp" >				 
+	android:background="@drawable/panel_challenge_results"
+	android:layout_marginLeft="12dp"
+	android:layout_marginRight="12dp"
+	android:layout_marginTop="7dp"
+	android:layout_marginBottom="7dp" >				 
       
 	<LinearLayout
 	android:layout_width="fill_parent"
@@ -23,7 +24,7 @@
 
 			<ImageView
 			    android:id="@+id/media_TN"
-			    android:layout_width="5dp"
+			    android:layout_width="0dp"
 			    android:layout_height="wrap_content"
 			    android:layout_weight="0.5"
 			    android:adjustViewBounds="true"
@@ -41,7 +42,6 @@
 					    android:layout_height="wrap_content"
 					    android:layout_weight="1"
 					    android:gravity="top|left"
-					    android:textSize="5dp"
 					    android:textColor="#18305c"
 					    android:textStyle="bold" />
 				
@@ -51,7 +51,6 @@
 					    android:layout_height="wrap_content"
 					    android:layout_weight="1"
 					    android:gravity="top|left"
-					    android:textSize="5dp"
 					    android:textColor="#ffffff"
 					    android:textStyle="bold" />
 

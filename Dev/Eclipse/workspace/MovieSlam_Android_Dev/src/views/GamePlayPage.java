@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import tools.DownloadImageTask;
 import views.component.MoviePlayer;
-import models.TempModel;
+import models.Gameplay;
 
 import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.R.id;
@@ -108,17 +108,17 @@ public class GamePlayPage extends Activity {
 	//init the array of 20 anwsers
 	public void initAnswers(){
 		for (int i=0; i<5; i++){
-			rightAnswers[i] = TempModel._answers[i][0];
+			rightAnswers[i] = Gameplay._answers[i][0];
 		}
 		
 		String[] wrongAnswers = new String[3];
-		wrongAnswers[0] = TempModel._answers[TempModel.index][1];
-		wrongAnswers[1] = TempModel._answers[TempModel.index][2];
-		wrongAnswers[2] = TempModel._answers[TempModel.index][3];
+		wrongAnswers[0] = Gameplay._answers[Gameplay.index][1];
+		wrongAnswers[1] = Gameplay._answers[Gameplay.index][2];
+		wrongAnswers[2] = Gameplay._answers[Gameplay.index][3];
 		
 		rightAnswerPointer = (int) (Math.random()*4);
 		System.out.println("-----------right answer pointer: "+ rightAnswerPointer);
-		buttonLabels[rightAnswerPointer] = rightAnswers[TempModel.index];
+		buttonLabels[rightAnswerPointer] = rightAnswers[Gameplay.index];
 		int k=0;
 		for (int i=0; i<4; i++){
 			if (i == rightAnswerPointer){
@@ -131,7 +131,7 @@ public class GamePlayPage extends Activity {
 	
 	//init the array of 5 questions
 	public void initQuestions(){
-		String questionText = TempModel.getQuestion();
+		String questionText = Gameplay.getQuestion();
 		int i = 0;
 		if (questionText.equals("name")){
 			i = 1;
@@ -174,7 +174,7 @@ public class GamePlayPage extends Activity {
 	
 	//init the processing bar
 	public void initProcessingBar(){
-		String s = TempModel.getMediaURLs();
+		String s = Gameplay.getMediaURLs();
 		if (parseAsIPadURL(s) == ""){
 			thread = new Thread(timerThread);
 			thread.start();
@@ -210,7 +210,7 @@ public class GamePlayPage extends Activity {
 	
 	//init the video player
 	public void initVideoPlayer(){
-		String s = TempModel.getMediaURLs();
+		String s = Gameplay.getMediaURLs();
 		if (parseAsIPadURL(s) != ""){
 			surfaceView.setVisibility(View.VISIBLE);
 			imageView.setVisibility(View.INVISIBLE);
@@ -236,8 +236,8 @@ public class GamePlayPage extends Activity {
 	}
 	
 	private void nextMedia(){
-		TempModel.index = TempModel.index+1;
-		if (TempModel.index >= 5){
+		Gameplay.index = Gameplay.index+1;
+		if (Gameplay.index >= 5){
 			startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
 		}else{
 			movieThread=  new Thread(){

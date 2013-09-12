@@ -1,6 +1,6 @@
 package views;
 
-import models.TempModel;
+import models.Gameplay;
 import tools.AdvElement;
 import tools.DownloadImageTask;
 
@@ -8,7 +8,6 @@ import com.example.movieslam_android_dev.R;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -32,15 +31,15 @@ public class ResultPage extends Activity {
 	     	View result_cell = layoutInflater.inflate(R.layout.result_cell, result_table, false);
 	     	result_table.addView(result_cell);
 	     	
-	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.media_TN)).execute(TempModel.getMediaTN(i));
+	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.media_TN)).execute(Gameplay.getMediaTN(i));
 	     	
 	     	TextView mediaName = (TextView) result_cell.findViewById(R.id.media_name);
-	     	mediaName.setText(TempModel.getMediaNames(i));
+	     	mediaName.setText(Gameplay.getMediaNames(i));
 	     	
-	     	TextView buynowText =(TextView) findViewById(R.id.buy_now);
+	     	TextView buynowText =(TextView) result_cell.findViewById(R.id.buy_now);
 	     	buynowText.setClickable(true);
 	     	buynowText.setMovementMethod(LinkMovementMethod.getInstance());
-	     	String text = "<a href="+TempModel.getMediaEtailers(i)+">BUY NOW</a>";
+	     	String text = "<a href="+Gameplay.getMediaEtailers(i)+">BUY NOW</a>";
 	     	buynowText.setText(Html.fromHtml(text));
 	     	buynowText.setTextColor(Color.parseColor("#FFFFFF"));
      	}

@@ -5,7 +5,7 @@ import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import models.Config;
-import models.TempModel;
+import models.Gameplay;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -133,14 +133,14 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 			
 			
 			//set properties for model
-			TempModel.setQuestion(questions);
-			TempModel.setAnswers(anwsers);
-			TempModel.setMediaEtailers(mediaEtailers);
-			TempModel.setMediaURLs(mediaURLs);
-			TempModel.setMediaLegals(mediaURLs);
-			TempModel.setMediaNames(mediaNames);
-			TempModel.setMediaTN(mediaTN);
-			TempModel.setMediaIDs(mediaIDs);
+			Gameplay.setQuestion(questions);
+			Gameplay.setAnswers(anwsers);
+			Gameplay.setMediaEtailers(mediaEtailers);
+			Gameplay.setMediaURLs(mediaURLs);
+			Gameplay.setMediaLegals(mediaURLs);
+			Gameplay.setMediaNames(mediaNames);
+			Gameplay.setMediaTN(mediaTN);
+			Gameplay.setMediaIDs(mediaIDs);
 			
 			thread.start();
 			

@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import views.GamePlayPage;
-import models.TempModel;
+import models.Gameplay;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -125,7 +125,7 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 			mediaPlayer.setOnBufferingUpdateListener(this);
 			mediaPlayer.setOnCompletionListener(this);
 			mediaPlayer.setOnPreparedListener(this);
-			mediaPlayer.setDataSource(TempModel.getMediaURLs());
+			mediaPlayer.setDataSource(Gameplay.getMediaURLs());
 			mediaPlayer.prepare();
 		} catch (Exception e) {
 			Log.e("mediaPlayer", "error", e);
