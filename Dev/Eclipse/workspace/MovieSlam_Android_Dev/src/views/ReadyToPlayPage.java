@@ -40,9 +40,8 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
                 try {
                     synchronized(this){
                         wait(1000);
-                        Intent intent = new Intent();
-            			intent.setClass(ReadyToPlayPage.this, GamePlayPage.class);
-            			ReadyToPlayPage.this.startActivity(intent);
+//                      startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+                        startActivity(new Intent(getApplicationContext(), ResultPage.class));
                     }
                 }
                 catch(InterruptedException ex){                    
@@ -69,6 +68,7 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 		String[] mediaIDs = new String[5];
 		String[] mediaEtailers = new String[5];
 		String[][] anwsers = new String[5][4];
+		String[] mediaTN = new String[5];
 		
 		try {
 			for (int i=0; i<5; i++){
@@ -102,6 +102,10 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 				Element mediaEtailerElement = (Element) mediaEtailerList.item(0);
 				mediaEtailerList = mediaEtailerElement.getChildNodes();
 				
+				NodeList mediaTNList = ((Element)mediaNode).getElementsByTagName("media_thumbnail");
+				Element mediaTNElement = (Element) mediaTNList.item(0);
+				mediaTNList = mediaTNElement.getChildNodes();
+				
 				NodeList anwsersList = ((Element)mediaNode).getElementsByTagName("choice_value");
 				Element anwsersElement0 = (Element) anwsersList.item(0);
 				Element anwsersElement1 = (Element) anwsersList.item(1);
@@ -116,12 +120,13 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 				anwsers[i][2] = ((Node) anwsersList2.item(0)).getNodeValue();
 				anwsers[i][3] = ((Node) anwsersList3.item(0)).getNodeValue();
 				
-				mediaEtailers[i] = ((Node) mediaEtailerList.item(0)).getNodeValue();
 				questions[i] = ((Node) questionList.item(0)).getNodeValue();
 				mediaURLs[i] = ((Node) mediaUrlList.item(0)).getNodeValue();
 				mediaLegals[i] = ((Node) mediaLegalList.item(0)).getNodeValue();
 				mediaNames[i] = ((Node) mediaNameList.item(0)).getNodeValue();
 				mediaIDs[i] = ((Node) mediaIDList.item(0)).getNodeValue();
+				mediaEtailers[i] = ((Node) mediaEtailerList.item(0)).getNodeValue();
+				mediaTN[i] = ((Node) mediaTNList.item(0)).getNodeValue();
 				
 				System.out.println("movie question "+i+": "+questions[i]);
 			}
@@ -134,6 +139,7 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 			TempModel.setMediaURLs(mediaURLs);
 			TempModel.setMediaLegals(mediaURLs);
 			TempModel.setMediaNames(mediaNames);
+			TempModel.setMediaTN(mediaTN);
 			TempModel.setMediaIDs(mediaIDs);
 			
 			thread.start();

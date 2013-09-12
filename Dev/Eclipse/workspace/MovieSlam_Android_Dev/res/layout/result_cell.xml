@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>  
+
+<TableRow
+	xmlns:android="http://schemas.android.com/apk/res/android"  
+	android:id="@+id/tableRow_result"
+	android:layout_width="fill_parent"
+	android:layout_height="25dp"
+	android:layout_marginLeft="5dp"
+	android:layout_marginRight="5dp"
+	android:layout_marginTop="5dp"
+	android:layout_marginBottom="5dp" >				 
+      
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+         
+			<LinearLayout
+			    android:layout_width="0dp"
+			    android:layout_height="fill_parent"
+			    android:layout_weight="0.1"
+			    android:orientation="horizontal" />
+
+			<ImageView
+			    android:id="@+id/media_TN"
+			    android:layout_width="5dp"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0.5"
+			    android:adjustViewBounds="true"
+			    android:scaleType="centerCrop" />
+        
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_weight="1">
+
+				<TextView
+					    android:id="@+id/media_name"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_weight="1"
+					    android:gravity="top|left"
+					    android:textSize="5dp"
+					    android:textColor="#18305c"
+					    android:textStyle="bold" />
+				
+				<TextView
+					    android:id="@+id/buy_now"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_weight="1"
+					    android:gravity="top|left"
+					    android:textSize="5dp"
+					    android:textColor="#ffffff"
+					    android:textStyle="bold" />
+
+			</LinearLayout>
+          	
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_weight="1">
+				
+			    <LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="0dp"
+					android:orientation="horizontal"
+					android:layout_weight="0.8">
+					
+			        <ImageView
+					    android:id="@+id/player_image"
+					    android:layout_width="90dp"
+					    android:layout_height="wrap_content"
+					    android:layout_weight="1"
+					    android:adjustViewBounds="true"
+					    android:scaleType="centerCrop" />
+			        
+			        <ImageView
+					    android:id="@+id/oppo_image"
+					    android:layout_width="90dp"
+					    android:layout_height="wrap_content"
+					    android:layout_weight="1"
+					    android:adjustViewBounds="true"
+					    android:scaleType="centerCrop" />
+			        
+				</LinearLayout>
+				
+			    <LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="0dp"
+					android:orientation="vertical"
+					android:layout_weight="0.2">
+					
+			        <TextView
+						android:id="@+id/player_result"
+						android:layout_width="wrap_content"
+						android:layout_height="fill_parent"
+						android:gravity="left"
+						android:textColor="#18305c"
+						android:textSize="20sp"
+						android:textStyle="bold"
+						android:layout_weight="1" />
+			        
+			        <TextView
+						android:id="@+id/oppo_result"
+						android:layout_width="wrap_content"
+						android:layout_height="fill_parent"
+						android:gravity="left"
+						android:textColor="#18305c"
+						android:textSize="20sp"
+						android:textStyle="bold"
+						android:layout_weight="1" />
+			        
+				</LinearLayout>
+	
+			</LinearLayout>
+		
+	</LinearLayout>
+         
+</TableRow>

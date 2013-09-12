@@ -33,6 +33,10 @@ public class TempModel {
 		return _mediaNames[index];
 	}
 	
+	public static String getMediaNames(int i){
+		return _mediaNames[i];
+	}
+	
 	public static void setMediaIDs(String[] s){
 		_mediaIDs = s;
 	}
@@ -70,8 +74,22 @@ public class TempModel {
 	
 	public static String[] _mediaEtailers;
 	
-	public static String[] getMediaEtailers() {
-		return _mediaEtailers;
+	public static String getMediaEtailers() {
+		return _mediaEtailers[index];
+	}
+	
+	public static String getMediaEtailers(int n) {
+		return _mediaEtailers[n];
+	}
+	
+	public static void setMediaTN(String[] s) {
+		_mediaTN = s;
+	}
+	
+	public static String[] _mediaTN;
+	
+	public static String getMediaTN(int i) {
+		return "http://screenslam.foxfilm.com/" + _mediaTN[i];
 	}
 	
 	public static int index = 0;
