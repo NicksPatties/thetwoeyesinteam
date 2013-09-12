@@ -28,8 +28,7 @@ public class RoundHistory extends Activity implements ResponseDelegate, Config {
 		setContentView(R.layout.round_history);
 		
 		// get round detail from backend
-		Bundle b_in = getIntent().getExtras();
-		
+		Bundle b_in = getIntent().getExtras();		
 		new XmlRequestHandler(this, BASE_URL+"/service/getRoundDetail.php?game_id="+b_in.getString("game_id")+"&user_id="+User.get_uid()).execute();
 		Log.d("debug", BASE_URL+"/service/getRoundDetail.php?game_id="+b_in.getString("game_id")+"&user_id="+User.get_uid());
 		

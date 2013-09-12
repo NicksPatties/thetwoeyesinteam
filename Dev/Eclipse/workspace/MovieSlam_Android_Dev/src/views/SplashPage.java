@@ -186,8 +186,16 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			
 			AdvElement gameplay_e = gameplays_e.getElement("gameplay", i);
 			
+			TextView player_name_txt = (TextView) player_challenge_cell.findViewById(R.id.player_name_txt);
+			player_name_txt.setText(gameplay_e.getValue("player_user_fname")+"\n"+gameplay_e.getValue("player_user_lname"));
+			
+			TextView player_score_txt = (TextView) player_challenge_cell.findViewById(R.id.player_score_txt);
+			player_score_txt.setText(gameplay_e.getValue("gameplay_user_won")+":"+gameplay_e.getValue("gameplay_player_won"));
+			
+			new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
+			
 			// add listener to table row
-			player_challenge_cell.setTag(gameplay_e.getValue("gameplay_game_id"));
+			player_challenge_cell.setTag(gameplay_e.getValue("player_user_id"));
 			player_challenge_cell.setClickable(true);
 			player_challenge_cell.setOnClickListener(new OnClickListener() {
 		        public void onClick(View v) {
@@ -199,14 +207,6 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		        }
 		    });
 			
-			TextView player_name_txt = (TextView) player_challenge_cell.findViewById(R.id.player_name_txt);
-			player_name_txt.setText(gameplay_e.getValue("player_user_fname")+"\n"+gameplay_e.getValue("player_user_lname"));
-			
-			TextView player_score_txt = (TextView) player_challenge_cell.findViewById(R.id.player_score_txt);
-			player_score_txt.setText(gameplay_e.getValue("gameplay_user_won")+":"+gameplay_e.getValue("gameplay_player_won"));
-			
-			new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
-			
 			// check challenger type
 			Button b0 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b0);			
 			Button b1 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b1);
@@ -215,6 +215,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			String genre_type = gameplay_e.getValue("challenge_genre_type");
 			String gameplay_status = gameplay_e.getValue("gameplay_status");
 			String gameplay_round = gameplay_e.getValue("gameplay_round");
+						
 			if (gameplay_status.equals("accept")){
 
 				// set decline button
