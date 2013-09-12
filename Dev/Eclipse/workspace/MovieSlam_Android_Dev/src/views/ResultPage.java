@@ -53,7 +53,7 @@ public class ResultPage extends Activity {
 	     	
 	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.player_image_result)).execute(User.get_thumbnail());
 	     	
-//	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute(Gameplay.get_oppo_thumbnail());
+	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute(Gameplay.getOppoImageURL());
 	     	
 	     	TextView playerTime = (TextView) result_cell.findViewById(R.id.player_time);
 //	     	playerTime.setText(Gameplay.getMediaTime(i));

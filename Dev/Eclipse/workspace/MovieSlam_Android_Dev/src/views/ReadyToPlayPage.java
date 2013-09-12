@@ -14,6 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import tools.AdvElement;
 import tools.ResponseDelegate;
 import tools.XmlRequestHandler;
 
@@ -82,6 +83,15 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 		String[] mediaEtailers = new String[5];
 		String[][] anwsers = new String[5][4];
 		String[] mediaTN = new String[5];
+		
+		AdvElement ade = new AdvElement(response);
+		AdvElement opponent = ade.getElement("player");
+		Gameplay.setChallOppoID(opponent.getValue("player_user_id"));
+		Gameplay.setChallOppoFID(opponent.getValue("player_user_fid"));
+		Gameplay.setOppoFName(opponent.getValue("player_user_fname"));
+		Gameplay.setOppoLName(opponent.getValue("player_user_lname"));
+		Gameplay.setOppoImageURL(opponent.getValue("player_user_thumbnail"));
+		Gameplay.setOppoScore(opponent.getValue("player_user_score"));
 		
 		try {
 			for (int i=0; i<5; i++){

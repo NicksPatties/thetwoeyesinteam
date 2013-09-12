@@ -38,6 +38,16 @@ public class Gameplay {
 		_challOppoID = s;
 	}
 	
+	public static String getChallOppoFID (String s){
+		return _challOppoFID;
+	}
+	
+	private static String _challOppoFID;
+	
+	public static void setChallOppoFID (String s){
+		_challOppoFID = s;
+	}
+	
 	public static void setOppoImageURL (String s){
 		_oppoImageURL = s;
 	}
