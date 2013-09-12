@@ -6,21 +6,20 @@ import tools.AdvElement;
 import tools.DownloadImageTask;
 import tools.ResponseDelegate;
 import tools.XmlRequestHandler;
-
-import com.example.movieslam_android_dev.R;
-import com.example.movieslam_android_dev.R.layout;
-import com.example.movieslam_android_dev.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import com.example.movieslam_android_dev.R;
 
 public class GameHistory extends Activity implements ResponseDelegate, Config {
 
@@ -64,11 +63,18 @@ public class GameHistory extends Activity implements ResponseDelegate, Config {
 			int player_won = Integer.parseInt(gameplay_e.getValue("player_won"));
 			game_result_txt.setText((user_won == -1 ? "-" : Integer.toString(user_won)) +" : "+ (player_won == -1 ? "-" : Integer.toString(player_won)));
 			
+			RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight());
+			
 			ImageView user_tn = (ImageView) player_challenge_cell.findViewById(R.id.user_tn);
 			new DownloadImageTask(user_tn).execute(b_in.getString("user_tn_url"));
+			//user_tn.setLayoutParams(layoutParams);
+			//user_tn.setLayoutParams(new LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight()));
+			
 			ImageView player_tn = (ImageView) player_challenge_cell.findViewById(R.id.player_tn);
-			new DownloadImageTask(player_tn).execute(b_in.getString("player_tn_url"));
-					
+			new DownloadImageTask(player_tn).execute(b_in.getString("player_tn_url"));			
+			//player_tn.setLayoutParams(layoutParams);
+			//player_tn.setLayoutParams(new LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight()));
+			
 		}
 		
 	}

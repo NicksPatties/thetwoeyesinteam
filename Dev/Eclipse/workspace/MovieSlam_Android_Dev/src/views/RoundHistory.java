@@ -3,6 +3,7 @@ package views;
 import models.Config;
 import models.User;
 import tools.AdvElement;
+import tools.DownloadImageTask;
 import tools.ResponseDelegate;
 import tools.XmlRequestHandler;
 
@@ -18,7 +19,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 public class RoundHistory extends Activity implements ResponseDelegate, Config {
 
@@ -30,8 +33,7 @@ public class RoundHistory extends Activity implements ResponseDelegate, Config {
 		// get round detail from backend
 		Bundle b_in = getIntent().getExtras();		
 		new XmlRequestHandler(this, BASE_URL+"/service/getRoundDetail.php?game_id="+b_in.getString("game_id")+"&user_id="+User.get_uid()).execute();
-		Log.d("debug", BASE_URL+"/service/getRoundDetail.php?game_id="+b_in.getString("game_id")+"&user_id="+User.get_uid());
-		
+		Log.d("debug", BASE_URL+"/service/getRoundDetail.php?game_id="+b_in.getString("game_id")+"&user_id="+User.get_uid());		
 	}
 
 	@Override
@@ -43,14 +45,23 @@ public class RoundHistory extends Activity implements ResponseDelegate, Config {
 
 	@Override
 	public void responseLoaded(String response) {
+		// init root element
+		AdvElement doc = new AdvElement(response);
 		
 		// generate round details
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		TableLayout round_info_wrapper = (TableLayout) findViewById(R.id.round_info_wrapper);
-		for (int i = 0; i < 5; i++){
+		for (int i = 0; i < doc.getElementLength("media"); i++){
+			AdvElement media_e = doc.getElement("media", i);
 			
-			View player_challenge_cell = layoutInflater.inflate(R.layout.round_info_cell, round_info_wrapper, false);
-			round_info_wrapper.addView(player_challenge_cell);
+			View round_info_cell = layoutInflater.inflate(R.layout.round_info_cell, round_info_wrapper, false);
+			round_info_wrapper.addView(round_info_cell);
+			
+			ImageView movie_tn = (ImageView) round_info_cell.findViewById(R.id.movie_tn);
+			new DownloadImageTask(movie_tn).execute(BASE_URL + "/" + media_e.getValue("media_thumbnail"));
+			
+			TextView movie_txt = (TextView) round_info_cell.findViewById(R.id.movie_txt);
+			movie_txt.setText(media_e.getValue("media_name"));
 		}
 		
 	}
