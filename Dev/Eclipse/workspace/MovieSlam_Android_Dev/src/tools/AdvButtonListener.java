@@ -1,13 +1,10 @@
 package tools;
 
 import models.Config;
-import models.User;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import tools.ResponseDelegate;
-import tools.XmlRequestHandler;
 
 public class AdvButtonListener implements OnClickListener, Config {
 	private Bundle _bundle;

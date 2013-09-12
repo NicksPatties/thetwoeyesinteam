@@ -65,9 +65,9 @@ public class GameHistory extends Activity implements ResponseDelegate, Config {
 			game_result_txt.setText((user_won == -1 ? "-" : Integer.toString(user_won)) +" : "+ (player_won == -1 ? "-" : Integer.toString(player_won)));
 			
 			ImageView user_tn = (ImageView) player_challenge_cell.findViewById(R.id.user_tn);
-			new DownloadImageTask(user_tn).execute("http://graph.facebook.com/100000855108534/picture?type=large");
+			new DownloadImageTask(user_tn).execute(b_in.getString("user_tn_url"));
 			ImageView player_tn = (ImageView) player_challenge_cell.findViewById(R.id.player_tn);
-			new DownloadImageTask(player_tn).execute("http://graph.facebook.com/100000855108534/picture?type=large");
+			new DownloadImageTask(player_tn).execute(b_in.getString("player_tn_url"));
 					
 		}
 		

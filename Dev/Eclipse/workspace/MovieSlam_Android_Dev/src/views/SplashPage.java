@@ -2,20 +2,17 @@ package views;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import tools.AdvElement;
-import tools.ChallengeBoardButtonListener;
-import tools.DownloadImageTask;
-import tools.ResponseDelegate;
-import tools.XmlRequestHandler;
 import models.Config;
 import models.Gameplay;
 import models.User;
-import android.R.string;
+import tools.AdvButtonListener;
+import tools.AdvElement;
+import tools.DownloadImageTask;
+import tools.ResponseDelegate;
+import tools.XmlRequestHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,12 +21,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,16 +32,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
-import com.facebook.FacebookException;
-import com.facebook.model.GraphUser;
-import com.facebook.widget.FriendPickerFragment;
-import com.facebook.widget.LoginButton;
-import com.facebook.widget.PickerFragment;
 
 public class SplashPage extends FragmentActivity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
@@ -195,18 +181,20 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			
 			new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
 			
-			// Game history
-			player_challenge_cell.setTag(gameplay_e.getValue("player_user_id"));
-			player_challenge_cell.setClickable(true);
-			player_challenge_cell.setOnClickListener(new OnClickListener() {
-		        public void onClick(View v) {
-		           	Intent intent = new Intent(getApplicationContext(), GameHistory.class);
-					Bundle b_out = new Bundle();
-					b_out.putString("player_id", (String) v.getTag());
-					intent.putExtras(b_out);
+			// Game history			
+			Bundle game_history_bd = new Bundle();
+			game_history_bd.putString("player_id", gameplay_e.getValue("player_user_id"));
+			game_history_bd.putString("user_tn_url", user_e.getValue("user_thumbnail"));
+			game_history_bd.putString("player_tn_url", gameplay_e.getValue("player_user_thumbnail"));
+			OnClickListener challenge_row_ltn = new AdvButtonListener(game_history_bd, this) {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(getApplicationContext(), GameHistory.class);
+					intent.putExtras(get_bundle());
 					startActivity(intent);
-		        }
-		    });
+				}
+			};
+			player_challenge_cell.setOnClickListener(challenge_row_ltn);
 			
 			// check challenger type
 			Button b0 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b0);			
@@ -221,25 +209,27 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 
 				// set decline button
 				b0.setText("DECLINE");
-				OnClickListener b0_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
+				Bundle decline_bd = new Bundle();
+				decline_bd.putString("game_id", game_id);
+				OnClickListener b0_ltn = new AdvButtonListener(decline_bd, this) {
 					@Override
 					public void onClick(View v) {
-						new XmlRequestHandler(get_delegate(), BASE_URL+"/service/getGameInfo.php?user_id="+User.get_uid()+"&remove_game_id="+get_gameplay_game_id()).execute();
+						new XmlRequestHandler(get_delegate(), BASE_URL+"/service/getGameInfo.php?user_id="+User.get_uid()+"&remove_game_id="+get_bundle().getString("game_id")).execute();
 					}
 				};
 				b0.setOnClickListener(b0_ltn);
 				
 				// set accept button
 				b1.setText("ACCEPT");
-				OnClickListener b1_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
+				Bundle accept_bd = new Bundle();
+				accept_bd.putString("target_source_type", "cid");
+				accept_bd.putString("target_id", challenge_id);
+				accept_bd.putString("target_genre", genre_type);
+				OnClickListener b1_ltn = new AdvButtonListener(accept_bd, this) {
 					@Override
 					public void onClick(View v) {						
-						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
-						Bundle b_out = new Bundle();
-						b_out.putString("target_source_type", "cid");
-						b_out.putString("target_id", get_challenge_id());
-						b_out.putString("target_genre", get_challenge_genre_type());
-						intent.putExtras(b_out);
+						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						
+						intent.putExtras(get_bundle());
 						startActivity(intent);
 					}
 				};
@@ -254,13 +244,13 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			}else{
 				// set result button
 				b0.setText("RESULT");
-				OnClickListener b0_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
+				Bundle result_bd = new Bundle();
+				result_bd.putString("game_id", game_id);
+				OnClickListener b0_ltn = new AdvButtonListener(result_bd, this) {
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(getApplicationContext(), RoundHistory.class);
-						Bundle b_out = new Bundle();
-						b_out.putString("game_id", get_gameplay_game_id());
-						intent.putExtras(b_out);
+						Intent intent = new Intent(getApplicationContext(), RoundHistory.class);						
+						intent.putExtras(get_bundle());
 						startActivity(intent);
 					}
 				};
