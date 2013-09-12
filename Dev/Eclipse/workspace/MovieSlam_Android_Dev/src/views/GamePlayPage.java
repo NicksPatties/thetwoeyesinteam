@@ -41,12 +41,13 @@ public class GamePlayPage extends Activity {
 	private ImageView imageView;
 	private TextView textview;
 	private ProgressBar progressBar;
-	private MoviePlayer player;
+	private MoviePlayer moviePlayer;
 	private String[] rightAnswers = new String[5];
 	private String[] buttonLabels = new String[4];
 	private Button[] buttons = new Button[4];
 	private ImageView[] crosses = new ImageView[4];
 	private ImageView[] starses = new ImageView[4];
+	private TextView[] score_text = new TextView[4];
 	private AnimationDrawable[] starsAnimation = new AnimationDrawable[4];
 	private int timer = 0;
 	private int rightAnswerPointer = 0;
@@ -81,6 +82,10 @@ public class GamePlayPage extends Activity {
 		starsAnimation[1] = (AnimationDrawable) starses[1].getDrawable();
 		starsAnimation[2] = (AnimationDrawable) starses[2].getDrawable();
 		starsAnimation[3] = (AnimationDrawable) starses[3].getDrawable();
+		score_text[0] = (TextView) this.findViewById(R.id.score_text1);
+		score_text[1] = (TextView) this.findViewById(R.id.score_text2);
+		score_text[2] = (TextView) this.findViewById(R.id.score_text3);
+		score_text[3] = (TextView) this.findViewById(R.id.score_text4);
 
 		initAssets();
 	}
@@ -214,7 +219,7 @@ public class GamePlayPage extends Activity {
 		if (parseAsIPadURL(s) != ""){
 			surfaceView.setVisibility(View.VISIBLE);
 			imageView.setVisibility(View.INVISIBLE);
-			player = new MoviePlayer(surfaceView, progressBar, this);
+			moviePlayer = new MoviePlayer(surfaceView, progressBar, this);
 		}else{
 			surfaceView.setVisibility(View.INVISIBLE);
 			imageView.setVisibility(View.VISIBLE);
@@ -278,15 +283,17 @@ public class GamePlayPage extends Activity {
 				starsAnimation[rightAnswerPointer].start();
 				buttons[rightAnswerPointer].setBackgroundResource(R.drawable.button_orange);
 				audioPlayer(1);//correct answer sound
-				if(player!=null){
-					int position = player.mediaPlayer.getCurrentPosition();
-					int duration = player.mediaPlayer.getDuration();
+				if(moviePlayer!=null){
+					int position = moviePlayer.mediaPlayer.getCurrentPosition();
+					int duration = moviePlayer.mediaPlayer.getDuration();
 					System.out.println("--------------The position you got for this question: "+ position);
 					System.out.println("--------------The duration you got for this question: "+ duration);
 					System.out.println("--------------The SCORE you got for this question: "+ (100-90*position/duration));
 					score = 100-90*position/duration;
+					score_text[rightAnswerPointer].setText(Integer.toString(score));
 				}else{
 					score = 100-90*timer/100;
+					score_text[rightAnswerPointer].setText(Integer.toString(score));
 				}
 				System.out.println("--------------The SCORE you got for this question: "+ score);
 			}else{
@@ -296,8 +303,8 @@ public class GamePlayPage extends Activity {
 				score = 10;
 			}
 			
-			if(player!=null){
-				player.setPause();
+			if(moviePlayer!=null){
+				moviePlayer.setPause();
 			}else{
 //				thread.stop();
 			}

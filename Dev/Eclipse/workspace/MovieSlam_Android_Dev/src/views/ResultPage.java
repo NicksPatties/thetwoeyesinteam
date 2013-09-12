@@ -1,8 +1,10 @@
 package views;
 
 import models.Gameplay;
+import models.User;
 import tools.AdvElement;
 import tools.DownloadImageTask;
+import tools.XmlRequestHandler;
 
 import com.example.movieslam_android_dev.R;
 
@@ -42,6 +44,21 @@ public class ResultPage extends Activity {
 	     	String text = "<a href="+Gameplay.getMediaEtailers(i)+">BUY NOW</a>";
 	     	buynowText.setText(Html.fromHtml(text));
 	     	buynowText.setTextColor(Color.parseColor("#FFFFFF"));
+	     	
+	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.player_image_result)).execute(User.get_thumbnail());
+	     	
+//	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute(Gameplay.get_oppo_thumbnail());
+	     	
+	     	TextView playerTime = (TextView) result_cell.findViewById(R.id.player_time);
+//	     	playerTime.setText(Gameplay.getMediaTime(i));
+	     	
+	     	TextView oppoTime = (TextView) result_cell.findViewById(R.id.oppo_time);
+	     	oppoTime.setText("WRONG");
      	}
 	}
+	
+	public void onClick(View v) {
+		//go to genre selection page
+	}
+	
 }

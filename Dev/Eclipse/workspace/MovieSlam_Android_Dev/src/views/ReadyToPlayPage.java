@@ -34,14 +34,16 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
         
+        
+        
         thread=  new Thread(){
             @Override
             public void run(){
                 try {
                     synchronized(this){
                         wait(1000);
-//                      startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
-                        startActivity(new Intent(getApplicationContext(), ResultPage.class));
+                      startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+//                        startActivity(new Intent(getApplicationContext(), ResultPage.class));
                     }
                 }
                 catch(InterruptedException ex){                    
