@@ -18,6 +18,65 @@ public class Gameplay {
 		_promo_name = promo_name;
 	}
 	
+	public static void setGenre (String s){
+		_genre = s;
+	}
+	
+	private static String _genre;
+	
+	public static String getGenre (){
+		return _genre;
+	}
+	
+	public static String getChallOppoID (String s){
+		return _challOppoID;
+	}
+	
+	private static String _challOppoID;
+	
+	public static void setChallOppoID (String s){
+		_challOppoID = s;
+	}
+	
+	public static void setOppoImageURL (String s){
+		_oppoImageURL = s;
+	}
+	
+	private static String _oppoImageURL;
+	
+	public static String getOppoImageURL (){
+		return _oppoImageURL;
+	}
+	
+	public static void setOppoScore (String s){
+		_oppoScore = s;
+	}
+	
+	private static String _oppoScore;
+	
+	public static String getOppoScore (){
+		return _oppoScore;
+	}
+	
+	public static void setOppoFName (String s){
+		_oppoFName = s;
+	}
+	
+	private static String _oppoFName;
+	
+	public static String getOppoFName (){
+		return _oppoFName;
+	}
+	
+	public static void setOppoLName (String s){
+		_oppoLName = s;
+	}
+	
+	private static String _oppoLName;
+	
+	public static String getOppoLName (){
+		return _oppoLName;
+	}
 	
 	public static void setMediaURLs(String[] s){
 		_mediaURLs = s;
