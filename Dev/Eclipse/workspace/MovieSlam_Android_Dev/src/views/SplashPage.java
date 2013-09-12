@@ -191,7 +191,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			player_challenge_cell.setClickable(true);
 			player_challenge_cell.setOnClickListener(new OnClickListener() {
 		        public void onClick(View v) {
-		           	Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
+		           	Intent intent = new Intent(getApplicationContext(), GameHistory.class);
 					Bundle b_out = new Bundle();
 					b_out.putString("player_id", (String) v.getTag());
 					intent.putExtras(b_out);
