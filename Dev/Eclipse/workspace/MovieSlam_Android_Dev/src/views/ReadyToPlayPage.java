@@ -6,6 +6,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import models.Config;
 import models.Gameplay;
+import models.User;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,6 +19,7 @@ import tools.XmlRequestHandler;
 
 import com.example.movieslam_android_dev.R;
 
+import android.R.color;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,13 +30,18 @@ import android.widget.TextView;
 
 public class ReadyToPlayPage extends Activity implements ResponseDelegate, Config{
 
+	private TextView genreText;
+	
 	private Thread thread;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
         
-        
+        genreText = (TextView) findViewById(R.id.genre_text);
+        String s = Gameplay.getGenre();
+        genreText.setText(s);
+//        genreText.setTextColor(color.holo_orange_dark);
         
         thread=  new Thread(){
             @Override
@@ -42,8 +49,8 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
                 try {
                     synchronized(this){
                         wait(1000);
-                      startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
-//                        startActivity(new Intent(getApplicationContext(), ResultPage.class));
+                        startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+//                      startActivity(new Intent(getApplicationContext(), ResultPage.class));
                     }
                 }
                 catch(InterruptedException ex){                    
@@ -52,9 +59,13 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
                 // TODO              
             }
         };
-		
-		new XmlRequestHandler(this, BASE_URL+"/service/getMedia.php?&type=drama&user_id=8").execute();
         
+        String api = BASE_URL+ "/service/getMedia.php?"
+        				+"&type="+Gameplay.getGenre()
+        				+"&user_id="+User.get_uid();
+		
+//		new XmlRequestHandler(this, BASE_URL+"/service/getMedia.php?&type=drama&user_id=8").execute();
+		new XmlRequestHandler(this, api).execute();
 	}
 
 	@Override

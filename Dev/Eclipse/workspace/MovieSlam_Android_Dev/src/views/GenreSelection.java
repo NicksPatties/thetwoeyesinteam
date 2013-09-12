@@ -33,6 +33,7 @@ public class GenreSelection extends Activity {
 		b_out.putString("target_source_type", b_in.getString("target_source_type"));
 		b_out.putString("target_id", b_in.getString("target_id"));
 		b_out.putString("target_genre", (String) view.getTag());
+		Gameplay.setGenre((String) view.getTag());
 		intent.putExtras(b_out);
 		startActivity(intent);
 	}

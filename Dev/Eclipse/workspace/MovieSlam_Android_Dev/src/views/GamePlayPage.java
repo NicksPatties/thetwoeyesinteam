@@ -250,8 +250,10 @@ public class GamePlayPage extends Activity {
                         wait(3000);
                         if (Gameplay.index >= 5){
                 			startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
+                			finish();
                 		}else{
                 			startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+                			finish();
                 		}
                     }
                 }
@@ -309,6 +311,9 @@ public class GamePlayPage extends Activity {
 					System.out.println("--------------The duration you got for this question: "+ duration);
 					System.out.println("--------------The SCORE you got for this question: "+ (100-90*position/duration));
 					score = 100-90*position/duration;
+					if (score >= 100){
+						score = 10;
+					}
 					score_text[rightAnswerPointer].setText(Integer.toString(score));
 				}else{
 					score = 100-90*timer/100;

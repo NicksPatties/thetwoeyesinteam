@@ -10,21 +10,27 @@ import com.example.movieslam_android_dev.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class ResultPage extends Activity {
 	
+	private Button btn_nextround;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.result_page);
+        
+        btn_nextround = (Button) findViewById(R.id.btn_next_round);
         
      	LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
      	TableLayout result_table = (TableLayout) findViewById(R.id.result_table);
@@ -58,6 +64,7 @@ public class ResultPage extends Activity {
 	}
 	
 	public void onClick(View v) {
+		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
 		//go to genre selection page
 	}
 	
