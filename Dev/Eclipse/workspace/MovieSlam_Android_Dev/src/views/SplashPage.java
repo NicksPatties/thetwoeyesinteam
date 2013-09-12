@@ -23,6 +23,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -37,6 +38,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +73,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
                   }
               });
           }
-      }, 5000);
+      }, (int)(PROMO_IMG_DURATION*1000));
         
         
         // hardcode to user id 3
@@ -161,7 +163,6 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			user_info_edit.clear();
 			user_info_edit.putString("uid", uid);
 			user_info_edit.commit();
-			//Toast.makeText(this, "UID saved.", 3000).show();
 		}		
 		
 		TextView userScore_txt = (TextView)findViewById(R.id.userScore_txt); 
@@ -178,10 +179,25 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		for (int i = 0; i < gameplays_e.getElementLength("gameplay"); i++){
-			AdvElement gameplay_e = gameplays_e.getElement("gameplay", i);
 			
+			// add player challenge cell			
 			View player_challenge_cell = layoutInflater.inflate(R.layout.player_challenge_cell, score_table, false);
 			score_table.addView(player_challenge_cell);
+			
+			AdvElement gameplay_e = gameplays_e.getElement("gameplay", i);
+			
+			// add listener to table row
+			player_challenge_cell.setTag(gameplay_e.getValue("gameplay_game_id"));
+			player_challenge_cell.setClickable(true);
+			player_challenge_cell.setOnClickListener(new OnClickListener() {
+		        public void onClick(View v) {
+		           	Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
+					Bundle b_out = new Bundle();
+					b_out.putString("player_id", (String) v.getTag());
+					intent.putExtras(b_out);
+					startActivity(intent);
+		        }
+		    });
 			
 			TextView player_name_txt = (TextView) player_challenge_cell.findViewById(R.id.player_name_txt);
 			player_name_txt.setText(gameplay_e.getValue("player_user_fname")+"\n"+gameplay_e.getValue("player_user_lname"));
