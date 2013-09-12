@@ -1,14 +1,20 @@
 package views;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +40,8 @@ public class UserTypeSelection extends FragmentActivity {
             }
         });
 	}
+	
+	
 	
 	public void gotoFBFriendSelector(View view){		
 		
@@ -111,6 +119,46 @@ public class UserTypeSelection extends FragmentActivity {
 
         fragment.loadData(false);
     }
+    
+    
+    
+    public void gotoEmail(View view){		
+    	startActivity(new Intent(getApplicationContext(), EmailSelection.class));
+	}
+	
+	
+	public void gotoSms(View view){
+		ArrayList<String> alContacts = new ArrayList<String>();
+		
+		ContentResolver contResv = getContentResolver();
+		Cursor cursor = contResv.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+		if(cursor.moveToFirst())
+		{
+		    
+		    do
+		    {
+		        String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+
+		        if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
+		        {
+		            Cursor pCur = contResv.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
+		            while (pCur.moveToNext()) 
+		            {
+		                String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+		                alContacts.add(contactNumber);
+		                break;
+		            }
+		            pCur.close();
+		        }
+
+		    } while (cursor.moveToNext()) ;
+		}
+		
+		for (int i=0; i< alContacts.size(); i++){
+			Log.d("debug", alContacts.get(i));
+		}
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

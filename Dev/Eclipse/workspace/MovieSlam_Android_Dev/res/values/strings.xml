@@ -40,5 +40,6 @@
     <string name="no_friends_selected"></string>
     <string name="you_picked"></string>
     <string name="title_activity_round_history">RoundHistory</string>
+    <string name="title_activity_email_selection">EmailSelection</string>
 
 </resources>

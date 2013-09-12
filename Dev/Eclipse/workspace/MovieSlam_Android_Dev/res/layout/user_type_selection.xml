@@ -116,6 +116,7 @@
 	   	    android:textColor="@android:color/white"
 	   	    android:textSize="18sp"
 	   	    android:textStyle="bold"
+	   	    android:onClick="gotoEmail"
 	   	    android:layout_marginBottom="12dp" />
 	        
 	        <Button
@@ -129,6 +130,7 @@
 	   	    android:textColor="@android:color/white"
 	   	    android:textSize="18sp"
 	   	    android:textStyle="bold"
+	   	    android:onClick="gotoSms"
 	   	    android:layout_marginBottom="12dp" />
 	        
 		</LinearLayout>
