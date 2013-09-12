@@ -64,7 +64,7 @@ public class ResultPage extends Activity {
 	}
 	
 	public void onClick(View v) {
-		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
+		startActivity(new Intent(getApplicationContext(), SplashPage.class));
 		//go to genre selection page
 	}
 	
