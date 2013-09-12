@@ -48,6 +48,21 @@ tools:context=".GenreSelection" >
 					android:layout_marginTop="30dp" 
 					android:layout_marginBottom="30dp">
 					</ImageView>
+					
+			        <Button
+				   	android:id="@+id/promo_btn"
+				    android:layout_width="fill_parent"
+			   	    android:layout_height="0dp"
+			   	    android:layout_weight="100"
+			   	    android:background="@drawable/button_bg"
+			   	    android:clickable="true"
+			   	    android:text=""
+			   	    android:textColor="@android:color/white"
+			   	    android:textSize="30sp"
+			   	    android:textStyle="bold"
+			   	    android:onClick="gotoGamePlayPage"
+			   	    android:layout_marginBottom="35dp"
+			   	    android:tag="promo" />
 		        	
 			        <Button
 				   	android:id="@+id/btn_splash"

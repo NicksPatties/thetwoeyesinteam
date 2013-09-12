@@ -63,8 +63,8 @@ public class UidInputPage extends Activity implements ResponseDelegate, Config {
 			EditText uid_txt = (EditText) this.findViewById(R.id.uid_txt);
 			Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
 			Bundle b = new Bundle();
-			b.putString("target_player_type", "uid");
-			b.putString("target_player_id", uid_txt.getText().toString());
+			b.putString("target_source_type", "uid");
+			b.putString("target_id", uid_txt.getText().toString());
 			intent.putExtras(b);
 			startActivity(intent);
 			finish();			

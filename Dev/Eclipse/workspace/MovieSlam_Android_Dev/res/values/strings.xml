@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_id">124623494364348</string>
+
+    <string name="app_id">124623494364348</string>
     <string name="app_name">MovieSlam_Android_Dev</string>
     <string name="action_settings">Settings</string>
     <string name="splash">Movie Slam Splash!!!</string>
@@ -36,6 +37,9 @@
     <string name="title_activity_help_info">HelpInfo</string>
     <string name="title_activity_user_type_selection">UserTypeSelection</string>
     <string name="title_activity_uid_input_page">UidInputPage</string>
-	<string name="no_friends_selected"></string>
-	<string name="you_picked"></string>
+    <string name="no_friends_selected"></string>
+    <string name="you_picked"></string>
+    <string name="title_activity_round_history">RoundHistory</string>
+    <string name="title_activity_email_selection">EmailSelection</string>
+
 </resources>

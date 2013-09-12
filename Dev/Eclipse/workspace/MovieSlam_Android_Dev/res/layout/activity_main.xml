@@ -46,7 +46,6 @@ tools:context=".MainActivity">
 		android:layout_height="match_parent">
 		    
 		    <LinearLayout
-		    android:background="@drawable/bg_challengeboard"
 		    android:orientation="horizontal"
 		    android:id="@+id/ContainerLayout"
 		    android:layout_width="fill_parent"
@@ -185,6 +184,17 @@ tools:context=".MainActivity">
 			</LinearLayout>
 			
 		</RelativeLayout>
+		
+		<ImageView
+		android:id="@+id/bg_preloader"
+		android:scaleType="centerCrop"
+		android:layout_alignLeft="@+id/bg"
+		android:layout_alignRight="@+id/bg"
+		android:adjustViewBounds="true"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:src="@drawable/bg_preloader" >
+		</ImageView>
 		
 	</RelativeLayout>
 	

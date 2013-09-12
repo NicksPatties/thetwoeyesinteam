@@ -4,12 +4,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import tools.AdvElement;
+import tools.ChallengeBoardButtonListener;
 import tools.DownloadImageTask;
 import tools.ResponseDelegate;
 import tools.XmlRequestHandler;
 import models.Config;
+import models.Gameplay;
 import models.User;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -27,6 +32,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,13 +49,27 @@ import com.facebook.widget.PickerFragment;
 
 public class SplashPage extends FragmentActivity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
-	
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
+        
+        // init promo image
+        final ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
+        new DownloadImageTask(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
+        Timer t = new Timer(false);
+        t.schedule(new TimerTask() {
+        @Override
+        public void run() {
+             runOnUiThread(new Runnable() {
+                  public void run() {
+                	  bg_preloader.setVisibility(View.GONE);
+                  }
+              });
+          }
+      }, 5000);
+        
         
         // hardcode to user id 3
         SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
@@ -62,9 +82,9 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
         // User info init (check for fb connect first!!!!!!!!!!!!)
         String uid = getUIDFromDevice();
         if (uid != null){
-        	getGameinfo(uid, "0");
+        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0", false).execute();
         }else{
-        	getGameinfo("0", "0", "guest", "Guest", BASE_URL+"/include/images/avatar.png");
+        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png", false).execute();
         }
         
 		// add main board content
@@ -74,7 +94,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		user_panel.addView(user_main_board);		
 		
 		// FB connected
-		LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
+		//LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
 		
         
 	}
@@ -90,48 +110,34 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		
 	}
 	
-	
-
-	private void getGameinfo(String uid, String fid) {
-		
-		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
-		score_table.removeAllViews();
-		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid="+fid).execute();
-	}
-	
-	private void getGameinfo(String uid, String fid, String fname, String lname, String thumbnail) {
-		
-		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
-		score_table.removeAllViews();
-		new XmlRequestHandler(this, BASE_URL+"service/getGameInfo.php?user_id="+uid+"&fid="+fid+"&fname="+fname+"&lname="+lname+"&thumbnail="+thumbnail).execute();
-		
-	}
-	
 	public void connectToFacebook(View view){
 	}
 
-	public void gotoHelp(View view){
-		
+	public void gotoHelp(View view){		
 		startActivity(new Intent(getApplicationContext(), HelpInfo.class));
 	}
 	
-	public void gotoNewChallenge(View view){
-		
+	public void gotoNewChallenge(View view){		
 		startActivity(new Intent(getApplicationContext(), UserTypeSelection.class));
 //		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
 	
 	public void gotoRefresh(View view){
 		String uid = getUIDFromDevice();
-		getGameinfo(uid, "0");
+		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0").execute();
 	}
 	
 	@Override
 	public void responseLoaded(String response) {
+		
 		// init root element
 		AdvElement doc = new AdvElement(response);
 		
-		
+		// init promo info
+		AdvElement promo_e = doc.getElement("promo");
+		Gameplay.set_promo(Integer.parseInt(promo_e.getValue("display")));
+		Gameplay.set_promo_name(promo_e.getValue("name"));
+
 		// set User variables
 		AdvElement user_e = doc.getElement("user");
 		User.set_uid(user_e.getValue("user_id"));
@@ -161,13 +167,13 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		
 		new DownloadImageTask((ImageView) findViewById(R.id.userThumbnail_iv)).execute(user_e.getValue("user_thumbnail"));
 		
-		
-		
+		// empty challenge board
+		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
+		score_table.removeAllViews();
 		
 		// parse player challenges board
 		AdvElement gameplays_e = doc.getElement("gameplays");		
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
 		
 		for (int i = 0; i < gameplays_e.getElementLength("gameplay"); i++){
 			AdvElement gameplay_e = gameplays_e.getElement("gameplay", i);
@@ -186,18 +192,59 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			// check challenger type
 			Button b0 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b0);			
 			Button b1 = (Button) player_challenge_cell.findViewById(R.id.player_challenge_b1);
+			String game_id = gameplay_e.getValue("gameplay_game_id");
+			String challenge_id = gameplay_e.getValue("challenge_id");
+			String genre_type = gameplay_e.getValue("challenge_genre_type");
 			String gameplay_status = gameplay_e.getValue("gameplay_status");
+			String gameplay_round = gameplay_e.getValue("gameplay_round");
 			if (gameplay_status.equals("accept")){
+
+				// set decline button
 				b0.setText("DECLINE");
+				OnClickListener b0_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
+					@Override
+					public void onClick(View v) {
+						new XmlRequestHandler(get_delegate(), BASE_URL+"/service/getGameInfo.php?user_id="+User.get_uid()+"&remove_game_id="+get_gameplay_game_id()).execute();
+					}
+				};
+				b0.setOnClickListener(b0_ltn);
+				
+				// set accept button
 				b1.setText("ACCEPT");
-			}else if (gameplay_status.equals("end")){
+				OnClickListener b1_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
+					@Override
+					public void onClick(View v) {						
+						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
+						Bundle b_out = new Bundle();
+						b_out.putString("target_source_type", "cid");
+						b_out.putString("target_id", get_challenge_id());
+						b_out.putString("target_genre", get_challenge_genre_type());
+						intent.putExtras(b_out);
+						startActivity(intent);
+					}
+				};
+				b1.setOnClickListener(b1_ltn);
+				
+			}else if (gameplay_status.equals("end") && gameplay_round.equals("1")){
 				b0.setText("FORFEIT");
 				b0.setEnabled(false);
 				b0.setBackgroundResource(R.drawable.button_small_disabled);
 				b1.setVisibility(View.INVISIBLE);
 				player_score_txt.setText("-:-");
 			}else{
+				// set result button
 				b0.setText("RESULT");
+				OnClickListener b0_ltn = new ChallengeBoardButtonListener(game_id, challenge_id, genre_type, this) {
+					@Override
+					public void onClick(View v) {					
+						Intent intent = new Intent(getApplicationContext(), RoundHistory.class);
+						Bundle b_out = new Bundle();
+						b_out.putString("game_id", get_gameplay_game_id());
+						intent.putExtras(b_out);
+						startActivity(intent);
+					}
+				};
+				b0.setOnClickListener(b0_ltn);
 				b1.setVisibility(View.INVISIBLE);
 			}
 			
