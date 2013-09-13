@@ -1,9 +1,11 @@
 package views;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
+import tools.FriendPickerApplication;
+import views.component.PickFriendsActivity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -13,23 +15,25 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SimpleAdapter;
 
 import com.example.movieslam_android_dev.R;
-import com.facebook.FacebookException;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
-import com.facebook.widget.FriendPickerFragment;
-import com.facebook.widget.PickerFragment;
 
 public class UserTypeSelection extends FragmentActivity {
-	private List<GraphUser> tags;	
+//	private List<GraphUser> tags;
+	private static final int PICK_FRIENDS_ACTIVITY = 1;
+	private UiLifecycleHelper lifecycleHelper;
+	boolean pickFriendsWhenSessionOpened;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +46,99 @@ public class UserTypeSelection extends FragmentActivity {
                 onClickPickFriends();
             }
         });
+        
+        
+        lifecycleHelper = new UiLifecycleHelper(this, new Session.StatusCallback() {
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+                onSessionStateChanged(session, state, exception);
+            }
+        });
+        lifecycleHelper.onCreate(savedInstanceState);
+
+        ensureOpenSession();
 	}
 	
+	private boolean ensureOpenSession() {
+        if (Session.getActiveSession() == null ||
+                !Session.getActiveSession().isOpened()) {
+            Session.openActiveSession(this, true, new Session.StatusCallback() {
+                @Override
+                public void call(Session session, SessionState state, Exception exception) {
+                    onSessionStateChanged(session, state, exception);
+                }
+            });
+            return false;
+        }
+        return true;
+    }
+
+    private void onSessionStateChanged(Session session, SessionState state, Exception exception) {
+        if (pickFriendsWhenSessionOpened && state.isOpened()) {
+            pickFriendsWhenSessionOpened = false;
+
+            startPickFriendsActivity();
+        }
+    }
+
+    private void displaySelectedFriends(int resultCode) {
+        String results = "";
+        FriendPickerApplication application = (FriendPickerApplication) getApplication();
+
+        Collection<GraphUser> selection = application.getSelectedUsers();
+        if (selection != null && selection.size() > 0) {
+            ArrayList<String> names = new ArrayList<String>();
+            for (GraphUser user : selection) {
+                names.add(user.getName());
+            }
+            results = TextUtils.join(", ", names);
+        } else {
+            results = "<No friends selected>";
+        }
+
+        //resultsTextView.setText(results);
+    }
 	
+	private void onClickPickFriends() {
+        startPickFriendsActivity();
+    }
+
+    private void startPickFriendsActivity() {
+        if (ensureOpenSession()) {
+            FriendPickerApplication application = (FriendPickerApplication) getApplication();
+            application.setSelectedUsers(null);
+
+            Intent intent = new Intent(this, PickFriendsActivity.class);
+            // Note: The following line is optional, as multi-select behavior is the default for
+            // FriendPickerFragment. It is here to demonstrate how parameters could be passed to the
+            // friend picker if single-select functionality was desired, or if a different user ID was
+            // desired (for instance, to see friends of a friend).
+            PickFriendsActivity.populateParameters(intent, null, true, true);
+            startActivityForResult(intent, PICK_FRIENDS_ACTIVITY);
+        } else {
+            pickFriendsWhenSessionOpened = true;
+        }
+    }
+    /*
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Update the display every time we are started.
+        displaySelectedFriends(RESULT_OK);
+    }
+	*/
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case PICK_FRIENDS_ACTIVITY:
+                displaySelectedFriends(resultCode);
+                break;
+            default:
+                Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+                break;
+        }
+    }	
 	
-	public void gotoFBFriendSelector(View view){		
-		
-	}
 	
 	public void gotoUIDSelection(View view){	
 		
@@ -63,65 +153,6 @@ public class UserTypeSelection extends FragmentActivity {
 		intent.putExtras(b);
 		startActivity(intent);
 	}
-	
-	private void onClickPickFriends() {
-        final FriendPickerFragment fragment = new FriendPickerFragment();
-
-        setFriendPickerListeners(fragment);
-
-        showPickerFragment(fragment);
-    }
-
-    private void setFriendPickerListeners(final FriendPickerFragment fragment) {
-        fragment.setOnDoneButtonClickedListener(new FriendPickerFragment.OnDoneButtonClickedListener() {
-            @Override
-            public void onDoneButtonClicked(PickerFragment<?> pickerFragment) {
-                onFriendPickerDone(fragment);
-            }
-        });
-    }
-    
-    private void onFriendPickerDone(FriendPickerFragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        fm.popBackStack();
-
-        String results = "";
-
-        List<GraphUser> selection = fragment.getSelection();
-        tags = selection;
-        if (selection != null && selection.size() > 0) {
-            ArrayList<String> names = new ArrayList<String>();
-            for (GraphUser user : selection) {
-                names.add(user.getName());
-            }
-            results = TextUtils.join(", ", names);
-        } else {
-            results = getString(R.string.no_friends_selected);
-        }
-
-        //showAlert(getString(R.string.you_picked), results);
-    }
-    
-    private void showPickerFragment(PickerFragment<?> fragment) {
-        fragment.setOnErrorListener(new PickerFragment.OnErrorListener() {
-            @Override
-            public void onError(PickerFragment<?> pickerFragment, FacebookException error) {
-            }
-        });
-
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.fpoContainer, fragment)
-                .addToBackStack(null)
-                .commit();
-
-        //controlsContainer.setVisibility(View.GONE);
-
-        // We want the fragment fully created so we can use it immediately.
-        fm.executePendingTransactions();
-
-        fragment.loadData(false);
-    }
     
     
     

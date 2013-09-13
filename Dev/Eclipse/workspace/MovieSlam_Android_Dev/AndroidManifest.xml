@@ -18,7 +18,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+        android:name="tools.FriendPickerApplication">
         <activity
             android:name="views.SplashPage"
             android:label="@string/app_name"
@@ -61,11 +62,7 @@
             android:name="views.UidInputPage"
             android:label="@string/title_activity_uid_input_page" >
         </activity>
-        <activity
-            android:name="com.facebook.LoginActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+        
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -82,6 +79,15 @@
         <activity
             android:name="views.GameHistory"
             android:label="@string/title_activity_game_history" >
+        </activity>
+        
+        <activity android:name="views.component.PickFriendsActivity"
+                  android:label="Pick Friends">
+        </activity>
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
     </application>
 
