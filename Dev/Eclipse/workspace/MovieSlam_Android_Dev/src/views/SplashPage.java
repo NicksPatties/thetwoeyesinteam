@@ -246,6 +246,8 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 				b0.setText("RESULT");
 				Bundle result_bd = new Bundle();
 				result_bd.putString("game_id", game_id);
+				//result_bd.putString("user_tn_url", user_e.getValue("user_thumbnail"));
+				//result_bd.putString("player_tn_url", gameplay_e.getValue("player_user_thumbnail"));
 				OnClickListener b0_ltn = new AdvButtonListener(result_bd, this) {
 					@Override
 					public void onClick(View v) {

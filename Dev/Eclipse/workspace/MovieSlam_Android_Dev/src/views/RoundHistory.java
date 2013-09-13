@@ -59,7 +59,13 @@ public class RoundHistory extends Activity implements ResponseDelegate, Config {
 			
 			ImageView movie_tn = (ImageView) round_info_cell.findViewById(R.id.movie_tn);
 			new DownloadImageTask(movie_tn).execute(BASE_URL + "/" + media_e.getValue("media_thumbnail"));
+			/*
+			ImageView user_tn = (ImageView) round_info_cell.findViewById(R.id.round_user_tn);
+			new DownloadImageTask(user_tn).execute(BASE_URL + "/" + media_e.getValue("user_tn_url"));
 			
+			ImageView play_tn = (ImageView) round_info_cell.findViewById(R.id.round_player_tn);
+			new DownloadImageTask(play_tn).execute(BASE_URL + "/" + media_e.getValue("player_tn_url"));
+			*/
 			TextView movie_txt = (TextView) round_info_cell.findViewById(R.id.movie_txt);
 			movie_txt.setText(media_e.getValue("media_name"));
 		}
