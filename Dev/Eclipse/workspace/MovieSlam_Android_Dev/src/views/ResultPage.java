@@ -25,12 +25,16 @@ import android.widget.TextView;
 public class ResultPage extends Activity {
 	
 	private Button btn_nextround;
+	private Button btn_home;
+	private Button btn_FB;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.result_page);
         
         btn_nextround = (Button) findViewById(R.id.btn_next_round);
+        btn_home = (Button) findViewById(R.id.btn_home_result);
+        btn_FB = (Button) findViewById(R.id.btn_FB_result);
         
      	LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
      	TableLayout result_table = (TableLayout) findViewById(R.id.result_table);
@@ -73,7 +77,16 @@ public class ResultPage extends Activity {
      	}
 	}
 	
-	public void onClick(View v) {
+	public void goHome(View v) {
+		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
+		//go to home page
+	}
+	
+	public void goFacebook(View v) {
+		//go to Facebook
+	}
+	
+	public void onNextRound(View v) {
 		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
 		//go to genre selection page
 	}
