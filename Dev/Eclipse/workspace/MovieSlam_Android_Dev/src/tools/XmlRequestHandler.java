@@ -28,7 +28,11 @@ public class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
     
     public XmlRequestHandler(Context cxt, String url, Boolean show_loader) {
     	if (show_loader){
-    		progress = ProgressDialog.show(cxt, "Loading", "Please wait...", true);
+    		//progress = ProgressDialog.show(cxt, "Loading", "Please wait...", true);
+    		progress = new ProgressDialog(cxt);
+    		progress.setIndeterminate( true );
+    		progress.setMessage( "Please Wait..." );
+            progress.show();
     	}    	
 		delegate = (ResponseDelegate) cxt;
 		_url = url;

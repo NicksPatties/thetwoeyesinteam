@@ -6,13 +6,16 @@ import java.util.HashMap;
 
 import tools.FriendPickerApplication;
 import views.component.PickFriendsActivity;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
@@ -29,8 +32,11 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 
 public class UserTypeSelection extends FragmentActivity {
+	
 //	private List<GraphUser> tags;
 	private static final int PICK_FRIENDS_ACTIVITY = 1;
+	static final int PICK_CONTACT = 2;
+	
 	private UiLifecycleHelper lifecycleHelper;
 	boolean pickFriendsWhenSessionOpened;
 	
@@ -82,21 +88,32 @@ public class UserTypeSelection extends FragmentActivity {
     }
 
     private void displaySelectedFriends(int resultCode) {
-        String results = "";
+        String name = "";
+        String fid = "";
+        
         FriendPickerApplication application = (FriendPickerApplication) getApplication();
 
         Collection<GraphUser> selection = application.getSelectedUsers();
         if (selection != null && selection.size() > 0) {
             ArrayList<String> names = new ArrayList<String>();
+            ArrayList<String> fids = new ArrayList<String>();
             for (GraphUser user : selection) {
                 names.add(user.getName());
+                fids.add(user.getId());
             }
-            results = TextUtils.join(", ", names);
-        } else {
-            results = "<No friends selected>";
-        }
-
-        //resultsTextView.setText(results);
+            name = TextUtils.join(", ", names);
+            fid  = TextUtils.join(", ", fids);           
+            
+            // go to genre selection page if fb friend is selected
+            Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
+    		Bundle b = new Bundle();
+    		b.putString("target_source_type", "fid");
+    		b.putString("target_id", fid);
+    		intent.putExtras(b);
+    		startActivity(intent);
+    		
+    		Log.d("debug", name+" "+fid);
+        }       
     }
 	
 	private void onClickPickFriends() {
@@ -113,7 +130,7 @@ public class UserTypeSelection extends FragmentActivity {
             // FriendPickerFragment. It is here to demonstrate how parameters could be passed to the
             // friend picker if single-select functionality was desired, or if a different user ID was
             // desired (for instance, to see friends of a friend).
-            PickFriendsActivity.populateParameters(intent, null, true, true);
+            PickFriendsActivity.populateParameters(intent, null, false, true);
             startActivityForResult(intent, PICK_FRIENDS_ACTIVITY);
         } else {
             pickFriendsWhenSessionOpened = true;
@@ -127,12 +144,40 @@ public class UserTypeSelection extends FragmentActivity {
         // Update the display every time we are started.
         displaySelectedFriends(RESULT_OK);
     }
-	*/
+    */
+	
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case PICK_FRIENDS_ACTIVITY:
                 displaySelectedFriends(resultCode);
                 break;
+            case PICK_CONTACT:
+            	Uri contactUri = data.getData();
+                ContentResolver resolver = getContentResolver();
+                long contactId = -1;
+
+                // get display name from the contact
+                Cursor cursor = resolver.query( contactUri,
+                                                new String[] { Contacts._ID, Contacts.DISPLAY_NAME }, 
+                                                null, null, null );
+                if( cursor.moveToFirst() )
+                {
+                    contactId = cursor.getLong( 0 );
+                    Log.d( "debug", "ContactID = " + Long.toString( contactId ) );
+                    Log.d( "debug", "DisplayName = " + cursor.getString( 1 ) );
+                }
+
+                // get all phone numbers with type from the contact
+                cursor = resolver.query( Phone.CONTENT_URI,
+                                         new String[] { Phone.TYPE, Phone.NUMBER }, 
+                                         Phone._ID + "=" + contactId, null, null );
+                while( cursor.moveToNext() )
+                {
+                    Log.d( "debug", "PhoneNumber = " + cursor.getString( 1 ) );
+                }
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);         
+                sendIntent.setData(Uri.parse("sms:"));
+         	   break;
             default:
                 Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
                 break;
@@ -201,6 +246,12 @@ public class UserTypeSelection extends FragmentActivity {
                 HashMap<String, String> email = addresses.get(which);
                 //e.setText(email.get("Email"));
                 Log.d("debug",email.get("Email"));
+                
+                Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {email.get("Email")});
+                emailIntent.setType("text/plain");
+                startActivity(Intent.createChooser(emailIntent, "Send a mail ..."));
+                
 
               dialog.dismiss();
             }
@@ -211,9 +262,14 @@ public class UserTypeSelection extends FragmentActivity {
 	
 	
 	public void gotoSms(View view){
+		/*
 		Intent intent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
 		intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-		startActivityForResult(intent, 1);
+		startActivityForResult(intent, PICK_CONTACT);
+		*/
+		Intent intent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
+		intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+		startActivityForResult(intent, PICK_CONTACT);
 	}
 	
 
