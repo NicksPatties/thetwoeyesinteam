@@ -177,5 +177,25 @@ public class Gameplay {
 		return "http://screenslam.foxfilm.com/" + _mediaTN[i];
 	}
 	
+	public static void setElapses(float f) {
+		_elapses[index] = f;
+	}
+	
+	public static float[] _elapses = new float[5];
+	
+	public static float getElapses(int n) {
+		return _elapses[n];
+	}
+	
+	public static void setOppoElapses(float f) {
+		_oppoElapses[index] = f;
+	}
+	
+	public static float[] _oppoElapses = new float[5];
+	
+	public static float getOppoElapses(int n) {
+		return _oppoElapses[n];
+	}
+	
 	public static int index = 0;
 }

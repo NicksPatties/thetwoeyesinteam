@@ -55,6 +55,7 @@ public class GamePlayPage extends Activity {
 	private Thread thread;
 	private Thread movieThread;
 	private int score;
+	private float elapse;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -314,9 +315,13 @@ public class GamePlayPage extends Activity {
 					if (score >= 100){
 						score = 10;
 					}
+					elapse = (duration - duration*(score-10)/90)/1000;
+					Gameplay.setElapses(elapse);
 					score_text[rightAnswerPointer].setText(Integer.toString(score));
 				}else{
 					score = 100-90*timer/100;
+					elapse = 8 - 8*(score-10)/90;
+					Gameplay.setElapses(elapse);
 					score_text[rightAnswerPointer].setText(Integer.toString(score));
 				}
 				System.out.println("--------------The SCORE you got for this question: "+ score);
@@ -330,7 +335,7 @@ public class GamePlayPage extends Activity {
 			if(moviePlayer!=null){
 				moviePlayer.setPause();
 			}else{
-//				thread.stop();
+				thread = null;
 			}
 			
 			

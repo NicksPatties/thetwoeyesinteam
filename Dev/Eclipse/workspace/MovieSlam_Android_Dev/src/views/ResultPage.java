@@ -55,16 +55,26 @@ public class ResultPage extends Activity {
 	     	
 	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute(Gameplay.getOppoImageURL());
 	     	
-	     	TextView playerTime = (TextView) result_cell.findViewById(R.id.player_time);
-//	     	playerTime.setText(Gameplay.getMediaTime(i));
+	     	TextView userTime = (TextView) result_cell.findViewById(R.id.user_time);
+	     	String s1 = Float.toString(Gameplay.getElapses(i));
+	     	if (Gameplay.getElapses(i) <= 0){
+	     		s1 = "WRONG";
+	     	}
+	     	userTime.setText(s1);
 	     	
 	     	TextView oppoTime = (TextView) result_cell.findViewById(R.id.oppo_time);
-	     	oppoTime.setText("WRONG");
+	     	String s2 = Float.toString(Gameplay.getOppoElapses(i));
+	     	if (s2.isEmpty())
+	     	{
+	     		oppoTime.setText("WRONG");
+	     		oppoTime.setTextColor(Color.RED);
+	     	}
+//	     	oppoTime.setText(Gameplay.getOppoMediaTime(i));
      	}
 	}
 	
 	public void onClick(View v) {
-		startActivity(new Intent(getApplicationContext(), SplashPage.class));
+		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
 		//go to genre selection page
 	}
 	

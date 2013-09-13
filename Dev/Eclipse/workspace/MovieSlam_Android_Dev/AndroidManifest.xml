@@ -79,6 +79,10 @@
             android:name="views.EmailSelection"
             android:label="@string/title_activity_email_selection" >
         </activity>
+        <activity
+            android:name="views.GameHistory"
+            android:label="@string/title_activity_game_history" >
+        </activity>
     </application>
 
 </manifest>

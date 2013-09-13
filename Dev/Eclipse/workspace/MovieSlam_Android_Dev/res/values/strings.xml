@@ -41,5 +41,6 @@
     <string name="you_picked"></string>
     <string name="title_activity_round_history">RoundHistory</string>
     <string name="title_activity_email_selection">EmailSelection</string>
+    <string name="title_activity_game_history">GameHistory</string>
 
 </resources>
