@@ -48,19 +48,23 @@
         </activity>
         <activity
             android:name="views.GenreSelection"
-            android:label="@string/title_activity_genre_selection" >
+            android:label="@string/title_activity_genre_selection"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="views.HelpInfo"
-            android:label="@string/title_activity_help_info" >
+            android:label="@string/title_activity_help_info"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="views.UserTypeSelection"
-            android:label="@string/title_activity_user_type_selection" >
+            android:label="@string/title_activity_user_type_selection"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="views.UidInputPage"
-            android:label="@string/title_activity_uid_input_page" >
+            android:label="@string/title_activity_uid_input_page"
+            android:screenOrientation="portrait" >
         </activity>
         
 
@@ -70,24 +74,24 @@
 
         <activity
             android:name="views.RoundHistory"
-            android:label="@string/title_activity_round_history" >
-        </activity>
-        <activity
-            android:name="views.EmailSelection"
-            android:label="@string/title_activity_email_selection" >
+            android:label="@string/title_activity_round_history"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="views.GameHistory"
-            android:label="@string/title_activity_game_history" >
+            android:label="@string/title_activity_game_history"
+            android:screenOrientation="portrait" >
         </activity>
         
         <activity android:name="views.component.PickFriendsActivity"
-                  android:label="Pick Friends">
+                  android:label="Pick Friends"
+                  android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.facebook.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

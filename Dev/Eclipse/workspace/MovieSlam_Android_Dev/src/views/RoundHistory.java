@@ -6,15 +6,9 @@ import tools.AdvElement;
 import tools.DownloadImageTask;
 import tools.ResponseDelegate;
 import tools.XmlRequestHandler;
-
-import com.example.movieslam_android_dev.R;
-import com.example.movieslam_android_dev.R.layout;
-import com.example.movieslam_android_dev.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +16,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import com.example.movieslam_android_dev.R;
 
 public class RoundHistory extends Activity implements ResponseDelegate, Config {
 

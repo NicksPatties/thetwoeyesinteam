@@ -88,7 +88,6 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		
 		// FB connected
 		//LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
-//		*/
 	}
 	
 	private String getUIDFromDevice() {

@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import tools.FriendPickerApplication;
 import views.component.PickFriendsActivity;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -22,9 +21,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
 import com.facebook.Session;
@@ -45,15 +42,7 @@ public class UserTypeSelection extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.user_type_selection);
-		
-		Button pickFriendsButton = (Button) findViewById(R.id.friendSelector);
-        pickFriendsButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onClickPickFriends();
-            }
-        });
-        
+		setContentView(R.layout.user_type_selection);        
         
         lifecycleHelper = new UiLifecycleHelper(this, new Session.StatusCallback() {
             @Override
@@ -64,6 +53,10 @@ public class UserTypeSelection extends FragmentActivity {
         lifecycleHelper.onCreate(savedInstanceState);
 
         ensureOpenSession();
+	}
+	
+	public void gotoFIDSelection(View view){	
+		onClickPickFriends();
 	}
 	
 	private boolean ensureOpenSession() {
