@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
 import com.facebook.Session;
@@ -155,28 +156,22 @@ public class UserTypeSelection extends FragmentActivity {
             	Uri contactUri = data.getData();
                 ContentResolver resolver = getContentResolver();
                 long contactId = -1;
+                String player_name = null;
+                String player_number = null;
 
                 // get display name from the contact
-                Cursor cursor = resolver.query( contactUri,
-                                                new String[] { Contacts._ID, Contacts.DISPLAY_NAME }, 
-                                                null, null, null );
-                if( cursor.moveToFirst() )
-                {
-                    contactId = cursor.getLong( 0 );
-                    Log.d( "debug", "ContactID = " + Long.toString( contactId ) );
-                    Log.d( "debug", "DisplayName = " + cursor.getString( 1 ) );
+                Cursor cursor = resolver.query( contactUri, new String[] { Contacts._ID, Contacts.DISPLAY_NAME }, null, null, null );
+                if(cursor.moveToFirst()){
+                    contactId = cursor.getLong(0);
+                    player_name = cursor.getString(1);
+                    cursor = resolver.query(Phone.CONTENT_URI, new String[] { Phone.TYPE, Phone.NUMBER }, Phone._ID + "=" + contactId, null, null);
                 }
-
-                // get all phone numbers with type from the contact
-                cursor = resolver.query( Phone.CONTENT_URI,
-                                         new String[] { Phone.TYPE, Phone.NUMBER }, 
-                                         Phone._ID + "=" + contactId, null, null );
-                while( cursor.moveToNext() )
-                {
-                    Log.d( "debug", "PhoneNumber = " + cursor.getString( 1 ) );
-                }
-                Intent sendIntent = new Intent(Intent.ACTION_VIEW);         
-                sendIntent.setData(Uri.parse("sms:"));
+                player_number = cursor.moveToNext() ? cursor.getString(1) : null;
+                // launch sms app                
+                Uri uri = Uri.parse("smsto:"+player_number);
+        		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+        		intent.putExtra("sms_body", "Hello "+player_name);  
+        		startActivity(intent);
          	   break;
             default:
                 Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
@@ -262,14 +257,10 @@ public class UserTypeSelection extends FragmentActivity {
 	
 	
 	public void gotoSms(View view){
-		/*
 		Intent intent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
 		intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
 		startActivityForResult(intent, PICK_CONTACT);
-		*/
-		Intent intent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
-		intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-		startActivityForResult(intent, PICK_CONTACT);
+		
 	}
 	
 
