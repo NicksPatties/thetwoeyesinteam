@@ -1,12 +1,10 @@
 package views;
 
-import com.example.movieslam_android_dev.R;
-import com.example.movieslam_android_dev.R.layout;
-import com.example.movieslam_android_dev.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+
+import com.example.movieslam_android_dev.R;
 
 public class HelpInfo extends Activity {
 

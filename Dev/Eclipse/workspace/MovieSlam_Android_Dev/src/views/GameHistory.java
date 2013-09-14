@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -63,7 +61,7 @@ public class GameHistory extends Activity implements ResponseDelegate, Config {
 			int player_won = Integer.parseInt(gameplay_e.getValue("player_won"));
 			game_result_txt.setText((user_won == -1 ? "-" : Integer.toString(user_won)) +" : "+ (player_won == -1 ? "-" : Integer.toString(player_won)));
 			
-			RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight());
+			//RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight());
 			
 			ImageView user_tn = (ImageView) player_challenge_cell.findViewById(R.id.user_tn);
 			new DownloadImageTask(user_tn).execute(b_in.getString("user_tn_url"));
