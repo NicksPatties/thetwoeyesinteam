@@ -27,8 +27,8 @@
 					        android:id="@+id/btn_home_result"
 					        android:layout_weight="1"
 					        android:layout_width="0dp"
-					        android:layout_height="wrap_content"
-					        android:background="@drawable/help_button_bg"
+					        android:layout_height="60dp"
+					        android:background="@drawable/home_button_bg"
 					        android:clickable="true"
 					        android:textColor="@android:color/white"
 					        android:onClick="goHome" />	    	    
@@ -43,8 +43,8 @@
 					        android:id="@+id/btn_FB_result"
 					        android:layout_weight="1"
 					        android:layout_width="0dp"
-					        android:layout_height="wrap_content"
-					        android:background="@drawable/refresh_button_bg"
+					        android:layout_height="60dp"
+					        android:background="@drawable/help_button_bg"
 					        android:clickable="true"
 					        android:textColor="@android:color/white"
 					        android:onClick="goFacebook" /> 

@@ -183,6 +183,8 @@ public class Gameplay {
 	
 	public static float[] _elapses = new float[5];
 	
+//	public static float[] _elapses = {5.5f, 4.5f, 3.7f, 2.8f, 1.5f};
+	
 	public static float getElapses(int n) {
 		return _elapses[n];
 	}
@@ -192,6 +194,8 @@ public class Gameplay {
 	}
 	
 	public static float[] _oppoElapses = new float[5];
+	
+//	public static float[] _oppoElapses = {5.1f, 4.2f, 3.4f, 2.6f, 1.9f};
 	
 	public static float getOppoElapses(int n) {
 		return _oppoElapses[n];

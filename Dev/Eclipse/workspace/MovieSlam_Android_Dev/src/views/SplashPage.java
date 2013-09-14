@@ -44,7 +44,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
         
-//        startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
+//        startActivity(new Intent(getApplicationContext(), ResultPage.class));
         
 //        /**
 

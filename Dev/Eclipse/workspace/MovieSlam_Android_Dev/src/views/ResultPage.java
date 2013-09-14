@@ -44,20 +44,26 @@ public class ResultPage extends Activity {
 	     	result_table.addView(result_cell);
 	     	
 	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.media_TN)).execute(Gameplay.getMediaTN(i));
+//	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.media_TN)).execute("http://screenslam.foxfilm.com/image/title_thumbnail_default.jpg");
 	     	
 	     	TextView mediaName = (TextView) result_cell.findViewById(R.id.media_name);
 	     	mediaName.setText(Gameplay.getMediaNames(i));
+//	     	mediaName.setText("Flight ClubFlight");
 	     	
 	     	TextView buynowText =(TextView) result_cell.findViewById(R.id.buy_now);
 	     	buynowText.setClickable(true);
 	     	buynowText.setMovementMethod(LinkMovementMethod.getInstance());
+//	     	String text = "BUY NOW";
 	     	String text = "<a href="+Gameplay.getMediaEtailers(i)+">BUY NOW</a>";
 	     	buynowText.setText(Html.fromHtml(text));
 	     	buynowText.setTextColor(Color.parseColor("#FFFFFF"));
 	     	
-	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.player_image_result)).execute(User.get_thumbnail());
-	     	
+	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.user_image_result)).execute(User.get_thumbnail());
+//	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.user_image_result)).execute("https://graph.facebook.com/1447010240/picture");
+//	     	
 	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute(Gameplay.getOppoImageURL());
+//	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute("https://graph.facebook.com/100002538660677/picture");
+//	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute("http://screenslam.foxfilm.com/include/images/avatar.png");
 	     	
 	     	TextView userTime = (TextView) result_cell.findViewById(R.id.user_time);
 	     	String s1 = Float.toString(Gameplay.getElapses(i));
@@ -73,12 +79,13 @@ public class ResultPage extends Activity {
 	     		oppoTime.setText("WRONG");
 	     		oppoTime.setTextColor(Color.RED);
 	     	}
-//	     	oppoTime.setText(Gameplay.getOppoMediaTime(i));
+	     	oppoTime.setText(s2);
+//	     	oppoTime.setText("WRONG");
      	}
 	}
 	
 	public void goHome(View v) {
-		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
+		startActivity(new Intent(getApplicationContext(), SplashPage.class));
 		//go to home page
 	}
 	

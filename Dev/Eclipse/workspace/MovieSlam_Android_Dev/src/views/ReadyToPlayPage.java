@@ -61,12 +61,12 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
             }
         };
         
-//        String api = BASE_URL+ "/service/getMedia.php?"
-//        				+"&type="+Gameplay.getGenre()
-//        				+"&user_id="+User.get_uid();
+        String api = BASE_URL+ "/service/getMedia.php?"
+        				+"&type="+Gameplay.getGenre()
+        				+"&user_id="+User.get_uid();
 		
-		new XmlRequestHandler(this, BASE_URL+"/service/getMedia.php?&type=drama&user_id=8").execute();
-//		new XmlRequestHandler(this, api).execute();
+//		new XmlRequestHandler(this, BASE_URL+"/service/getMedia.php?&type=drama&user_id=8").execute();
+		new XmlRequestHandler(this, api).execute();
 	}
 
 	@Override
