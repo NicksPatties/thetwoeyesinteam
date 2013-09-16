@@ -38,21 +38,21 @@ public class Gameplay {
 		return _challType;
 	}
 	
-	public static String getChallOppoID (String s){
+	public static String getChallOppoID (){
 		return _challOppoID;
 	}
 	
-	private static String _challOppoID;
+	private static String _challOppoID = "";
 	
 	public static void setChallOppoID (String s){
 		_challOppoID = s;
 	}
 	
-	public static String getChallOppoFID (String s){
+	public static String getChallOppoFID (){
 		return _challOppoFID;
 	}
 	
-	private static String _challOppoFID;
+	private static String _challOppoFID = "";
 	
 	public static void setChallOppoFID (String s){
 		_challOppoFID = s;

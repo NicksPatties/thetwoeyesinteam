@@ -59,9 +59,27 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
         
         String api;
         if (Gameplay.getChallType().equals("self")){
-        	api = BASE_URL+ "/service/getMedia.php?"
-    				+"&type="+Gameplay.getGenre()
-    				+"&user_id="+User.get_uid();
+//        	Boolean b = Gameplay.getChallOppoID().equals("");
+//        	if (!b){
+        	if (!Gameplay.getChallOppoID().equals("")){
+//        	if (!Gameplay.getChallOppoID().isEmpty()){
+        		api = BASE_URL+ "/service/getMedia.php?by=uid"
+        				+"&type="+Gameplay.getGenre()
+        				+"&user_id="+User.get_uid()
+        				+"&target="+Gameplay.getChallOppoID();
+        	
+        	}else if (!Gameplay.getChallOppoFID().equals("")){
+        		api = BASE_URL+ "/service/getMedia.php?by=fb"
+        				+"&type="+Gameplay.getGenre()
+        				+"&user_id="+User.get_uid()
+        				+"&target="+Gameplay.getChallOppoFID()
+        				+"&target_fname="+Gameplay.getOppoFName()
+        				+"&target_lname="+Gameplay.getOppoLName();
+        	}else{
+        		api = BASE_URL+ "/service/getMedia.php?"
+        				+"&type="+Gameplay.getGenre()
+        				+"&user_id="+User.get_uid();
+        	}
         }else{
         	api = BASE_URL+ "/service/getChallenge.php?"
     				+"&challenge_id="+Gameplay.getChallID();

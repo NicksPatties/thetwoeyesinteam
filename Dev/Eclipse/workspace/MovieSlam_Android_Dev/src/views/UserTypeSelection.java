@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import models.Gameplay;
 import tools.FriendPickerApplication;
 import views.component.PickFriendsActivity;
 import android.app.AlertDialog;
@@ -100,6 +101,9 @@ public class UserTypeSelection extends FragmentActivity {
             
             // go to genre selection page if fb friend is selected
             Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
+            Gameplay.setChallOppoFID(fid);
+            Gameplay.setOppoFName(name);
+            Gameplay.setOppoLName(name);
     		Bundle b = new Bundle();
     		b.putString("target_source_type", "fid");
     		b.putString("target_id", fid);
