@@ -2,6 +2,7 @@ package views;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -119,6 +120,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0").execute();
 	}
 	
+	private ArrayList<View> challenge_cell_array = new ArrayList<View>();
 	@Override
 	public void responseLoaded(String response) {
 		
@@ -163,14 +165,15 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		score_table.removeAllViews();
 		
 		// parse player challenges board
-		AdvElement gameplays_e = doc.getElement("gameplays");		
+		final AdvElement gameplays_e = doc.getElement("gameplays");
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		for (int i = 0; i < gameplays_e.getElementLength("gameplay"); i++){
 			
 			// add player challenge cell			
-			View player_challenge_cell = layoutInflater.inflate(R.layout.player_challenge_cell, score_table, false);
+			final View player_challenge_cell = layoutInflater.inflate(R.layout.player_challenge_cell, score_table, false);
 			score_table.addView(player_challenge_cell);
+			challenge_cell_array.add(player_challenge_cell);
 			
 			AdvElement gameplay_e = gameplays_e.getElement("gameplay", i);
 			
@@ -182,7 +185,8 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			
 			new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
 			
-			// Game history			
+			// Game history	
+			//let's use bundle later
 			Bundle game_history_bd = new Bundle();
 			game_history_bd.putString("player_id", gameplay_e.getValue("player_user_id"));
 			game_history_bd.putString("user_tn_url", user_e.getValue("user_thumbnail"));
@@ -228,7 +232,27 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 				accept_bd.putString("target_genre", genre_type);
 				OnClickListener b1_ltn = new AdvButtonListener(accept_bd, this) {
 					@Override
-					public void onClick(View v) {						
+					public void onClick(View v) {	
+						int itemIndex = challenge_cell_array.indexOf(player_challenge_cell);
+						AdvElement gameplay_e = gameplays_e.getElement("gameplay", itemIndex);
+						Gameplay.setChallID(gameplay_e.getValue("challenge_id"));
+						Gameplay.setGameID(gameplay_e.getValue("gameplay_game_id"));
+						Gameplay.setChallOppoScore(gameplay_e.getValue("player_user_score"));
+						Gameplay.setChallOppoImageURL(gameplay_e.getValue("player_user_thumbnail"));
+						Gameplay.setChallRound(gameplay_e.getValue("gameplay_round"));
+						Gameplay.setUserWon(gameplay_e.getValue("gameplay_user_won"));
+						Gameplay.setOppoWon(gameplay_e.getValue("gameplay_player_won"));
+						Gameplay.setOppoFName(gameplay_e.getValue("player_user_fname"));
+						Gameplay.setOppoLName(gameplay_e.getValue("player_user_lname"));
+						Gameplay.setGenre(gameplay_e.getValue("challenge_genre_type"));
+						Gameplay.setChallStatus(gameplay_e.getValue("gameplay_status"));
+						if (Gameplay.getChallStatus().equals("accept")){
+							Gameplay.setChallType("challenge");
+						}else{
+							Gameplay.setChallType("self");
+						}
+						Gameplay.setChallOppoID(gameplay_e.getValue("player_user_id"));
+						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));
 						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						
 						intent.putExtras(get_bundle());
 						startActivity(intent);

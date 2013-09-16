@@ -24,6 +24,7 @@ import android.R.color;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -32,6 +33,8 @@ import android.widget.TextView;
 public class ReadyToPlayPage extends Activity implements ResponseDelegate, Config{
 
 	private TextView genreText;
+	private TextView userNameText;
+	private TextView oppoNameText;
 	
 	private Thread thread;
 	@Override
@@ -39,11 +42,32 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
         
+        userNameText = (TextView) findViewById(R.id.user_name_ready);
+        oppoNameText = (TextView) findViewById(R.id.oppo_name_ready);
+        
         genreText = (TextView) findViewById(R.id.genre_text);
         String s = Gameplay.getGenre();
-        genreText.setText(s);
-//        genreText.setTextColor(color.holo_orange_dark);
+        if (s.equals("all")){
+        	s = "random";
+        }else if(s.equals("promo")){
+        	s = Gameplay.get_promo_name();
+        }else if(s.equals("scifi")){
+        	s = "sci-fi";
+        }
+        genreText.setText(s.toUpperCase());
+        genreText.setTextColor(Color.RED);
         
+        String api;
+        if (Gameplay.getChallType().equals("self")){
+        	api = BASE_URL+ "/service/getMedia.php?"
+    				+"&type="+Gameplay.getGenre()
+    				+"&user_id="+User.get_uid();
+        }else{
+        	api = BASE_URL+ "/service/getChallenge.php?"
+    				+"&challenge_id="+Gameplay.getChallID();
+        }
+//      new XmlRequestHandler(this, BASE_URL+"/service/getMedia.php?&type=drama&user_id=8").execute();
+        new XmlRequestHandler(this, api).execute();
         thread=  new Thread(){
             @Override
             public void run(){
@@ -51,28 +75,22 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
                     synchronized(this){
                         wait(1000);
                         startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
-//                      startActivity(new Intent(getApplicationContext(), ResultPage.class));
                     }
                 }
                 catch(InterruptedException ex){                    
                 }
-
-                // TODO              
             }
         };
-        
-        String api = BASE_URL+ "/service/getMedia.php?"
-        				+"&type="+Gameplay.getGenre()
-        				+"&user_id="+User.get_uid();
-		
-//		new XmlRequestHandler(this, BASE_URL+"/service/getMedia.php?&type=drama&user_id=8").execute();
-		new XmlRequestHandler(this, api).execute();
 	}
 
 	@Override
 	public void responseLoaded(String response) {
 		// could use regx for better result
-		response = response.replace("<?xml version=1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n\n<?xml version=\"1.0\"?>\n","");
+		if (Gameplay.getChallType().equals("self")){
+			response = response.replace("<?xml version=1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n\n<?xml version=\"1.0\"?>\n","");
+        }else{
+        	response = response.replace("<?xml version=\"1.0\"?>\n","");
+        }
 		
 		Document doc;
 		String[] questions = new String[5];
@@ -154,7 +172,6 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 				System.out.println("movie question "+i+": "+questions[i]);
 			}
 			
-			
 			//set properties for model
 			Gameplay.setQuestion(questions);
 			Gameplay.setAnswers(anwsers);
@@ -164,6 +181,14 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 			Gameplay.setMediaNames(mediaNames);
 			Gameplay.setMediaTN(mediaTN);
 			Gameplay.setMediaIDs(mediaIDs);
+			
+			if (Gameplay.getChallType().equals("self")){
+				userNameText.setText(User.get_fname() + "    "+ User.get_lname());
+				oppoNameText.setText(Gameplay.getOppoFName() + "    "+ Gameplay.getOppoLName());
+	        }else{
+				userNameText.setText(User.get_fname() + "    "+ User.get_lname());
+				oppoNameText.setText(Gameplay.getOppoFName() + "    "+ Gameplay.getOppoLName());
+	        }
 			
 			thread.start();
 			

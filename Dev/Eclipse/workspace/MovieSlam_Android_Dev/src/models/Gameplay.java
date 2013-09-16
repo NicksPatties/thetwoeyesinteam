@@ -28,6 +28,16 @@ public class Gameplay {
 		return _genre;
 	}
 	
+	public static void setChallType (String s){
+		_challType = s;
+	}
+	
+	private static String _challType = "self";
+	
+	public static String getChallType (){
+		return _challType;
+	}
+	
 	public static String getChallOppoID (String s){
 		return _challOppoID;
 	}
@@ -202,4 +212,85 @@ public class Gameplay {
 	}
 	
 	public static int index = 0;
+
+	public static void setChallID(String value) {
+		_challID = value;
+	}
+	
+	public static String _challID;
+	
+	public static String getChallID() {
+		return _challID;
+	}
+	
+	public static void setGameID(String value) {
+		_gameID = value;
+	}
+	
+	public static String _gameID;
+	
+	public static String getGameID() {
+		return _gameID;
+	}
+	
+	public static void setChallRound(String value) {
+		_challRound = value;
+	}
+	
+	public static String _challRound = "0";
+	
+	public static String getChallRound() {
+		return _challRound;
+	}
+	
+	public static void setChallStatus(String value) {
+		_challStatus = value;
+	}
+	
+	public static String _challStatus;
+	
+	public static String getChallStatus() {
+		return _challStatus;
+	}
+	
+	public static void setUserWon(String value) {
+		_userWon = value;
+	}
+	
+	public static String _userWon = "0";
+	
+	public static String getUserWon() {
+		return _userWon;
+	}
+	
+	public static void setOppoWon(String value) {
+		_oppoWon = value;
+	}
+	
+	public static String _oppoWon = "0";
+	
+	public static String getOppoWon() {
+		return _oppoWon;
+	}
+	
+	public static void setChallOppoImageURL(String value) {
+		_challOppoImageURL = value;
+	}
+	
+	public static String _challOppoImageURL;
+	
+	public static String getChallOppoImageURL() {
+		return _challOppoImageURL;
+	}
+	
+	public static void setChallOppoScore(String value) {
+		_challOppoScore = value;
+	}
+	
+	public static String _challOppoScore;
+	
+	public static String getChallOppoScore() {
+		return _challOppoScore;
+	}
+	
 }
