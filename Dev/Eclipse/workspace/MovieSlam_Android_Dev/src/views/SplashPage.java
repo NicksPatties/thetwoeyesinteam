@@ -36,19 +36,61 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.movieslam_android_dev.R;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
+import com.facebook.widget.LoginButton;
 
 public class SplashPage extends FragmentActivity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
+	
+	private UiLifecycleHelper uiHelper;
+	private Session.StatusCallback callback = 
+	    new Session.StatusCallback() {
+	    @Override
+	    public void call(Session session, 
+	            SessionState state, Exception exception) {
+	        onSessionStateChange(session, state, exception);
+	    }
+	};
+	
+	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+        if (state.isOpened()) {
+            Log.d("debug","open");
+        } else if (state.isClosed()) {
+        	Log.d("debug","closed");
+        }else{
+        	Log.d("debug","error open");
+        }
+	}
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState); 
+		super.onCreate(savedInstanceState);
+		
+		uiHelper = new UiLifecycleHelper(this, callback);
+	    uiHelper.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_main);
         
 //        startActivity(new Intent(getApplicationContext(), ResultPage.class));
         
 //        /**
-
+        
+        Session session = Session.getActiveSession();
+        if (session != null ) {
+        	if (session.isOpened() || session.isClosed()) {
+        		/*onSessionStateChange(session, session.getState(), null);*/
+        		Log.d("debug","session open");
+        	}else{
+        		Log.d("debug","session closed");
+        		session.closeAndClearTokenInformation();
+        	}
+            
+        }
+        
         // init promo image
         final ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
         new DownloadImageTask(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
@@ -88,8 +130,18 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		user_panel.addView(user_main_board);		
 		
 		// FB connected
-		//LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
-//		 */
+		LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
+        loginButton.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
+            @Override
+            public void onUserInfoFetched(GraphUser user) {
+            	Log.d("debug", "start");
+                //Log.d("debug", user.getFirstName()+" "+user.getLastName());
+                //Log.d("debug", user.getId());
+                // It's possible that we were waiting for this.user to be populated in order to post a
+                // status update.
+               // handlePendingAction();
+            }
+        });
 	}
 	
 	private String getUIDFromDevice() {
