@@ -4,6 +4,7 @@ import tools.AdvElement;
 import tools.ResponseDelegate;
 import tools.XmlRequestHandler;
 import models.Config;
+import models.Gameplay;
 import models.User;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -65,6 +66,7 @@ public class UidInputPage extends Activity implements ResponseDelegate, Config {
 			Bundle b = new Bundle();
 			b.putString("target_source_type", "uid");
 			b.putString("target_id", uid_txt.getText().toString());
+			Gameplay.setChallOppoID(uid_txt.getText().toString());
 			intent.putExtras(b);
 			startActivity(intent);
 			finish();			

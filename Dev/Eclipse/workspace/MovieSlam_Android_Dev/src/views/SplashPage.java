@@ -92,19 +92,19 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
         }
         
         // init promo image
-        final ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
-        new DownloadImageTask(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
-        Timer t = new Timer(false);
-        t.schedule(new TimerTask() {
-        @Override
-        public void run() {
-             runOnUiThread(new Runnable() {
-                  public void run() {
-                	  bg_preloader.setVisibility(View.GONE);
-                  }
-              });
-          }
-      }, (int)(PROMO_IMG_DURATION*1000));
+//        ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
+//        new DownloadImageTask(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
+//        Timer t = new Timer(false);
+//        t.schedule(new TimerTask() {
+//        @Override
+//        public void run() {
+//             runOnUiThread(new Runnable() {
+//                  public void run() {
+//                	  bg_preloader.setVisibility(View.GONE);
+//                  }
+//              });
+//          }
+//      }, (int)(PROMO_IMG_DURATION*1000));
         
         
         // hardcode to user id 3
