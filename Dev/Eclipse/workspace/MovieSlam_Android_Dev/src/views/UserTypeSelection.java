@@ -182,7 +182,9 @@ public class UserTypeSelection extends FragmentActivity {
 		startActivity(new Intent(getApplicationContext(), UidInputPage.class));
 	}
 	
-	public void gotoGenreSelection(View view){	
+	public void gotoGenreSelection(View view){
+		Gameplay.setChallID("0");
+		Gameplay.setChallType("self");
 		Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
 		Bundle b = new Bundle();
 		b.putString("target_source_type", "random");

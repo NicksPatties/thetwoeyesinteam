@@ -138,8 +138,12 @@ public class Gameplay {
 	
 	public static String[] _mediaIDs;
 	
-	public static String getMediaIDs(){
+	public static String getMediaID(){
 		return _mediaIDs[index];
+	}
+	
+	public static String[] getMediaIDs(){
+		return _mediaIDs;
 	}
 	
 	public static void setAnswers(String[][] s){
@@ -161,6 +165,10 @@ public class Gameplay {
 	
 	public static String getQuestion(){
 		return _questions[index];
+	}
+	
+	public static String[] getQuestions(){
+		return _questions;
 	}
 	
 	public static void setMediaEtailers(String[] s) {
@@ -195,8 +203,12 @@ public class Gameplay {
 	
 //	public static float[] _elapses = {5.5f, 4.5f, 3.7f, 2.8f, 1.5f};
 	
-	public static float getElapses(int n) {
+	public static float getElapse(int n) {
 		return _elapses[n];
+	}
+	
+	public static float[] getElapses() {
+		return _elapses;
 	}
 	
 	public static void setOppoElapses(float f) {
@@ -207,7 +219,7 @@ public class Gameplay {
 	
 //	public static float[] _oppoElapses = {5.1f, 4.2f, 3.4f, 2.6f, 1.9f};
 	
-	public static float getOppoElapses(int n) {
+	public static float getOppoElapse(int n) {
 		return _oppoElapses[n];
 	}
 	
@@ -217,7 +229,7 @@ public class Gameplay {
 		_challID = value;
 	}
 	
-	public static String _challID;
+	public static String _challID = "0";
 	
 	public static String getChallID() {
 		return _challID;
@@ -227,7 +239,7 @@ public class Gameplay {
 		_gameID = value;
 	}
 	
-	public static String _gameID;
+	public static String _gameID = "0";
 	
 	public static String getGameID() {
 		return _gameID;
@@ -293,4 +305,9 @@ public class Gameplay {
 		return _challOppoScore;
 	}
 	
+	public static int userScoreThisGame = 0;
+	
+	public static int oppoScoreThisGame = 0;
+	
+	public static boolean show_next_round = false;
 }

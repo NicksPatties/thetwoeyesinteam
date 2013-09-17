@@ -129,6 +129,10 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
 		Gameplay.setOppoImageURL(opponent.getValue("player_user_thumbnail"));
 		Gameplay.setOppoScore(opponent.getValue("player_user_score"));
 		
+		if (Gameplay.getChallType().equals("challenge")){
+			Gameplay.oppoScoreThisGame = Integer.parseInt(opponent.getValue("player_game_score"));
+        }
+		
 		try {
 			for (int i=0; i<5; i++){
 				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(response)));

@@ -1,15 +1,28 @@
 package views;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import tools.DownloadImageTask;
+import tools.HttpPoster;
+import tools.ResponseDelegate;
+import tools.XmlRequestHandler;
 import views.component.MoviePlayer;
+import models.Config;
 import models.Gameplay;
+import models.User;
 
 import com.example.movieslam_android_dev.R;
 import com.example.movieslam_android_dev.R.id;
@@ -36,7 +49,7 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class GamePlayPage extends Activity {
+public class GamePlayPage extends Activity{
 	private SurfaceView surfaceView;
 	private ImageView imageView;
 	private TextView textview;
@@ -56,6 +69,8 @@ public class GamePlayPage extends Activity {
 	private Thread movieThread;
 	private int score;
 	private float elapse;
+	private boolean endGame = false;
+	private String winnerID = "";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -243,6 +258,11 @@ public class GamePlayPage extends Activity {
 	
 	private void nextMedia(){
 		Gameplay.index = Gameplay.index+1;
+		
+		if (Gameplay.index >= 5){
+			finalPost();
+		}
+		
 		movieThread=  new Thread(){
             @Override
             public void run(){
@@ -250,12 +270,12 @@ public class GamePlayPage extends Activity {
                     synchronized(this){
                         wait(3000);
                         if (Gameplay.index >= 5){
-                			startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
+                        	startActivity(new Intent(getApplicationContext(), InterstitialPage.class));
                 			finish();
-                		}else{
-                			startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+                        }else{
+                        	startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
                 			finish();
-                		}
+                        }
                     }
                 }
                 catch(InterruptedException ex){                    
@@ -266,6 +286,61 @@ public class GamePlayPage extends Activity {
         movieThread.start();
 	}
 	
+	private void finalPost(){
+		String userWon = Gameplay.getUserWon();
+    	String oppoWon = Gameplay.getOppoWon();
+    	
+        if (Gameplay.getChallType().equals("challenge"))
+        {
+        	
+        	if(Integer.parseInt(userWon) >= 5 && Integer.parseInt(oppoWon) >=5){
+        		endGame = true;
+        	}
+        }
+        if(Gameplay.getChallType().equals("self")||endGame){
+        	Gameplay.show_next_round = false;
+        }else{
+        	Gameplay.show_next_round = true;
+        }
+        
+        if (Gameplay.getChallType().equals("challenge")){
+        	if(Gameplay.userScoreThisGame>Gameplay.oppoScoreThisGame){
+        		Gameplay.setUserWon(Integer.toString((Integer.parseInt(oppoWon)+1)));
+        	}else if(Gameplay.userScoreThisGame<Gameplay.oppoScoreThisGame){
+        		Gameplay.setOppoWon(Integer.toString((Integer.parseInt(oppoWon)+1)));
+        	}else{
+        		winnerID = "-1";
+        	}
+        }else{
+        	winnerID = "0";
+        }
+        
+        int finalUserScore = Integer.parseInt(User.get_score()) + Gameplay.userScoreThisGame;
+        String s1 = removeBraces(Arrays.toString(Gameplay.getMediaIDs()));
+        String s2 = removeBraces(Arrays.toString(Gameplay.getQuestions()));
+        String s3 = removeBraces(Arrays.toString(Gameplay.getElapses()));
+        
+        String finalPost = "";
+        finalPost = Config.BASE_URL + "/service/saveChallenge.php?"
+        	+"user_id="+User.get_uid()
+        	+"&player_id="+Gameplay.getChallOppoID()
+        	+"&user_score="+User.get_score()
+        	+"&challenge_type="+Gameplay.getChallType()
+        	+"&challenge_id="+Gameplay.getChallID()
+        	+"&genre_type="+Gameplay.getGenre()
+        	+"&media_id_array="+s1
+        	+"&choice_var_array="+s2
+        	+"&duel_elapsed_array="+s3
+        	+"&score="+Integer.toString(finalUserScore)
+        	+"&game_id="+Gameplay.getGameID()
+        	+"&winner_id="+winnerID
+        	+"&endGame="+Boolean.toString(endGame);
+        	
+        System.out.println(finalPost);
+        
+        new HttpPoster(this, finalPost).execute();
+	}
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	     if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -273,6 +348,13 @@ public class GamePlayPage extends Activity {
 	     return true;
 	     }
 	     return super.onKeyDown(keyCode, event);    
+	}
+	
+	private String removeBraces(String value){
+		String s = value.replace("[", "");
+		s = s.replace("]", "");
+		s = s.replace(" ", "");
+		return s;
 	}
 	
 	class ClickEvent implements OnClickListener {
@@ -305,12 +387,14 @@ public class GamePlayPage extends Activity {
 					Gameplay.setElapses(elapse);
 					score_text[rightAnswerPointer].setText(Integer.toString(score));
 				}
+				Gameplay.userScoreThisGame = Gameplay.userScoreThisGame + score;
 				System.out.println("--------------The SCORE you got for this question: "+ score);
 			}else{
 				buttons[rightAnswerPointer].setBackgroundResource(R.drawable.button_orange);
 				crosses[findIndex(arg0)].setVisibility(View.VISIBLE);
 				audioPlayer(0);//incorrect answer sound
 				score = 10;
+				Gameplay.userScoreThisGame = Gameplay.userScoreThisGame + score;
 			}
 			
 			if(moviePlayer!=null){

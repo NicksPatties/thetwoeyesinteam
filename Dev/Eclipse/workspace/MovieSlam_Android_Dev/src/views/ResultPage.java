@@ -67,14 +67,14 @@ public class ResultPage extends Activity {
 //	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute("http://screenslam.foxfilm.com/include/images/avatar.png");
 	     	
 	     	TextView userTime = (TextView) result_cell.findViewById(R.id.user_time);
-	     	String s1 = Float.toString(Gameplay.getElapses(i));
-	     	if (Gameplay.getElapses(i) <= 0){
+	     	String s1 = Float.toString(Gameplay.getElapse(i));
+	     	if (Gameplay.getElapse(i) <= 0){
 	     		s1 = "WRONG";
 	     	}
 	     	userTime.setText(s1);
 	     	
 	     	TextView oppoTime = (TextView) result_cell.findViewById(R.id.oppo_time);
-	     	String s2 = Float.toString(Gameplay.getOppoElapses(i));
+	     	String s2 = Float.toString(Gameplay.getOppoElapse(i));
 	     	if (s2.isEmpty())
 	     	{
 	     		oppoTime.setText("WRONG");

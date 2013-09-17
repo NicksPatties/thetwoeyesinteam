@@ -62,6 +62,8 @@ public class UidInputPage extends Activity implements ResponseDelegate, Config {
 		String valid = doc.getValue("valid");
 		if (valid.equals("1")){
 			EditText uid_txt = (EditText) this.findViewById(R.id.uid_txt);
+			Gameplay.setChallID("0");
+			Gameplay.setChallType("self");
 			Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
 			Bundle b = new Bundle();
 			b.putString("target_source_type", "uid");
