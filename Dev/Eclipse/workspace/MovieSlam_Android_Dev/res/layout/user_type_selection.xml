@@ -48,7 +48,7 @@
         android:layout_weight="5">
         
 	        <Button
-		   	android:id="@+id/friendSelector"
+		   	android:id="@+id/friendSelector_btn"
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
@@ -62,7 +62,7 @@
 	   	    android:layout_marginBottom="12dp" />
 	        
 	        <Button
-		   	android:id="@+id/btn_splash"
+		   	android:id="@+id/userSelector_btn"
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
@@ -76,7 +76,7 @@
 	   	    android:layout_marginBottom="12dp" />
 	        
 	        <Button
-		   	android:id="@+id/btn_splash"
+		   	android:id="@+id/randomSelector_btn"
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
@@ -106,7 +106,7 @@
 		android:paddingRight="160dp">
 	        
 	        <Button
-		   	android:id="@+id/btn_splash"
+		   	android:id="@+id/emailInvite_btn"
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"
@@ -120,7 +120,7 @@
 	   	    android:layout_marginBottom="12dp" />
 	        
 	        <Button
-		   	android:id="@+id/btn_splash"
+		   	android:id="@+id/smsInvite_btn"
 		    android:layout_width="fill_parent"
 	   	    android:layout_height="0dp"
 	   	    android:layout_weight="150"

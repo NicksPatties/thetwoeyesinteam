@@ -588,6 +588,7 @@ public class LoginButton extends Button {
     }
 
     private void setButtonText() {
+    	this.setTextSize(7);
         if (sessionTracker != null && sessionTracker.getOpenSession() != null) {
             setText((logoutText != null) ? logoutText :
                     getResources().getString(R.string.com_facebook_loginview_log_out_button));

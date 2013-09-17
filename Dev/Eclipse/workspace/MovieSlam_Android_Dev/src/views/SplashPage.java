@@ -3,8 +3,6 @@ package views;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import models.Config;
 import models.Gameplay;
@@ -36,19 +34,66 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.movieslam_android_dev.R;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
+import com.facebook.widget.LoginButton;
 
 public class SplashPage extends FragmentActivity implements ResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
+	
+	private UiLifecycleHelper uiHelper;
+	private Session.StatusCallback callback = 
+	    new Session.StatusCallback() {
+	    @Override
+	    public void call(Session session, 
+	            SessionState state, Exception exception) {
+	        onSessionStateChange(session, state, exception);
+	    }
+	};
+	
+	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+	}
+	
+	@Override
+	protected void onResumeFragments() {
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+	    uiHelper.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onDestroy() {
+	    super.onDestroy();
+	    uiHelper.onDestroy();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+	    super.onSaveInstanceState(outState);
+	    uiHelper.onSaveInstanceState(outState);
+	}
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState); 
+		super.onCreate(savedInstanceState);
+		
+		uiHelper = new UiLifecycleHelper(this, callback);
+	    uiHelper.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_main);
+        
+        Gameplay.set_fbConnected(-1);
         
 //        startActivity(new Intent(getApplicationContext(), ResultPage.class));
         
 //        /**
-
+        
         // init promo image
 //        ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
 //        new DownloadImageTask(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
@@ -69,17 +114,11 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
         SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
 		Editor user_info_edit = user_info.edit();
 		user_info_edit.clear();
-		user_info_edit.putString("uid", "3");
+		user_info_edit.putString("uid", "2171");
 		user_info_edit.commit();
 		
 		
-        // User info init (check for fb connect first!!!!!!!!!!!!)
-        String uid = getUIDFromDevice();
-        if (uid != null){
-        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0", false).execute();
-        }else{
-        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png", false).execute();
-        }
+        
         
 		// add main board content
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -88,8 +127,66 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		user_panel.addView(user_main_board);		
 		
 		// FB connected
-		//LoginButton loginButton = (LoginButton) user_main_board.findViewById(R.id.loginButton);
-//		 */
+		
+		// start Facebook Login
+		/*
+		Session.openActiveSession(this, true, new Session.StatusCallback() {
+		
+		    // callback when session changes state
+		    @Override
+		    public void call(Session session, SessionState state, Exception exception) {
+		    }
+		});
+		*/
+		
+		LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
+		loginButton.setBackgroundResource(R.drawable.button_bg_small);
+        loginButton.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
+            @Override
+            public void onUserInfoFetched(GraphUser user) {
+            	
+            	Session session = Session.getActiveSession();
+
+        	    if (session != null && session.isOpened()) {
+        	    	if (Gameplay.get_fbConnected() != 1){
+        	    		Gameplay.set_fbConnected(1);
+        	    		Log.d("debug","FB connected");
+            	    	Log.d("debug", user.getId() + " " + user.getId());
+            	    	User.set_fid(user.getId());
+            	    	User.set_fname(user.getFirstName());
+            	    	User.set_lname(user.getLastName());
+            	    	User.set_thumbnail("");
+            	    	
+            	    	callGameInfoByFID();
+        	    	}        	    	
+        	    } else {
+        	    	if (Gameplay.get_fbConnected() != 0){
+        	    		Gameplay.set_fbConnected(0);
+        	    		Log.d("debug","FB disconnected");
+        	    		if (session != null){
+        	    			Session.getActiveSession().closeAndClearTokenInformation();
+        	    		}
+        	    		
+        	    		callGameInfoByUID();
+        	    	}        	    	
+        	    	//session.closeAndClearTokenInformation();
+        	    }
+            }
+        });
+        
+	}
+	
+	public void callGameInfoByFID(){
+		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid="+User.get_fid()+"&fname="+User.get_fname()+"&lname="+User.get_lname()+"&thumbnail=http://graph.facebook.com/"+User.get_fid()+"/picture?type=large", true).execute();
+	}
+	
+	public void callGameInfoByUID(){
+		String uid = getUIDFromDevice();
+        if (uid != null){
+        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0", true).execute();
+        }else{
+        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png", true).execute();
+        }
 	}
 	
 	private String getUIDFromDevice() {
@@ -99,8 +196,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			return user_info.getString("uid", "");
 		}else{
 			return null;
-		}
-		
+		}		
 	}
 	
 	public void connectToFacebook(View view){
@@ -147,7 +243,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		TextView userID_txt = (TextView)findViewById(R.id.userID_txt);
 		String uid = User.get_uid();		
 		userID_txt.setText(uid);
-		if (!this.getUIDFromDevice().equals(uid)){
+		if (!this.getUIDFromDevice().equals(uid) && Gameplay.get_fbConnected() == 0){
 			SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
 			Editor user_info_edit = user_info.edit();
 			user_info_edit.clear();
@@ -185,7 +281,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			
 			new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
 			
-			// Game history	
+			// Game history
 			//let's use bundle later
 			Bundle game_history_bd = new Bundle();
 			game_history_bd.putString("player_id", gameplay_e.getValue("player_user_id"));
