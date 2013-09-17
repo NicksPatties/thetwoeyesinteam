@@ -4,6 +4,7 @@ public class Gameplay {
 	
 	public static int _promo;
 	public static String _promo_name;
+	public static int _fbConnected;
 	
 	public static int get_promo() {
 		return _promo;
@@ -16,6 +17,12 @@ public class Gameplay {
 	}
 	public static void set_promo_name(String promo_name) {
 		_promo_name = promo_name;
+	}
+	public static int get_fbConnected() {
+		return _fbConnected;
+	}
+	public static void set_fbConnected(int fbConnected) {
+		_fbConnected = fbConnected;
 	}
 	
 	public static void setGenre (String s){

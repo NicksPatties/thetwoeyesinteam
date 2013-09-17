@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SimpleAdapter;
 
 import com.example.movieslam_android_dev.R;
@@ -53,7 +54,24 @@ public class UserTypeSelection extends FragmentActivity {
         });
         lifecycleHelper.onCreate(savedInstanceState);
 
-        ensureOpenSession();
+        if (Gameplay.get_fbConnected() == 0){
+        	Button friendSelector_btn = (Button) this.findViewById(R.id.friendSelector_btn);
+        	friendSelector_btn.setEnabled(false);
+        	friendSelector_btn.setBackgroundResource(R.drawable.button_small_disabled);
+        	
+        	Button userSelector_btn = (Button) this.findViewById(R.id.userSelector_btn);
+        	userSelector_btn.setEnabled(false);
+        	userSelector_btn.setBackgroundResource(R.drawable.button_small_disabled);
+        	
+        	Button emailInvite_btn = (Button) this.findViewById(R.id.emailInvite_btn);
+        	emailInvite_btn.setEnabled(false);
+        	emailInvite_btn.setBackgroundResource(R.drawable.button_small_disabled);
+        	
+        	Button smsInvite_btn = (Button) this.findViewById(R.id.smsInvite_btn);
+        	smsInvite_btn.setEnabled(false);
+        	smsInvite_btn.setBackgroundResource(R.drawable.button_small_disabled);
+        }
+        //ensureOpenSession();
 	}
 	
 	public void gotoFIDSelection(View view){	
