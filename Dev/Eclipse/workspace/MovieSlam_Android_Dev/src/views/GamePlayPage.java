@@ -70,7 +70,7 @@ public class GamePlayPage extends Activity{
 	private int score;
 	private float elapse;
 	private boolean endGame = false;
-	private String winnerID = "";
+	private String winnerID = "0";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -306,8 +306,10 @@ public class GamePlayPage extends Activity{
         if (Gameplay.getChallType().equals("challenge")){
         	if(Gameplay.userScoreThisGame>Gameplay.oppoScoreThisGame){
         		Gameplay.setUserWon(Integer.toString((Integer.parseInt(oppoWon)+1)));
+        		winnerID = User.get_uid();
         	}else if(Gameplay.userScoreThisGame<Gameplay.oppoScoreThisGame){
         		Gameplay.setOppoWon(Integer.toString((Integer.parseInt(oppoWon)+1)));
+        		winnerID = Gameplay.getChallOppoID();
         	}else{
         		winnerID = "-1";
         	}

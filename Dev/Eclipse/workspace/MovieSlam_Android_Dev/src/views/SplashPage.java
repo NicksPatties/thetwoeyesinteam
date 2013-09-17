@@ -114,7 +114,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
         SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
 		Editor user_info_edit = user_info.edit();
 		user_info_edit.clear();
-		user_info_edit.putString("uid", "2171");
+		user_info_edit.putString("uid", "3");
 		user_info_edit.commit();
 		
 		
