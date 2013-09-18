@@ -37,12 +37,14 @@ public class AdvElement {
 			_document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(doc_s)));
 			_document.getDocumentElement().normalize();
 		} catch (SAXException e) {
-			e.printStackTrace();
+			Log.e("AdvElement", "AdvElement init Error: SAXException");
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e("AdvElement", "AdvElement init Error: IOException");
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}		
+			Log.e("AdvElement", "AdvElement init Error: ParserConfigurationException");
+		} catch (Exception e){
+			Log.e("AdvElement", "AdvElement init Error: Source is not valid");
+		}
 	}
 
 	public AdvElement getElement(String tag_s) {	
@@ -51,11 +53,16 @@ public class AdvElement {
 	
 	public AdvElement getElement(String tag_s, int idx) {
 		Element e;
-		if (_document == null){
-			e = (Element) _element.getElementsByTagName(tag_s).item(idx);
-		}else{
-			e = (Element) _document.getElementsByTagName(tag_s).item(idx);
-		}		
+		try {
+			if (_document == null){
+				e = (Element) _element.getElementsByTagName(tag_s).item(idx);
+			}else{
+				e = (Element) _document.getElementsByTagName(tag_s).item(idx);
+			}
+		} catch (NullPointerException expt){
+			Log.e("AdvElement", "AdvElement getElement Error: "+tag_s);
+			return null;
+		}
 		return new AdvElement(e);
 	}
 	
@@ -67,8 +74,8 @@ public class AdvElement {
 			}else{
 				r = _document.getElementsByTagName(tag_s).item(0).getChildNodes().item(0).getNodeValue();
 			}
-		} catch (NullPointerException e){
-			Log.e("AdvElement", "AdvElement parsing error: "+tag_s);
+		} catch (NullPointerException expt){
+			Log.e("AdvElement", "AdvElement getValue Error: "+tag_s);
 			return "0";
 		}
 		return r;

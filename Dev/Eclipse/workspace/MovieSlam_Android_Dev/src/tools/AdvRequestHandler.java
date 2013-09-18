@@ -15,32 +15,26 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
+
+public class AdvRequestHandler extends AsyncTask<Object, Object, Object> {
 	
-	public ResponseDelegate delegate = null;
+	public AdvResponseDelegate delegate = null;
 	private String _url;
 	private String _xmlData;
 	private ProgressDialog progress;
 	
-    public XmlRequestHandler(Context cxt, String url) {
+    public AdvRequestHandler(Context cxt, String url) {
 		this(cxt, url, true);
 	}
     
-    public XmlRequestHandler(Context cxt, String url, Boolean show_loader) {
-    	if (show_loader){
-    		//progress = ProgressDialog.show(cxt, "Loading", "Please wait...", true);
-    		progress = new ProgressDialog(cxt);
-    		progress.setIndeterminate( true );
-    		progress.setMessage( "Please Wait..." );
-            progress.show();
-    	}    	
-		delegate = (ResponseDelegate) cxt;
+    public AdvRequestHandler(Context cxt, String url, Boolean show_loader) {
+		delegate = (AdvResponseDelegate) cxt;
 		_url = url;
+		_xmlData = null;
 	}
 
 
 	protected Void doInBackground(Object... params) {
-
     	HttpClient hc = new DefaultHttpClient();
     	HttpPost hp = new HttpPost(_url);
 
@@ -49,21 +43,37 @@ public class XmlRequestHandler extends AsyncTask<Object, Object, Object> {
     		HttpEntity he = hr.getEntity();
     		_xmlData = EntityUtils.toString(he);
     	} catch (ClientProtocolException e) {
-    		Log.d("error", "ClientProtocolException");
+    		Log.e("xml request handler", "Client Error");
     		return null;
     	} catch (IOException e) {
-    		Log.d("error", "IOException");
+    		Log.e("xml request handler", "I/O Error.");
     		return null;
-    	}    			
+    	} catch (NullPointerException e){
+    		Log.e("xml request handler", "No Internet Access.");
+    		return null;
+		} catch (Exception e){
+			Log.e("xml request handler", "Error.");
+    		return null;
+		}
     			
     	return null;
+    }
+	
+	@Override
+    protected void onPreExecute() { 
+		progress = new ProgressDialog((Context) delegate);
+		progress.setMessage("Loading...");
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.show(); 
     }
 
     @Override
     protected void onPostExecute(Object obj) {
     	delegate.responseLoaded(_xmlData);
     	if (progress != null){
-    		progress.dismiss();  
+    		progress.dismiss();
+    		progress = null;
     	}    		
     }
 

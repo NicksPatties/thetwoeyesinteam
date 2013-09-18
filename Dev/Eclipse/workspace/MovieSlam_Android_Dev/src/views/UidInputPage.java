@@ -1,8 +1,8 @@
 package views;
 
 import tools.AdvElement;
-import tools.ResponseDelegate;
-import tools.XmlRequestHandler;
+import tools.AdvResponseDelegate;
+import tools.AdvRequestHandler;
 import models.Config;
 import models.Gameplay;
 import models.User;
@@ -17,7 +17,7 @@ import android.widget.EditText;
 
 import com.example.movieslam_android_dev.R;
 
-public class UidInputPage extends Activity implements ResponseDelegate, Config {
+public class UidInputPage extends Activity implements AdvResponseDelegate, Config {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class UidInputPage extends Activity implements ResponseDelegate, Config {
 		String uid_s = uid_txt.getText().toString();
 		
 		if (!uid_s.equals("") && Integer.parseInt(uid_s) != Integer.parseInt(User.get_uid())){
-			new XmlRequestHandler(this, BASE_URL+"/service/checkUID.php?user_id="+User.get_uid()+"&player_id="+uid_s+"&fb=0").execute();
+			new AdvRequestHandler(this, BASE_URL+"/service/checkUID.php?user_id="+User.get_uid()+"&player_id="+uid_s+"&fb=0").execute();
 		}else{
 			Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("ERROR");

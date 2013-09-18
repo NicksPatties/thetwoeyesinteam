@@ -15,8 +15,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import tools.AdvElement;
-import tools.ResponseDelegate;
-import tools.XmlRequestHandler;
+import tools.AdvResponseDelegate;
+import tools.AdvRequestHandler;
 
 import com.example.movieslam_android_dev.R;
 
@@ -30,7 +30,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ReadyToPlayPage extends Activity implements ResponseDelegate, Config{
+public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Config{
 
 	private TextView genreText;
 	private TextView userNameText;
@@ -85,7 +85,7 @@ public class ReadyToPlayPage extends Activity implements ResponseDelegate, Confi
     				+"&challenge_id="+Gameplay.getChallID();
         }
 //      new XmlRequestHandler(this, BASE_URL+"/service/getMedia.php?&type=drama&user_id=8").execute();
-        new XmlRequestHandler(this, api).execute();
+        new AdvRequestHandler(this, api).execute();
         thread=  new Thread(){
             @Override
             public void run(){

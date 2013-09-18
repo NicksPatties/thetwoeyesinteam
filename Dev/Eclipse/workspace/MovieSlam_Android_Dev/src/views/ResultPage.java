@@ -4,7 +4,7 @@ import models.Gameplay;
 import models.User;
 import tools.AdvElement;
 import tools.DownloadImageTask;
-import tools.XmlRequestHandler;
+import tools.AdvRequestHandler;
 
 import com.example.movieslam_android_dev.R;
 

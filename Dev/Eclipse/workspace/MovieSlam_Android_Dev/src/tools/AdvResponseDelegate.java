@@ -1,5 +1,5 @@
 package tools;
 
-public interface ResponseDelegate {
+public interface AdvResponseDelegate {
 	void responseLoaded(String response);
 }

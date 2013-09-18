@@ -10,8 +10,8 @@ import models.User;
 import tools.AdvButtonListener;
 import tools.AdvElement;
 import tools.DownloadImageTask;
-import tools.ResponseDelegate;
-import tools.XmlRequestHandler;
+import tools.AdvResponseDelegate;
+import tools.AdvRequestHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.movieslam_android_dev.R;
 import com.facebook.Session;
@@ -40,7 +41,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 
-public class SplashPage extends FragmentActivity implements ResponseDelegate, Config {
+public class SplashPage extends FragmentActivity implements AdvResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
 	
 	private UiLifecycleHelper uiHelper;
@@ -141,10 +142,11 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		
 		LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
 		loginButton.setBackgroundResource(R.drawable.button_bg_small);
+		
         loginButton.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
             @Override
             public void onUserInfoFetched(GraphUser user) {
-            	
+            	try {
             	Session session = Session.getActiveSession();
 
         	    if (session != null && session.isOpened()) {
@@ -174,14 +176,24 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
         	    	}        	    	
         	    	//session.closeAndClearTokenInformation();
         	    }
+        	    
+            	} catch (NullPointerException e){
+            		showConnectionError();
+    			}
             }
-
-			
+            
+	        
         });
+		
         
         
      
         
+	}
+	
+	public void showConnectionError(){
+		Toast toast = Toast.makeText(this, "No internet access.", Toast.LENGTH_LONG);
+		toast.show();
 	}
 	
 	public void setfbConnected(int i) {
@@ -195,7 +207,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 	}
 	
 	public void callGameInfoByFID(){
-		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid="+User.get_fid()+"&fname="+User.get_fname()+"&lname="+User.get_lname()+"&thumbnail=http://graph.facebook.com/"+User.get_fid()+"/picture?type=large", true).execute();
+		new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid="+User.get_fid()+"&fname="+User.get_fname()+"&lname="+User.get_lname()+"&thumbnail=http://graph.facebook.com/"+User.get_fid()+"/picture?type=large", true).execute();
 	}
 	
 	public void callGameInfoByUID(){
@@ -203,10 +215,10 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		String uid = getUIDFromDevice();
         if (uid != null){
         	Log.d("debug", "call game info 1");
-        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0", true).execute();
+        	new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0", true).execute();
         }else{
         	
-        	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png", true).execute();
+        	new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png", true).execute();
         	Log.d("debug", "call game info 2 "+ BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png");
         }
 	}
@@ -235,12 +247,24 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 	
 	public void gotoRefresh(View view){
 		String uid = getUIDFromDevice();
-		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0").execute();
+		new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0").execute();
+		
+		if (Gameplay.get_fbConnected() == 0){
+			callGameInfoByUID();
+		}else if (Gameplay.get_fbConnected() == 1){
+			callGameInfoByFID();
+		}
+		
 	}
 	
 	//private ArrayList<View> challenge_cell_array = new ArrayList<View>();
 	@Override
 	public void responseLoaded(String response) {
+		
+		if (response == null){
+			showConnectionError();
+			return;
+		}
 		
 		// init root element
 		AdvElement doc = new AdvElement(response);
@@ -397,7 +421,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 				OnClickListener b0_ltn = new AdvButtonListener(decline_bd, this) {
 					@Override
 					public void onClick(View v) {
-						new XmlRequestHandler(get_delegate(), BASE_URL+"/service/getGameInfo.php?user_id="+User.get_uid()+"&remove_game_id="+get_bundle().getString("game_id")).execute();
+						new AdvRequestHandler(get_delegate(), BASE_URL+"/service/getGameInfo.php?user_id="+User.get_uid()+"&remove_game_id="+get_bundle().getString("game_id")).execute();
 					}
 				};
 				b0.setOnClickListener(b0_ltn);

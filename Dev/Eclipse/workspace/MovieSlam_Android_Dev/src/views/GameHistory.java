@@ -4,8 +4,8 @@ import models.Config;
 import models.User;
 import tools.AdvElement;
 import tools.DownloadImageTask;
-import tools.ResponseDelegate;
-import tools.XmlRequestHandler;
+import tools.AdvResponseDelegate;
+import tools.AdvRequestHandler;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.movieslam_android_dev.R;
 
-public class GameHistory extends Activity implements ResponseDelegate, Config {
+public class GameHistory extends Activity implements AdvResponseDelegate, Config {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class GameHistory extends Activity implements ResponseDelegate, Config {
 		
 		// get round detail from backend
 		Bundle b_in = getIntent().getExtras();
-		new XmlRequestHandler(this, BASE_URL+"/service/getPastGameplay.php?user_id="+User.get_uid()+"&player_id="+b_in.getString("player_id")).execute();
+		new AdvRequestHandler(this, BASE_URL+"/service/getPastGameplay.php?user_id="+User.get_uid()+"&player_id="+b_in.getString("player_id")).execute();
 		Log.d("debug", BASE_URL+"/service/getPastGameplay.php?user_id="+User.get_uid()+"&player_id="+b_in.getString("player_id"));
 	}
 

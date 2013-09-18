@@ -17,8 +17,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import tools.DownloadImageTask;
 import tools.HttpPoster;
-import tools.ResponseDelegate;
-import tools.XmlRequestHandler;
+import tools.AdvResponseDelegate;
+import tools.AdvRequestHandler;
 import views.component.MoviePlayer;
 import models.Config;
 import models.Gameplay;

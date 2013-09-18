@@ -5,12 +5,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 public class AdvLoaderThread  extends AsyncTask<Object, Object, Object> {
-	public ThreadResponseDelegate _delegate;
+	public AdvThreadDelegate _delegate;
 	protected Object _data;
 	private ProgressDialog _progress;
 
 	public AdvLoaderThread(Context delegate) {
-		_delegate = (ThreadResponseDelegate) delegate;
+		_delegate = (AdvThreadDelegate) delegate;
 		_progress = ProgressDialog.show((Context) _delegate, "Loading", "Please wait...", true);
 	}
 

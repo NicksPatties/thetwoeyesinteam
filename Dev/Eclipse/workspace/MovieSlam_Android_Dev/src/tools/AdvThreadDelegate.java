@@ -1,5 +1,5 @@
 package tools;
 
-public interface ThreadResponseDelegate {
+public interface AdvThreadDelegate {
 	void threadResponseLoaded(Object response);
 }
