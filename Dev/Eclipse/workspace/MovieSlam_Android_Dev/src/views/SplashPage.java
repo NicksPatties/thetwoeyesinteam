@@ -109,16 +109,28 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 //          }
 //      }, (int)(PROMO_IMG_DURATION*1000));
         
+     
+        
         
         // hardcode to user id 3
         SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
-		Editor user_info_edit = user_info.edit();
+		/*
+        Editor user_info_edit = user_info.edit();
 		user_info_edit.clear();
-		user_info_edit.putString("uid", "3");
-		user_info_edit.commit();
-		
-		
+		//user_info_edit.putString("uid", "2171");
+		user_info_edit.commit();*/
         
+		// start Facebook Login
+    	if (user_info.contains("fbConnected") && user_info.getString("fbConnected", "").equals("1")){
+    		Log.d("Debug", "facbeook login detected");
+    		Session.openActiveSession(this, true, new Session.StatusCallback() {
+    			
+    		    // callback when session changes state
+    		    @Override
+    		    public void call(Session session, SessionState state, Exception exception) {
+    		    }
+    		});
+         }
         
 		// add main board content
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -126,18 +138,6 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		View user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
 		user_panel.addView(user_main_board);		
 		
-		// FB connected
-		
-		// start Facebook Login
-		/*
-		Session.openActiveSession(this, true, new Session.StatusCallback() {
-		
-		    // callback when session changes state
-		    @Override
-		    public void call(Session session, SessionState state, Exception exception) {
-		    }
-		});
-		*/
 		
 		LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
 		loginButton.setBackgroundResource(R.drawable.button_bg_small);
@@ -149,31 +149,49 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 
         	    if (session != null && session.isOpened()) {
         	    	if (Gameplay.get_fbConnected() != 1){
-        	    		Gameplay.set_fbConnected(1);
-        	    		Log.d("debug","FB connected");
-            	    	Log.d("debug", user.getId() + " " + user.getId());
+        	    		setfbConnected(1);
+        	    		
+        	    		// set User data by facebook
             	    	User.set_fid(user.getId());
             	    	User.set_fname(user.getFirstName());
             	    	User.set_lname(user.getLastName());
             	    	User.set_thumbnail("");
-            	    	
+            	    	// get user info
             	    	callGameInfoByFID();
         	    	}        	    	
         	    } else {
         	    	if (Gameplay.get_fbConnected() != 0){
-        	    		Gameplay.set_fbConnected(0);
-        	    		Log.d("debug","FB disconnected");
+        	    		
+        	    		// set user to non facebook connect in local decvice
+        	    		setfbConnected(0);
+        	    		
+        	    		// clear session if user log out
         	    		if (session != null){
         	    			Session.getActiveSession().closeAndClearTokenInformation();
         	    		}
-        	    		
+        	    		// get user info
         	    		callGameInfoByUID();
         	    	}        	    	
         	    	//session.closeAndClearTokenInformation();
         	    }
             }
+
+			
         });
         
+        
+     
+        
+	}
+	
+	public void setfbConnected(int i) {
+		Gameplay.set_fbConnected(i);
+		
+		SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
+		Editor user_info_edit = user_info.edit();
+		user_info_edit.putString("fbConnected", Integer.toString(i));
+		user_info_edit.commit();
+		Log.d("debug", "facebook login set to "+i);
 	}
 	
 	public void callGameInfoByFID(){
@@ -181,11 +199,15 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 	}
 	
 	public void callGameInfoByUID(){
+		
 		String uid = getUIDFromDevice();
         if (uid != null){
+        	Log.d("debug", "call game info 1");
         	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0", true).execute();
         }else{
+        	
         	new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png", true).execute();
+        	Log.d("debug", "call game info 2 "+ BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png");
         }
 	}
 	
@@ -216,7 +238,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		new XmlRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0").execute();
 	}
 	
-	private ArrayList<View> challenge_cell_array = new ArrayList<View>();
+	//private ArrayList<View> challenge_cell_array = new ArrayList<View>();
 	@Override
 	public void responseLoaded(String response) {
 		
@@ -243,10 +265,9 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 		TextView userID_txt = (TextView)findViewById(R.id.userID_txt);
 		String uid = User.get_uid();		
 		userID_txt.setText(uid);
-		if (!this.getUIDFromDevice().equals(uid) && Gameplay.get_fbConnected() == 0){
+		if ((getUIDFromDevice() == null || !this.getUIDFromDevice().equals(uid)) && Gameplay.get_fbConnected() == 0){
 			SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
 			Editor user_info_edit = user_info.edit();
-			user_info_edit.clear();
 			user_info_edit.putString("uid", uid);
 			user_info_edit.commit();
 		}		
@@ -269,7 +290,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			// add player challenge cell			
 			final View player_challenge_cell = layoutInflater.inflate(R.layout.player_challenge_cell, score_table, false);
 			score_table.addView(player_challenge_cell);
-			challenge_cell_array.add(player_challenge_cell);
+			//challenge_cell_array.add(player_challenge_cell);
 			
 			AdvElement gameplay_e = gameplays_e.getElement("gameplay", i);
 			
@@ -305,9 +326,70 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 			String genre_type = gameplay_e.getValue("challenge_genre_type");
 			String gameplay_status = gameplay_e.getValue("gameplay_status");
 			String gameplay_round = gameplay_e.getValue("gameplay_round");
+			
+			if (gameplay_status.equals("wait")){
+				
+				// waiting for opponent status
+				b0.setText("RESULT");
+				b0.setEnabled(false);
+				b0.setBackgroundResource(R.drawable.button_small_disabled);
+				b1.setText("CONTINUE");
+				
+				b1.setEnabled(false);
+				b1.setBackgroundResource(R.drawable.button_small_disabled);
+				Gameplay.setChallType("challenge");
+				
+				player_score_txt.setText("wait");
+				player_score_txt.setTextSize(12);
+			}else if (gameplay_status.equals("start")){
+				
+				b0.setText("RESULT");
+				Bundle result_bd = new Bundle();
+				result_bd.putString("game_id", game_id);
+				OnClickListener b0_ltn = new AdvButtonListener(result_bd, this) {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getApplicationContext(), RoundHistory.class);						
+						intent.putExtras(get_bundle());
+						startActivity(intent);
+					}
+				};
+				b0.setOnClickListener(b0_ltn);
+				
+				b1.setText("CONTINUE");
+				Bundle continue_bd = new Bundle();
+				continue_bd.putInt("cell_idx", i);
+				continue_bd.putString("target_source_type", "cid");
+				continue_bd.putString("target_id", challenge_id);
+				continue_bd.putString("target_genre", genre_type);
+				OnClickListener b1_ltn = new AdvButtonListener(continue_bd, this) {
+					@Override
+					public void onClick(View v) {
+						//int itemIndex = challenge_cell_array.indexOf(player_challenge_cell);
+						int cell_idx = this.get_bundle().getInt("cell_idx");
+						AdvElement gameplay_e = gameplays_e.getElement("gameplay", cell_idx);
 						
-			if (gameplay_status.equals("accept")){
-
+						Gameplay.setChallID(gameplay_e.getValue("challenge_id"));
+						Gameplay.setGameID(gameplay_e.getValue("gameplay_game_id"));
+						Gameplay.setChallOppoScore(gameplay_e.getValue("player_user_score"));
+						Gameplay.setChallOppoImageURL(gameplay_e.getValue("player_user_thumbnail"));
+						Gameplay.setChallRound(gameplay_e.getValue("gameplay_round"));
+						Gameplay.setUserWon(gameplay_e.getValue("gameplay_user_won"));
+						Gameplay.setOppoWon(gameplay_e.getValue("gameplay_player_won"));
+						Gameplay.setOppoFName(gameplay_e.getValue("player_user_fname"));
+						Gameplay.setOppoLName(gameplay_e.getValue("player_user_lname"));
+						Gameplay.setGenre(gameplay_e.getValue("challenge_genre_type"));
+						Gameplay.setChallStatus(gameplay_e.getValue("gameplay_status"));
+						Gameplay.setChallType("challenge");
+						Gameplay.setChallOppoID(gameplay_e.getValue("player_user_id"));
+						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));
+						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						
+						intent.putExtras(get_bundle());
+						startActivity(intent);
+					}
+				};
+				b1.setOnClickListener(b1_ltn);
+			}else if (gameplay_status.equals("accept")){
 				// set decline button
 				b0.setText("DECLINE");
 				Bundle decline_bd = new Bundle();
@@ -323,14 +405,16 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 				// set accept button
 				b1.setText("ACCEPT");
 				Bundle accept_bd = new Bundle();
+				accept_bd.putInt("cell_idx", i);
 				accept_bd.putString("target_source_type", "cid");
 				accept_bd.putString("target_id", challenge_id);
 				accept_bd.putString("target_genre", genre_type);
 				OnClickListener b1_ltn = new AdvButtonListener(accept_bd, this) {
 					@Override
 					public void onClick(View v) {	
-						int itemIndex = challenge_cell_array.indexOf(player_challenge_cell);
-						AdvElement gameplay_e = gameplays_e.getElement("gameplay", itemIndex);
+						//int itemIndex = challenge_cell_array.indexOf(player_challenge_cell);
+						int cell_idx = this.get_bundle().getInt("cell_idx");
+						AdvElement gameplay_e = gameplays_e.getElement("gameplay", cell_idx);
 						Gameplay.setChallID(gameplay_e.getValue("challenge_id"));
 						Gameplay.setGameID(gameplay_e.getValue("gameplay_game_id"));
 						Gameplay.setChallOppoScore(gameplay_e.getValue("player_user_score"));
@@ -342,11 +426,7 @@ public class SplashPage extends FragmentActivity implements ResponseDelegate, Co
 						Gameplay.setOppoLName(gameplay_e.getValue("player_user_lname"));
 						Gameplay.setGenre(gameplay_e.getValue("challenge_genre_type"));
 						Gameplay.setChallStatus(gameplay_e.getValue("gameplay_status"));
-						if (Gameplay.getChallStatus().equals("accept")){
-							Gameplay.setChallType("challenge");
-						}else{
-							Gameplay.setChallType("self");
-						}
+						Gameplay.setChallType("self");
 						Gameplay.setChallOppoID(gameplay_e.getValue("player_user_id"));
 						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));
 						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						

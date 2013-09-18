@@ -18,6 +18,7 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -261,6 +262,8 @@ public class UserTypeSelection extends FragmentActivity {
                 
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {email.get("Email")});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Let's play Movie Slam!");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("Hey "+email.get("Email")+",\n\n I want to play Movie Slam! Click here to download from the iTunes App STore or play on Facebook!"));
                 emailIntent.setType("text/plain");
                 startActivity(Intent.createChooser(emailIntent, "Send a mail ..."));
                 

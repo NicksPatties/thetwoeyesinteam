@@ -61,11 +61,16 @@ public class AdvElement {
 	
 	public String getValue(String tag_s){
 		String r;
-		if (_document == null){
-			r = _element.getElementsByTagName(tag_s).item(0).getChildNodes().item(0).getNodeValue();
-		}else{
-			r = _document.getElementsByTagName(tag_s).item(0).getChildNodes().item(0).getNodeValue();
-		}	
+		try {
+			if (_document == null){
+				r = _element.getElementsByTagName(tag_s).item(0).getChildNodes().item(0).getNodeValue();
+			}else{
+				r = _document.getElementsByTagName(tag_s).item(0).getChildNodes().item(0).getNodeValue();
+			}
+		} catch (NullPointerException e){
+			Log.e("AdvElement", "AdvElement parsing error: "+tag_s);
+			return "0";
+		}
 		return r;
 	}
 
