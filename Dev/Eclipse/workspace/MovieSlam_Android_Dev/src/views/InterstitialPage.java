@@ -39,6 +39,7 @@ public class InterstitialPage extends Activity {
                     synchronized(this){
                         wait(3000);
                         startActivity(new Intent(getApplicationContext(), ResultPage.class));
+                        finish();
                     }
                 }
                 catch(InterruptedException ex){                    
