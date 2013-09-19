@@ -64,12 +64,26 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 			new DownloadImageTask(user_tn).execute(b_in.getString("user_tn_url"));
 			
 			TextView round_user_txt = (TextView) round_info_cell.findViewById(R.id.round_user_txt);
-			round_user_txt.setText(user_rounds_e.getValue("elapsed", i).equals("-1") ? "WRONG" : user_rounds_e.getValue("elapsed", i));
+			double round_user = Double.parseDouble(user_rounds_e.getValue("elapsed", i));
+			if (round_user == -1){
+				round_user_txt.setText("WRONG");
+				round_user_txt.setTextColor(0xFFFF0000);
+			}else{
+				round_user_txt.setText(Double.toString(round_user));
+			}		
 			
 			ImageView play_tn = (ImageView) round_info_cell.findViewById(R.id.round_player_tn);
 			new DownloadImageTask(play_tn).execute(b_in.getString("player_tn_url"));
 			
 			TextView round_player_txt = (TextView) round_info_cell.findViewById(R.id.round_player_txt);
+			double round_player = Double.parseDouble(player_rounds_e.getValue("elapsed", i));
+			if (round_player == -1){
+				round_player_txt.setText("WRONG");
+				round_player_txt.setTextColor(0xFFFF0000);
+			}else{
+				round_player_txt.setText(Double.toString(round_player));
+			}	
+			
 			round_player_txt.setText(player_rounds_e.getValue("elapsed", i).equals("-1") ? "WRONG" : player_rounds_e.getValue("elapsed", i));
 			
 			TextView movie_txt = (TextView) round_info_cell.findViewById(R.id.movie_txt);
