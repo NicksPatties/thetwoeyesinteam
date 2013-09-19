@@ -207,6 +207,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 	
 	public void callGameInfoByFID(){
 		new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid="+User.get_fid()+"&fname="+User.get_fname()+"&lname="+User.get_lname()+"&thumbnail=http://graph.facebook.com/"+User.get_fid()+"/picture?type=large", true).execute();
+		Log.d("debug", BASE_URL+"/service/getGameInfo.php?user_id=0&fid="+User.get_fid()+"&fname="+User.get_fname()+"&lname="+User.get_lname()+"&thumbnail=http://graph.facebook.com/"+User.get_fid()+"/picture?type=large");
 	}
 	
 	public void callGameInfoByUID(){
@@ -460,12 +461,14 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 				b1.setOnClickListener(b1_ltn);
 				
 			}else if (gameplay_status.equals("end") && gameplay_round.equals("1")){
+				
 				b0.setText("FORFEIT");
 				b0.setEnabled(false);
 				b0.setBackgroundResource(R.drawable.button_small_disabled);
 				b1.setVisibility(View.INVISIBLE);
 				player_score_txt.setText("-:-");
 			}else{
+				
 				// set result button
 				b0.setText("RESULT");
 				Bundle result_bd = new Bundle();
