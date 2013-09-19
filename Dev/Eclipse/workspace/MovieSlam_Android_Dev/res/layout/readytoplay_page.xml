@@ -1,73 +1,68 @@
-<LinearLayout
+<LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ReadyToPlayPage" 
-    android:background="@drawable/bg"
-    android:id="@+id/readytoplayPage">
-    
-    <TextView 
-        android:id="@+id/genre_text"
-        android:layout_width="fill_parent"
-    	android:layout_height="0dp"
-    	android:layout_weight="3"
-		android:textSize="60sp"
-		android:gravity="center"
-		android:layout_gravity="center"
-        />
-    
-    <LinearLayout 
-	        android:layout_width="fill_parent"
-	    	android:layout_height="0dp"
-	    	android:layout_weight="7"
-	    	android:layout_margin="150dp"
-	    	android:orientation="horizontal">
-	    <LinearLayout 
-	        android:layout_width="60dp"
-	    	android:layout_height="150dp"
-	    	android:orientation="vertical"
-	        >
-	        <TextView 
-		        android:id="@+id/user_name_ready"
-		        android:layout_width="fill_parent"
-		    	android:layout_height="0dp"
-		    	android:layout_weight="3"
-				android:textSize="30sp"
-	        />
-	        
-	        <LinearLayout 
-		        android:layout_width="fill_parent"
-		    	android:layout_height="0dp"
-		    	android:layout_weight="7"
-		    	android:orientation="vertical"
-	        />
-	    </LinearLayout>
-	    <LinearLayout 
-	        android:layout_width="60dp"
-	    	android:layout_height="150dp"
-	    	android:orientation="vertical"
-	        >
-	        <TextView 
-		        android:id="@+id/oppo_name_ready"
-		        android:layout_width="fill_parent"
-		    	android:layout_height="0dp"
-		    	android:layout_weight="3"
-				android:textSize="30sp"
-	        />
-	        
-	        <LinearLayout 
-		        android:layout_width="fill_parent"
-		    	android:layout_height="0dp"
-		    	android:layout_weight="7"
-		    	android:orientation="vertical"
-	        />
-	    </LinearLayout>
-	 </LinearLayout>
+    android:background="@drawable/genre_action_italian"
+    android:orientation="vertical"
+    android:id="@+id/readytoplayPage"
+    tools:context=".ReadyToPlayPage" >
 
+    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="0dp"
+				android:orientation="vertical"
+				android:layout_weight="8">
+	</LinearLayout>
+	
+    <TableLayout 
+			android:id="@+id/ready_table"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:layout_weight="3">  
+	</TableLayout>
+	
+    <RelativeLayout
+				android:layout_width="fill_parent"
+				android:layout_height="0dp"
+				android:layout_weight="4">
+				<TextView  
+			        android:layout_width="wrap_content"  
+			        android:layout_height="wrap_content"  
+			        android:layout_centerInParent="true"/> 
+			    <RelativeLayout
+					android:layout_width="150dp"
+					android:layout_height="150dp">
+				    <TextView  
+				        android:layout_width="wrap_content"  
+				        android:layout_height="wrap_content"
+				        android:gravity="center" 
+				        android:layout_gravity="center"/>
+				</RelativeLayout>
+			    <RelativeLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+			    <RelativeLayout  
+			        android:layout_width="50dp"  
+			        android:layout_height="fill_parent"  
+			        android:layout_centerInParent="true"/>
+			        
+	</RelativeLayout>
+	
+    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="0dp"
+				android:orientation="vertical"
+				android:layout_weight="9">
+				<TextView
+				    android:paddingLeft="400dp"
+				    android:id = "@+id/round_number"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"/>
+	</LinearLayout>
+    
 </LinearLayout>

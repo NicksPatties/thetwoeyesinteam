@@ -17,17 +17,24 @@ import org.xml.sax.InputSource;
 import tools.AdvElement;
 import tools.AdvResponseDelegate;
 import tools.AdvRequestHandler;
+import tools.DownloadImageTask;
 
 import com.example.movieslam_android_dev.R;
 
 import android.R.color;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Config{
@@ -42,20 +49,29 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
         
-        userNameText = (TextView) findViewById(R.id.user_name_ready);
-        oppoNameText = (TextView) findViewById(R.id.oppo_name_ready);
-        
-        genreText = (TextView) findViewById(R.id.genre_text);
-        String s = Gameplay.getGenre();
-        if (s.equals("all")){
-        	s = "random";
-        }else if(s.equals("promo")){
-        	s = Gameplay.get_promo_name();
-        }else if(s.equals("scifi")){
-        	s = "sci-fi";
+        LinearLayout ll = (LinearLayout) findViewById(R.id.readytoplayPage);
+		ll.setBackgroundResource(R.drawable.genre_logo_and_copy);
+		
+		String g = Gameplay.getGenre();
+        if (g.equals("all")){
+        	ll.setBackgroundResource(R.drawable.genre_random_italian);
+        }else if(g.equals("promo")){
+        	g = Gameplay.get_promo_name();
+        }else if(g.equals("scifi")){
+        	ll.setBackgroundResource(R.drawable.genre_scifi_italian);
+        }else if(g.equals("drama")){
+        	ll.setBackgroundResource(R.drawable.genre_drama_italian);
+        }else if(g.equals("family")){
+        	ll.setBackgroundResource(R.drawable.genre_family_italian);
+        }else if(g.equals("comedy")){
+        	ll.setBackgroundResource(R.drawable.genre_comedy_italian);
+        }else if(g.equals("action")){
+        	ll.setBackgroundResource(R.drawable.genre_action_italian);
+        }else if(g.equals("horror")){
+        	ll.setBackgroundResource(R.drawable.genre_horror_italian);
+        }else{
+        	ll.setBackgroundResource(R.drawable.genre_logo_and_copy);
         }
-        genreText.setText(s.toUpperCase());
-        genreText.setTextColor(Color.RED);
         
         String api;
         if (Gameplay.getChallType().equals("self")){
@@ -91,7 +107,7 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
             public void run(){
                 try {
                     synchronized(this){
-                        wait(1000);
+                        wait(3000);
                         startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
                     }
                 }
@@ -204,13 +220,72 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 			Gameplay.setMediaTN(mediaTN);
 			Gameplay.setMediaIDs(mediaIDs);
 			
-			if (Gameplay.getChallType().equals("self")){
-				userNameText.setText(User.get_fname() + "    "+ User.get_lname());
-				oppoNameText.setText(Gameplay.getOppoFName() + "    "+ Gameplay.getOppoLName());
-	        }else{
-				userNameText.setText(User.get_fname() + "    "+ User.get_lname());
-				oppoNameText.setText(Gameplay.getOppoFName() + "    "+ Gameplay.getOppoLName());
-	        }
+//	        switch (g) {
+//            case "all":  
+//            		 ll.setBackgroundResource(R.drawable.genre_random_italian);
+//                     break;
+//            case "scifi":  
+//            		 ll.setBackgroundResource(R.drawable.genre_scifi_italian);
+//                     break;
+//            case "drama":
+//            		 ll.setBackgroundResource(R.drawable.genre_drama_italian);
+//            		 break;
+//		    case "comedy":  
+//		    		 ll.setBackgroundResource(R.drawable.genre_comedy_italian);
+//		             break;
+//		    case "family":  
+//		    		 ll.setBackgroundResource(R.drawable.genre_family_italian);
+//		             break;
+//		    case "action":  
+//		    		 ll.setBackgroundResource(R.drawable.genre_action_italian);
+//		             break;
+//		    case "horror": 
+//		    		 ll.setBackgroundResource(R.drawable.genre_horror_italian);
+//		             break;
+//		    default: 
+//			   		 ll.setBackgroundResource(R.drawable.genre_logo_and_copy);
+//		             break;
+			
+			LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		    TableLayout result_table = (TableLayout) findViewById(R.id.ready_table);
+		    
+		    View ready_cell = layoutInflater.inflate(R.layout.ready_info_cell, result_table, false);
+	     	result_table.addView(ready_cell);
+	     	
+	     	TextView s = (TextView) ready_cell.findViewById(R.id.names);
+	     	s.setTextColor(Color.parseColor("#1f426e"));
+	     	String userFName = "Lana";
+	     	String userLName = "Oskoui";
+	     	String userName = userFName+" "+userLName;
+	     	String offset1 = "";
+	     	if (userName.length() <= 52){
+	     		for (int i = 0; i < 52-userName.length(); i++) {
+	    			offset1 += " "; 
+	    		}
+	     	}
+	     	userName = "    "+userName+offset1;
+	     	String oppoFName = "App";
+	     	String oppoLName = "Oskoui";
+	     	String oppoName = "    "+oppoFName+" "+oppoLName;
+	     	s.setText(userName+oppoName);
+	     	
+//	     	new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.user_image)).execute("http://screenslam.foxfilm.com/image/title_thumbnail_default.jpg");
+	     	new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.user_image_ready)).execute(User.get_thumbnail());
+	     	
+	     	TextView s1 = (TextView) ready_cell.findViewById(R.id.user_point_ready);
+	     	s1.setTextColor(Color.parseColor("#ffffff"));
+	     	s1.setText("10000\n"+"Points");
+	     	
+	     	if (Gameplay.getOppoImageURL().equals("")){
+	     		new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
+	     	}else{
+	     		new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
+	     	}
+//	     	new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image)).execute("https://graph.facebook.com/100002538660677/picture");
+	     	
+	     	TextView s2 = (TextView) ready_cell.findViewById(R.id.oppo_point_ready);
+	     	s2.setTextColor(Color.parseColor("#ffffff"));
+	     	s2.setText("20000\n"+"Points");
 			
 			thread.start();
 			
