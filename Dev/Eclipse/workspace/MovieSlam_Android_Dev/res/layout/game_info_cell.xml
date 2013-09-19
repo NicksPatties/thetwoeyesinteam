@@ -17,18 +17,18 @@ android:layout_marginTop="35dp" >
 		
 		    <ImageView
 	        android:id="@+id/user_tn"
-	        android:paddingRight="20dp"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="60dp"
+	        android:layout_height="60dp"
 	        android:layout_toLeftOf="@+id/game_result_txt"
-	        android:layout_alignTop="@+id/game_result_txt"
 	        android:adjustViewBounds="true"
 	        android:scaleType="centerCrop" />
 
 			<TextView
-		    android:id="@+id/game_result_txt"
+		    android:id="@id/game_result_txt"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="20dp"
+		    android:layout_marginRight="20dp"
 		    android:layout_centerHorizontal="true"
 		    android:text="-:-"
 		    android:textColor="#FFFFFF"
@@ -37,11 +37,9 @@ android:layout_marginTop="35dp" >
 			
 			<ImageView
 	        android:id="@+id/player_tn"
-	        android:paddingLeft="20dp"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@+id/game_result_txt"
-	        android:layout_alignTop="@+id/game_result_txt"
+	        android:layout_width="60dp"
+	        android:layout_height="60dp"
+	        android:layout_toRightOf="@id/game_result_txt"
 	        android:adjustViewBounds="true"
 	        android:scaleType="centerCrop" />
         			            

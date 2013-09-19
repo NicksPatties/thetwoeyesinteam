@@ -3,7 +3,7 @@ package views;
 import models.Config;
 import models.User;
 import tools.AdvElement;
-import tools.DownloadImageTask;
+import tools.AdvImageLoader;
 import tools.AdvResponseDelegate;
 import tools.AdvRequestHandler;
 import android.app.Activity;
@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -56,6 +57,12 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 			View player_challenge_cell = layoutInflater.inflate(R.layout.game_info_cell, round_info_wrapper, false);
 			round_info_wrapper.addView(player_challenge_cell);
 			
+			if (i == 0){
+				LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)player_challenge_cell.getLayoutParams();
+				params.setMargins(0, 80, 0, 0);
+				player_challenge_cell.setLayoutParams(params);
+			}
+			
 			TextView game_result_txt = (TextView) player_challenge_cell.findViewById(R.id.game_result_txt);
 			int user_won = Integer.parseInt(gameplay_e.getValue("user_won"));
 			int player_won = Integer.parseInt(gameplay_e.getValue("player_won"));
@@ -64,12 +71,12 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 			//RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight());
 			
 			ImageView user_tn = (ImageView) player_challenge_cell.findViewById(R.id.user_tn);
-			new DownloadImageTask(user_tn).execute(b_in.getString("user_tn_url"));
+			new AdvImageLoader(user_tn).execute(b_in.getString("user_tn_url"));
 			//user_tn.setLayoutParams(layoutParams);
 			//user_tn.setLayoutParams(new LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight()));
 			
 			ImageView player_tn = (ImageView) player_challenge_cell.findViewById(R.id.player_tn);
-			new DownloadImageTask(player_tn).execute(b_in.getString("player_tn_url"));			
+			new AdvImageLoader(player_tn).execute(b_in.getString("player_tn_url"));			
 			//player_tn.setLayoutParams(layoutParams);
 			//player_tn.setLayoutParams(new LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight()));
 			

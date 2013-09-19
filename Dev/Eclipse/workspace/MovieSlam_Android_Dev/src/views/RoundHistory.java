@@ -2,17 +2,22 @@ package views;
 
 import models.Config;
 import models.User;
+import tools.AdvButtonListener;
 import tools.AdvElement;
-import tools.DownloadImageTask;
-import tools.AdvResponseDelegate;
 import tools.AdvRequestHandler;
+import tools.AdvResponseDelegate;
+import tools.AdvImageLoader;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -56,12 +61,12 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 			round_info_wrapper.addView(round_info_cell);
 			
 			ImageView movie_tn = (ImageView) round_info_cell.findViewById(R.id.movie_tn);
-			new DownloadImageTask(movie_tn).execute(BASE_URL + "/" + media_e.getValue("media_thumbnail"));
+			new AdvImageLoader(movie_tn).execute(BASE_URL + "/" + media_e.getValue("media_thumbnail"));
 			
 			
 			Bundle b_in = getIntent().getExtras();	
 			ImageView user_tn = (ImageView) round_info_cell.findViewById(R.id.round_user_tn);
-			new DownloadImageTask(user_tn).execute(b_in.getString("user_tn_url"));
+			new AdvImageLoader(user_tn).execute(b_in.getString("user_tn_url"));
 			
 			TextView round_user_txt = (TextView) round_info_cell.findViewById(R.id.round_user_txt);
 			double round_user = Double.parseDouble(user_rounds_e.getValue("elapsed", i));
@@ -69,11 +74,11 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 				round_user_txt.setText("WRONG");
 				round_user_txt.setTextColor(0xFFFF0000);
 			}else{
-				round_user_txt.setText(Double.toString(round_user));
+				round_user_txt.setText(Double.toString(round_user)+"s");
 			}		
 			
 			ImageView play_tn = (ImageView) round_info_cell.findViewById(R.id.round_player_tn);
-			new DownloadImageTask(play_tn).execute(b_in.getString("player_tn_url"));
+			new AdvImageLoader(play_tn).execute(b_in.getString("player_tn_url"));
 			
 			TextView round_player_txt = (TextView) round_info_cell.findViewById(R.id.round_player_txt);
 			double round_player = Double.parseDouble(player_rounds_e.getValue("elapsed", i));
@@ -81,13 +86,27 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 				round_player_txt.setText("WRONG");
 				round_player_txt.setTextColor(0xFFFF0000);
 			}else{
-				round_player_txt.setText(Double.toString(round_player));
+				round_player_txt.setText(Double.toString(round_player)+"s");
 			}	
 			
 			round_player_txt.setText(player_rounds_e.getValue("elapsed", i).equals("-1") ? "WRONG" : player_rounds_e.getValue("elapsed", i));
 			
 			TextView movie_txt = (TextView) round_info_cell.findViewById(R.id.movie_txt);
 			movie_txt.setText(media_e.getValue("media_name"));
+			
+			Button buy_txt = (Button) round_info_cell.findViewById(R.id.buy_txt);
+			buy_txt.setTag(media_e.getValue("media_etailer"));
+			OnClickListener buy_txt_ltn = new AdvButtonListener(null, this) {
+				@Override
+				public void onClick(View v) {
+					Log.d("debug", "something on clicjk");
+					Intent i = new Intent(Intent.ACTION_VIEW);
+					String url = (String) v.getTag();
+					i.setData(Uri.parse(url));
+					startActivity(i);
+				}
+			};
+			buy_txt.setOnClickListener(buy_txt_ltn);
 		}
 		
 	}

@@ -8,9 +8,9 @@ import models.Gameplay;
 import models.User;
 import tools.AdvButtonListener;
 import tools.AdvElement;
+import tools.AdvImageLoader;
 import tools.AdvRequestHandler;
 import tools.AdvResponseDelegate;
-import tools.DownloadImageTask;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -96,7 +96,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
         
         // init promo image
 //        ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
-//        new DownloadImageTask(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
+//        new AdvImageLoader(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
 //        Timer t = new Timer(false);
 //        t.schedule(new TimerTask() {
 //        @Override
@@ -183,11 +183,6 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
             
 	        
         });
-		
-        
-        
-     
-        
 	}
 	
 	public void showConnectionError(){
@@ -299,7 +294,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 		TextView userScore_txt = (TextView)findViewById(R.id.userScore_txt); 
 		userScore_txt.setText(user_e.getValue("user_score"));
 		
-		new DownloadImageTask((ImageView) findViewById(R.id.userThumbnail_iv)).execute(user_e.getValue("user_thumbnail"));
+		new AdvImageLoader((ImageView) findViewById(R.id.userThumbnail_iv)).execute(user_e.getValue("user_thumbnail"));
 		
 		// empty challenge board
 		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
@@ -324,7 +319,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 			TextView player_score_txt = (TextView) player_challenge_cell.findViewById(R.id.player_score_txt);
 			player_score_txt.setText(gameplay_e.getValue("gameplay_user_won")+":"+gameplay_e.getValue("gameplay_player_won"));
 			
-			new DownloadImageTask((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
+			new AdvImageLoader((ImageView) player_challenge_cell.findViewById(R.id.challenge_player_tn)).execute(gameplay_e.getValue("player_user_thumbnail"));
 			
 			// Game history
 			//let's use bundle later
@@ -489,7 +484,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 			
 		}					
 	}
-	
+	/*
 	// generate hash for facebook auth
 	public void printHashKey() {
         try {
@@ -507,5 +502,5 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
         }
 
     }
-	
+	*/
 }
