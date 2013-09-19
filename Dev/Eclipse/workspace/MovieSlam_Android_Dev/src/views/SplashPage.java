@@ -404,7 +404,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 						Gameplay.setOppoLName(gameplay_e.getValue("player_user_lname"));
 						Gameplay.setGenre(gameplay_e.getValue("challenge_genre_type"));
 						Gameplay.setChallStatus(gameplay_e.getValue("gameplay_status"));
-						Gameplay.setChallType("challenge");
+						Gameplay.setChallType("slef");
 						Gameplay.setChallOppoID(gameplay_e.getValue("player_user_id"));
 						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));
 						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						
@@ -450,7 +450,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 						Gameplay.setOppoLName(gameplay_e.getValue("player_user_lname"));
 						Gameplay.setGenre(gameplay_e.getValue("challenge_genre_type"));
 						Gameplay.setChallStatus(gameplay_e.getValue("gameplay_status"));
-						Gameplay.setChallType("self");
+						Gameplay.setChallType("challenge");
 						Gameplay.setChallOppoID(gameplay_e.getValue("player_user_id"));
 						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));
 						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						
