@@ -2,16 +2,15 @@ package views;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 import models.Config;
 import models.Gameplay;
 import models.User;
 import tools.AdvButtonListener;
 import tools.AdvElement;
-import tools.DownloadImageTask;
-import tools.AdvResponseDelegate;
 import tools.AdvRequestHandler;
+import tools.AdvResponseDelegate;
+import tools.DownloadImageTask;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -471,8 +470,8 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 				b0.setText("RESULT");
 				Bundle result_bd = new Bundle();
 				result_bd.putString("game_id", game_id);
-				//result_bd.putString("user_tn_url", user_e.getValue("user_thumbnail"));
-				//result_bd.putString("player_tn_url", gameplay_e.getValue("player_user_thumbnail"));
+				result_bd.putString("user_tn_url", user_e.getValue("user_thumbnail"));
+				result_bd.putString("player_tn_url", gameplay_e.getValue("player_user_thumbnail"));
 				OnClickListener b0_ltn = new AdvButtonListener(result_bd, this) {
 					@Override
 					public void onClick(View v) {

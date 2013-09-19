@@ -128,8 +128,6 @@ public class UserTypeSelection extends FragmentActivity {
     		b.putString("target_id", fid);
     		intent.putExtras(b);
     		startActivity(intent);
-    		
-    		Log.d("debug", name+" "+fid);
         }       
     }
 	
