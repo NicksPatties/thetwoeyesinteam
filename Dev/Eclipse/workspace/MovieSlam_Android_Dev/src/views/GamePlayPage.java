@@ -259,6 +259,9 @@ public class GamePlayPage extends Activity{
 	private void nextMedia(){
 		Gameplay.index = Gameplay.index+1;
 		
+		moviePlayer.stop();
+		moviePlayer.surfaceDestroyed(surfaceView.getHolder());
+		
 		if (Gameplay.index >= 5){
 			finalPost();
 		}
@@ -340,7 +343,7 @@ public class GamePlayPage extends Activity{
         	
         System.out.println(finalPost);
         
-        new HttpPoster(this, finalPost).execute();
+//        new HttpPoster(this, finalPost).execute();
 	}
 	
 	@Override

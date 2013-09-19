@@ -91,7 +91,7 @@ public class ResultPage extends Activity {
 	
 	public void goHome(View v) {
 		startActivity(new Intent(getApplicationContext(), SplashPage.class));
-		//go to home page
+		finish();
 	}
 	
 	public void goFacebook(View v) {
@@ -100,7 +100,7 @@ public class ResultPage extends Activity {
 	
 	public void onNextRound(View v) {
 		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
-		//go to genre selection page
+		finish();
 	}
 	
 }
