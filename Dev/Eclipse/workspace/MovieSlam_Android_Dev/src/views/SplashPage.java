@@ -494,6 +494,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
+                String s = Base64.encodeToString(md.digest(), Base64.DEFAULT);
                 Log.d("debug", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         } catch (NameNotFoundException e) {

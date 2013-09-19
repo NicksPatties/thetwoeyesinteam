@@ -121,8 +121,9 @@ public class UserTypeSelection extends FragmentActivity {
             // go to genre selection page if fb friend is selected
             Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
             Gameplay.setChallOppoFID(fid);
-            Gameplay.setOppoFName(name);
-            Gameplay.setOppoLName(name);
+            String[] splited = name.split(" ");
+            Gameplay.setOppoFName(splited[0]);
+            Gameplay.setOppoLName(splited[1]);
     		Bundle b = new Bundle();
     		b.putString("target_source_type", "fid");
     		b.putString("target_id", fid);

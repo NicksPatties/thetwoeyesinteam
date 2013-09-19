@@ -27,6 +27,8 @@ public class GenreSelection extends Activity {
 	}
 	
 	public void gotoGamePlayPage(View view){
+		Gameplay.setChallID("0");
+		Gameplay.setChallType("self");
 		Bundle b_in = getIntent().getExtras();		
 		Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
 		Bundle b_out = new Bundle();
