@@ -62,12 +62,15 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 			Bundle b_in = getIntent().getExtras();	
 			ImageView user_tn = (ImageView) round_info_cell.findViewById(R.id.round_user_tn);
 			new DownloadImageTask(user_tn).execute(b_in.getString("user_tn_url"));
-			Log.d("debug", "round : "+user_rounds_e.getValue("elapsed", i)+" "+player_rounds_e.getValue("elapsed", i));
+			
+			TextView round_user_txt = (TextView) round_info_cell.findViewById(R.id.round_user_txt);
+			round_user_txt.setText(user_rounds_e.getValue("elapsed", i));
 			
 			ImageView play_tn = (ImageView) round_info_cell.findViewById(R.id.round_player_tn);
 			new DownloadImageTask(play_tn).execute(b_in.getString("player_tn_url"));
 			
-			
+			TextView round_player_txt = (TextView) round_info_cell.findViewById(R.id.round_player_txt);
+			round_player_txt.setText(player_rounds_e.getValue("elapsed", i));
 			
 			TextView movie_txt = (TextView) round_info_cell.findViewById(R.id.movie_txt);
 			movie_txt.setText(media_e.getValue("media_name"));
