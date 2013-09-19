@@ -67,12 +67,17 @@ public class AdvElement {
 	}
 	
 	public String getValue(String tag_s){
+		
+		return getValue(tag_s, 0);
+	}
+	
+	public String getValue(String tag_s, int idx){
 		String r;
 		try {
 			if (_document == null){
-				r = _element.getElementsByTagName(tag_s).item(0).getChildNodes().item(0).getNodeValue();
+				r = _element.getElementsByTagName(tag_s).item(idx).getChildNodes().item(0).getNodeValue();
 			}else{
-				r = _document.getElementsByTagName(tag_s).item(0).getChildNodes().item(0).getNodeValue();
+				r = _document.getElementsByTagName(tag_s).item(idx).getChildNodes().item(0).getNodeValue();
 			}
 		} catch (NullPointerException expt){
 			Log.e("AdvElement", "AdvElement getValue Error: "+tag_s);

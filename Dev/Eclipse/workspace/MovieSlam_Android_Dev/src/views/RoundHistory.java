@@ -43,6 +43,8 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 	public void responseLoaded(String response) {
 		// init root element
 		AdvElement doc = new AdvElement(response);
+		AdvElement user_rounds_e = doc.getElement("user");
+		AdvElement player_rounds_e = doc.getElement("player");
 		
 		// generate round details
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -60,7 +62,7 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 			Bundle b_in = getIntent().getExtras();	
 			ImageView user_tn = (ImageView) round_info_cell.findViewById(R.id.round_user_tn);
 			new DownloadImageTask(user_tn).execute(b_in.getString("user_tn_url"));
-			Log.d("debug", media_e.getValue("user_tn_url"));
+			Log.d("debug", "round : "+user_rounds_e.getValue("elapsed", i)+" "+player_rounds_e.getValue("elapsed", i));
 			
 			ImageView play_tn = (ImageView) round_info_cell.findViewById(R.id.round_player_tn);
 			new DownloadImageTask(play_tn).execute(b_in.getString("player_tn_url"));
