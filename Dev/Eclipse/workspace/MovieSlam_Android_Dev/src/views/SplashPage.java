@@ -43,6 +43,7 @@ import com.facebook.widget.LoginButton;
 public class SplashPage extends FragmentActivity implements AdvResponseDelegate, Config {
 //  public class SplashPage extends Activity{ // used for testing game play page quickly
 	
+	private View user_main_board;
 	private UiLifecycleHelper uiHelper;
 	private Session.StatusCallback callback = 
 	    new Session.StatusCallback() {
@@ -135,7 +136,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 		// add main board content
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
-		View user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
+		user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
 		user_panel.addView(user_main_board);		
 		
 		
@@ -201,20 +202,25 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 	}
 	
 	public void callGameInfoByFID(){
+		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
+		score_table.removeAllViews();
+		
 		new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid="+User.get_fid()+"&fname="+User.get_fname()+"&lname="+User.get_lname()+"&thumbnail=http://graph.facebook.com/"+User.get_fid()+"/picture?type=large", true).execute();
-		Log.d("debug", BASE_URL+"/service/getGameInfo.php?user_id=0&fid="+User.get_fid()+"&fname="+User.get_fname()+"&lname="+User.get_lname()+"&thumbnail=http://graph.facebook.com/"+User.get_fid()+"/picture?type=large");
+		Log.d("debug", "by fid "+BASE_URL+"/service/getGameInfo.php?user_id=0&fid="+User.get_fid()+"&fname="+User.get_fname()+"&lname="+User.get_lname()+"&thumbnail=http://graph.facebook.com/"+User.get_fid()+"/picture?type=large");
 	}
 	
 	public void callGameInfoByUID(){
+		TableLayout score_table = (TableLayout) findViewById(R.id.score_table);
+		score_table.removeAllViews();
 		
 		String uid = getUIDFromDevice();
         if (uid != null){
-        	Log.d("debug", "call game info 1");
+        	Log.d("debug", "by uid "+" get user by id");
         	new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0", true).execute();
         }else{
         	
         	new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png", true).execute();
-        	Log.d("debug", "call game info 2 "+ BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png");
+        	Log.d("debug", "by uid "+"call game info 2 "+ BASE_URL+"/service/getGameInfo.php?user_id=0&fid=0&fname=guest&lname=Guest&thumbnail="+BASE_URL+"/include/images/avatar.png");
         }
 	}
 	
@@ -240,9 +246,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 //		startActivity(new Intent(getApplicationContext(), ReadyToPlayPage.class));
 	}
 	
-	public void gotoRefresh(View view){
-		String uid = getUIDFromDevice();
-		new AdvRequestHandler(this, BASE_URL+"/service/getGameInfo.php?user_id="+uid+"&fid=0").execute();
+	public void gotoRefresh(View view){		
 		
 		if (Gameplay.get_fbConnected() == 0){
 			callGameInfoByUID();
@@ -255,6 +259,8 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 	//private ArrayList<View> challenge_cell_array = new ArrayList<View>();
 	@Override
 	public void responseLoaded(String response) {
+		
+		Log.d("debug", "construct interface");
 		
 		if (response == null){
 			showConnectionError();
@@ -291,8 +297,9 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 			user_info_edit.commit();
 		}		
 		
-		TextView userScore_txt = (TextView)findViewById(R.id.userScore_txt); 
+		TextView userScore_txt = (TextView) user_main_board.findViewById(R.id.userScore_txt); 
 		userScore_txt.setText(user_e.getValue("user_score"));
+		
 		
 		new AdvImageLoader((ImageView) findViewById(R.id.userThumbnail_iv)).execute(user_e.getValue("user_thumbnail"));
 		
@@ -307,7 +314,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 		for (int i = 0; i < gameplays_e.getElementLength("gameplay"); i++){
 			
 			// add player challenge cell			
-			final View player_challenge_cell = layoutInflater.inflate(R.layout.player_challenge_cell, score_table, false);
+			final View player_challenge_cell = layoutInflater.inflate(R.layout.player_game_cell, score_table, false);
 			score_table.addView(player_challenge_cell);
 			//challenge_cell_array.add(player_challenge_cell);
 			

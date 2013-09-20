@@ -59,7 +59,7 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 			
 			if (i == 0){
 				LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)player_challenge_cell.getLayoutParams();
-				params.setMargins(0, 80, 0, 0);
+				params.setMargins(0, 160, 0, 0);
 				player_challenge_cell.setLayoutParams(params);
 			}
 			
@@ -68,17 +68,11 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 			int player_won = Integer.parseInt(gameplay_e.getValue("player_won"));
 			game_result_txt.setText((user_won == -1 ? "-" : Integer.toString(user_won)) +" : "+ (player_won == -1 ? "-" : Integer.toString(player_won)));
 			
-			//RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight());
-			
 			ImageView user_tn = (ImageView) player_challenge_cell.findViewById(R.id.user_tn);
 			new AdvImageLoader(user_tn).execute(b_in.getString("user_tn_url"));
-			//user_tn.setLayoutParams(layoutParams);
-			//user_tn.setLayoutParams(new LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight()));
 			
 			ImageView player_tn = (ImageView) player_challenge_cell.findViewById(R.id.player_tn);
 			new AdvImageLoader(player_tn).execute(b_in.getString("player_tn_url"));			
-			//player_tn.setLayoutParams(layoutParams);
-			//player_tn.setLayoutParams(new LayoutParams(game_result_txt.getMeasuredHeight(), game_result_txt.getMeasuredHeight()));
 			
 		}
 		

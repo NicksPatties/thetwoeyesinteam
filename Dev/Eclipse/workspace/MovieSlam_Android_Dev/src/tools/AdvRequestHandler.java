@@ -70,6 +70,7 @@ public class AdvRequestHandler extends AsyncTask<Object, Object, Object> {
 
     @Override
     protected void onPostExecute(Object obj) {
+    	Log.d("debug", "finish request: "+_url);
     	delegate.responseLoaded(_xmlData);
     	if (progress != null){
     		progress.dismiss();

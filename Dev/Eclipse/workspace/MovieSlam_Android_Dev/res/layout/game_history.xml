@@ -50,14 +50,14 @@ tools:context=".GameHistory">
 			    	<LinearLayout
 					android:layout_width="fill_parent"
 					android:layout_height="0dp"
-					android:layout_weight="2.5">
+					android:layout_weight="2">
 					</LinearLayout>
 					
 			        <LinearLayout
 			        android:orientation="vertical"
 					android:layout_width="fill_parent"
 					android:layout_height="0dp"
-					android:layout_weight="11">
+					android:layout_weight="12">
 					
 			            <TableLayout
 						android:id="@+id/game_info_wrapper"
