@@ -108,6 +108,7 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
                 try {
                     synchronized(this){
                         wait(3000);
+                        Gameplay.index = 0;
                         startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
                     }
                 }
@@ -220,32 +221,6 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 			Gameplay.setMediaTN(mediaTN);
 			Gameplay.setMediaIDs(mediaIDs);
 			
-//	        switch (g) {
-//            case "all":  
-//            		 ll.setBackgroundResource(R.drawable.genre_random_italian);
-//                     break;
-//            case "scifi":  
-//            		 ll.setBackgroundResource(R.drawable.genre_scifi_italian);
-//                     break;
-//            case "drama":
-//            		 ll.setBackgroundResource(R.drawable.genre_drama_italian);
-//            		 break;
-//		    case "comedy":  
-//		    		 ll.setBackgroundResource(R.drawable.genre_comedy_italian);
-//		             break;
-//		    case "family":  
-//		    		 ll.setBackgroundResource(R.drawable.genre_family_italian);
-//		             break;
-//		    case "action":  
-//		    		 ll.setBackgroundResource(R.drawable.genre_action_italian);
-//		             break;
-//		    case "horror": 
-//		    		 ll.setBackgroundResource(R.drawable.genre_horror_italian);
-//		             break;
-//		    default: 
-//			   		 ll.setBackgroundResource(R.drawable.genre_logo_and_copy);
-//		             break;
-			
 			LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    TableLayout result_table = (TableLayout) findViewById(R.id.ready_table);
 		    
@@ -254,8 +229,8 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 	     	
 	     	TextView s = (TextView) ready_cell.findViewById(R.id.names);
 	     	s.setTextColor(Color.parseColor("#1f426e"));
-	     	String userFName = "Lana";
-	     	String userLName = "Oskoui";
+	     	String userFName = User.get_fname();
+	     	String userLName = User.get_lname();
 	     	String userName = userFName+" "+userLName;
 	     	String offset1 = "";
 	     	if (userName.length() <= 52){
@@ -264,8 +239,15 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 	    		}
 	     	}
 	     	userName = "    "+userName+offset1;
-	     	String oppoFName = "App";
-	     	String oppoLName = "Oskoui";
+	     	String oppoFName = "";
+	     	String oppoLName = "";
+	     	if (Gameplay.getOppoLName().equals("guest")){
+	     		oppoFName = "Guest";
+		     	oppoLName = Gameplay.getOppoFName();
+	     	}else{
+	     		oppoFName = Gameplay.getOppoFName();
+		     	oppoLName = Gameplay.getOppoLName();
+	     	}
 	     	String oppoName = "    "+oppoFName+" "+oppoLName;
 	     	s.setText(userName+oppoName);
 	     	
@@ -274,7 +256,7 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 	     	
 	     	TextView s1 = (TextView) ready_cell.findViewById(R.id.user_point_ready);
 	     	s1.setTextColor(Color.parseColor("#ffffff"));
-	     	s1.setText("10000\n"+"Points");
+	     	s1.setText(User.get_score()+" Points");
 	     	
 	     	if (Gameplay.getOppoImageURL().equals("")){
 	     		new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
@@ -285,7 +267,7 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 	     	
 	     	TextView s2 = (TextView) ready_cell.findViewById(R.id.oppo_point_ready);
 	     	s2.setTextColor(Color.parseColor("#ffffff"));
-	     	s2.setText("20000\n"+"Points");
+	     	s2.setText(Gameplay.getChallOppoScore()+" Points");
 			
 			thread.start();
 			

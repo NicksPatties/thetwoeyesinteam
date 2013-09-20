@@ -1,4 +1,4 @@
-<RelativeLayout 
+<LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,78 +7,35 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/bg_interstitial"
+    android:orientation="vertical"
     tools:context=".InterstitialPage" 
     android:id="@+id/interstitialPage">
     
     <LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
+				android:layout_width="fill_parent"
+				android:layout_height="0dp"
 				android:orientation="vertical"
-				android:layout_weight="1">
-
+				android:layout_weight="8">
 	</LinearLayout>
+	
+    <TableLayout 
+			android:id="@+id/ready_table"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:layout_weight="3">  
+	</TableLayout>
 	
     <LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="0dp"
-				android:orientation="horizontal"
-				android:layout_weight="1">
-
-				<LinearLayout
-				    android:layout_margin="20dp"
-					android:layout_width="0dp"
-					android:layout_height="fill_parent"
-					android:orientation="vertical"
-					android:layout_weight="1">
-					
-				    <TextView
-					    android:id="@+id/user_name_interstitial"
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content"
-					    android:layout_weight="1"
-					    android:gravity="top|left"
-					    android:textColor="#18305c"
-					    android:textStyle="bold" />
-				    <LinearLayout
-					    android:layout_margin="20dp"
-						android:layout_width="0dp"
-						android:layout_height="fill_parent"
-						android:orientation="horizontal"
-						android:layout_weight="1">
-				    </LinearLayout>
-				</LinearLayout>
-				
-				<LinearLayout
-					android:layout_width="0dp"
-					android:layout_height="fill_parent"
-					android:orientation="vertical"
-					android:layout_weight="1">
-				</LinearLayout>
-				
-				<LinearLayout
-				    android:layout_margin="20dp"
-					android:layout_width="0dp"
-					android:layout_height="fill_parent"
-					android:orientation="vertical"
-					android:layout_weight="1">
-				    <TextView
-					    android:id="@+id/oppo_name_interstitial"
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content"
-					    android:layout_weight="1"
-					    android:gravity="top|left"
-					    android:textColor="#18305c"
-					    android:textStyle="bold" />
-				    <LinearLayout
-					    android:layout_margin="20dp"
-						android:layout_width="0dp"
-						android:layout_height="fill_parent"
-						android:orientation="horizontal"
-						android:layout_weight="1">
-					</LinearLayout>
-				</LinearLayout>
-
+				android:orientation="vertical"
+				android:layout_weight="13">
+				<TextView
+				    android:paddingLeft="200dp"
+				    android:id = "@+id/round_number"
+				    android:textSize="30sp"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"/>
 	</LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

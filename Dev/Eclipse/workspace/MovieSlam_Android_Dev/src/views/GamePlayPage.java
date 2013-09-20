@@ -252,6 +252,7 @@ public class GamePlayPage extends Activity{
 	}
 	
 	public void showLegal(){
+		surfaceView.setVisibility(View.INVISIBLE);
 		imageView = (ImageView) this.findViewById(R.id.legalImage);
 		new DownloadImageTask(imageView).execute("http://screenslam.foxfilm.com/legal/legal_default.png");
 	}
@@ -259,8 +260,11 @@ public class GamePlayPage extends Activity{
 	private void nextMedia(){
 		Gameplay.index = Gameplay.index+1;
 		
-		moviePlayer.stop();
-		moviePlayer.surfaceDestroyed(surfaceView.getHolder());
+		//tried to release memory, but seems failed
+//		if(moviePlayer != null){
+//			moviePlayer.stop();
+//			moviePlayer.surfaceDestroyed(surfaceView.getHolder());
+//		}
 		
 		if (Gameplay.index >= 5){
 			finalPost();
