@@ -52,7 +52,7 @@ import android.widget.TextView;
 public class GamePlayPage extends Activity{
 	private SurfaceView surfaceView;
 	private ImageView imageView;
-	private TextView textview;
+	private ImageView questionImage;
 	private ProgressBar progressBar;
 	private MoviePlayer moviePlayer;
 	private String[] rightAnswers = new String[5];
@@ -80,7 +80,7 @@ public class GamePlayPage extends Activity{
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		surfaceView = (SurfaceView) this.findViewById(R.id.videoplayer);
 		imageView = (ImageView) this.findViewById(R.id.stillImage);
-		textview = (TextView) this.findViewById(R.id.questionTV);
+		questionImage = (ImageView) this.findViewById(R.id.questionIV);
 		progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
 		buttons[0] = (Button) this.findViewById(R.id.btn1);
 		buttons[1] = (Button) this.findViewById(R.id.btn2);
@@ -153,27 +153,16 @@ public class GamePlayPage extends Activity{
 	//init the array of 5 questions
 	public void initQuestions(){
 		String questionText = Gameplay.getQuestion();
-		int i = 0;
-		if (questionText.equals("name")){
-			i = 1;
-		}else if (questionText.equals("actor")){
-			i = 2;
-		}else{
-			i = 3;
-		}
-		switch (i) {
-			case 1:  
-				questionText = "NAME THIS FILM";
-				break;
-			case 2:
-				questionText = "NAME AN ACTOR FROM THIS FILM";
-				break;
-			default: 
-				questionText = "NAME AN ACTOR FROM THIS SCENE";
-				break;
-		}
-		textview.setText(questionText);
-		textview.setGravity(Gravity.CENTER);
+		//for now, we only have 3 kinds of question, we should add two more when we need
+		questionImage.setVisibility(View.INVISIBLE);
+     	if(questionText.equals("name")) {
+     		questionImage.setImageResource(R.drawable.copy_namethisfilm);
+     	}else if(questionText.equals("actor")){
+     		questionImage.setImageResource(R.drawable.copy_nametheactorinthisfilm);
+     	}else{
+     		questionImage.setImageResource(R.drawable.copy_nametheactorinthisscene);
+     	}
+     	questionImage.setVisibility(View.VISIBLE);
 	}
 	
 	//init button with listeners

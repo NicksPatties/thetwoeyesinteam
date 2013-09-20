@@ -258,16 +258,12 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 	     	s1.setTextColor(Color.parseColor("#ffffff"));
 	     	s1.setText(User.get_score()+" Points");
 	     	
-	     	if (Gameplay.getOppoImageURL().equals("")){
-	     		new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
-	     	}else{
-	     		new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
-	     	}
+	     	new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
 //	     	new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image)).execute("https://graph.facebook.com/100002538660677/picture");
 	     	
 	     	TextView s2 = (TextView) ready_cell.findViewById(R.id.oppo_point_ready);
 	     	s2.setTextColor(Color.parseColor("#ffffff"));
-	     	s2.setText(Gameplay.getChallOppoScore()+" Points");
+	     	s2.setText(Gameplay.getOppoScore()+" Points");
 			
 			thread.start();
 			

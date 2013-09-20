@@ -21,6 +21,7 @@ import android.widget.TextView;
 public class InterstitialPage extends Activity {
 
 	private Thread thread;
+	private ImageView gameResult;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
@@ -28,6 +29,8 @@ public class InterstitialPage extends Activity {
         
         LinearLayout ll = (LinearLayout) findViewById(R.id.readytoplayPage);
 		ll.setBackgroundResource(R.drawable.bg);
+		
+		gameResult = (ImageView) findViewById(R.id.game_result_interstitial);
         
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    TableLayout result_table = (TableLayout) findViewById(R.id.ready_table);
@@ -64,24 +67,37 @@ public class InterstitialPage extends Activity {
      	
      	TextView TV1 = (TextView) ready_cell.findViewById(R.id.user_point_ready);
      	TV1.setTextColor(Color.parseColor("#ffffff"));
-     	TV1.setText(User.get_score()+" Points");
+     	TV1.setText("This Gmae :\n"+ Gameplay.userScoreThisGame);
      	
-     	if (Gameplay.getOppoImageURL().equals("")){
-     		new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
-     	}else{
-     		new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
-     	}
+     	new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());
 //     	new DownloadImageTask((ImageView) ready_cell.findViewById(R.id.oppo_image)).execute("https://graph.facebook.com/100002538660677/picture");
      	
      	TextView TV2 = (TextView) ready_cell.findViewById(R.id.oppo_point_ready);
      	TV2.setTextColor(Color.parseColor("#ffffff"));
-     	TV2.setText(Gameplay.getChallOppoScore()+" Points");
+     	if (Gameplay.oppoScoreThisGame == 0){
+     		TV2.setText("This Game :\n  ?");
+     	}else{
+     		TV2.setText("This Game :"+ Gameplay.oppoScoreThisGame);
+     	}
+     	
         
      	TextView TV3 = (TextView) this.findViewById(R.id.round_number);
      	TV3.setTextColor(Color.parseColor("#ffffff"));
      	String s3 = Gameplay.getUserWon() +"             Round "+Gameplay.getChallRound()+"          "+ Gameplay.getOppoWon();
      	TV3.setText(s3);
      	TV3.setTextColor(Color.parseColor("#1f426e"));;
+     	
+     	gameResult.setVisibility(View.INVISIBLE);
+     	if (Gameplay.getChallType().equals("challenge")){
+     		if(Gameplay.userScoreThisGame>Gameplay.oppoScoreThisGame) {
+     			gameResult.setImageResource(R.drawable.copy_youwin);
+     		}else if(Gameplay.userScoreThisGame<Gameplay.oppoScoreThisGame){
+     			gameResult.setImageResource(R.drawable.copy_youlost);
+     		}else{
+     			gameResult.setImageResource(R.drawable.copy_itsatie);
+     		}
+     	gameResult.setVisibility(View.VISIBLE);
+     	}
      	
         thread=  new Thread(){
             @Override
