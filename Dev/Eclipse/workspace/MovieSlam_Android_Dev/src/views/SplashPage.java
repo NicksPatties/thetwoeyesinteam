@@ -1,7 +1,7 @@
 package views;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import models.Config;
 import models.Gameplay;
@@ -15,13 +15,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,23 +88,22 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
         
 //        startActivity(new Intent(getApplicationContext(), ResultPage.class));
         
-//        /**
-        
+        /*
         // init promo image
-//        ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
-//        new AdvImageLoader(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
-//        Timer t = new Timer(false);
-//        t.schedule(new TimerTask() {
-//        @Override
-//        public void run() {
-//             runOnUiThread(new Runnable() {
-//                  public void run() {
-//                	  bg_preloader.setVisibility(View.GONE);
-//                  }
-//              });
-//          }
-//      }, (int)(PROMO_IMG_DURATION*1000));
-        
+        ImageView bg_preloader = (ImageView) findViewById(R.id.bg_preloader);
+        new AdvImageLoader(bg_preloader).execute(BASE_URL+"/include/images/screenslam_loading_promo.jpg");
+        Timer t = new Timer(false);
+        t.schedule(new TimerTask() {
+        @Override
+        public void run() {
+             runOnUiThread(new Runnable() {
+                  public void run() {
+                	  bg_preloader.setVisibility(View.GONE);
+                  }
+              });
+          }
+      }, (int)(PROMO_IMG_DURATION*1000));
+        */
      
         
         
@@ -406,7 +400,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 						Gameplay.setOppoLName(gameplay_e.getValue("player_user_lname"));
 						Gameplay.setGenre(gameplay_e.getValue("challenge_genre_type"));
 						Gameplay.setChallStatus(gameplay_e.getValue("gameplay_status"));
-						Gameplay.setChallType("slef");
+						Gameplay.setChallType("self");
 						Gameplay.setChallOppoID(gameplay_e.getValue("player_user_id"));
 						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));
 						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						
