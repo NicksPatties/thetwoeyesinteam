@@ -2,7 +2,9 @@ package views;
 
 import models.Gameplay;
 import models.User;
+import tools.AdvButtonListener;
 import tools.AdvElement;
+import tools.AdvImageLoader;
 import tools.DownloadImageTask;
 import tools.AdvRequestHandler;
 
@@ -12,11 +14,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -32,14 +37,14 @@ public class ResultPage extends Activity {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.result_page);
         
-        btn_nextround = (Button) findViewById(R.id.btn_next_round);
-        if(Gameplay.show_next_round){
-        	btn_nextround.setVisibility(View.VISIBLE);
-        }else{
-        	btn_nextround.setVisibility(View.INVISIBLE);
-        }
-        btn_home = (Button) findViewById(R.id.btn_home_result);
-        btn_FB = (Button) findViewById(R.id.btn_FB_result);
+//        btn_nextround = (Button) findViewById(R.id.btn_next_round);
+//        if(Gameplay.show_next_round){
+//        	btn_nextround.setVisibility(View.VISIBLE);
+//        }else{
+//        	btn_nextround.setVisibility(View.INVISIBLE);
+//        }
+//        btn_home = (Button) findViewById(R.id.btn_home_result);
+//        btn_FB = (Button) findViewById(R.id.btn_FB_result);
         
      	LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
      	TableLayout result_table = (TableLayout) findViewById(R.id.result_table);
@@ -56,17 +61,31 @@ public class ResultPage extends Activity {
 	     	mediaName.setText(Gameplay.getMediaNames(i));
 //	     	mediaName.setText("Flight ClubFlight");
 	     	
-	     	TextView buynowText =(TextView) result_cell.findViewById(R.id.buy_now);
-	     	buynowText.setClickable(true);
-	     	buynowText.setMovementMethod(LinkMovementMethod.getInstance());
-//	     	String text = "BUY NOW";
-	     	String text = "<a href="+Gameplay.getMediaEtailers(i)+">BUY NOW</a>";
-	     	buynowText.setText(Html.fromHtml(text));
-	     	buynowText.setTextColor(Color.parseColor("#FFFFFF"));
+//	     	TextView buynowText =(TextView) result_cell.findViewById(R.id.buy_now);
+//	     	buynowText.setClickable(true);
+//	     	buynowText.setMovementMethod(LinkMovementMethod.getInstance());
+////	     	String text = "BUY NOW";
+//	     	String text = "<a href="+Gameplay.getMediaEtailers(i)+">BUY NOW</a>";
+//	     	buynowText.setText(Html.fromHtml(text));
+//	     	buynowText.setTextColor(Color.parseColor("#FFFFFF"));
+	     	
+	     	Button buy_txt = (Button) result_cell.findViewById(R.id.buy_now);
+			buy_txt.setTag(Gameplay.getMediaEtailers(i));
+			OnClickListener buy_txt_ltn = new AdvButtonListener(null, this) {
+				@Override
+				public void onClick(View v) {
+					Log.d("debug", "something on clicjk");
+					Intent i = new Intent(Intent.ACTION_VIEW);
+					String url = (String) v.getTag();
+					i.setData(Uri.parse(url));
+					startActivity(i);
+				}
+			};
+			buy_txt.setOnClickListener(buy_txt_ltn);
 	     	
 	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.user_image_result)).execute(User.get_thumbnail());
 //	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.user_image_result)).execute("https://graph.facebook.com/1447010240/picture");
-//	     	
+	     	
 	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute(Gameplay.getOppoImageURL());
 //	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute("https://graph.facebook.com/100002538660677/picture");
 //	     	new DownloadImageTask((ImageView) result_cell.findViewById(R.id.oppo_image_result)).execute("http://screenslam.foxfilm.com/include/images/avatar.png");
@@ -91,7 +110,6 @@ public class ResultPage extends Activity {
 	     	oppoTime.setText(s2);
 //	     	oppoTime.setText("WRONG");
      	}
-//     	*/
 	}
 	
 	public void goHome(View v) {
