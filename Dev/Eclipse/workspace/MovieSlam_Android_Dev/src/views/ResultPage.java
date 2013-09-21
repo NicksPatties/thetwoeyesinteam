@@ -37,14 +37,14 @@ public class ResultPage extends Activity {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.result_page);
         
-//        btn_nextround = (Button) findViewById(R.id.btn_next_round);
-//        if(Gameplay.show_next_round){
-//        	btn_nextround.setVisibility(View.VISIBLE);
-//        }else{
-//        	btn_nextround.setVisibility(View.INVISIBLE);
-//        }
-//        btn_home = (Button) findViewById(R.id.btn_home_result);
-//        btn_FB = (Button) findViewById(R.id.btn_FB_result);
+        btn_nextround = (Button) findViewById(R.id.btn_next_round);
+        if(Gameplay.show_next_round){
+        	btn_nextround.setVisibility(View.VISIBLE);
+        }else{
+        	btn_nextround.setVisibility(View.INVISIBLE);
+        }
+        btn_home = (Button) findViewById(R.id.btn_home_result);
+        btn_FB = (Button) findViewById(R.id.btn_FB_result);
         
      	LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
      	TableLayout result_table = (TableLayout) findViewById(R.id.result_table);
