@@ -1,56 +1,68 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HelpInfo" >
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+android:id="@+id/main_wrapper"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:facebook="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".HelpInfo">
 
     <RelativeLayout
-android:layout_width="wrap_content"
-android:layout_height="match_parent"
-android:layout_centerHorizontal="true"
-android:layout_centerVertical="true">
-
-	<ImageView
-	android:id="@+id/bg"
-	android:scaleType="centerCrop"
-	android:adjustViewBounds="true"
-	android:layout_width="wrap_content"
-	android:layout_height="match_parent"
-	android:src="@drawable/bg_help" >
-	</ImageView>
+    android:id="@+id/help_info_wrapper"
+	android:layout_width="720px"
+	android:layout_height="1280px"
+	android:layout_gravity="center">
 	
-	<RelativeLayout
-	android:layout_width="0dp"
-	android:layout_alignLeft="@+id/bg"
-	android:layout_alignRight="@+id/bg"
-	android:layout_height="match_parent">
-	    
-	
-	<ScrollView	
-	android:paddingTop="100dp"
-	android:paddingLeft="60dp"
-	android:paddingRight="60dp"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
-	            	
-		<LinearLayout 
+        <ImageView
+		android:id="@+id/bg"
+		android:scaleType="centerCrop"
+		android:adjustViewBounds="true"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical">
-			                  
-		<ImageView
-		android:id="@+id/ImageView01"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:src="@drawable/fpo_help_text" >
+		android:layout_height="match_parent"
+		android:src="@drawable/bg_help_720_1280" >
 		</ImageView>
-				        	
-		</LinearLayout>
+		
+        <ScrollView
+		android:layout_width="580px"
+		android:layout_height="1120px"
+		android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" >
+				                  
+			<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="15px"
+			android:textColor="#FFFFFF"
+			android:text=
+			"Aiuto\n
+			\n
+			\nIn attesa di accedere
+			\nPer giocare, accedi con Facebook. Se vuoi giocare senza accedere a Facebook, potrai generare un tuo account. Tutte le partite che farai potranno essere linkate a Facebook o al tuo account, ma non a entrambi.
+			\nIl Campo di Sfida
+			\nIl Campo di Sfida è dove potrai vedere le nuove partite, i giochi in essere, e i risultati precedenti. Il tuo punteggio è sempre visualizzato in alto a destra. Aumenta il tuo punteggio per sbloccare nuovi livelli.
+			\nClicca su “Risultati” per visualizzare la tua partita con un giocatore o clicca sull’avatar del giocatore per vedere i tuoi risultati precedenti.
+			\n
+			\nPreparati
+			\nPer iniziare una nuova partita, clicca “Inizia una nuova partita”. Cerca i tuoi amici su Facebook, inserisci l’account di un avversario, o cercane uno nuovo.
+			\nUna volta che hai scelto una categoria, rispondi alle domande velocemente per ottenere punti extra. I turni devono essere completati prima di tornare al Campo di Sfida. Una volta che il round è terminato, il tuo avversario sceglierà la prossima categoria.
+			\nIl primo giocatore che vince 5 round vince la Sfida. Se entrambi i giocatori non giocano per 5 giorni, la sfida finisce. Se la sfida finisce in un pareggio, lo sfidante perde.
+			\n
+			\nCategorie
+			\nParti con 3 categorie sbloccate per iniziare a giocare:
+			\nCASUALE
+			\nDRAMMATICO
+			\nCOMMEDIA
+			\nLe seguenti categorie si sbloccano incrementando il tuo punteggio:
+			\nFANTASCIENZA (Si sblocca quando arrivi a 100.000 punti)
+			\nAZIONE (Si sblocca quando arrivi a 250.000 punti)
+			\nHORROR (Si sblocca quando arrivi a 375.000 punti)
+			\nFAMILY (Si sblocca quando arrivi a 500.000 punti)">
+			
+			</TextView>
 		        	
-	</ScrollView>
-	
+		</ScrollView>
+
 	</RelativeLayout>
-
-</RelativeLayout>
-
-</RelativeLayout>
+	
+</FrameLayout>

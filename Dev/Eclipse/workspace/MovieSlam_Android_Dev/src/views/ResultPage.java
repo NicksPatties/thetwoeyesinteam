@@ -5,6 +5,7 @@ import models.User;
 import tools.AdvButtonListener;
 import tools.AdvElement;
 import tools.AdvImageLoader;
+import tools.AdvRDAdjuster;
 import tools.DownloadImageTask;
 import tools.AdvRequestHandler;
 
@@ -29,9 +30,21 @@ import android.widget.TextView;
 
 public class ResultPage extends Activity {
 	
+	private boolean screenAdjusted = false;
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (!screenAdjusted){
+			screenAdjusted = true;
+	        AdvRDAdjuster.adjust(findViewById(R.id.result_page_wrapper));
+		}
+		super.onWindowFocusChanged(hasFocus);
+	}
+	/*
 	private Button btn_nextround;
 	private Button btn_home;
 	private Button btn_FB;
+	
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
@@ -109,7 +122,10 @@ public class ResultPage extends Activity {
 	     	}
 	     	oppoTime.setText(s2);
 //	     	oppoTime.setText("WRONG");
+ 
+     	
      	}
+     	
 	}
 	
 	public void goHome(View v) {
@@ -125,5 +141,86 @@ public class ResultPage extends Activity {
 		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
 		finish();
 	}
+	
+	*/
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState); 
+        setContentView(R.layout.game_result_page);
+        
+        Button btn_nextround = (Button) findViewById(R.id.btn_next_round);
+        if(Gameplay.show_next_round){
+        	btn_nextround.setVisibility(View.VISIBLE);
+        }else{
+        	btn_nextround.setVisibility(View.INVISIBLE);
+        }
+        
+     	LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+     	TableLayout result_table = (TableLayout) findViewById(R.id.result_table);
+     	
+     	for (int i = 0; i < 5; i++){
+	     	View result_info_cell = layoutInflater.inflate(R.layout.result_info_cell, result_table, false);
+	     	result_table.addView(result_info_cell);
+	     	
+	     	new AdvImageLoader((ImageView) result_info_cell.findViewById(R.id.movie_tn)).execute(Gameplay.getMediaTN(i));
+	     	
+	     	TextView movie_txt = (TextView) result_info_cell.findViewById(R.id.movie_txt);
+	     	movie_txt.setText(Gameplay.getMediaNames(i));
+	     	
+	     	Button buy_txt = (Button) result_info_cell.findViewById(R.id.buy_txt);
+			buy_txt.setTag(Gameplay.getMediaEtailers(i));
+			OnClickListener buy_txt_ltn = new AdvButtonListener(null, this) {
+				@Override
+				public void onClick(View v) {
+					Intent i = new Intent(Intent.ACTION_VIEW);
+					String url = (String) v.getTag();
+					i.setData(Uri.parse(url));
+					startActivity(i);
+				}
+			};
+			buy_txt.setOnClickListener(buy_txt_ltn);
+	     	
+	     	new AdvImageLoader((ImageView) result_info_cell.findViewById(R.id.round_user_tn)).execute(User.get_thumbnail());	     	
+	     	new AdvImageLoader((ImageView) result_info_cell.findViewById(R.id.round_player_tn)).execute(Gameplay.getOppoImageURL());
+	     	
+	     	TextView round_user_txt = (TextView) result_info_cell.findViewById(R.id.round_user_txt);	     	
+	     	if (Gameplay.getElapse(i) <= 0){
+	     		round_user_txt.setText("WRONG");
+	     		round_user_txt.setTextColor(Color.RED);
+	     	}else{
+	     		round_user_txt.setText(Float.toString(Gameplay.getElapse(i)));
+	     	}	     	
+	     	
+	     	TextView round_player_txt = (TextView) result_info_cell.findViewById(R.id.round_player_txt);     	
+	     	String s2 = Float.toString(Gameplay.getOppoElapse(i));
+	     	if (s2.isEmpty())
+	     	{
+	     		round_player_txt.setText("WRONG");
+	     		round_player_txt.setTextColor(Color.RED);
+	     	}
+	     	if(s2.equals("0.0")){
+	     		s2 = "";
+	     	}
+	     	round_player_txt.setText(s2);
+     	
+     	}
+	}
+	
+	public void goHome(View v) {
+		// clear stack and go to home page
+		Intent intent = new Intent(this, SplashPage.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+	
+	public void goFacebook(View v) {
+		//go to Facebook
+	}
+	
+	public void onNextRound(View v) {
+		// go to genre page
+		startActivity(new Intent(getApplicationContext(), GenreSelection.class));
+		finish();
+	}
+	
 	
 }

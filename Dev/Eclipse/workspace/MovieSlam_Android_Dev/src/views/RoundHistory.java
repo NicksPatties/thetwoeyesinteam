@@ -4,6 +4,7 @@ import models.Config;
 import models.User;
 import tools.AdvButtonListener;
 import tools.AdvElement;
+import tools.AdvRDAdjuster;
 import tools.AdvRequestHandler;
 import tools.AdvResponseDelegate;
 import tools.AdvImageLoader;
@@ -25,6 +26,17 @@ import android.widget.TextView;
 import com.example.movieslam_android_dev.R;
 
 public class RoundHistory extends Activity implements AdvResponseDelegate, Config {
+	
+	private boolean screenAdjusted = false;
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (!screenAdjusted){
+			screenAdjusted = true;
+	        //AdvRDAdjuster.adjust(findViewById(R.id.round_history_wrapper));
+		}
+		super.onWindowFocusChanged(hasFocus);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +120,7 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 			};
 			buy_txt.setOnClickListener(buy_txt_ltn);
 		}
-		
+		AdvRDAdjuster.adjust(findViewById(R.id.round_history_wrapper));
 	}
 
 }

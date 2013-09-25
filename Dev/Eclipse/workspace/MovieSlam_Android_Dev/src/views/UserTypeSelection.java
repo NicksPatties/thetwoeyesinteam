@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import models.Gameplay;
-import tools.FriendPickerApplication;
+import tools.AdvRDAdjuster;
+import views.component.FriendPickerApplication;
 import views.component.PickFriendsActivity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -35,11 +36,22 @@ import com.facebook.model.GraphUser;
 public class UserTypeSelection extends FragmentActivity {
 	
 //	private List<GraphUser> tags;
+	private boolean screenAdjusted = false;
 	private static final int PICK_FRIENDS_ACTIVITY = 1;
 	static final int PICK_CONTACT = 2;
 	
 	private UiLifecycleHelper lifecycleHelper;
 	boolean pickFriendsWhenSessionOpened;
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (!screenAdjusted){
+			 screenAdjusted = true;
+			 AdvRDAdjuster.adjust(findViewById(R.id.user_type_selection_wrapper));
+			 Log.d("debug", "test");
+		}
+		super.onWindowFocusChanged(hasFocus);
+	}
 	
 
 	@Override
@@ -72,7 +84,7 @@ public class UserTypeSelection extends FragmentActivity {
         	smsInvite_btn.setEnabled(false);
         	smsInvite_btn.setBackgroundResource(R.drawable.button_small_disabled);
         }
-        //ensureOpenSession();
+        
 	}
 	
 	public void gotoFIDSelection(View view){	
@@ -102,6 +114,7 @@ public class UserTypeSelection extends FragmentActivity {
     }
 
     private void displaySelectedFriends(int resultCode) {
+    	
         String name = "";
         String fid = "";
         
@@ -129,7 +142,8 @@ public class UserTypeSelection extends FragmentActivity {
     		b.putString("target_id", fid);
     		intent.putExtras(b);
     		startActivity(intent);
-        }       
+        }
+        
     }
 	
 	private void onClickPickFriends() {
@@ -167,26 +181,29 @@ public class UserTypeSelection extends FragmentActivity {
             case PICK_FRIENDS_ACTIVITY:
                 displaySelectedFriends(resultCode);
                 break;
-            case PICK_CONTACT:
-            	Uri contactUri = data.getData();
-                ContentResolver resolver = getContentResolver();
-                long contactId = -1;
-                String player_name = null;
-                String player_number = null;
-
-                // get display name from the contact
-                Cursor cursor = resolver.query( contactUri, new String[] { Contacts._ID, Contacts.DISPLAY_NAME }, null, null, null );
-                if(cursor.moveToFirst()){
-                    contactId = cursor.getLong(0);
-                    player_name = cursor.getString(1);
-                    cursor = resolver.query(Phone.CONTENT_URI, new String[] { Phone.TYPE, Phone.NUMBER }, Phone._ID + "=" + contactId, null, null);
-                }
-                player_number = cursor.moveToNext() ? cursor.getString(1) : null;
-                // launch sms app                
-                Uri uri = Uri.parse("smsto:"+player_number);
-        		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-        		intent.putExtra("sms_body", "Hello "+player_name);  
-        		startActivity(intent);
+            case PICK_CONTACT:            	
+            	if (data != null){
+            		Uri contactUri = data.getData();
+            		ContentResolver resolver = getContentResolver();
+                    long contactId = -1;
+                    String player_name = null;
+                    String player_number = null;
+                    // get display name from the contact
+                    Cursor cursor = resolver.query( contactUri, new String[] { Contacts._ID, Contacts.DISPLAY_NAME }, null, null, null );
+                    if(cursor.moveToFirst()){
+                        contactId = cursor.getLong(0);
+                        player_name = cursor.getString(1);
+                        cursor = resolver.query(Phone.CONTENT_URI, new String[] { Phone.TYPE, Phone.NUMBER }, Phone._ID + "=" + contactId, null, null);
+                    }
+                    player_number = cursor.moveToNext() ? cursor.getString(1) : null;
+                    // launch sms app
+                    if (player_number != null){
+                    	Uri uri = Uri.parse("smsto:"+player_number);
+                		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                		intent.putExtra("sms_body", "Hello "+player_name);  
+                		startActivity(intent);
+                    }
+            	}               
          	   break;
             default:
                 Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
@@ -271,7 +288,6 @@ public class UserTypeSelection extends FragmentActivity {
             }
           }).create().show(); 
         
-    	//startActivity(new Intent(getApplicationContext(), EmailSelection.class));
 	}
 	
 	

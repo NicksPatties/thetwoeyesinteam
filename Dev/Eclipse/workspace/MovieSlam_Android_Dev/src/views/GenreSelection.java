@@ -1,5 +1,6 @@
 package views;
 
+import tools.AdvRDAdjuster;
 import models.Gameplay;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +12,18 @@ import android.widget.Button;
 import com.example.movieslam_android_dev.R;
 
 public class GenreSelection extends Activity {
+	private boolean screenAdjusted = false;
 
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (!screenAdjusted){
+			screenAdjusted = true;
+	        AdvRDAdjuster.setScale(findViewById(R.id.genre_selection_wrapper), findViewById(R.id.main_wrapper));
+	        AdvRDAdjuster.adjust(findViewById(R.id.genre_selection_wrapper));
+		}
+		super.onWindowFocusChanged(hasFocus);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

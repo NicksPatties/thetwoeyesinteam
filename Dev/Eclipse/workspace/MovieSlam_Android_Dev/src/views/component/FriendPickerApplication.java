@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tools;
+package views.component;
 
 import android.app.Application;
 import com.facebook.model.GraphUser;

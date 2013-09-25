@@ -12,70 +12,70 @@
     android:background="@drawable/bg_challenge_results"
     android:id="@+id/resultPage">
     
-    <LinearLayout
-        android:layout_margin="25dp"
-		android:orientation="vertical"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+<!--     <LinearLayout -->
+<!--         android:layout_margin="25dp" -->
+<!-- 		android:orientation="vertical" -->
+<!-- 		android:layout_width="fill_parent" -->
+<!-- 		android:layout_height="fill_parent"> -->
 		
-        <LinearLayout 
-			android:orientation="horizontal"
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1.5"> 
-			<Button
-					        android:id="@+id/btn_home_result"
-					        android:layout_weight="1"
-					        android:layout_width="0dp"
-					        android:layout_height="60dp"
-					        android:background="@drawable/home_button_bg"
-					        android:clickable="true"
-					        android:textColor="@android:color/white"
-					        android:onClick="goHome" />	    	    
+<!--         <LinearLayout  -->
+<!-- 			android:orientation="horizontal" -->
+<!-- 			android:layout_width="fill_parent" -->
+<!-- 			android:layout_height="0dp" -->
+<!-- 			android:layout_weight="1.5">  -->
+<!-- 			<Button -->
+<!-- 					        android:id="@+id/btn_home_result" -->
+<!-- 					        android:layout_weight="1" -->
+<!-- 					        android:layout_width="0dp" -->
+<!-- 					        android:layout_height="60dp" -->
+<!-- 					        android:background="@drawable/home_button_bg" -->
+<!-- 					        android:clickable="true" -->
+<!-- 					        android:textColor="@android:color/white" -->
+<!-- 					        android:onClick="goHome" />	    	     -->
 	    	    
-				    	    <LinearLayout
-							android:layout_width="0dp"
-							android:layout_height="fill_parent"
-							android:layout_weight="10">
-							</LinearLayout>	    	    
+<!-- 				    	    <LinearLayout -->
+<!-- 							android:layout_width="0dp" -->
+<!-- 							android:layout_height="fill_parent" -->
+<!-- 							android:layout_weight="10"> -->
+<!-- 							</LinearLayout>	    	     -->
 	    	    
-				    	    <Button
-					        android:id="@+id/btn_FB_result"
-					        android:layout_weight="1"
-					        android:layout_width="0dp"
-					        android:layout_height="60dp"
-					        android:background="@drawable/help_button_bg"
-					        android:clickable="true"
-					        android:textColor="@android:color/white"
-					        android:onClick="goFacebook" /> 
-		</LinearLayout>
-		<TableLayout 
-			android:id="@+id/result_table"
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="10">  
-		</TableLayout>
+<!-- 				    	    <Button -->
+<!-- 					        android:id="@+id/btn_FB_result" -->
+<!-- 					        android:layout_weight="1" -->
+<!-- 					        android:layout_width="0dp" -->
+<!-- 					        android:layout_height="60dp" -->
+<!-- 					        android:background="@drawable/help_button_bg" -->
+<!-- 					        android:clickable="true" -->
+<!-- 					        android:textColor="@android:color/white" -->
+<!-- 					        android:onClick="goFacebook" />  -->
+<!-- 		</LinearLayout> -->
+<!-- 		<TableLayout  -->
+<!-- 			android:id="@+id/result_table" -->
+<!-- 			android:layout_width="fill_parent" -->
+<!-- 			android:layout_height="0dp" -->
+<!-- 			android:layout_weight="10">   -->
+<!-- 		</TableLayout> -->
 		
-		<Button
-			    android:id="@+id/btn_next_round"
-			    android:layout_width="fill_parent"
-		        android:layout_height="40dp"
-		        android:layout_weight="0.5"
-		        android:background="@drawable/button_bg"
-			    android:textColor="@android:color/white"
-		    	android:textSize="15sp"
-		    	android:textStyle="bold"
-		        android:layout_gravity="center_horizontal"
-		        android:text="NEXT ROUND"
-			    android:onClick="onNextRound" />
+<!-- 		<Button -->
+<!-- 			    android:id="@+id/btn_next_round" -->
+<!-- 			    android:layout_width="fill_parent" -->
+<!-- 		        android:layout_height="40dp" -->
+<!-- 		        android:layout_weight="0.5" -->
+<!-- 		        android:background="@drawable/button_bg" -->
+<!-- 			    android:textColor="@android:color/white" -->
+<!-- 		    	android:textSize="15sp" -->
+<!-- 		    	android:textStyle="bold" -->
+<!-- 		        android:layout_gravity="center_horizontal" -->
+<!-- 		        android:text="NEXT ROUND" -->
+<!-- 			    android:onClick="onNextRound" /> -->
 		
-		 <LinearLayout 
-			android:orientation="vertical"
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="3">  
-		</LinearLayout>
-	</LinearLayout>
+<!-- 		 <LinearLayout  -->
+<!-- 			android:orientation="vertical" -->
+<!-- 			android:layout_width="fill_parent" -->
+<!-- 			android:layout_height="0dp" -->
+<!-- 			android:layout_weight="3">   -->
+<!-- 		</LinearLayout> -->
+<!-- 	</LinearLayout> -->
 	
      
 </LinearLayout>

@@ -1,14 +1,12 @@
 package views;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import models.Config;
 import models.Gameplay;
 import models.User;
 import tools.AdvButtonListener;
 import tools.AdvElement;
 import tools.AdvImageLoader;
+import tools.AdvRDAdjuster;
 import tools.AdvRequestHandler;
 import tools.AdvResponseDelegate;
 import android.content.Context;
@@ -21,9 +19,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,14 +39,24 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 	
 	private View user_main_board;
 	private UiLifecycleHelper uiHelper;
+	private boolean screenAdjusted = false;
 	private Session.StatusCallback callback = 
 	    new Session.StatusCallback() {
 	    @Override
-	    public void call(Session session, 
-	            SessionState state, Exception exception) {
-	        onSessionStateChange(session, state, exception);
+	    public void call(Session session, SessionState state, Exception exception) {
+	    	onSessionStateChange(session, state, exception);
 	    }
 	};
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (!screenAdjusted){
+			screenAdjusted = true;
+	        AdvRDAdjuster.setScale(findViewById(R.id.game_home_wrapper), findViewById(R.id.main_wrapper));
+	        AdvRDAdjuster.adjust(findViewById(R.id.game_home_wrapper));
+		}
+		super.onWindowFocusChanged(hasFocus);
+	}
 	
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 	}
@@ -82,7 +91,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 		uiHelper = new UiLifecycleHelper(this, callback);
 	    uiHelper.onCreate(savedInstanceState);
         
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.game_home);
         
         Gameplay.set_fbConnected(-1);
         
@@ -107,10 +116,10 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
      
         
         
-        // hardcode to user id 3
+        
         SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
-		/*
-        Editor user_info_edit = user_info.edit();
+        // hardcode to user id - 2171
+        /*Editor user_info_edit = user_info.edit();
 		user_info_edit.clear();
 		//user_info_edit.putString("uid", "2171");
 		user_info_edit.commit();*/
@@ -129,7 +138,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
         
 		// add main board content
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		LinearLayout user_panel = (LinearLayout) findViewById(R.id.user_panel);
+		RelativeLayout user_panel = (RelativeLayout) findViewById(R.id.user_panel);
 		user_main_board = layoutInflater.inflate(R.layout.user_main_board, user_panel, false);
 		user_panel.addView(user_main_board);		
 		
@@ -167,32 +176,31 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
         	    		}
         	    		// get user info
         	    		callGameInfoByUID();
-        	    	}        	    	
-        	    	//session.closeAndClearTokenInformation();
+        	    	}
         	    }
         	    
             	} catch (NullPointerException e){
             		showConnectionError();
     			}
-            }
-            
+            }            
 	        
         });
 	}
 	
 	public void showConnectionError(){
+		// display connection error if happen
 		Toast toast = Toast.makeText(this, "No internet access.", Toast.LENGTH_LONG);
 		toast.show();
 	}
 	
 	public void setfbConnected(int i) {
+		// set FB to connected status and store it into the device
 		Gameplay.set_fbConnected(i);
 		
 		SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
 		Editor user_info_edit = user_info.edit();
 		user_info_edit.putString("fbConnected", Integer.toString(i));
 		user_info_edit.commit();
-		Log.d("debug", "facebook login set to "+i);
 	}
 	
 	public void callGameInfoByFID(){
@@ -227,9 +235,6 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 			return null;
 		}		
 	}
-	
-	public void connectToFacebook(View view){
-	}
 
 	public void gotoHelp(View view){		
 		startActivity(new Intent(getApplicationContext(), HelpInfo.class));
@@ -241,16 +246,14 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 	}
 	
 	public void gotoRefresh(View view){		
-		
+		// get the game info again by either UID or FID
 		if (Gameplay.get_fbConnected() == 0){
 			callGameInfoByUID();
 		}else if (Gameplay.get_fbConnected() == 1){
 			callGameInfoByFID();
-		}
-		
+		}		
 	}
 	
-	//private ArrayList<View> challenge_cell_array = new ArrayList<View>();
 	@Override
 	public void responseLoaded(String response) {
 		
@@ -360,7 +363,6 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 				Gameplay.setChallType("challenge");
 				
 				player_score_txt.setText("wait");
-				player_score_txt.setTextSize(12);
 			}else if (gameplay_status.equals("start")){
 				
 				b0.setText("RESULT");
@@ -483,7 +485,9 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 				b1.setVisibility(View.INVISIBLE);
 			}
 			
-		}					
+		}
+		
+		AdvRDAdjuster.adjust(findViewById(R.id.score_table));
 	}
 	/*
 	// generate hash for facebook auth

@@ -4,6 +4,7 @@ import models.Config;
 import models.User;
 import tools.AdvElement;
 import tools.AdvImageLoader;
+import tools.AdvRDAdjuster;
 import tools.AdvResponseDelegate;
 import tools.AdvRequestHandler;
 import android.app.Activity;
@@ -21,6 +22,17 @@ import android.widget.TextView;
 import com.example.movieslam_android_dev.R;
 
 public class GameHistory extends Activity implements AdvResponseDelegate, Config {
+	
+	private boolean screenAdjusted = false;
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (!screenAdjusted){
+			screenAdjusted = true;
+	        //AdvRDAdjuster.adjust(findViewById(R.id.game_history_wrapper));
+		}
+		super.onWindowFocusChanged(hasFocus);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +68,12 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 			
 			View player_challenge_cell = layoutInflater.inflate(R.layout.game_info_cell, round_info_wrapper, false);
 			round_info_wrapper.addView(player_challenge_cell);
-			
+			/*
 			if (i == 0){
 				LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)player_challenge_cell.getLayoutParams();
 				params.setMargins(0, 160, 0, 0);
 				player_challenge_cell.setLayoutParams(params);
-			}
+			}*/
 			
 			TextView game_result_txt = (TextView) player_challenge_cell.findViewById(R.id.game_result_txt);
 			int user_won = Integer.parseInt(gameplay_e.getValue("user_won"));
@@ -75,6 +87,8 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 			new AdvImageLoader(player_tn).execute(b_in.getString("player_tn_url"));			
 			
 		}
+		
+		AdvRDAdjuster.adjust(findViewById(R.id.game_history_wrapper));
 		
 	}
 

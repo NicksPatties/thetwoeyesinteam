@@ -1,5 +1,6 @@
 package views;
 
+import tools.AdvRDAdjuster;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +8,16 @@ import android.view.Menu;
 import com.example.movieslam_android_dev.R;
 
 public class HelpInfo extends Activity {
+	private boolean screenAdjusted = false;
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (!screenAdjusted){
+			screenAdjusted = true;
+	        AdvRDAdjuster.adjust(findViewById(R.id.help_info_wrapper));
+		}
+		super.onWindowFocusChanged(hasFocus);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

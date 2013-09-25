@@ -19,7 +19,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-        android:name="tools.FriendPickerApplication">
+        android:name="views.component.FriendPickerApplication">
         <activity
             android:name="views.SplashPage"
             android:label="@string/app_name"
