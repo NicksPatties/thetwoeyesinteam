@@ -1,5 +1,6 @@
 package views;
 
+import tools.AdvActivityStarter;
 import tools.DownloadImageTask;
 import models.Gameplay;
 import models.User;
@@ -24,6 +25,7 @@ public class InterstitialPage extends Activity {
 	private ImageView gameResult;
 	
 	protected void onCreate(Bundle savedInstanceState) {
+		try {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
         
@@ -117,5 +119,9 @@ public class InterstitialPage extends Activity {
         };
         
         thread.start();
+		}catch(Exception e){
+			new AdvActivityStarter(this, SplashPage.class, 0, true).start();		
+		}
 	}
+	
 }

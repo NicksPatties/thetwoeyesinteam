@@ -113,9 +113,6 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
           }
       }, (int)(PROMO_IMG_DURATION*1000));
         */
-     
-        
-        
         
         SharedPreferences user_info = this.getSharedPreferences("user_info", MODE_PRIVATE);
         // hardcode to user id - 2171
@@ -256,8 +253,6 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 	
 	@Override
 	public void responseLoaded(String response) {
-		
-		Log.d("debug", "construct interface");
 		
 		if (response == null){
 			showConnectionError();

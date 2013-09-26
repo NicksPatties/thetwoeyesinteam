@@ -136,13 +136,7 @@ public class ResultPage extends Activity {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.result_page);
         
-        Button btn_nextround = (Button) findViewById(R.id.btn_next_round);
-        if(Gameplay.show_next_round){
-        	btn_nextround.setVisibility(View.VISIBLE);
-        }else{
-        	btn_nextround.setVisibility(View.INVISIBLE);
-        }
-        
+        ((Button) findViewById(R.id.btn_next_round)).setVisibility(Gameplay.show_next_round ? View.VISIBLE : View.INVISIBLE);        
      	LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
      	TableLayout result_table = (TableLayout) findViewById(R.id.result_table);
      	

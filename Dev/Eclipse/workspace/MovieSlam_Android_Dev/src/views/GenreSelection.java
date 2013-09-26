@@ -1,5 +1,6 @@
 package views;
 
+import tools.AdvActivityStarter;
 import tools.AdvRDAdjuster;
 import models.Gameplay;
 import android.app.Activity;
@@ -36,6 +37,7 @@ public class GenreSelection extends Activity {
 		}else{
 			promo_btn.setVisibility(View.GONE);
 		}
+		
 	}
 	
 	public void gotoGamePlayPage(View view){
