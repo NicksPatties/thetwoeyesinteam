@@ -26,27 +26,17 @@ import android.widget.TextView;
 import com.example.movieslam_android_dev.R;
 
 public class RoundHistory extends Activity implements AdvResponseDelegate, Config {
-	
-	private boolean screenAdjusted = false;
-	
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		if (!screenAdjusted){
-			screenAdjusted = true;
-	        //AdvRDAdjuster.adjust(findViewById(R.id.round_history_wrapper));
-		}
-		super.onWindowFocusChanged(hasFocus);
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.round_history);
 		
+		
 		// get round detail from backend
 		Bundle b_in = getIntent().getExtras();		
 		new AdvRequestHandler(this, BASE_URL+"/service/getRoundDetail.php?game_id="+b_in.getString("game_id")+"&user_id="+User.get_uid()).execute();
-		Log.d("debug", BASE_URL+"/service/getRoundDetail.php?game_id="+b_in.getString("game_id")+"&user_id="+User.get_uid());		
+		Log.d("debug", BASE_URL+"/service/getRoundDetail.php?game_id="+b_in.getString("game_id")+"&user_id="+User.get_uid());
 	}
 
 	@Override
@@ -65,7 +55,7 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 		
 		// generate round details
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		TableLayout round_info_wrapper = (TableLayout) findViewById(R.id.round_info_wrapper);
+		TableLayout round_info_wrapper = (TableLayout) findViewById(R.id.round_history_table);
 		for (int i = 0; i < doc.getElementLength("media"); i++){
 			AdvElement media_e = doc.getElement("media", i);
 			
@@ -120,6 +110,7 @@ public class RoundHistory extends Activity implements AdvResponseDelegate, Confi
 			};
 			buy_txt.setOnClickListener(buy_txt_ltn);
 		}
+		//AdvRDAdjuster.adjust(findViewById(R.id.round_history_table));
 		AdvRDAdjuster.adjust(findViewById(R.id.round_history_wrapper));
 	}
 

@@ -1,6 +1,7 @@
 package views;
 
 import tools.AdvElement;
+import tools.AdvRDAdjuster;
 import tools.AdvResponseDelegate;
 import tools.AdvRequestHandler;
 import models.Config;
@@ -23,6 +24,7 @@ public class UidInputPage extends Activity implements AdvResponseDelegate, Confi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.uid_input_page);
+		AdvRDAdjuster.adjust(findViewById(R.id.uid_input_page_wrapper));
 	}
 	
 	public void gotoCancel(View view){		

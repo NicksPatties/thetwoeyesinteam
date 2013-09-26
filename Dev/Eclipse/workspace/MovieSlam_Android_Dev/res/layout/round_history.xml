@@ -23,13 +23,21 @@ tools:context=".RoundHistory">
 		android:src="@drawable/bg_challenge_results_popup_720_1280" >
 		</ImageView>
 		
-        <TableLayout
-		android:id="@+id/round_info_wrapper"
-        android:layout_width="642px"
-        android:layout_height="1150px"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">  
-        </TableLayout>
+        <ScrollView
+		android:layout_width="642px"
+		android:layout_height="1150px"
+		android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" >
+				                  
+			<TableLayout
+			android:id="@+id/round_history_table"
+	        android:layout_width="642px"
+	        android:layout_height="1150px"
+	        android:layout_alignParentBottom="true"
+	        android:layout_centerHorizontal="true">  
+			</TableLayout>
+		        	
+		</ScrollView>
 		
 	</RelativeLayout>
 	

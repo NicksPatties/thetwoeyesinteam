@@ -15,6 +15,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import tools.AdvElement;
+import tools.AdvImageLoader;
 import tools.AdvResponseDelegate;
 import tools.AdvRequestHandler;
 import tools.DownloadImageTask;
@@ -27,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ import android.widget.TextView;
 
 public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Config{
 
+	/*
 	private TextView genreText;
 	private TextView userNameText;
 	private TextView oppoNameText;
@@ -266,6 +269,169 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 	     	s2.setText(Gameplay.getOppoScore()+" Points");
 			
 			thread.start();
+			
+		} catch (Exception e) {
+			Log.d("debug", "Exception");
+		}
+	}
+	*/
+	
+	
+	private Thread delay_thread;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState); 
+        setContentView(R.layout.readytoplay_page);
+        
+        LinearLayout ll = (LinearLayout) findViewById(R.id.readytoplayPage);
+		
+		String genre = Gameplay.getGenre();
+        if (genre.equals("all")){
+        	ll.setBackgroundResource(R.drawable.genre_random_italian_720_1280);
+        } 
+        if(genre.equals("promo")){
+        	genre = Gameplay.get_promo_name();
+        }else{
+        	ll.setBackgroundResource(getResources().getIdentifier("genre_"+genre+"_italian_720_1280", "drawable", getPackageName()));
+        }
+        
+        
+        String api;
+        if (Gameplay.getChallType().equals("self")){
+//        	Boolean b = Gameplay.getChallOppoID().equals("");
+//        	if (!b){
+        	if (!Gameplay.getChallOppoID().equals("")){
+//        	if (!Gameplay.getChallOppoID().isEmpty()){
+        		api = BASE_URL+ "/service/getMedia.php?by=uid"
+        				+"&type="+Gameplay.getGenre()
+        				+"&user_id="+User.get_uid()
+        				+"&target="+Gameplay.getChallOppoID();
+        	
+        	}else if (!Gameplay.getChallOppoFID().equals("")){
+        		api = BASE_URL+ "/service/getMedia.php?by=fb"
+        				+"&type="+Gameplay.getGenre()
+        				+"&user_id="+User.get_uid()
+        				+"&target="+Gameplay.getChallOppoFID()
+        				+"&target_fname="+Gameplay.getOppoFName()
+        				+"&target_lname="+Gameplay.getOppoLName();
+        	}else{
+        		api = BASE_URL+ "/service/getMedia.php?"
+        				+"&type="+Gameplay.getGenre()
+        				+"&user_id="+User.get_uid();
+        	}
+        }else{
+        	api = BASE_URL+ "/service/getChallenge.php?"
+    				+"&challenge_id="+Gameplay.getChallID();
+        }
+        new AdvRequestHandler(this, api).execute();
+        
+        delay_thread =  new Thread(){
+            @Override
+            public void run(){
+                try {
+                    synchronized(this){
+                        wait(3000);
+                        Gameplay.index = 0;
+                        startActivity(new Intent(getApplicationContext(), GamePlayPage.class));
+                    }
+                }
+                catch(InterruptedException ex){                    
+                }
+            }
+        };
+	}
+
+	@Override
+	public void responseLoaded(String response) {
+		
+		String[] questions = new String[5];
+		String[] mediaURLs = new String[5];
+		String[] mediaLegals = new String[5];
+		String[] mediaNames = new String[5];
+		String[] mediaIDs = new String[5];
+		String[] mediaEtailers = new String[5];
+		String[][] anwsers = new String[5][4];
+		String[] mediaTN = new String[5];
+		
+		AdvElement doc = new AdvElement(response);
+		AdvElement opponent_e = doc.getElement("player");
+		Gameplay.setChallOppoID(opponent_e.getValue("player_user_id"));
+		Gameplay.setChallOppoFID(opponent_e.getValue("player_user_fid"));
+		Gameplay.setOppoFName(opponent_e.getValue("player_user_fname"));
+		Gameplay.setOppoLName(opponent_e.getValue("player_user_lname"));
+		Gameplay.setOppoImageURL(opponent_e.getValue("player_user_thumbnail"));
+		Gameplay.setOppoScore(opponent_e.getValue("player_user_score"));
+		
+		if (Gameplay.getChallType().equals("challenge")){
+			Gameplay.oppoScoreThisGame = Integer.parseInt(opponent_e.getValue("player_game_score"));
+        }
+		
+		try {
+			//set properties for model
+			for (int i=0; i<5; i++){
+				// setup data of the 5 turns
+				AdvElement media_e = doc.getElement("media", i);			
+				questions[i] = media_e.getValue("choice_var");
+				mediaURLs[i] = media_e.getValue("media_url");
+				mediaLegals[i] = media_e.getValue("media_legal");
+				mediaNames[i] = media_e.getValue("media_name");
+				mediaIDs[i] = media_e.getValue("media_id");
+				mediaEtailers[i] = media_e.getValue("media_etailer");
+				mediaTN[i] = media_e.getValue("media_thumbnail");
+				for (int j = 0; j < 4; j++)	anwsers[i][j] = media_e.getValue("choice_value", j);				
+			}
+			Gameplay.setQuestion(questions);
+			Gameplay.setAnswers(anwsers);
+			Gameplay.setMediaEtailers(mediaEtailers);
+			Gameplay.setMediaURLs(mediaURLs);
+			Gameplay.setMediaLegals(mediaURLs);
+			Gameplay.setMediaNames(mediaNames);
+			Gameplay.setMediaTN(mediaTN);
+			Gameplay.setMediaIDs(mediaIDs);
+			
+			LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		    TableLayout result_table = (TableLayout) findViewById(R.id.ready_table);
+		    
+		    View ready_cell = layoutInflater.inflate(R.layout.ready_info_cell, result_table, false);
+	     	result_table.addView(ready_cell);
+	     	
+	     	TextView s = (TextView) ready_cell.findViewById(R.id.names);
+	     	s.setTextColor(Color.parseColor("#1f426e"));
+	     	String userFName = User.get_fname();
+	     	String userLName = User.get_lname();
+	     	String userName = userFName+" "+userLName;
+	     	String offset1 = "";
+	     	if (userName.length() <= 52){
+	     		for (int i = 0; i < 52-userName.length(); i++) {
+	    			offset1 += " "; 
+	    		}
+	     	}
+	     	userName = "    "+userName+offset1;
+	     	String oppoFName = "";
+	     	String oppoLName = "";
+	     	if (Gameplay.getOppoLName().equals("guest")){
+	     		oppoFName = "Guest";
+		     	oppoLName = Gameplay.getOppoFName();
+	     	}else{
+	     		oppoFName = Gameplay.getOppoFName();
+		     	oppoLName = Gameplay.getOppoLName();
+	     	}
+	     	String oppoName = "    "+oppoFName+" "+oppoLName;
+	     	s.setText(userName+oppoName);
+	     	
+	     	// load user info
+	     	new AdvImageLoader((ImageView) ready_cell.findViewById(R.id.user_image_ready)).execute(User.get_thumbnail());
+	     	TextView user_point_ready = (TextView) ready_cell.findViewById(R.id.user_point_ready);
+	     	user_point_ready.setTextColor(Color.parseColor("#ffffff"));
+	     	user_point_ready.setText(User.get_score()+" Points");
+	     	
+	     	// load player info
+	     	new AdvImageLoader((ImageView) ready_cell.findViewById(R.id.oppo_image_ready)).execute(Gameplay.getOppoImageURL());	     	
+	     	TextView oppo_point_ready = (TextView) ready_cell.findViewById(R.id.oppo_point_ready);
+	     	oppo_point_ready.setTextColor(Color.parseColor("#ffffff"));
+	     	oppo_point_ready.setText(Gameplay.getOppoScore()+" Points");
+			
+	     	delay_thread.start();
 			
 		} catch (Exception e) {
 			Log.d("debug", "Exception");

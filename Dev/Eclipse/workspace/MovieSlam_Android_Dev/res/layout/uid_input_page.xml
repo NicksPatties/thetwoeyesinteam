@@ -1,131 +1,68 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+android:id="@+id/main_wrapper"
+xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
+xmlns:facebook="http://schemas.android.com/apk/res-auto"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".UidInputPage" >
+tools:context=".UidInputPage">
 
-	<RelativeLayout
-	android:layout_width="wrap_content"
-	android:layout_height="match_parent"
-	android:layout_centerHorizontal="true"
-	android:layout_centerVertical="true">
-
-		<ImageView
+    <RelativeLayout
+    android:id="@+id/uid_input_page_wrapper"
+	android:layout_width="720px"
+	android:layout_height="1280px"
+	android:layout_gravity="center">
+	
+        <ImageView
 		android:id="@+id/bg"
 		android:scaleType="centerCrop"
 		android:adjustViewBounds="true"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:src="@drawable/bg_enter_userid" >
-		</ImageView>
-	
-		<LinearLayout
-		android:orientation="vertical"
-		android:layout_width="0dp"
-		android:layout_alignLeft="@+id/bg"
-		android:layout_alignRight="@+id/bg"
-		android:layout_height="match_parent">
+		android:src="@drawable/bg_enter_userid_720_1280" >
+		</ImageView>		
+        
+        <EditText
+	    android:id="@+id/uid_txt"
+	    android:layout_width="440px"
+	    android:layout_height="70px"
+	    android:textStyle="bold"
+	    android:background="#00000000"
+	    android:ems="10"
+	    android:textSize="18px"
+	    android:inputType="numberSigned"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginBottom="10px"
+	    android:layout_marginTop="590px" />
+        
+        <Button
+		android:id="@+id/canel_btn"
+		android:layout_width="200px"
+		android:layout_height="60px"
+		android:background="@drawable/button_bg_small"
+		android:text="CANCEL"
+		android:textStyle="bold"
+		android:textColor="#FFFFFF"
+		android:onClick="gotoCancel"
+		android:textSize="16px"
+		android:layout_below="@id/uid_txt"
+		android:layout_alignLeft="@id/uid_txt" />
 		
-		    <LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="19">
-			</LinearLayout>
-
-		    <LinearLayout
-		    android:orientation="horizontal"
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="2">
-			
-				<LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
-				android:layout_weight="1">
-				</LinearLayout>	
-				
-				<EditText
-			    android:id="@+id/uid_txt"
-			    android:layout_width="0dp"
-			    android:layout_height="match_parent"
-			    android:textStyle="bold"
-			    android:background="#00000000"
-			    android:ems="10"
-			    android:layout_weight="3"
-			    android:inputType="numberSigned" />
-				
-				<LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
-				android:layout_weight="1">
-				</LinearLayout>	
-			
-			</LinearLayout>
-			
-		    <LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1">
-			</LinearLayout>
-			
-		    <LinearLayout
-		    android:orientation="horizontal"
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="2">
-			
-				<LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
-				android:layout_weight="5">
-				</LinearLayout>
-				
-				<Button
-				android:id="@+id/canel_et"
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
-				android:layout_weight="5"
-				android:background="@drawable/button_bg_small"
-				android:text="CANCEL"
-				android:textStyle="bold"
-				android:textColor="#FFFFFF"
-				android:onClick="gotoCancel"
-				android:textSize="16sp" />
-				
-				<LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
-				android:layout_weight="1">
-				</LinearLayout>
-				
-				<Button
-				android:id="@+id/submit_et"
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
-				android:layout_weight="5"
-				android:background="@drawable/button_bg_small"
-				android:text="SUBMIT"
-				android:textStyle="bold"
-				android:textColor="#FFFFFF"
-				android:onClick="gotoGenreSelection"
-				android:textSize="16sp" />
-				
-				<LinearLayout
-				android:layout_width="5dp"
-				android:layout_height="fill_parent"
-				android:layout_weight="5">
-				</LinearLayout>	
-			
-			</LinearLayout>
-			
-			<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="17">
-			</LinearLayout>
-		
-		</LinearLayout>
+		<Button
+		android:id="@+id/submit_btn"
+		android:layout_width="200px"
+		android:layout_height="60px"
+		android:background="@drawable/button_bg_small"
+		android:text="SUBMIT"
+		android:textStyle="bold"
+		android:textColor="#FFFFFF"
+		android:onClick="gotoGenreSelection"
+		android:textSize="16px"
+		android:layout_below="@id/uid_txt"
+		android:layout_alignRight="@id/uid_txt" />        
 		
 	</RelativeLayout>
 	
-</RelativeLayout>
+</FrameLayout>

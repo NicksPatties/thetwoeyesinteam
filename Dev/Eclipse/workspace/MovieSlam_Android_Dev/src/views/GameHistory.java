@@ -22,22 +22,12 @@ import android.widget.TextView;
 import com.example.movieslam_android_dev.R;
 
 public class GameHistory extends Activity implements AdvResponseDelegate, Config {
-	
-	private boolean screenAdjusted = false;
-	
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		if (!screenAdjusted){
-			screenAdjusted = true;
-	        //AdvRDAdjuster.adjust(findViewById(R.id.game_history_wrapper));
-		}
-		super.onWindowFocusChanged(hasFocus);
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_history);
+		AdvRDAdjuster.adjust(findViewById(R.id.game_history_wrapper));
 		
 		// get round detail from backend
 		Bundle b_in = getIntent().getExtras();
@@ -58,7 +48,7 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 		
 		// add cells
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		TableLayout round_info_wrapper = (TableLayout) findViewById(R.id.game_info_wrapper);		
+		TableLayout game_history_table = (TableLayout) findViewById(R.id.game_history_table);		
 			
 		// parse player challenges board
 		AdvElement doc = new AdvElement(response);	
@@ -66,8 +56,8 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 		for (int i = 0; i < gameplays_e.getElementLength("gameplay"); i++){
 			AdvElement gameplay_e = gameplays_e.getElement("gameplay", i);
 			
-			View player_challenge_cell = layoutInflater.inflate(R.layout.game_info_cell, round_info_wrapper, false);
-			round_info_wrapper.addView(player_challenge_cell);
+			View player_challenge_cell = layoutInflater.inflate(R.layout.game_info_cell, game_history_table, false);
+			game_history_table.addView(player_challenge_cell);
 			/*
 			if (i == 0){
 				LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)player_challenge_cell.getLayoutParams();
@@ -88,7 +78,7 @@ public class GameHistory extends Activity implements AdvResponseDelegate, Config
 			
 		}
 		
-		AdvRDAdjuster.adjust(findViewById(R.id.game_history_wrapper));
+		AdvRDAdjuster.adjust(findViewById(R.id.game_history_table));
 		
 	}
 

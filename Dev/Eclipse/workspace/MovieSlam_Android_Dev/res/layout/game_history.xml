@@ -30,7 +30,7 @@ tools:context=".GameHistory">
         android:layout_centerHorizontal="true" >
 				                  
 			<TableLayout
-			android:id="@+id/game_info_wrapper"
+			android:id="@+id/game_history_table"
 	        android:layout_width="580px"
 	        android:layout_height="1000px"
 	        android:layout_alignParentBottom="true"

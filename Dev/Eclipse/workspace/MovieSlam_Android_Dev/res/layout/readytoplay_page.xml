@@ -1,48 +1,93 @@
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    android:id="@+id/readytoplayPage"
-    tools:context=".ReadyToPlayPage" >
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+android:id="@+id/readytoplayPage"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:facebook="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity">
 
-    <LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:orientation="vertical"
-			android:layout_weight="8">
+    <RelativeLayout
+    android:id="@+id/game_home_wrapper"
+	android:layout_width="720px"
+	android:layout_height="1280px"
+	android:layout_gravity="center">
+	
+        <ImageView
+		android:id="@+id/bg"
+		android:scaleType="centerCrop"
+		android:adjustViewBounds="true"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:src="@drawable/bg_challengeboard_720_1280" >
+		</ImageView>
+		
+        <ImageView 
+        android:adjustViewBounds="true"
+		android:layout_width="696px"
+		android:layout_height="175px"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="450px"
+        android:src="@drawable/orangeboxes_vs_720_1280"/>
+		
+	    <TableLayout 
+		android:id="@+id/ready_table"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="3">  
+		</TableLayout>
+		
+   </RelativeLayout>
+   
+</FrameLayout>
+
+<!-- <LinearLayout  -->
+<!--     xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--     xmlns:tools="http://schemas.android.com/tools" -->
+<!--     android:layout_width="match_parent" -->
+<!--     android:layout_height="match_parent" -->
+<!--     android:paddingBottom="@dimen/activity_vertical_margin" -->
+<!--     android:paddingLeft="@dimen/activity_horizontal_margin" -->
+<!--     android:paddingRight="@dimen/activity_horizontal_margin" -->
+<!--     android:paddingTop="@dimen/activity_vertical_margin" -->
+<!--     android:orientation="vertical" -->
+<!--     android:id="@+id/readytoplayPage" -->
+<!--     tools:context=".ReadyToPlayPage" > -->
+
+<!--     <LinearLayout -->
+<!-- 			android:layout_width="fill_parent" -->
+<!-- 			android:layout_height="0dp" -->
+<!-- 			android:orientation="vertical" -->
+<!-- 			android:layout_weight="8"> -->
 				
-        	<ImageView
-        	    	android:id="@+id/game_result_interstitial"
-	            	android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-        	</ImageView>
+<!--         	<ImageView -->
+<!--         	    	android:id="@+id/game_result_interstitial" -->
+<!-- 	            	android:layout_width="wrap_content" -->
+<!-- 					android:layout_height="wrap_content"> -->
+<!--         	</ImageView> -->
             
-	</LinearLayout>
+<!-- 	</LinearLayout> -->
 	
-    <TableLayout 
-			android:id="@+id/ready_table"
-			android:layout_width="fill_parent"
-			android:layout_height="0dp"
-			android:layout_weight="3">  
-	</TableLayout>
+<!--     <TableLayout  -->
+<!-- 			android:id="@+id/ready_table" -->
+<!-- 			android:layout_width="fill_parent" -->
+<!-- 			android:layout_height="0dp" -->
+<!-- 			android:layout_weight="3">   -->
+<!-- 	</TableLayout> -->
 	
-    <LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="0dp"
-				android:orientation="vertical"
-				android:layout_weight="13">
-				<TextView
-				    android:paddingLeft="300dp"
-				    android:id = "@+id/round_number"
-				    android:textSize="30sp"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"/>
-	</LinearLayout>
+<!--     <LinearLayout -->
+<!-- 				android:layout_width="fill_parent" -->
+<!-- 				android:layout_height="0dp" -->
+<!-- 				android:orientation="vertical" -->
+<!-- 				android:layout_weight="13"> -->
+<!-- 				<TextView -->
+<!-- 				    android:paddingLeft="300dp" -->
+<!-- 				    android:id = "@+id/round_number" -->
+<!-- 				    android:textSize="30sp" -->
+<!-- 			        android:layout_width="wrap_content" -->
+<!-- 			        android:layout_height="wrap_content"/> -->
+<!-- 	</LinearLayout> -->
     
-</LinearLayout>
+<!-- </LinearLayout> -->

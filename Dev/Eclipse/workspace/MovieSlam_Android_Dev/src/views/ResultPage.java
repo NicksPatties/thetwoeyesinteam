@@ -29,17 +29,6 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class ResultPage extends Activity {
-	
-	private boolean screenAdjusted = false;
-	
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		if (!screenAdjusted){
-			screenAdjusted = true;
-	        AdvRDAdjuster.adjust(findViewById(R.id.result_page_wrapper));
-		}
-		super.onWindowFocusChanged(hasFocus);
-	}
 	/*
 	private Button btn_nextround;
 	private Button btn_home;
@@ -145,7 +134,7 @@ public class ResultPage extends Activity {
 	*/
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
-        setContentView(R.layout.game_result_page);
+        setContentView(R.layout.result_page);
         
         Button btn_nextround = (Button) findViewById(R.id.btn_next_round);
         if(Gameplay.show_next_round){
@@ -158,15 +147,16 @@ public class ResultPage extends Activity {
      	TableLayout result_table = (TableLayout) findViewById(R.id.result_table);
      	
      	for (int i = 0; i < 5; i++){
-	     	View result_info_cell = layoutInflater.inflate(R.layout.result_info_cell, result_table, false);
-	     	result_table.addView(result_info_cell);
+	     	View result_cell = layoutInflater.inflate(R.layout.result_cell, result_table, false);
+	     	result_table.addView(result_cell);
 	     	
-	     	new AdvImageLoader((ImageView) result_info_cell.findViewById(R.id.movie_tn)).execute(Gameplay.getMediaTN(i));
-	     	
-	     	TextView movie_txt = (TextView) result_info_cell.findViewById(R.id.movie_txt);
+	     	// load movie thumbnail and name
+	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.movie_tn)).execute(Gameplay.getMediaTN(i));
+	     	TextView movie_txt = (TextView) result_cell.findViewById(R.id.movie_txt);
 	     	movie_txt.setText(Gameplay.getMediaNames(i));
 	     	
-	     	Button buy_txt = (Button) result_info_cell.findViewById(R.id.buy_txt);
+	     	// buy button
+	     	Button buy_txt = (Button) result_cell.findViewById(R.id.buy_txt);
 			buy_txt.setTag(Gameplay.getMediaEtailers(i));
 			OnClickListener buy_txt_ltn = new AdvButtonListener(null, this) {
 				@Override
@@ -179,10 +169,12 @@ public class ResultPage extends Activity {
 			};
 			buy_txt.setOnClickListener(buy_txt_ltn);
 	     	
-	     	new AdvImageLoader((ImageView) result_info_cell.findViewById(R.id.round_user_tn)).execute(User.get_thumbnail());	     	
-	     	new AdvImageLoader((ImageView) result_info_cell.findViewById(R.id.round_player_tn)).execute(Gameplay.getOppoImageURL());
+			// load thumbnails
+	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.round_user_tn)).execute(User.get_thumbnail());	     	
+	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.round_player_tn)).execute(Gameplay.getOppoImageURL());
 	     	
-	     	TextView round_user_txt = (TextView) result_info_cell.findViewById(R.id.round_user_txt);	     	
+	     	// user time
+	     	TextView round_user_txt = (TextView) result_cell.findViewById(R.id.round_user_txt);	     	
 	     	if (Gameplay.getElapse(i) <= 0){
 	     		round_user_txt.setText("WRONG");
 	     		round_user_txt.setTextColor(Color.RED);
@@ -190,7 +182,8 @@ public class ResultPage extends Activity {
 	     		round_user_txt.setText(Float.toString(Gameplay.getElapse(i)));
 	     	}	     	
 	     	
-	     	TextView round_player_txt = (TextView) result_info_cell.findViewById(R.id.round_player_txt);     	
+	     	// player time
+	     	TextView round_player_txt = (TextView) result_cell.findViewById(R.id.round_player_txt);     	
 	     	String s2 = Float.toString(Gameplay.getOppoElapse(i));
 	     	if (s2.isEmpty())
 	     	{
@@ -203,6 +196,7 @@ public class ResultPage extends Activity {
 	     	round_player_txt.setText(s2);
      	
      	}
+     	AdvRDAdjuster.adjust(findViewById(R.id.result_page_wrapper));
 	}
 	
 	public void goHome(View v) {
