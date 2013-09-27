@@ -19,7 +19,8 @@ tools:context=".ReadyToPlayPage">
 		android:scaleType="centerCrop"
 		android:adjustViewBounds="true"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent"
+		android:src="@drawable/movieslam_android_comp720_1280">
 		</ImageView>       
 		
         <ImageView
