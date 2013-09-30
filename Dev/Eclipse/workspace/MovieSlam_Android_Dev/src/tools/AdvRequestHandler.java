@@ -75,7 +75,7 @@ public class AdvRequestHandler extends AsyncTask<Object, Object, Object> {
     	if (progress != null){
     		progress.dismiss();
     		progress = null;
-    	}    		
+    	}
     }
 
  }

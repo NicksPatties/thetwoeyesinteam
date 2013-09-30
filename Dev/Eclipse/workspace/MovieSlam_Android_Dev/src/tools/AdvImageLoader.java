@@ -33,6 +33,7 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 				}				
 				in.close();
 			}
+			
 			return bm;
 			
 		} catch (Exception e) {

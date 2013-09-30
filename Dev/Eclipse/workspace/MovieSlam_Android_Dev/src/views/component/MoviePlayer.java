@@ -160,8 +160,22 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 		progressBar.setSecondaryProgress(bufferingProgress);
 		//int currentProgress = progressBar.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
 		//Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
+		Log.e("mediaPlayer", "buffering");
+	}
+	
+	public void free(){
+		
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;       	
+        }
+		surfaceHolder = null;
+		progressBar = null;
+		mTimer = null;
+		_url = null;
+		_gp = null;
 		
 	}
-
 }
 

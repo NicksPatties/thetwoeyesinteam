@@ -2,7 +2,6 @@ package tools;
 
 import java.io.Serializable;
 
-import views.SplashPage;
 import models.Config;
 import android.content.Context;
 import android.content.Intent;

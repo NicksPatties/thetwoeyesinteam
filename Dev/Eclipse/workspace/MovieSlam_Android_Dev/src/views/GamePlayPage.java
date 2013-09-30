@@ -492,7 +492,7 @@ public class GamePlayPage extends Activity implements Config{
 		if (media.type.equals("video")){
 			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.VISIBLE);
 			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.INVISIBLE);
-			//MoviePlayer moviePlayer = new MoviePlayer(((SurfaceView) this.findViewById(R.id.videoplayer)), ((ProgressBar) this.findViewById(R.id.progressBar)), BASE_URL+"/"+media_url, this);
+			moviePlayer = new MoviePlayer(((SurfaceView) this.findViewById(R.id.videoplayer)), ((ProgressBar) this.findViewById(R.id.progressBar)), media_url, this);
 		}else if (media.type.equals("image")){
 			//initProcessingBar();
 			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.INVISIBLE);
@@ -530,17 +530,19 @@ public class GamePlayPage extends Activity implements Config{
 				media.user_elapse = 4.5F;
 				media.user_score = 10;
 				
-				moviePlayer = null;
+				moviePlayer.free();				
 				
 			}else if (media.type.equals("image")){
 				media.user_correct = true;
 				media.user_elapse = 3.5F;
 				media.user_score = 10;
-			}
+			}			
+			moviePlayer = null;
+			buttons = null;
 			
-						
 		// wrong answer response
 		}else{
+			
 			audioPlayer(0);
 			media.user_correct = false;
 			media.user_elapse = 0;
@@ -554,6 +556,12 @@ public class GamePlayPage extends Activity implements Config{
 			
 			crosses[Integer.parseInt((String) view.getTag())-1].setVisibility(View.VISIBLE);
 			buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
+			
+			if (media.type.equals("video")){				
+				moviePlayer.free();					
+			}
+			moviePlayer = null;
+			buttons = null;
 		}
 		
 		// go to next page
