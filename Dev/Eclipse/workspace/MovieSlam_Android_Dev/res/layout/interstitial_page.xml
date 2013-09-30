@@ -190,7 +190,7 @@ tools:context=".InterstitialPage">
 	    android:layout_marginTop="20px"
 	    android:layout_centerHorizontal="true"
 	    android:text=""
-	    android:textColor="#ffffff"
+	    android:textColor="#18305c"
 	    android:textSize="20px"
 	    android:textStyle="bold" />
 		

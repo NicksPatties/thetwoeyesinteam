@@ -24,7 +24,7 @@ public class Gameplay {
 	public static void set_fbConnected(int fbConnected) {
 		_fbConnected = fbConnected;
 	}
-	
+	/*
 	public static void setGenre (String s){
 		_genre = s;
 	}
@@ -317,4 +317,5 @@ public class Gameplay {
 	public static int oppoScoreThisGame = 0;
 	
 	public static boolean show_next_round = false;
+	*/
 }

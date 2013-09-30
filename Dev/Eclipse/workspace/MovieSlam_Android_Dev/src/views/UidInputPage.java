@@ -1,11 +1,14 @@
 package views;
 
+import java.io.Serializable;
+
 import tools.AdvElement;
 import tools.AdvRDAdjuster;
 import tools.AdvResponseDelegate;
 import tools.AdvRequestHandler;
 import models.Config;
 import models.Gameplay;
+import models.Round;
 import models.User;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -64,14 +67,13 @@ public class UidInputPage extends Activity implements AdvResponseDelegate, Confi
 		String valid = doc.getValue("valid");
 		if (valid.equals("1")){
 			EditText uid_txt = (EditText) this.findViewById(R.id.uid_txt);
-			Gameplay.setChallID("0");
-			Gameplay.setChallType("self");
+			
+			Round round = new Round("new_game");
+            round.target_type = "uid";
+            round.player_id = uid_txt.getText().toString();   		   		
+			
 			Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
-			Bundle b = new Bundle();
-			b.putString("target_source_type", "uid");
-			b.putString("target_id", uid_txt.getText().toString());
-			Gameplay.setChallOppoID(uid_txt.getText().toString());
-			intent.putExtras(b);
+			intent.putExtra("round_info", (Serializable) round);
 			startActivity(intent);
 			finish();			
 		}else{			

@@ -1,10 +1,12 @@
 package views;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 import models.Gameplay;
+import models.Round;
 import tools.AdvRDAdjuster;
 import views.component.FriendPickerApplication;
 import views.component.PickFriendsActivity;
@@ -133,14 +135,13 @@ public class UserTypeSelection extends FragmentActivity {
             
             // go to genre selection page if fb friend is selected
             Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
-            Gameplay.setChallOppoFID(fid);
+            Round round = new Round("new_game");
+            round.target_type = "fid";
+            round.player_fid = fid;
             String[] splited = name.split(" ");
-            Gameplay.setOppoFName(splited[0]);
-            Gameplay.setOppoLName(splited[1]);
-    		Bundle b = new Bundle();
-    		b.putString("target_source_type", "fid");
-    		b.putString("target_id", fid);
-    		intent.putExtras(b);
+            round.player_fname = splited[0];
+            round.player_lname = splited[1];
+    		intent.putExtra("round_info", (Serializable) round);
     		startActivity(intent);
         }
         
@@ -218,13 +219,11 @@ public class UserTypeSelection extends FragmentActivity {
 	}
 	
 	public void gotoGenreSelection(View view){
-		Gameplay.setChallID("0");
-		Gameplay.setChallType("self");
+		
+		Round round = new Round("new_game");
+		round.target_type = "random";	
 		Intent intent = new Intent(getApplicationContext(), GenreSelection.class);
-		Bundle b = new Bundle();
-		b.putString("target_source_type", "random");
-		b.putString("target_id", "0");
-		intent.putExtras(b);
+		intent.putExtra("round_info", (Serializable) round);
 		startActivity(intent);
 	}
     

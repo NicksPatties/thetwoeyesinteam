@@ -46,3 +46,54 @@ public class User {
 		return _score;
 	}
 }
+
+/*
+package models;
+
+public class User {
+	
+	public String _uid;
+	public String _fid;
+	public String _fname;
+	public String _lname;
+	public String _thumbnail;
+	public String _score;
+	
+	public String get_uid() {
+		return _uid;
+	}
+	public void set_uid(String uid) {
+		_uid = uid;
+	}
+	public String get_fid() {
+		return _fid;
+	}
+	public void set_fid(String fid) {
+		_fid = fid;
+	}
+	public String get_fname() {
+		return _fname;
+	}
+	public void set_fname(String fname) {
+		_fname = fname;
+	}
+	public String get_lname() {
+		return _lname;
+	}
+	public void set_lname(String lname) {
+		_lname = lname;
+	}
+	public String get_thumbnail() {
+		return _thumbnail;
+	}
+	public void set_thumbnail(String thumbnail){
+		_thumbnail = thumbnail;
+	}
+	public void set_score(String score){
+		_score = score;
+	}
+	public String get_score() {
+		return _score;
+	}
+}
+*/

@@ -28,7 +28,9 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 			if (bm == null){
 				InputStream in = new java.net.URL(url).openStream();
 				bm = BitmapFactory.decodeStream(in);
-				AdvImageManagement.SetBitmap(url, bm);
+				if (_user_cache){
+					AdvImageManagement.SetBitmap(url, bm);
+				}				
 				in.close();
 			}
 			return bm;

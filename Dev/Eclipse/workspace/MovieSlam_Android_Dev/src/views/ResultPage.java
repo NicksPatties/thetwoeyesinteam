@@ -1,6 +1,7 @@
 package views;
 
 import models.Gameplay;
+import models.Round;
 import models.User;
 import tools.AdvButtonListener;
 import tools.AdvElement;
@@ -29,6 +30,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class ResultPage extends Activity {
+	private Round round;
 	/*
 	private Button btn_nextround;
 	private Button btn_home;
@@ -38,6 +40,8 @@ public class ResultPage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.result_page);
+        
+        
         
         btn_nextround = (Button) findViewById(R.id.btn_next_round);
         if(Gameplay.show_next_round){
@@ -116,7 +120,7 @@ public class ResultPage extends Activity {
      	}
      	
 	}
-	
+	/*
 	public void goHome(View v) {
 		startActivity(new Intent(getApplicationContext(), SplashPage.class));
 		finish();
@@ -135,8 +139,10 @@ public class ResultPage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.result_page);
+        round = (Round) getIntent().getSerializableExtra("round_info");
         
-        ((Button) findViewById(R.id.btn_next_round)).setVisibility(Gameplay.show_next_round ? View.VISIBLE : View.INVISIBLE);        
+        
+        ((Button) findViewById(R.id.btn_next_round)).setVisibility(round.challenge_type.equals("accept_game") ? View.VISIBLE : View.INVISIBLE);        
      	LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
      	TableLayout result_table = (TableLayout) findViewById(R.id.result_table);
      	
@@ -145,13 +151,13 @@ public class ResultPage extends Activity {
 	     	result_table.addView(result_cell);
 	     	
 	     	// load movie thumbnail and name
-	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.movie_tn)).execute(Gameplay.getMediaTN(i));
+	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.movie_tn)).execute(round.medias[i].thumbnail);
 	     	TextView movie_txt = (TextView) result_cell.findViewById(R.id.movie_txt);
-	     	movie_txt.setText(Gameplay.getMediaNames(i));
+	     	movie_txt.setText(round.medias[i].name);
 	     	
 	     	// buy button
 	     	Button buy_txt = (Button) result_cell.findViewById(R.id.buy_txt);
-			buy_txt.setTag(Gameplay.getMediaEtailers(i));
+			buy_txt.setTag(round.medias[i].etailer);
 			OnClickListener buy_txt_ltn = new AdvButtonListener(null, this) {
 				@Override
 				public void onClick(View v) {
@@ -165,38 +171,45 @@ public class ResultPage extends Activity {
 	     	
 			// load thumbnails
 	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.round_user_tn)).execute(User.get_thumbnail());	     	
-	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.round_player_tn)).execute(Gameplay.getOppoImageURL());
+	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.round_player_tn)).execute(round.player_thumbnail);
 	     	
 	     	// user time
-	     	TextView round_user_txt = (TextView) result_cell.findViewById(R.id.round_user_txt);	     	
-	     	if (Gameplay.getElapse(i) <= 0){
+	     	TextView round_user_txt = (TextView) result_cell.findViewById(R.id.round_user_txt);
+	     	if (round.medias[i].user_correct){
+	     		round_user_txt.setText(round.medias[i].user_elapse+"s");
+	     		Log.d("debug", "elapse:"+round.medias[i].user_elapse);
+	     	}else{
 	     		round_user_txt.setText("WRONG");
 	     		round_user_txt.setTextColor(Color.RED);
-	     	}else{
-	     		round_user_txt.setText(Float.toString(Gameplay.getElapse(i)));
-	     	}	     	
+	     	}
 	     	
-	     	// player time
-	     	TextView round_player_txt = (TextView) result_cell.findViewById(R.id.round_player_txt);     	
-	     	String s2 = Float.toString(Gameplay.getOppoElapse(i));
-	     	if (s2.isEmpty())
-	     	{
-	     		round_player_txt.setText("WRONG");
-	     		round_player_txt.setTextColor(Color.RED);
-	     	}
-	     	if(s2.equals("0.0")){
-	     		s2 = "";
-	     	}
-	     	round_player_txt.setText(s2);
-     	
+	     	if (round.challenge_type.equals("accept_game")){
+	     		/*
+	     		// player time
+		     	TextView round_player_txt = (TextView) result_cell.findViewById(R.id.round_player_txt);     	
+		     	String s2 = Float.toString(Gameplay.getOppoElapse(i));
+		     	if (s2.isEmpty())
+		     	{
+		     		round_player_txt.setText("WRONG");
+		     		round_player_txt.setTextColor(Color.RED);
+		     	}
+		     	if(s2.equals("0.0")){
+		     		s2 = "";
+		     	}
+		     	round_player_txt.setText(s2);
+		     	*/
+	     	}    	
      	}
+     	
+     	
      	AdvRDAdjuster.adjust(findViewById(R.id.result_page_wrapper));
+     	round = null;
 	}
 	
 	public void goHome(View v) {
 		// clear stack and go to home page
 		Intent intent = new Intent(this, SplashPage.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); 
 		startActivity(intent);
 	}
 	

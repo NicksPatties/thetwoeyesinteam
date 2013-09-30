@@ -6,6 +6,7 @@ import tools.AdvRDAdjuster;
 import tools.DownloadImageTask;
 import models.Config;
 import models.Gameplay;
+import models.Round;
 import models.User;
 
 import com.example.movieslam_android_dev.R;
@@ -23,6 +24,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class InterstitialPage extends Activity implements Config {
+	private Round round;
 	// previous version
 	/*
 	private Thread thread;
@@ -128,74 +130,55 @@ public class InterstitialPage extends Activity implements Config {
 		}
 	}
 	*/
-	private Thread thread;
-	private ImageView gameResult;
 	
 	protected void onCreate(Bundle savedInstanceState) {
-		try {
+
 			super.onCreate(savedInstanceState); 
 	        setContentView(R.layout.interstitial_page);
+	        round = (Round) getIntent().getSerializableExtra("round_info");
 	        AdvRDAdjuster.adjust(findViewById(R.id.interstitial_page_wrapper));
+	        
+	        int user_partial_score = 0;
+	        int player_partial_score = 0;
+	        
+	        for (int i = 0; i < NUMBER_OF_TURN; i++){
+	        	user_partial_score += round.medias[i].user_score;
+	        }
+	        if (round.challenge_type.equals("accept_game")){
+	        	for (int i = 0; i < NUMBER_OF_TURN; i++){
+	        		player_partial_score += round.medias[i].player_score;
+		        }
+	        }
 	        
 			// load user & player info
 			new AdvImageLoader((ImageView) findViewById(R.id.interstitial_page_user_tn)).execute(User.get_thumbnail());
-			((TextView) findViewById(R.id.interstitial_page_user_partial_score_txt)).setText(Integer.toString(Gameplay.userScoreThisGame));
+			((TextView) findViewById(R.id.interstitial_page_user_partial_score_txt)).setText(Integer.toString(user_partial_score));
 			((TextView) findViewById(R.id.interstitial_page_user_score_txt)).setText(User.get_score());
 			((TextView) findViewById(R.id.interstitial_page_user_name_txt)).setText(User.get_lname().equals("Guest") ? "Guest "+User.get_fname() : User.get_fname()+" "+User.get_lname().charAt(0)+".");
 			
-			new AdvImageLoader((ImageView) findViewById(R.id.interstitial_page_player_tn)).execute(Gameplay.getOppoImageURL());
-			((TextView) findViewById(R.id.interstitial_page_player_partial_score_txt)).setText((String) (Gameplay.oppoScoreThisGame == 0 ? "?" : Integer.toString(Gameplay.oppoScoreThisGame)));
-			((TextView) findViewById(R.id.interstitial_page_player_score_txt)).setText(Gameplay.getOppoScore());
-			((TextView) findViewById(R.id.interstitial_page_player_name_txt)).setText(Gameplay.getOppoLName().equals("Guest") ? "Guest "+Gameplay.getOppoFName() : Gameplay.getOppoFName()+" "+Gameplay.getOppoLName().charAt(0)+".");
+			new AdvImageLoader((ImageView) findViewById(R.id.interstitial_page_player_tn)).execute(round.player_thumbnail);
+			((TextView) findViewById(R.id.interstitial_page_player_partial_score_txt)).setText((String) (round.challenge_type.equals("new_game") ? "?" : player_partial_score));
+			((TextView) findViewById(R.id.interstitial_page_player_score_txt)).setText(round.player_score);
+			((TextView) findViewById(R.id.interstitial_page_player_name_txt)).setText(round.player_lname.equals("Guest") ? "Guest "+round.player_fname : round.player_fname+" "+round.player_lname.charAt(0)+".");
 			
 			// load round info
-			((TextView) findViewById(R.id.interstitial_page_round_txt)).setText(Gameplay.getUserWon() +"     Round "+Gameplay.getChallRound()+"     "+ Gameplay.getOppoWon());
+			//((TextView) findViewById(R.id.interstitial_page_round_txt)).setText(Gameplay.getUserWon() +"     Round "+Gameplay.getChallRound()+"     "+ Gameplay.getOppoWon());
 	        
-			// load win/lose
-			((ImageView) findViewById(R.id.interstitial_page_result_img)).setImageResource(R.drawable.copy_youwin);
-			/*
-	        
-	       
-	     	
-	     	TextView TV1 = (TextView) ready_cell.findViewById(R.id.user_point_ready);
-	     	TV1.setTextColor(Color.parseColor("#ffffff"));
-	     	TV1.setText("This Gmae :\n"+ Gameplay.userScoreThisGame);
-	     	
-	     	TextView TV2 = (TextView) ready_cell.findViewById(R.id.oppo_point_ready);
-	     	TV2.setTextColor(Color.parseColor("#ffffff"));
-	     	if (Gameplay.oppoScoreThisGame == 0){
-	     		TV2.setText("This Game :\n  ?");
-	     	}else{
-	     		TV2.setText("This Game :"+ Gameplay.oppoScoreThisGame);
-	     	}
-	     	
-	        
-	     	TextView TV3 = (TextView) this.findViewById(R.id.round_number);
-	     	TV3.setTextColor(Color.parseColor("#ffffff"));
-	     	String s3 = Gameplay.getUserWon() +"             Round "+Gameplay.getChallRound()+"          "+ Gameplay.getOppoWon();
-	     	TV3.setText(s3);
-	     	TV3.setTextColor(Color.parseColor("#1f426e"));;
-	     	
-	     	gameResult.setVisibility(View.INVISIBLE);
-	     	if (Gameplay.getChallType().equals("challenge")){
-	     		if(Gameplay.userScoreThisGame>Gameplay.oppoScoreThisGame) {
-	     			gameResult.setImageResource(R.drawable.copy_youwin);
-	     		}else if(Gameplay.userScoreThisGame<Gameplay.oppoScoreThisGame){
-	     			gameResult.setImageResource(R.drawable.copy_youlost);
+			// load win/lose			
+			if (round.challenge_type.equals("accept_challenge")){
+				if(user_partial_score > player_partial_score) {
+	     			((ImageView) findViewById(R.id.interstitial_page_result_img)).setImageResource(R.drawable.copy_youwin);
+	     		}else if(user_partial_score < player_partial_score){
+	     			((ImageView) findViewById(R.id.interstitial_page_result_img)).setImageResource(R.drawable.copy_youlost);
 	     		}else{
-	     			gameResult.setImageResource(R.drawable.copy_itsatie);
+	     			((ImageView) findViewById(R.id.interstitial_page_result_img)).setImageResource(R.drawable.copy_itsatie);
 	     		}
-	     	gameResult.setVisibility(View.VISIBLE);
-	     	}
-     	
-	     	
-	     	*/
+			}
+			
+	        
      		// go to result page
-     		//new AdvActivityStarter(this, ResultPage.class, INTERSTITIAL_PAGE_DURATION).start();
-     		
-		}catch(Exception e){
-			new AdvActivityStarter(this, SplashPage.class, 0, true).start();
-		}
+     		new AdvActivityStarter(this, ResultPage.class, INTERSTITIAL_PAGE_DURATION, round).start();
+		
 	}
 	
 }

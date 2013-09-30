@@ -31,9 +31,11 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 	private String _url;
 	private GamePlayPage _gp;
 	
-	public MoviePlayer(SurfaceView surfaceView,ProgressBar progressBar, GamePlayPage gamePlayPage)
+	public MoviePlayer(SurfaceView surfaceView,ProgressBar progressBar, String url, GamePlayPage gamePlayPage)
 	{
 		_gp = gamePlayPage;
+		_url = url;
+		
 		this.progressBar=progressBar;
 		surfaceHolder=surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
@@ -73,10 +75,6 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 	{
 		mediaPlayer.start();
 	}
-	
-//	public void setURL(String url){
-//		_url = TempModel.getMediaURLs();
-//	}
 	
 	public void playUrl(String videoUrl)
 	{
@@ -125,7 +123,7 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 			mediaPlayer.setOnBufferingUpdateListener(this);
 			mediaPlayer.setOnCompletionListener(this);
 			mediaPlayer.setOnPreparedListener(this);
-			mediaPlayer.setDataSource(Gameplay.getMediaURLs());
+			mediaPlayer.setDataSource(_url);
 			mediaPlayer.prepare();
 		} catch (Exception e) {
 			Log.e("mediaPlayer", "error", e);
@@ -160,8 +158,8 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 	@Override
 	public void onBufferingUpdate(MediaPlayer arg0, int bufferingProgress) {
 		progressBar.setSecondaryProgress(bufferingProgress);
-		int currentProgress = progressBar.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
-		Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
+		//int currentProgress = progressBar.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
+		//Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
 		
 	}
 

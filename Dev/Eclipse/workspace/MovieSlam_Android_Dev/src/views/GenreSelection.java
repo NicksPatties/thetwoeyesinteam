@@ -1,8 +1,11 @@
 package views;
 
+import java.io.Serializable;
+
 import tools.AdvActivityStarter;
 import tools.AdvRDAdjuster;
 import models.Gameplay;
+import models.Round;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +15,10 @@ import android.widget.Button;
 
 import com.example.movieslam_android_dev.R;
 
+@SuppressWarnings("serial")
 public class GenreSelection extends Activity {
 	private boolean screenAdjusted = false;
+	private Round round;
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
@@ -29,6 +34,7 @@ public class GenreSelection extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.genre_selection);
+		round = (Round) getIntent().getSerializableExtra("round_info");
 		
 		// check for promo genre
 		Button promo_btn = (Button)findViewById(R.id.promo_btn);
@@ -36,22 +42,18 @@ public class GenreSelection extends Activity {
 			promo_btn.setText(Gameplay.get_promo_name());
 		}else{
 			promo_btn.setVisibility(View.GONE);
-		}
-		
+		}		
 	}
 	
 	public void gotoGamePlayPage(View view){
-		Gameplay.setChallID("0");
-		Gameplay.setChallType("self");
-		Bundle b_in = getIntent().getExtras();		
+		
+		round.challenge_id = 0;
+		round.genre = (String) view.getTag();
+		
 		Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
-		Bundle b_out = new Bundle();
-		b_out.putString("target_source_type", b_in.getString("target_source_type"));
-		b_out.putString("target_id", b_in.getString("target_id"));
-		b_out.putString("target_genre", (String) view.getTag());
-		Gameplay.setGenre((String) view.getTag());
-		intent.putExtras(b_out);
-		startActivity(intent);
+		intent.putExtra("round_info", (Serializable) round);
+		//startActivity(intent);
+		new AdvActivityStarter(this, ReadyToPlayPage.class, 0, round).start();
 	}
 
 	@Override

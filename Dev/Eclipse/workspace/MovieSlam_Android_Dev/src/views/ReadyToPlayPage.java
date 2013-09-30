@@ -1,10 +1,12 @@
 package views;
 
+import java.io.Serializable;
+
 import models.Config;
 import models.Gameplay;
+import models.Round;
 import models.User;
 import tools.AdvActivityStarter;
-import tools.AdvElement;
 import tools.AdvImageLoader;
 import tools.AdvRDAdjuster;
 import tools.AdvRequestHandler;
@@ -12,12 +14,15 @@ import tools.AdvResponseDelegate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.movieslam_android_dev.R;
 
 public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Config{
+	
+	private Round round;
 	// previous version
 	/*
 	private TextView genreText;
@@ -259,10 +264,11 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
 		super.onCreate(savedInstanceState); 
         setContentView(R.layout.readytoplay_page);
         AdvRDAdjuster.adjust(findViewById(R.id.ready_to_play_wrapper));
+        round = (Round) getIntent().getSerializableExtra("round_info");
         
         // set background accordingly
         ImageView bg = (ImageView) this.findViewById(R.id.genre_type_bg);		
-		String genre = Gameplay.getGenre();
+		String genre = round.genre;
         if (genre.equals("all")){
         	bg.setImageResource(R.drawable.genre_random_italian_720_1280);
         }else if(genre.equals("promo")){
@@ -272,75 +278,39 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
         }
         
         // get 5 media information
-        if (Gameplay.getChallType().equals("self")){
-        	if (!Gameplay.getChallOppoID().equals("")){
-        		new AdvRequestHandler(this, BASE_URL+ "/service/getMedia.php?by=uid"+"&type="+Gameplay.getGenre()+"&user_id="+User.get_uid()+"&target="+Gameplay.getChallOppoID()).execute();
-        	}else if (!Gameplay.getChallOppoFID().equals("")){
-        		new AdvRequestHandler(this, BASE_URL+ "/service/getMedia.php?by=fb"+"&type="+Gameplay.getGenre()+"&user_id="+User.get_uid()+"&target="+Gameplay.getChallOppoFID()+"&target_fname="+Gameplay.getOppoFName()+"&target_lname="+Gameplay.getOppoLName()).execute();
-        	}else{
-        		new AdvRequestHandler(this, BASE_URL+ "/service/getMedia.php?"+"&type="+Gameplay.getGenre()+"&user_id="+User.get_uid()).execute();
+        if (round.challenge_type.equals("new_game")){
+        	if (round.target_type.equals("uid")){
+        		new AdvRequestHandler(this, BASE_URL+ "/service/getMedia.php?by=uid"+"&type="+genre+"&user_id="+User.get_uid()+"&target="+round.player_id).execute();
+        	}else if (round.target_type.equals("fid")){
+        		new AdvRequestHandler(this, BASE_URL+ "/service/getMedia.php?by=fb"+"&type="+genre+"&user_id="+User.get_uid()+"&target="+round.player_fid+"&target_fname="+round.player_fname+"&target_lname="+round.player_lname).execute();
+        	}else if (round.target_type.equals("random")){
+        		new AdvRequestHandler(this, BASE_URL+ "/service/getMedia.php?"+"&type="+genre+"&user_id="+User.get_uid()).execute();
+        		Log.d("debug", BASE_URL+ "/service/getMedia.php?"+"&type="+genre+"&user_id="+User.get_uid());
         	}
         }else{
-        	new AdvRequestHandler(this, BASE_URL+ "/service/getChallenge.php?"+"&challenge_id="+Gameplay.getChallID()).execute();
-        }       
+        	new AdvRequestHandler(this, BASE_URL+ "/service/getChallenge.php?"+"&challenge_id="+round.challenge_id).execute();
+        }
+        
 	}
 
 	@Override
 	public void responseLoaded(String response) {
-		//set properties for model for 5 turns
-		String[] questions = new String[NUMBER_OF_TURN];
-		String[] mediaURLs = new String[NUMBER_OF_TURN];
-		String[] mediaLegals = new String[NUMBER_OF_TURN];
-		String[] mediaNames = new String[NUMBER_OF_TURN];
-		String[] mediaIDs = new String[NUMBER_OF_TURN];
-		String[] mediaEtailers = new String[NUMBER_OF_TURN];
-		String[][] anwsers = new String[NUMBER_OF_TURN][NUMBER_OF_CHOICE];
-		String[] mediaTN = new String[NUMBER_OF_TURN];
 		
-		AdvElement doc = new AdvElement(response);
-		AdvElement opponent_e = doc.getElement("player");
-		Gameplay.setChallOppoID(opponent_e.getValue("player_user_id"));
-		Gameplay.setChallOppoFID(opponent_e.getValue("player_user_fid"));
-		Gameplay.setOppoFName(opponent_e.getValue("player_user_fname"));
-		Gameplay.setOppoLName(opponent_e.getValue("player_user_lname"));
-		Gameplay.setOppoImageURL(opponent_e.getValue("player_user_thumbnail"));
-		Gameplay.setOppoScore(opponent_e.getValue("player_user_score"));		
-		if (Gameplay.getChallType().equals("challenge")){
-			Gameplay.oppoScoreThisGame = Integer.parseInt(opponent_e.getValue("player_game_score"));
-		}
-		
-		for (int i=0; i<NUMBER_OF_TURN; i++){
-			AdvElement media_e = doc.getElement("media", i);			
-			questions[i] = media_e.getValue("choice_var");
-			mediaURLs[i] = media_e.getValue("media_url");
-			mediaLegals[i] = media_e.getValue("media_legal");
-			mediaNames[i] = media_e.getValue("media_name");
-			mediaIDs[i] = media_e.getValue("media_id");
-			mediaEtailers[i] = media_e.getValue("media_etailer");
-			mediaTN[i] = media_e.getValue("media_thumbnail");
-			for (int j = 0; j < NUMBER_OF_CHOICE; j++)	anwsers[i][j] = media_e.getValue("choice_value", j);				
-		}
-		
-		Gameplay.setQuestion(questions);
-		Gameplay.setAnswers(anwsers);
-		Gameplay.setMediaEtailers(mediaEtailers);
-		Gameplay.setMediaURLs(mediaURLs);
-		Gameplay.setMediaLegals(mediaURLs);
-		Gameplay.setMediaNames(mediaNames);
-		Gameplay.setMediaTN(mediaTN);
-		Gameplay.setMediaIDs(mediaIDs);
+		// parse response into a Round object
+		round.init(response);	
 		
 		// load user & player info
      	new AdvImageLoader((ImageView) findViewById(R.id.ready_page_user_tn)).execute(User.get_thumbnail());
      	((TextView) findViewById(R.id.ready_page_user_score_txt)).setText(User.get_score());
      	((TextView) findViewById(R.id.ready_page_user_name_txt)).setText(User.get_lname().equals("Guest") ? "Guest "+User.get_fname() : User.get_fname()+" "+User.get_lname().charAt(0)+".");
      	
-     	new AdvImageLoader((ImageView) findViewById(R.id.ready_page_player_tn)).execute(Gameplay.getOppoImageURL());
-     	((TextView) findViewById(R.id.ready_page_player_score_txt)).setText(Gameplay.getOppoScore());
-     	((TextView) findViewById(R.id.ready_page_player_name_txt)).setText(Gameplay.getOppoLName().equals("Guest") ? "Guest "+Gameplay.getOppoFName() : Gameplay.getOppoFName()+" "+Gameplay.getOppoLName().charAt(0)+".");
+     	new AdvImageLoader((ImageView) findViewById(R.id.ready_page_player_tn)).execute(round.player_thumbnail);
+     	((TextView) findViewById(R.id.ready_page_player_score_txt)).setText(round.player_score);
+     	((TextView) findViewById(R.id.ready_page_player_name_txt)).setText(round.player_lname.equals("Guest") ? "Guest "+round.player_fname : round.player_fname+" "+round.player_lname.charAt(0)+".");
 		
-     	// go to gameplay
-     	 new AdvActivityStarter(this, GamePlayPage.class, READY_PAGE_DURATION).start();
-         Gameplay.index = 0;
+     	// go to gameplay		
+		round.media_idx = 0;
+		new AdvActivityStarter(this, GamePlayPage.class, READY_PAGE_DURATION, round).start();
+     	         
 	}
 }

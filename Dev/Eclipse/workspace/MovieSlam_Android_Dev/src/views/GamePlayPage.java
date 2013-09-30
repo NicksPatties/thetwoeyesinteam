@@ -1,44 +1,27 @@
 package views;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Arrays;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import tools.DownloadImageTask;
-import tools.HttpPoster;
-import tools.AdvResponseDelegate;
-import tools.AdvRequestHandler;
-import views.component.MoviePlayer;
 import models.Config;
 import models.Gameplay;
+import models.Media;
+import models.Round;
 import models.User;
-
-import com.example.movieslam_android_dev.R;
-import com.example.movieslam_android_dev.R.id;
-import com.example.movieslam_android_dev.R.layout;
-
+import tools.AdvActivityStarter;
+import tools.AdvImageLoader;
+import tools.AdvRDAdjuster;
+import tools.DownloadImageTask;
+import views.component.MoviePlayer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -46,10 +29,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class GamePlayPage extends Activity{
+import com.example.movieslam_android_dev.R;
+
+public class GamePlayPage extends Activity implements Config{
+	private Round round;
+	private Media media;
+	private MoviePlayer moviePlayer;
+	private int correct_idx;
+	private Button[] buttons = new Button[NUMBER_OF_CHOICE];
+	
+	/*
 	private SurfaceView surfaceView;
 	private ImageView imageView;
 	private ImageView questionImage;
@@ -58,8 +49,8 @@ public class GamePlayPage extends Activity{
 	private String[] rightAnswers = new String[5];
 	private String[] buttonLabels = new String[4];
 	private Button[] buttons = new Button[4];
-	private ImageView[] crosses = new ImageView[4];
-	private ImageView[] starses = new ImageView[4];
+	//private ImageView[] crosses = new ImageView[4];
+	//private ImageView[] starses = new ImageView[4];
 	private TextView[] score_text = new TextView[4];
 	private AnimationDrawable[] starsAnimation = new AnimationDrawable[4];
 	private int timer = 0;
@@ -71,12 +62,16 @@ public class GamePlayPage extends Activity{
 	private float elapse;
 	private boolean endGame = false;
 	private String winnerID = "0";
+	*/
 
-	/** Called when the activity is first created. */
+	/*
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gameplay_page);
+		round = (Round) getIntent().getSerializableExtra("round_info");
+		//AdvRDAdjuster.adjust(findViewById(R.id.ready_to_play_wrapper));
+		
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		surfaceView = (SurfaceView) this.findViewById(R.id.videoplayer);
 		imageView = (ImageView) this.findViewById(R.id.stillImage);
@@ -86,25 +81,32 @@ public class GamePlayPage extends Activity{
 		buttons[1] = (Button) this.findViewById(R.id.btn2);
 		buttons[2] = (Button) this.findViewById(R.id.btn3);
 		buttons[3] = (Button) this.findViewById(R.id.btn4);
-		crosses[0] = (ImageView) this.findViewById(R.id.cross1);
-		crosses[1] = (ImageView) this.findViewById(R.id.cross2);
-		crosses[2] = (ImageView) this.findViewById(R.id.cross3);
-		crosses[3] = (ImageView) this.findViewById(R.id.cross4);
-		starses[0] = (ImageView) this.findViewById(R.id.stars1);
-		starses[1] = (ImageView) this.findViewById(R.id.stars2);
-		starses[2] = (ImageView) this.findViewById(R.id.stars3);
-		starses[3] = (ImageView) this.findViewById(R.id.stars4);
-		starsAnimation[0] = (AnimationDrawable) starses[0].getDrawable();
-		starsAnimation[1] = (AnimationDrawable) starses[1].getDrawable();
-		starsAnimation[2] = (AnimationDrawable) starses[2].getDrawable();
-		starsAnimation[3] = (AnimationDrawable) starses[3].getDrawable();
+		
+//		crosses[0] = (ImageView) this.findViewById(R.id.cross1);
+//		crosses[1] = (ImageView) this.findViewById(R.id.cross2);
+//		crosses[2] = (ImageView) this.findViewById(R.id.cross3);
+//		crosses[3] = (ImageView) this.findViewById(R.id.cross4);
+//		starses[0] = (ImageView) this.findViewById(R.id.stars1);
+//		starses[1] = (ImageView) this.findViewById(R.id.stars2);
+//		starses[2] = (ImageView) this.findViewById(R.id.stars3);
+//		starses[3] = (ImageView) this.findViewById(R.id.stars4);
+//		
+//		starsAnimation[0] = (AnimationDrawable) starses[0].getDrawable();
+//		starsAnimation[1] = (AnimationDrawable) starses[1].getDrawable();
+//		starsAnimation[2] = (AnimationDrawable) starses[2].getDrawable();
+//		starsAnimation[3] = (AnimationDrawable) starses[3].getDrawable();
+		
+		
 		score_text[0] = (TextView) this.findViewById(R.id.score_text1);
 		score_text[1] = (TextView) this.findViewById(R.id.score_text2);
 		score_text[2] = (TextView) this.findViewById(R.id.score_text3);
 		score_text[3] = (TextView) this.findViewById(R.id.score_text4);
 
 		initAssets();
+		//startActivity(new Intent(getApplicationContext(), ResultPage.class));
+		
 	}
+	
 	
 	public void initAssets(){
 		initAnswers();
@@ -224,7 +226,7 @@ public class GamePlayPage extends Activity{
 		if (parseAsIPadURL(s) != ""){
 			surfaceView.setVisibility(View.VISIBLE);
 			imageView.setVisibility(View.INVISIBLE);
-			moviePlayer = new MoviePlayer(surfaceView, progressBar, this);
+			//moviePlayer = new MoviePlayer(surfaceView, progressBar, this);
 		}else{
 			surfaceView.setVisibility(View.INVISIBLE);
 			imageView.setVisibility(View.VISIBLE);
@@ -280,6 +282,7 @@ public class GamePlayPage extends Activity{
         };
         
         movieThread.start();
+        
 	}
 	
 	private void finalPost(){
@@ -361,47 +364,58 @@ public class GamePlayPage extends Activity{
 		public void onClick(View arg0) {
 			if (findIndex(arg0) == rightAnswerPointer)
 			{
-				starses[rightAnswerPointer].setVisibility(View.VISIBLE);
-				starsAnimation[rightAnswerPointer].setOneShot(true);
-				starsAnimation[rightAnswerPointer].start();
+//				starses[rightAnswerPointer].setVisibility(View.VISIBLE);
+//				starsAnimation[rightAnswerPointer].setOneShot(true);
+//				starsAnimation[rightAnswerPointer].start();
 				buttons[rightAnswerPointer].setBackgroundResource(R.drawable.button_orange);
-				audioPlayer(1);//correct answer sound
+				//audioPlayer(1);//correct answer sound
 				if(moviePlayer!=null){
-					int position = moviePlayer.mediaPlayer.getCurrentPosition();
-					int duration = moviePlayer.mediaPlayer.getDuration();
-					System.out.println("--------------The position you got for this question: "+ position);
-					System.out.println("--------------The duration you got for this question: "+ duration);
-					System.out.println("--------------The SCORE you got for this question: "+ (100-90*position/duration));
-					score = 100-90*position/duration;
-					if (score >= 100){
-						score = 10;
-					}
-					elapse = (duration - duration*(score-10)/90)/1000;
-					Gameplay.setElapses(elapse);
-					score_text[rightAnswerPointer].setText(Integer.toString(score));
+					Log.d("debug", "movie");
+					Gameplay.setElapses(4);
+					
+//					int position = moviePlayer.mediaPlayer.getCurrentPosition();
+//					int duration = moviePlayer.mediaPlayer.getDuration();
+//					
+//					System.out.println("--------------The position you got for this question: "+ position);
+//					System.out.println("--------------The duration you got for this question: "+ duration);
+//					System.out.println("--------------The SCORE you got for this question: "+ (100-90*position/duration));
+//					score = 100-90*position/duration;
+//					if (score >= 100){
+//						score = 10;
+//					}
+//					elapse = (duration - duration*(score-10)/90)/1000;
+//					Gameplay.setElapses(elapse);
+//					score_text[rightAnswerPointer].setText(Integer.toString(score));
+					
+					
+					
 				}else{
-					score = 100-90*timer/100;
-					elapse = 8 - 8*(score-10)/90;
-					Gameplay.setElapses(elapse);
-					score_text[rightAnswerPointer].setText(Integer.toString(score));
+					
+					Log.d("debug", "img");
+					Gameplay.setElapses(4);
+					
+//					score = 100-90*timer/100;
+//					elapse = 8 - 8*(score-10)/90;
+//					Gameplay.setElapses(elapse);
+//					score_text[rightAnswerPointer].setText(Integer.toString(score));
+					
 				}
 				Gameplay.userScoreThisGame = Gameplay.userScoreThisGame + score;
 				System.out.println("--------------The SCORE you got for this question: "+ score);
 			}else{
 				buttons[rightAnswerPointer].setBackgroundResource(R.drawable.button_orange);
-				crosses[findIndex(arg0)].setVisibility(View.VISIBLE);
-				audioPlayer(0);//incorrect answer sound
+				//crosses[findIndex(arg0)].setVisibility(View.VISIBLE);
+				//audioPlayer(0);//incorrect answer sound
 				score = 10;
 				Gameplay.userScoreThisGame = Gameplay.userScoreThisGame + score;
+				
 			}
 			
 			if(moviePlayer!=null){
-				moviePlayer.setPause();
+				//moviePlayer.setPause();
 			}else{
 				thread = null;
 			}
-			
-			
 			nextMedia();
 		}
 		
@@ -413,6 +427,143 @@ public class GamePlayPage extends Activity{
 				}
 			return 0;
 		}
+	}*/
+	
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.gameplay_page);
+		round = (Round) getIntent().getSerializableExtra("round_info");
+		media = round.medias[round.media_idx];
+		
+		//AdvRDAdjuster.adjust(findViewById(R.id.ready_to_play_wrapper));		
+		initAssets();		
+	}	
+	
+	public void initAssets(){
+		initQA();
+		initMediaPlayer();
 	}
-
+	
+	private void audioPlayer(int n){
+	    //set up MediaPlayer  
+		if (n == 1){
+			MediaPlayer mp = MediaPlayer.create(this, R.raw.correct);
+		    mp.start();
+		}else{
+			MediaPlayer mp = MediaPlayer.create(this, R.raw.incorrect);
+		    mp.start();
+		}
+	}
+	
+	public void initQA(){
+				
+		ImageView question_img = (ImageView) this.findViewById(R.id.questionIV);
+		correct_idx = (int) (Math.random()*4);
+		
+		if(media.question.equals("name")) {
+			question_img.setImageResource(R.drawable.copy_namethisfilm);
+     	}else if (media.question.equals("actor")){
+     		question_img.setImageResource(R.drawable.copy_nametheactorinthisfilm);
+     	}else{
+     		question_img.setImageResource(R.drawable.copy_nametheactorinthisscene);
+     	}
+		
+		String correct_value = media.choices[0];
+		media.choices[0] = media.choices[correct_idx];
+		media.choices[correct_idx] = correct_value;
+		
+		buttons[0] = (Button) this.findViewById(R.id.btn1);
+		buttons[1] = (Button) this.findViewById(R.id.btn2);
+		buttons[2] = (Button) this.findViewById(R.id.btn3);
+		buttons[3] = (Button) this.findViewById(R.id.btn4);		
+		buttons[0].setText(media.choices[0]);
+		buttons[1].setText(media.choices[1]);
+		buttons[2].setText(media.choices[2]);
+		buttons[3].setText(media.choices[3]);		
+	}
+	
+	
+	//init the video player
+	public void initMediaPlayer(){
+		
+		String media_url = media.url;
+		if (media.type.equals("video")){
+			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.VISIBLE);
+			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.INVISIBLE);
+			//MoviePlayer moviePlayer = new MoviePlayer(((SurfaceView) this.findViewById(R.id.videoplayer)), ((ProgressBar) this.findViewById(R.id.progressBar)), BASE_URL+"/"+media_url, this);
+		}else if (media.type.equals("image")){
+			//initProcessingBar();
+			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.INVISIBLE);
+			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.VISIBLE);
+			new AdvImageLoader(((ImageView) this.findViewById(R.id.stillImage)), false).execute(media_url);
+		}
+	}
+	
+	public void showLegal(){
+		((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.INVISIBLE);
+		new AdvImageLoader(((ImageView) this.findViewById(R.id.legalImage))).execute(media.legal);
+	}		
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	     if (keyCode == KeyEvent.KEYCODE_BACK) {
+	     //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
+	     return true;
+	     }
+	     return super.onKeyDown(keyCode, event);    
+	}
+	
+	public void onClick(View view) {
+		
+		// correct answer response
+		if (view.getTag().equals(Integer.toString(correct_idx+1))){
+			audioPlayer(1);
+			if (media.type.equals("video")){
+				//int position = moviePlayer.mediaPlayer.getCurrentPosition();
+				//int duration = moviePlayer.mediaPlayer.getDuration();
+				
+				media.user_correct = true;
+				//media.user_elapse = position;
+				//media.user_score = 100-90*position/duration;
+				media.user_elapse = 4.5F;
+				media.user_score = 10;
+				
+				moviePlayer = null;
+				
+			}else if (media.type.equals("image")){
+				media.user_correct = true;
+				media.user_elapse = 3.5F;
+				media.user_score = 10;
+			}
+			
+						
+		// wrong answer response
+		}else{
+			audioPlayer(0);
+			media.user_correct = false;
+			media.user_elapse = 0;
+			media.user_score = 0;
+			
+			ImageView[] crosses = new ImageView[NUMBER_OF_CHOICE];
+			crosses[0] = (ImageView) this.findViewById(R.id.cross1);
+			crosses[1] = (ImageView) this.findViewById(R.id.cross2);
+			crosses[2] = (ImageView) this.findViewById(R.id.cross3);
+			crosses[3] = (ImageView) this.findViewById(R.id.cross4);
+			
+			crosses[Integer.parseInt((String) view.getTag())-1].setVisibility(View.VISIBLE);
+			buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
+		}
+		
+		// go to next page
+		if (round.media_idx == 4){
+			new AdvActivityStarter(this, InterstitialPage.class, GAMEPLAY_DELAY, round).start();
+		}else{
+			round.media_idx++;
+			new AdvActivityStarter(this, GamePlayPage.class, GAMEPLAY_DELAY, round).start();
+		}
+		
+	}
+	
 }

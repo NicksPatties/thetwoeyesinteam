@@ -303,7 +303,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 		final AdvElement gameplays_e = doc.getElement("gameplays");
 		LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
-		for (int i = 0; i < gameplays_e.getElementLength("gameplay"); i++){
+		for (int i = 0; i < gameplays_e.getElementLength("gameplay"); i++){ 
 			
 			// add player challenge cell			
 			final View player_challenge_cell = layoutInflater.inflate(R.layout.player_game_cell, score_table, false);
@@ -355,7 +355,6 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 				
 				b1.setEnabled(false);
 				b1.setBackgroundResource(R.drawable.button_small_disabled);
-				Gameplay.setChallType("challenge");
 				
 				player_score_txt.setText("wait");
 			}else if (gameplay_status.equals("start")){
@@ -385,7 +384,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 						//int itemIndex = challenge_cell_array.indexOf(player_challenge_cell);
 						int cell_idx = this.get_bundle().getInt("cell_idx");
 						AdvElement gameplay_e = gameplays_e.getElement("gameplay", cell_idx);
-						
+						/*
 						Gameplay.setChallID(gameplay_e.getValue("challenge_id"));
 						Gameplay.setGameID(gameplay_e.getValue("gameplay_game_id"));
 						Gameplay.setChallOppoScore(gameplay_e.getValue("player_user_score"));
@@ -399,7 +398,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 						Gameplay.setChallStatus(gameplay_e.getValue("gameplay_status"));
 						Gameplay.setChallType("self");
 						Gameplay.setChallOppoID(gameplay_e.getValue("player_user_id"));
-						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));
+						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));*/
 						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						
 						intent.putExtras(get_bundle());
 						startActivity(intent);
@@ -432,7 +431,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 						//int itemIndex = challenge_cell_array.indexOf(player_challenge_cell);
 						int cell_idx = this.get_bundle().getInt("cell_idx");
 						AdvElement gameplay_e = gameplays_e.getElement("gameplay", cell_idx);
-						Gameplay.setChallID(gameplay_e.getValue("challenge_id"));
+						/*Gameplay.setChallID(gameplay_e.getValue("challenge_id"));
 						Gameplay.setGameID(gameplay_e.getValue("gameplay_game_id"));
 						Gameplay.setChallOppoScore(gameplay_e.getValue("player_user_score"));
 						Gameplay.setChallOppoImageURL(gameplay_e.getValue("player_user_thumbnail"));
@@ -445,7 +444,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 						Gameplay.setChallStatus(gameplay_e.getValue("gameplay_status"));
 						Gameplay.setChallType("challenge");
 						Gameplay.setChallOppoID(gameplay_e.getValue("player_user_id"));
-						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));
+						Gameplay.setChallOppoFID(gameplay_e.getValue("player_user_fid"));*/
 						Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);						
 						intent.putExtras(get_bundle());
 						startActivity(intent);
