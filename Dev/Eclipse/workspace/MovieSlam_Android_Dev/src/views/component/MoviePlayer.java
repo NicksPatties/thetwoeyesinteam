@@ -59,7 +59,7 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 	
 	Handler handleProgress = new Handler() {
 		public void handleMessage(Message msg) {
-
+			/*
 			int position = mediaPlayer.getCurrentPosition();
 			int duration = mediaPlayer.getDuration();
 			
@@ -67,6 +67,7 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 				long pos = progressBar.getMax() * position / duration;
 				progressBar.setProgress((int) pos);
 			}
+			*/
 		};
 	};
 	//*****************************************************
