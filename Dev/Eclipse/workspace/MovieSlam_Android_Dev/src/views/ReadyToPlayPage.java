@@ -272,7 +272,8 @@ public class ReadyToPlayPage extends Activity implements AdvResponseDelegate, Co
         if (genre.equals("all")){
         	bg.setImageResource(R.drawable.genre_random_italian_720_1280);
         }else if(genre.equals("promo")){
-        	genre = Gameplay.get_promo_name();
+        	//genre = Gameplay.get_promo_name();
+        	new AdvImageLoader(bg).execute(BASE_URL + "/include/images/genre_promo.png");
         }else{
         	bg.setImageResource(getResources().getIdentifier("genre_"+genre+"_italian_720_1280", "drawable", getPackageName()));
         }

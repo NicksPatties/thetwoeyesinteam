@@ -434,16 +434,15 @@ public class GamePlayPage extends Activity implements Config{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gameplay_page);
+		
 		round = (Round) getIntent().getSerializableExtra("round_info");
 		media = round.medias[round.media_idx];
-
-		AdvRDAdjuster.adjust(findViewById(R.id.gameplay_page_wrapper));
-			
+		AdvRDAdjuster.adjust(findViewById(R.id.gameplay_page_wrapper));			
 		initAssets();		
 	}
 	
 
-	public void initAssets(){		
+	public void initAssets(){
 		initQA();
 		initMediaPlayer();
 	}

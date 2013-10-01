@@ -40,7 +40,7 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 		surfaceHolder=surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		mTimer.schedule(mTimerTask, 0, 1000);
+		//mTimer.schedule(mTimerTask, 0, 1000);
 	}
 	
 	/*******************************************************
