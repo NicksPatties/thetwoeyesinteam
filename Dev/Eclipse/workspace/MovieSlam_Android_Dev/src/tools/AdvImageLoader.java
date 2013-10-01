@@ -37,7 +37,7 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 			return bm;
 			
 		} catch (Exception e) {
-			Log.e("AdvImageLoader", "bitmap error");
+			Log.e("AdvImageLoader", "BITMAP ERROR");
 			return null;
 		}
 	  }

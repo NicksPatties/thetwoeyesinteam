@@ -30,7 +30,7 @@ tools:context=".ReadyToPlayPage">
 		android:layout_height="175px"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="450px"
+        android:layout_marginTop="445px"
         android:src="@drawable/orangeboxes_vs_720_1280"/>       
         
         <ImageView

@@ -151,7 +151,7 @@ public class ResultPage extends Activity {
 	     	result_table.addView(result_cell);
 	     	
 	     	// load movie thumbnail and name
-	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.movie_tn)).execute(round.medias[i].thumbnail);
+	     	new AdvImageLoader((ImageView) result_cell.findViewById(R.id.movie_tn), false).execute(round.medias[i].thumbnail);
 	     	TextView movie_txt = (TextView) result_cell.findViewById(R.id.movie_txt);
 	     	movie_txt.setText(round.medias[i].name);
 	     	

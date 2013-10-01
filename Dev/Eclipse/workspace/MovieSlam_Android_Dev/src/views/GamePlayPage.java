@@ -38,7 +38,8 @@ public class GamePlayPage extends Activity implements Config{
 	private Media media;
 	private MoviePlayer moviePlayer;
 	private int correct_idx;
-	private Button[] buttons = new Button[NUMBER_OF_CHOICE];
+	private boolean isChosen;
+	private Button[] buttons;
 	
 	/*
 	private SurfaceView surfaceView;
@@ -433,18 +434,18 @@ public class GamePlayPage extends Activity implements Config{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.gameplay_page);
-		
+		setContentView(R.layout.gameplay_page);		
 		round = (Round) getIntent().getSerializableExtra("round_info");
+		AdvRDAdjuster.adjust(findViewById(R.id.gameplay_page_wrapper));	
+		
 		media = round.medias[round.media_idx];
-		AdvRDAdjuster.adjust(findViewById(R.id.gameplay_page_wrapper));			
 		initAssets();		
 	}
 	
 
 	public void initAssets(){
-		initQA();
 		initMediaPlayer();
+		initQA();	
 	}
 	
 	private void audioPlayer(int n){
@@ -459,8 +460,14 @@ public class GamePlayPage extends Activity implements Config{
 	}
 	
 	public void initQA(){
-				
 		
+		isChosen =  false;	
+		
+		buttons = new Button[NUMBER_OF_CHOICE];
+		buttons[0] = (Button) this.findViewById(R.id.btn1);
+		buttons[1] = (Button) this.findViewById(R.id.btn2);
+		buttons[2] = (Button) this.findViewById(R.id.btn3);
+		buttons[3] = (Button) this.findViewById(R.id.btn4);			
 		
 		ImageView question_img = (ImageView) this.findViewById(R.id.questionIV);
 		correct_idx = (int) (Math.random()*4);
@@ -476,11 +483,7 @@ public class GamePlayPage extends Activity implements Config{
 		String correct_value = media.choices[0];
 		media.choices[0] = media.choices[correct_idx];
 		media.choices[correct_idx] = correct_value;
-		
-		buttons[0] = (Button) this.findViewById(R.id.btn1);
-		buttons[1] = (Button) this.findViewById(R.id.btn2);
-		buttons[2] = (Button) this.findViewById(R.id.btn3);
-		buttons[3] = (Button) this.findViewById(R.id.btn4);		
+			
 		buttons[0].setText(media.choices[0]);
 		buttons[1].setText(media.choices[1]);
 		buttons[2].setText(media.choices[2]);
@@ -488,25 +491,30 @@ public class GamePlayPage extends Activity implements Config{
 	}
 	
 	
-	//init the video player
+	
 	public void initMediaPlayer(){
+				
+		// init legal
+		new AdvImageLoader((ImageView) this.findViewById(R.id.legalImage)).execute(media.legal);
+		((ImageView) this.findViewById(R.id.legalImage)).setVisibility(View.INVISIBLE);
 		
+		//init the media
 		String media_url = media.url;
-		if (media.type.equals("video")){
+		if (media.type.equals("video")){	
 			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.VISIBLE);
 			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.INVISIBLE);
 			moviePlayer = new MoviePlayer(((SurfaceView) this.findViewById(R.id.videoplayer)), ((ProgressBar) this.findViewById(R.id.progressBar)), media_url, this);
+					
 		}else if (media.type.equals("image")){
 			//initProcessingBar();
 			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.INVISIBLE);
 			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.VISIBLE);
 			new AdvImageLoader(((ImageView) this.findViewById(R.id.stillImage)), false).execute(media_url);
-		}
+		}		
 	}
 	
 	public void showLegal(){
-		((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.INVISIBLE);
-		new AdvImageLoader(((ImageView) this.findViewById(R.id.legalImage))).execute(media.legal);
+		((ImageView) this.findViewById(R.id.legalImage)).setVisibility(View.VISIBLE);					
 	}		
 	
 	@Override
@@ -520,61 +528,83 @@ public class GamePlayPage extends Activity implements Config{
 	
 	public void onClick(View view) {
 		
-		// correct answer response
-		if (view.getTag().equals(Integer.toString(correct_idx+1))){
-			audioPlayer(1);
-			if (media.type.equals("video")){
-				//int position = moviePlayer.mediaPlayer.getCurrentPosition();
-				//int duration = moviePlayer.mediaPlayer.getDuration();
+		// disable all button
+		for (int i=0; i<NUMBER_OF_CHOICE; i++){
+			buttons[i].setEnabled(false);
+		}
 				
-				media.user_correct = true;
-				//media.user_elapse = position;
-				//media.user_score = 100-90*position/duration;
-				media.user_elapse = 4.5F;
-				media.user_score = 10;
+		// check correctness
+		if (!isChosen){
+			isChosen = true;
+			
+			// correct answer response
+			if (view.getTag().equals(Integer.toString(correct_idx+1))){
+				audioPlayer(1);
+				if (media.type.equals("video")){
+					//int position = moviePlayer.mediaPlayer.getCurrentPosition();
+					//int duration = moviePlayer.mediaPlayer.getDuration();
+					
+					media.user_correct = true;
+					media.user_elapse = moviePlayer.getElapse();
+					media.user_score = (int) (100 - 90 * moviePlayer.getElapse() / moviePlayer.getDuration());
+					
+					moviePlayer.free(); 
+					
+				}else if (media.type.equals("image")){
+					media.user_correct = true;
+					media.user_elapse = 3.5F;
+					media.user_score = 10;
+				}			
+				moviePlayer = null;
+				buttons = null;
 				
-				moviePlayer.free();				
+			// wrong answer response
+			}else{
 				
-			}else if (media.type.equals("image")){
-				media.user_correct = true;
-				media.user_elapse = 3.5F;
-				media.user_score = 10;
-			}			
-			moviePlayer = null;
-			buttons = null;
-			
-		// wrong answer response
-		}else{
-			
-			audioPlayer(0);
-			media.user_correct = false;
-			media.user_elapse = 0;
-			media.user_score = 0;
-			
-			ImageView[] crosses = new ImageView[NUMBER_OF_CHOICE];
-			crosses[0] = (ImageView) this.findViewById(R.id.cross1);
-			crosses[1] = (ImageView) this.findViewById(R.id.cross2);
-			crosses[2] = (ImageView) this.findViewById(R.id.cross3);
-			crosses[3] = (ImageView) this.findViewById(R.id.cross4);
-			
-			crosses[Integer.parseInt((String) view.getTag())-1].setVisibility(View.VISIBLE);
-			buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
-			
-			if (media.type.equals("video")){				
-				moviePlayer.free();					
+				audioPlayer(0);
+				media.user_correct = false;
+				media.user_elapse = 0;
+				media.user_score = 0;
+				
+				ImageView[] crosses = new ImageView[NUMBER_OF_CHOICE];
+				crosses[0] = (ImageView) this.findViewById(R.id.cross1);
+				crosses[1] = (ImageView) this.findViewById(R.id.cross2);
+				crosses[2] = (ImageView) this.findViewById(R.id.cross3);
+				crosses[3] = (ImageView) this.findViewById(R.id.cross4);
+				
+				crosses[Integer.parseInt((String) view.getTag())-1].setVisibility(View.VISIBLE);
+				buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
+				
+				if (media.type.equals("video")){				
+					moviePlayer.free();					
+				}
+				moviePlayer = null;
+				buttons = null;
 			}
-			moviePlayer = null;
-			buttons = null;
-		}
-		
-		// go to next page
-		if (round.media_idx == 4){
-			new AdvActivityStarter(this, InterstitialPage.class, GAMEPLAY_DELAY, round).start();
-		}else{
-			round.media_idx++;
-			new AdvActivityStarter(this, GamePlayPage.class, GAMEPLAY_DELAY, round).start();
-		}
-		
+			
+			// go to next page
+			if (round.media_idx == 4){
+				new AdvActivityStarter(this, InterstitialPage.class, GAMEPLAY_DELAY, round).start();
+			}else{
+				round.media_idx++;
+				new AdvActivityStarter(this, GamePlayPage.class, GAMEPLAY_DELAY, round).start();
+				/*runOnUiThread(new Runnable() {
+					
+						@Override
+				        public void run() {
+				        	round.media_idx++;
+				        	
+							media = round.medias[round.media_idx];
+							
+							initQA();
+							initMediaPlayer();
+														
+				        }
+				        
+				});*/
+				
+			}
+		}	
 	}
 	
 }

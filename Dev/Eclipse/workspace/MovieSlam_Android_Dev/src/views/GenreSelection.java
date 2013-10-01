@@ -1,16 +1,14 @@
 package views;
 
-import java.io.Serializable;
-
-import tools.AdvActivityStarter;
-import tools.AdvRDAdjuster;
 import models.Gameplay;
 import models.Round;
+import tools.AdvActivityStarter;
+import tools.AdvRDAdjuster;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.movieslam_android_dev.R;
@@ -47,12 +45,11 @@ public class GenreSelection extends Activity {
 	
 	public void gotoGamePlayPage(View view){
 		
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+		WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+		
 		round.challenge_id = 0;
 		round.genre = (String) view.getTag();
-		
-		Intent intent = new Intent(getApplicationContext(), ReadyToPlayPage.class);
-		intent.putExtra("round_info", (Serializable) round);
-		//startActivity(intent);
 		new AdvActivityStarter(this, ReadyToPlayPage.class, 0, round).start();
 	}
 

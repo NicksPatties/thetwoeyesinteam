@@ -459,6 +459,7 @@ public class SplashPage extends FragmentActivity implements AdvResponseDelegate,
 				b0.setBackgroundResource(R.drawable.button_small_disabled);
 				b1.setVisibility(View.INVISIBLE);
 				player_score_txt.setText("-:-");
+				
 			}else{
 				
 				// set result button

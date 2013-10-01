@@ -1,12 +1,10 @@
 package views.component;
 
 
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import views.GamePlayPage;
-import models.Gameplay;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -17,11 +15,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 
-public class MoviePlayer implements OnBufferingUpdateListener,
-		OnCompletionListener, MediaPlayer.OnPreparedListener,
-		SurfaceHolder.Callback {
+public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListener, MediaPlayer.OnPreparedListener, SurfaceHolder.Callback {
 	private int videoWidth;
 	private int videoHeight;
 	public MediaPlayer mediaPlayer;
@@ -30,16 +25,18 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 	private Timer mTimer=new Timer();
 	private String _url;
 	private GamePlayPage _gp;
+	private float _elapse;
 	
 	public MoviePlayer(SurfaceView surfaceView,ProgressBar progressBar, String url, GamePlayPage gamePlayPage)
 	{
 		_gp = gamePlayPage;
 		_url = url;
+		_elapse = 0;
 		
 		this.progressBar=progressBar;
 		surfaceHolder=surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
-		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		//surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		//mTimer.schedule(mTimerTask, 0, 1000);
 	}
 	
@@ -70,45 +67,7 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 			*/
 		};
 	};
-	//*****************************************************
 	
-	public void play()
-	{
-		mediaPlayer.start();
-	}
-	
-	public void playUrl(String videoUrl)
-	{
-		try {
-			mediaPlayer.reset();
-			mediaPlayer.setDataSource(videoUrl);
-			mediaPlayer.prepare();//prepare and then play
-			//mediaPlayer.start();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void setPause()
-	{
-		mediaPlayer.pause();
-	}
-	
-	public void stop()
-	{
-		if (mediaPlayer != null) { 
-			mediaPlayer.stop();
-            mediaPlayer.release(); 
-            mediaPlayer = null; 
-        } 
-	}
 	
 	@Override
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
@@ -118,6 +77,7 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 	@Override
 	public void surfaceCreated(SurfaceHolder arg0) {
 		try {
+			
 			mediaPlayer = new MediaPlayer();
 			mediaPlayer.setDisplay(surfaceHolder);
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -125,16 +85,18 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 			mediaPlayer.setOnCompletionListener(this);
 			mediaPlayer.setOnPreparedListener(this);
 			mediaPlayer.setDataSource(_url);
-			mediaPlayer.prepare();
+			mediaPlayer.prepareAsync();
+			//mediaPlayer.prepare();
+			
 		} catch (Exception e) {
-			Log.e("mediaPlayer", "error", e);
+			//Log.e("mediaPlayer", "error", e);
 		}
 		Log.e("mediaPlayer", "surface created");
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder arg0) {
-		Log.e("mediaPlayer", "surface destroyed");
+		//Log.e("mediaPlayer", "surface destroyed");
 	}
 
 	
@@ -161,11 +123,11 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 		progressBar.setSecondaryProgress(bufferingProgress);
 		//int currentProgress = progressBar.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
 		//Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
-		Log.e("mediaPlayer", "buffering");
+		//Log.e("mediaPlayer", "buffering");
 	}
 	
 	public void free(){
-		
+		// free memory
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
             mediaPlayer.release();
@@ -176,7 +138,20 @@ public class MoviePlayer implements OnBufferingUpdateListener,
 		mTimer = null;
 		_url = null;
 		_gp = null;
-		
+		Log.e("error", "free memory");
 	}
+	
+	public float getElapse(){
+		if (mediaPlayer.isPlaying()){
+			Log.e("error", "current position"+mediaPlayer.getCurrentPosition()*1000);
+			return mediaPlayer.getCurrentPosition()/1000;			
+		}
+		return _elapse;
+	}
+	
+	public float getDuration(){
+		return mediaPlayer.getDuration()/1000;
+	}
+	
 }
 
