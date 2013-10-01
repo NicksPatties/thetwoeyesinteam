@@ -9,6 +9,7 @@ public class AdvRDAdjuster {
 	
 	public static void setScale(View wrapper, View device){
 	 	_scale = Math.min((float)device.getWidth() / wrapper.getWidth(), (float)device.getHeight() / wrapper.getHeight());
+	 	System.out.println(_scale);
 	}
 	
 	public static void adjust(View wrapper){
@@ -17,6 +18,7 @@ public class AdvRDAdjuster {
 	 	ViewGroup.LayoutParams layoutParams = wrapper.getLayoutParams();
 	 	layoutParams.width *= layoutParams.width != ViewGroup.LayoutParams.MATCH_PARENT && layoutParams.width != ViewGroup.LayoutParams.WRAP_CONTENT ? _scale : 1;
 	 	layoutParams.height *= layoutParams.height != ViewGroup.LayoutParams.MATCH_PARENT && layoutParams.height != ViewGroup.LayoutParams.WRAP_CONTENT ? _scale : 1;
+	 	System.out.println("!!!!!!!!!!!!"+layoutParams.height);
 	 	
 	 	if (layoutParams instanceof ViewGroup.MarginLayoutParams){
 	 		ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams)layoutParams;
@@ -43,3 +45,4 @@ public class AdvRDAdjuster {
 	}
 
 }
+
