@@ -17,6 +17,7 @@ import android.view.SurfaceView;
 import android.widget.ProgressBar;
 
 public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListener, MediaPlayer.OnPreparedListener, SurfaceHolder.Callback {
+	private static final int SHOW_PROGRESS = 0;
 	private int videoWidth;
 	private int videoHeight;
 	public MediaPlayer mediaPlayer;
@@ -43,31 +44,26 @@ public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListe
 	/*******************************************************
 	 * processing bar
 	 ******************************************************/
-	TimerTask mTimerTask = new TimerTask() {
-		@Override
-		public void run() {
-			if(mediaPlayer==null)
-				return;
-			if (mediaPlayer.isPlaying() && progressBar.isPressed() == false) {
-				handleProgress.sendEmptyMessage(0);
-			}
-		}
+	
+	protected Handler mHandler = new Handler()
+	{
+		
+	    @Override
+	    public void handleMessage(Message msg)
+	    {
+	    	Log.e("error", "set progress bar1");
+	        switch (msg.what){
+
+	            case SHOW_PROGRESS:
+	            	Log.e("error", "set progress bar");
+	            	long pos = progressBar.getMax() * mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration();
+					progressBar.setProgress((int) pos);
+	                break;
+	        }
+	    }
 	};
 	
-	Handler handleProgress = new Handler() {
-		public void handleMessage(Message msg) {
-			/*
-			int position = mediaPlayer.getCurrentPosition();
-			int duration = mediaPlayer.getDuration();
-			
-			if (duration > 0) {
-				long pos = progressBar.getMax() * position / duration;
-				progressBar.setProgress((int) pos);
-			}
-			*/
-		};
-	};
-	
+		
 	
 	@Override
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
@@ -109,17 +105,19 @@ public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListe
 		videoHeight = mediaPlayer.getVideoHeight();
 		if (videoHeight != 0 && videoWidth != 0) {
 			arg0.start();
-		}
-		Log.e("mediaPlayer", "onPrepared");
+		}		
 	}
-
+	
 	@Override
 	public void onCompletion(MediaPlayer arg0) {
-		_gp.showLegal();
+		//_gp.showLegal();
+		//mHandler.removeMessages(SHOW_PROGRESS);
 	}
+	
 
 	@Override
 	public void onBufferingUpdate(MediaPlayer arg0, int bufferingProgress) {
+		mHandler.sendEmptyMessage(SHOW_PROGRESS);
 		progressBar.setSecondaryProgress(bufferingProgress);
 		//int currentProgress = progressBar.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
 		//Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
@@ -138,19 +136,17 @@ public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListe
 		mTimer = null;
 		_url = null;
 		_gp = null;
-		Log.e("error", "free memory");
 	}
 	
 	public float getElapse(){
 		if (mediaPlayer.isPlaying()){
-			Log.e("error", "current position"+mediaPlayer.getCurrentPosition()*1000);
-			return mediaPlayer.getCurrentPosition()/1000;			
+			return (float)mediaPlayer.getCurrentPosition()/1000;			
 		}
 		return _elapse;
 	}
 	
 	public float getDuration(){
-		return mediaPlayer.getDuration()/1000;
+		return (float)mediaPlayer.getDuration()/1000;
 	}
 	
 }

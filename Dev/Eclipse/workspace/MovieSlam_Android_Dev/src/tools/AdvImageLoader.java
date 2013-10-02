@@ -27,7 +27,21 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 			Bitmap bm = _user_cache ? AdvImageManagement.getBitmapByURL(url) : null;
 			if (bm == null){
 				InputStream in = new java.net.URL(url).openStream();
-				bm = BitmapFactory.decodeStream(in);
+				// bm = BitmapFactory.decodeStream(in);
+				Log.e("URL lookup", url.toString());
+				BitmapFactory.Options bpo =  new BitmapFactory.Options();
+			//	bpo.inSampleSize = calculateInSampleSize(bpo, _img_v.getWidth(), _img_v.getHeight() );
+				bpo.inSampleSize = 20;
+				Log.e("sample size", String.valueOf(bpo.inSampleSize) );
+				Log.e("Width", String.valueOf(_img_v.getWidth())  );
+				Log.e("Height", String.valueOf(_img_v.getHeight()) );
+			//	bpo.inJustDecodeBounds = true;
+			//	bpo.				
+			//	BitmapFactory.decodeStream(in, outPadding, opts)
+			//	BitmapFactory.decodeFile(rawImageName, options);
+
+				bm = BitmapFactory.decodeStream(in, null, bpo );
+				
 				if (_user_cache){
 					AdvImageManagement.SetBitmap(url, bm);
 				}				
@@ -45,4 +59,26 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 	  protected void onPostExecute(Bitmap bm) {
 		  _img_v.setImageBitmap(bm);
 	  }
+	  
+	  public int calculateInSampleSize (BitmapFactory.Options options, int reqWidth, int reqHeight) {
+	    // Raw height and width of image
+	    final int height = options.outHeight;
+	    final int width = options.outWidth;
+	    int inSampleSize = 1;
+
+	    if (height > reqHeight || width > reqWidth) {
+
+	        // Calculate ratios of height and width to requested height and width
+	        final int heightRatio = Math.round((float) height / (float) reqHeight);
+	        final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+	        // Choose the smallest ratio as inSampleSize value, this will guarantee
+	        // a final image with both dimensions larger than or equal to the
+	        // requested height and width.
+	        inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+	    }
+
+	    return inSampleSize;
+	}
+	  
 }

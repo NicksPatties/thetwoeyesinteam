@@ -51,6 +51,7 @@ tools:context=".GameplayPage">
 	    android:layout_height="10px"
 	    android:layout_centerHorizontal="true"
 	    android:layout_alignBottom="@id/videoplayer" 
+	    android:progressDrawable="@drawable/greenprogress" 
 	    android:max="100"/>
         
         <ImageView
