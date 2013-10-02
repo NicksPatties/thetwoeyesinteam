@@ -55,11 +55,14 @@ public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListe
 	        switch (msg.what){
 
 	            case SHOW_PROGRESS:
-	            	Log.e("error", "set progress bar");
-	            	long percentage = mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration();
-	            	long pos = percentage >= 0.95 ?  progressBar.getMax() : progressBar.getMax() * percentage;
+	            	long pos = progressBar.getMax() * mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration();
+            		progressBar.setProgress((int) pos);
 	            	
-					progressBar.setProgress((int) pos);
+	            	if (pos > progressBar.getMax()*0.95){
+	            		progressBar.setProgress((int) progressBar.getMax());
+	            		_gp.showLegal();
+						mHandler.removeMessages(SHOW_PROGRESS);
+	            	}
 	                break;
 	        }
 	    }
@@ -112,8 +115,7 @@ public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListe
 	
 	@Override
 	public void onCompletion(MediaPlayer arg0) {
-		//_gp.showLegal();
-		//mHandler.removeMessages(SHOW_PROGRESS);
+		
 	}
 	
 
