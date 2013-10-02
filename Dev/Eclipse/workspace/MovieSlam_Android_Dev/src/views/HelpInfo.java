@@ -15,6 +15,7 @@ public class HelpInfo extends Activity {
 		if (!screenAdjusted){
 			screenAdjusted = true;
 	        AdvRDAdjuster.adjust(findViewById(R.id.help_info_wrapper));
+	        System.out.println("#########print something");
 		}
 		super.onWindowFocusChanged(hasFocus);
 	}
