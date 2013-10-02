@@ -31,7 +31,7 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 				Log.e("URL lookup", url.toString());
 				BitmapFactory.Options bpo =  new BitmapFactory.Options();
 			//	bpo.inSampleSize = calculateInSampleSize(bpo, _img_v.getWidth(), _img_v.getHeight() );
-				bpo.inSampleSize = 2;
+				bpo.inSampleSize = 1;
 				Log.e("sample size", String.valueOf(bpo.inSampleSize) );
 				Log.e("Width", String.valueOf(_img_v.getWidth())  );
 				Log.e("Height", String.valueOf(_img_v.getHeight()) );

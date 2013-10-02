@@ -17,7 +17,7 @@ import android.view.SurfaceView;
 import android.widget.ProgressBar;
 
 public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListener, MediaPlayer.OnPreparedListener, SurfaceHolder.Callback {
-	private static final int SHOW_PROGRESS = 0;
+	private static final int SHOW_PROGRESS = 1;
 	private int videoWidth;
 	private int videoHeight;
 	public MediaPlayer mediaPlayer;
@@ -56,7 +56,9 @@ public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListe
 
 	            case SHOW_PROGRESS:
 	            	Log.e("error", "set progress bar");
-	            	long pos = progressBar.getMax() * mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration();
+	            	long percentage = mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration();
+	            	long pos = percentage >= 0.95 ?  progressBar.getMax() : progressBar.getMax() * percentage;
+	            	
 					progressBar.setProgress((int) pos);
 	                break;
 	        }

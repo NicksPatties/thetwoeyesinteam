@@ -495,7 +495,7 @@ public class GamePlayPage extends Activity implements Config{
 	public void initMediaPlayer(){
 				
 		// init legal
-		new AdvImageLoader((ImageView) this.findViewById(R.id.legalImage)).execute(media.legal);
+		new AdvImageLoader((ImageView) this.findViewById(R.id.legalImage), false).execute(media.legal);
 		((ImageView) this.findViewById(R.id.legalImage)).setVisibility(View.INVISIBLE);
 		
 		//init the media
@@ -503,14 +503,14 @@ public class GamePlayPage extends Activity implements Config{
 		if (media.type.equals("video")){	
 			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.VISIBLE);
 			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.INVISIBLE);
-			//moviePlayer = new MoviePlayer(((SurfaceView) this.findViewById(R.id.videoplayer)), ((ProgressBar) this.findViewById(R.id.progressBar)), media_url, this);
+			moviePlayer = new MoviePlayer(((SurfaceView) this.findViewById(R.id.videoplayer)), ((ProgressBar) this.findViewById(R.id.progressBar)), media_url, this);
 					
 		}else if (media.type.equals("image")){
 			//initProcessingBar();
 			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.INVISIBLE);
 			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.VISIBLE);
 			new AdvImageLoader(((ImageView) this.findViewById(R.id.stillImage)), false).execute(media_url);
-		}		
+		}
 	}
 	
 	public void showLegal(){
@@ -541,14 +541,12 @@ public class GamePlayPage extends Activity implements Config{
 			if (view.getTag().equals(Integer.toString(correct_idx+1))){
 				audioPlayer(1);
 				if (media.type.equals("video")){
-					//int position = moviePlayer.mediaPlayer.getCurrentPosition();
-					//int duration = moviePlayer.mediaPlayer.getDuration();
-					/*
+					
 					media.user_correct = true;
 					media.user_elapse = moviePlayer.getElapse();
 					media.user_score = (int) (100 - 90 * moviePlayer.getElapse() / moviePlayer.getDuration());
-					*/
-					//moviePlayer.free(); 
+					
+					moviePlayer.free(); 
 					
 				}else if (media.type.equals("image")){
 					media.user_correct = true;
@@ -576,7 +574,7 @@ public class GamePlayPage extends Activity implements Config{
 				buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
 				
 				if (media.type.equals("video")){				
-					//moviePlayer.free();					
+					moviePlayer.free();					
 				}
 				moviePlayer = null;
 				buttons = null;
