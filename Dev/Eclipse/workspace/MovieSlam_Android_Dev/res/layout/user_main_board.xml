@@ -71,6 +71,16 @@ android:layout_height="match_parent">
 	android:layout_alignParentRight="true"
 	android:layout_marginRight="20px"
 	android:layout_alignParentTop="true"
-	android:layout_marginTop="20px" />	
+	android:layout_marginTop="20px" />	  
+	
+<!-- 	<ImageButton
+	    android:id="@+id/fbLoginButton"
+	    android:layout_width="150px"
+	    android:layout_height="50px"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignParentTop="true"
+	    android:layout_marginRight="20px"
+	    android:layout_marginTop="20px"
+	    android:layout_weight="3" />  - -->
     
 </RelativeLayout>

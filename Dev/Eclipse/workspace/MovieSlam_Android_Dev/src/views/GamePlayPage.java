@@ -459,6 +459,8 @@ public class GamePlayPage extends Activity implements Config{
 		}
 	}
 	
+
+	
 	public void initQA(){
 		
 		isChosen =  false;	
@@ -487,10 +489,11 @@ public class GamePlayPage extends Activity implements Config{
 		buttons[0].setText(media.choices[0]);
 		buttons[1].setText(media.choices[1]);
 		buttons[2].setText(media.choices[2]);
-		buttons[3].setText(media.choices[3]);		
+		buttons[3].setText(media.choices[3]);	
+		
 	}
 	
-	
+
 	
 	public void initMediaPlayer(){
 				
@@ -528,6 +531,23 @@ public class GamePlayPage extends Activity implements Config{
 	
 	public void onClick(View view) {
 		
+//		// test
+//		 img = (ImageView)findViewById(R.id.star1);
+//		 img.setBackgroundResource(R.drawable.starsanimation);
+//
+//		 // Get the background, which has been compiled to an AnimationDrawable object.
+//		 frameAnimation = (AnimationDrawable) img.getBackground();
+//		 frameAnimation.set
+////			ImageView img;
+//			AnimationDrawable frameAnimation;
+//		
+//		
+//		if( view.getTag().equals(Integer.toString(1))) {
+//			starses[0].setVisibility(View.VISIBLE);
+//			AnimationDrawable frameAnimation = (AnimationDrawable) starses[0].getBackground();
+//			frameAnimation.start();
+//		}
+		
 		// disable all button
 		for (int i=0; i<NUMBER_OF_CHOICE; i++){
 			buttons[i].setEnabled(false);
@@ -536,6 +556,31 @@ public class GamePlayPage extends Activity implements Config{
 		// check correctness
 		if (!isChosen){
 			isChosen = true;
+			
+			ImageView[] crosses = new ImageView[NUMBER_OF_CHOICE];
+			crosses[0] = (ImageView) this.findViewById(R.id.cross1);
+			crosses[1] = (ImageView) this.findViewById(R.id.cross2);
+			crosses[2] = (ImageView) this.findViewById(R.id.cross3);
+			crosses[3] = (ImageView) this.findViewById(R.id.cross4);
+			
+			TextView[] score_text = new TextView[NUMBER_OF_CHOICE];
+			score_text[0] = (TextView) this.findViewById(R.id.score_text1);
+			score_text[1] = (TextView) this.findViewById(R.id.score_text2);
+			score_text[2] = (TextView) this.findViewById(R.id.score_text3);
+			score_text[3] = (TextView) this.findViewById(R.id.score_text4);
+			
+			ImageView[] starses = new ImageView[NUMBER_OF_CHOICE];
+			starses[0] = (ImageView) findViewById(R.id.star1);
+			starses[1] = (ImageView) findViewById(R.id.star2);
+			starses[2] = (ImageView) findViewById(R.id.star3);
+			starses[3] = (ImageView) findViewById(R.id.star4);
+			
+//			Log.e("crosses[0].getWidth()", Integer.toString(crosses[0].getWidth()) );
+//			Log.e("crosses[0].getHeight()", Integer.toString(crosses[0].getHeight()) );
+//			Log.e("buttons[0].getWidth()", Integer.toString(buttons[0].getWidth()) );
+//			Log.e("buttons[0].getHeight()", Integer.toString(buttons[0].getHeight()) );
+			
+			buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
 			
 			// correct answer response
 			if (view.getTag().equals(Integer.toString(correct_idx+1))){
@@ -556,22 +601,35 @@ public class GamePlayPage extends Activity implements Config{
 				moviePlayer = null;
 				buttons = null;
 				
-			// wrong answer response
-			}else{
 				
+				starses[Integer.parseInt((String) view.getTag())-1].setVisibility(View.VISIBLE);
+//				starses[Integer.parseInt((String) view.getTag())-1].setBackgroundResource(R.drawable.starsanimation);
+				
+//				AnimationDrawable frameAnimation = (AnimationDrawable) starses[Integer.parseInt((String) view.getTag())-1].getBackground();
+				AnimationDrawable frameAnimation = (AnimationDrawable) starses[Integer.parseInt((String) view.getTag())-1].getDrawable();
+				frameAnimation.start();
+				
+//				score_text[Integer.parseInt((String) view.getTag())-1].setVisibility(View.VISIBLE);
+				score_text[Integer.parseInt((String) view.getTag())-1].setText("99");
+			//	buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
+				
+		
+			}else{
+				// wrong answer response
 				audioPlayer(0);
 				media.user_correct = false;
 				media.user_elapse = 0;
 				media.user_score = 0;
 				
-				ImageView[] crosses = new ImageView[NUMBER_OF_CHOICE];
-				crosses[0] = (ImageView) this.findViewById(R.id.cross1);
-				crosses[1] = (ImageView) this.findViewById(R.id.cross2);
-				crosses[2] = (ImageView) this.findViewById(R.id.cross3);
-				crosses[3] = (ImageView) this.findViewById(R.id.cross4);
+//				ImageView[] crosses = new ImageView[NUMBER_OF_CHOICE];
+//				crosses[0] = (ImageView) this.findViewById(R.id.cross1);
+//				crosses[1] = (ImageView) this.findViewById(R.id.cross2);
+//				crosses[2] = (ImageView) this.findViewById(R.id.cross3);
+//				crosses[3] = (ImageView) this.findViewById(R.id.cross4);
 				
 				crosses[Integer.parseInt((String) view.getTag())-1].setVisibility(View.VISIBLE);
-				buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
+//				crosses[Integer.parseInt((String) view.getTag())-1].setBackgroundResource(R.drawable.wrong);
+//				buttons[correct_idx].setBackgroundResource(R.drawable.button_orange);
 				
 				if (media.type.equals("video")){				
 					moviePlayer.free();					
