@@ -52,7 +52,7 @@ tools:context=".GameplayPage">
 	    android:layout_centerHorizontal="true"
 	    android:layout_alignBottom="@id/videoplayer" 
 	    android:progressDrawable="@drawable/greenprogress" 
-	    android:max="100"/>
+	    android:max="10"/>
         
         <ImageView
 		android:id="@+id/questionIV"

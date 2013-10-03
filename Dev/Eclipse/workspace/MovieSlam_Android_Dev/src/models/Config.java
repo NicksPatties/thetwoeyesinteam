@@ -11,4 +11,5 @@ public interface Config {
 	static public final float INTERSTITIAL_PAGE_DURATION = 3.0F;
 	static public final int NUMBER_OF_TURN = 5;
 	static public final int NUMBER_OF_CHOICE = 4;
+	static public final int MAX_TIME_FOR_IMAGE_GAMEPLAY = 10;
 }

@@ -2,6 +2,8 @@ package views;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import models.Config;
 import models.Gameplay;
@@ -40,6 +42,9 @@ public class GamePlayPage extends Activity implements Config{
 	private int correct_idx;
 	private boolean isChosen;
 	private Button[] buttons;
+	private ProgressBar progressBar;
+	private Timer timer;
+	private TimerTask timerTask;
 	
 	/*
 	private SurfaceView surfaceView;
@@ -493,8 +498,6 @@ public class GamePlayPage extends Activity implements Config{
 		
 	}
 	
-
-	
 	public void initMediaPlayer(){
 				
 		// init legal
@@ -504,15 +507,44 @@ public class GamePlayPage extends Activity implements Config{
 		//init the media
 		String media_url = media.url;
 		if (media.type.equals("video")){	
+			
 			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.VISIBLE);
 			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.INVISIBLE);
 			moviePlayer = new MoviePlayer(((SurfaceView) this.findViewById(R.id.videoplayer)), ((ProgressBar) this.findViewById(R.id.progressBar)), media_url, this);
-					
+	
 		}else if (media.type.equals("image")){
 			//initProcessingBar();
 			((SurfaceView) this.findViewById(R.id.videoplayer)).setVisibility(View.INVISIBLE);
 			((ImageView) this.findViewById(R.id.stillImage)).setVisibility(View.VISIBLE);
-			new AdvImageLoader(((ImageView) this.findViewById(R.id.stillImage)), false).execute(media_url);
+			
+			progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+
+			new AdvImageLoader(((ImageView) this.findViewById(R.id.stillImage)), false, new AdvImageLoader.AdvImageLoaderListener(){
+
+				@Override
+				public void imageLoaderDidFinishLoading() {
+					// TODO Auto-generated method stub
+					
+					timerTask = new TimerTask() {
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							if ( progressBar.getProgress() + 1 <= progressBar.getMax()) {
+								progressBar.setProgress(progressBar.getProgress() + 1);
+								return;
+							}
+							
+						}
+						
+					};
+					
+					timer = new Timer(); 
+					timer.scheduleAtFixedRate(timerTask, 0, 1000);
+					
+				}
+			}).execute(media_url);
+
 		}
 	}
 	
@@ -570,22 +602,26 @@ public class GamePlayPage extends Activity implements Config{
 					media.user_score = (int) (100 - 90 * moviePlayer.getElapse() / moviePlayer.getDuration());
 					
 					moviePlayer.free(); 
-					
+		
 				}else if (media.type.equals("image")){
+					
 					media.user_correct = true;
-					media.user_elapse = 3.5F;
-					media.user_score = 10;
+//					media.user_elapse = 3.5F;
+//					media.user_score = 10;
+					media.user_elapse = (float)(progressBar.getProgress());
+					media.user_score = 100 - (90 * progressBar.getProgress() / 10);
+					
 				}			
 				moviePlayer = null;
 				buttons = null;
-				
 				
 				starses[Integer.parseInt((String) view.getTag())-1].setVisibility(View.VISIBLE);			
 				AnimationDrawable frameAnimation = (AnimationDrawable) starses[Integer.parseInt((String) view.getTag())-1].getDrawable();
 				frameAnimation.start();
 				
-				score_text[Integer.parseInt((String) view.getTag())-1].setText("99");
-
+				score_text[Integer.parseInt((String) view.getTag())-1].setText( Integer.toString(media.user_score));
+				
+				
 			}else{
 				// wrong answer response
 				audioPlayer(0);
@@ -600,6 +636,16 @@ public class GamePlayPage extends Activity implements Config{
 				}
 				moviePlayer = null;
 				buttons = null;
+			}
+			
+			if (timerTask != null) {
+				timerTask.cancel();
+				timerTask = null;
+			}
+			
+			if (timer != null) {
+				timer.cancel();
+				timer = null;
 			}
 			
 			// go to next page
@@ -633,6 +679,7 @@ public class GamePlayPage extends Activity implements Config{
 		// TODO Auto-generated method stub
 		//moviePlayer.free();
 		Log.e("onDestroy", "onDestroy");
+		
 		super.onDestroy();
 	}
 	

@@ -2,6 +2,7 @@ package tools;
 
 import java.io.InputStream;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -9,9 +10,10 @@ import android.util.Log;
 import android.widget.ImageView;
 
 public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
-	ImageView _img_v;
-	Boolean _user_cache;
-
+	  ImageView _img_v;
+	  Boolean _user_cache; 
+	  AdvImageLoaderListener _listener;
+	
 	  public AdvImageLoader(ImageView img_v) {
 		  this(img_v, true);
 	  }
@@ -19,6 +21,15 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 	  public AdvImageLoader(ImageView img_v, Boolean use_cache) {
 		  _img_v = img_v;
 		  _user_cache =  use_cache;
+	  }
+	  
+	  abstract static public class AdvImageLoaderListener {
+		  abstract public void imageLoaderDidFinishLoading();
+	  }
+	   
+	  public AdvImageLoader(ImageView img_v, Boolean use_cache, AdvImageLoaderListener listener) {
+		  this(img_v, use_cache);
+		  _listener = listener;		  
 	  }
 
 	  protected Bitmap doInBackground(String... urls) {
@@ -58,6 +69,10 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 
 	  protected void onPostExecute(Bitmap bm) {
 		  _img_v.setImageBitmap(bm);
+
+		  if (_listener != null) {
+			  _listener.imageLoaderDidFinishLoading();
+		  }
 	  }
 	  
 	  public int calculateInSampleSize (BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -77,6 +92,8 @@ public class AdvImageLoader extends AsyncTask<String, Void, Bitmap> {
 	        // requested height and width.
 	        inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
 	    }
+	    
+
 
 	    return inSampleSize;
 	}
