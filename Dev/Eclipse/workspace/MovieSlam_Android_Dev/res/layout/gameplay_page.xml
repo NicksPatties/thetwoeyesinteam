@@ -62,9 +62,8 @@ tools:context=".GameplayPage">
 		android:layout_below="@id/videoplayer" 
 		android:layout_marginTop="50px" />
         
-        
-        
-        <Button
+    
+	    <Button
 	    android:id="@+id/btn1"
 	    android:tag="1"
 	    android:layout_width="500px"
@@ -80,26 +79,36 @@ tools:context=".GameplayPage">
 	    android:onClick="onClick" />
         
 		<ImageView
-		android:id="@+id/cross1"
-		android:layout_width="500px"
-		android:layout_height="120px"
-		android:layout_gravity="center"
-		android:visibility="gone"
-		android:src="@drawable/wrong"
-		android:layout_alignTop="@+id/btn1"/>
+		    android:id="@+id/cross1"
+		    android:layout_width="500px"
+		    android:layout_height="120px"
+		    android:layout_alignTop="@+id/btn1"
+		    android:layout_gravity="center"
+		    android:src="@drawable/wrong"
+		    android:visibility="gone" /> 
+		    
+ 		<ImageView
+ 		    android:id="@+id/star1"
+ 		    android:layout_width="500px"
+ 		    android:layout_height="200dp"
+ 		    android:layout_alignRight="@+id/btn1"
+ 		    android:layout_alignTop="@+id/score_text1"
+ 		    android:layout_marginRight="0dp"
+ 		    android:layout_marginTop="-60dp"
+ 		    android:src="@drawable/starsanimation"
+ 		    android:visibility="gone" />
 			    
 	    <TextView
-        android:id="@+id/score_text1"
-        android:layout_width="500px"
-        android:layout_height="120px"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="20px"
-        android:textColor="@android:color/white"
-        android:layout_alignTop="@+id/btn1"/>
-	    
-	    
-	    
+	        android:id="@+id/score_text1"
+	        android:layout_width="500px"
+	        android:layout_height="120px"
+	        android:layout_alignTop="@+id/btn1"
+	        android:layout_gravity="center"
+	        android:gravity="center"
+	        android:textColor="@android:color/white"
+	        android:textSize="50px" />
+            
+             
 	    <Button
 	    android:id="@+id/btn2"
 	    android:tag="2"
@@ -124,13 +133,25 @@ tools:context=".GameplayPage">
 		android:src="@drawable/wrong"
 		android:layout_alignTop="@+id/btn2"/>
 			    
+	     <ImageView
+	        android:id="@+id/star2"
+	        android:layout_width="500px"
+	        android:layout_height="200dp"
+	        android:layout_alignRight="@+id/btn2"
+	        android:layout_alignTop="@+id/score_text2"
+	        android:layout_marginRight="0dp"
+	        android:layout_marginTop="-60dp"
+	        android:src="@drawable/starsanimation"
+	        android:visibility="gone" /> 
+	    
+	    
 	    <TextView
         android:id="@+id/score_text2"
         android:layout_width="500px"
         android:layout_height="120px"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="20px"
+        android:textSize="50px"
         android:textColor="@android:color/white"
         android:layout_alignTop="@+id/btn2"/>
 	    
@@ -159,6 +180,17 @@ tools:context=".GameplayPage">
 		android:visibility="gone"
 		android:src="@drawable/wrong"
 		android:layout_alignTop="@+id/btn3"/>
+	    
+	     <ImageView
+	        android:id="@+id/star3"
+	        android:layout_width="500px"
+	        android:layout_height="200dp"
+	        android:layout_alignRight="@+id/btn3"
+	        android:layout_alignTop="@+id/score_text3"
+	        android:layout_marginRight="0dp"
+	        android:layout_marginTop="-60dp"
+	        android:src="@drawable/starsanimation"
+	        android:visibility="gone" /> 
 			    
 	    <TextView
         android:id="@+id/score_text3"
@@ -166,7 +198,7 @@ tools:context=".GameplayPage">
         android:layout_height="120px"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="20px"
+        android:textSize="50px"
         android:textColor="@android:color/white"
         android:layout_alignTop="@+id/btn3"/>
 	    
@@ -196,15 +228,28 @@ tools:context=".GameplayPage">
 		android:src="@drawable/wrong"
 		android:layout_alignTop="@+id/btn4"/>
 			    
+	    <ImageView
+	        android:id="@+id/star4"
+	        android:layout_width="500px"
+	        android:layout_height="200dp"
+	        android:layout_alignRight="@+id/btn4"
+	        android:layout_alignTop="@+id/score_text4"
+	        android:layout_marginRight="0dp"
+	        android:layout_marginTop="-60dp"
+	        android:src="@drawable/starsanimation"
+	        android:visibility="gone" /> 
+	    
 	    <TextView
         android:id="@+id/score_text4"
         android:layout_width="500px"
         android:layout_height="120px"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="20px"
+        android:textSize="50px"
         android:textColor="@android:color/white"
         android:layout_alignTop="@+id/btn4"/>
+
+
         
 	</RelativeLayout>
 	
