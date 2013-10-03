@@ -55,15 +55,15 @@ public class MoviePlayer implements OnBufferingUpdateListener, OnCompletionListe
 	        switch (msg.what){
 
 	            case SHOW_PROGRESS:
-//	            	long pos = progressBar.getMax() * mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration();
-//	            	Log.e("Media Player", String.valueOf(mediaPlayer.getDuration()));
-//            		progressBar.setProgress((int) pos);
-//	            	
-//	            	if (pos > progressBar.getMax()*0.95){
-//	            		progressBar.setProgress((int) progressBar.getMax());
-//	            		_gp.showLegal();
-//						mHandler.removeMessages(SHOW_PROGRESS);
-//	            	}
+	            	long pos = progressBar.getMax() * mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration();
+	            	Log.e("Media Player", String.valueOf(mediaPlayer.getDuration()));
+            		progressBar.setProgress((int) pos);
+	            	
+	            	if (pos > progressBar.getMax()*0.95){
+	            		progressBar.setProgress((int) progressBar.getMax());
+	            		_gp.showLegal();
+						mHandler.removeMessages(SHOW_PROGRESS);
+	            	}
 	                break;
 	        }
 	    }
