@@ -836,6 +836,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1628652678}
   - 212: {fileID: 1628652679}
+  - 114: {fileID: 1628652680}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -879,6 +880,21 @@ SpriteRenderer:
   m_SortingLayerID: 2511236001
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1628652680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1628652677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1c6a4b2451f1dc48b235ba94eee5d2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LEX: 0
+  LEY: 0
+  REX: 0
+  REY: 0
 --- !u!1 &1952752059
 GameObject:
   m_ObjectHideFlags: 0
