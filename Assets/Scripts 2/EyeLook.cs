@@ -15,16 +15,12 @@ using System.Collections;
 /// - Add a MouseLook script to the camera.
 ///   -> Set the mouse look to use LookY. (You want the camera to tilt up and down like a head. The character already turns.)
 [AddComponentMenu("Camera-Control/Mouse Look")]
-public class EyeLook1 : MonoBehaviour {
+public class EyeLook : MonoBehaviour {
 
 	public bool left = false; //Used to determine the control scheme, either WASD or LRUP Arrows
 
 	public float velocityX = 0F;
 	public float velocityY = 0F;
-	
-	float MN1 = 1.27F;//Magic Number: Roughly the amount of units from center of camera to the edge?
-	float xBorder = 0.02F;//Magic Number: Roughly the amount of X units to keep whole square within viewport.
-	float yBorder = 0.05F;//Magic Number: Roughly the amount of X units to keep whole square within viewport.
 	
 	public float posX;
 	public float posY;

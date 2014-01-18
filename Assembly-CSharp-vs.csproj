@@ -46,8 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts 2\EyeLook1.cs" />
+     <Compile Include="Assets\Scripts 2\EyeLook.cs" />
      <Compile Include="Assets\Scripts 2\EyeManager.cs" />
+     <Compile Include="Assets\Scripts 2\ModeSelector.cs" />
      <Compile Include="Assets\Scripts\BackgroundParallax.cs" />
      <Compile Include="Assets\Scripts\BackgroundPropSpawner.cs" />
      <Compile Include="Assets\Scripts\Bomb.cs" />

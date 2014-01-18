@@ -4,7 +4,7 @@
 TagManager:
   tags:
   - ground
-  - Crate
+  - Object
   - Enemy
   - Wall
   - Obstacle
@@ -21,7 +21,7 @@ TagManager:
   Builtin Layer 5: 
   Builtin Layer 6: 
   Builtin Layer 7: 
-  User Layer 8: Bombs
+  User Layer 8: Object
   User Layer 9: Player
   User Layer 10: Enemies
   User Layer 11: Pickups
