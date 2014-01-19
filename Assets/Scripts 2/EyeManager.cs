@@ -6,21 +6,26 @@ public class EyeManager : MonoBehaviour {
 	private Transform leftEye;
 	private Transform rightEye;
 	private Transform radiusMarker;
-	private Transform cursorPoint;
 	private Transform objectCheck;
 	private Transform lastObj;
 	private Transform curObj;
-
+	
 	public int mode;
 
 	private float R;
-	private float lrDistance;
+	public float lrDistance;
 	private Vector2 midPoint;
 	private bool canTarget;
 	private bool isOverObject;
 
+	#region Cursor Variables
+	private Transform cursorPoint;
 	private Vector2 newCursorPos;
 	public Vector2 cursorVelocity;
+	public float D1;
+	public float R2;
+	public Vector2 cursorTarget;
+	#endregion
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +38,7 @@ public class EyeManager : MonoBehaviour {
 
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
+		R2 = 0.5f;
 	}
 	
 	// Update is called once per frame
@@ -74,16 +80,43 @@ public class EyeManager : MonoBehaviour {
 	}
 
 	void updateCursor() {
-		if(canTarget)
+		Vector2 cursorPos;
+		cursorPos.x = cursorPoint.transform.position.x;
+		cursorPos.y = cursorPoint.transform.position.y;
+
+		if(canTarget) //if players are focused
 			cursorPoint.transform.position = midPoint;
-		else {
-			cursorVelocity.x += (Random.value-0.5f)/1000;
-			cursorVelocity.y += (Random.value-0.5f)/1000;
+		else { //if players are not focused, wander
+			//check if a new target needs to be acquired
+			if(cursorTarget == null) 
+				cursorTarget = getNewCursorTarget();
+			if(Vector2.Distance(cursorPos, cursorTarget) < R2 || Vector2.Distance(cursorPos, cursorTarget) > lrDistance)
+				cursorTarget = getNewCursorTarget();
+
+			//determine which direction to move cursor
+			if(cursorPos.x > cursorTarget.x)
+				cursorVelocity.x -= 0.001f;
+			else if(cursorPos.x < cursorTarget.x)
+				cursorVelocity.x += 0.001f;
+
+			if(cursorPos.y > cursorTarget.y)
+				cursorVelocity.y -= 0.001f;
+			else if(cursorPos.y < cursorTarget.y)
+				cursorVelocity.y += 0.001f;
 
 			newCursorPos.x = cursorPoint.transform.position.x + cursorVelocity.x;
 			newCursorPos.y = cursorPoint.transform.position.y + cursorVelocity.y;
 			cursorPoint.transform.position = newCursorPos;
 		}
+	}
+
+	Vector2 getNewCursorTarget() {
+		Vector2 target;
+		float radius = Random.value*(lrDistance/4);
+		float angle = Random.value*2*Mathf.PI;
+		target.x = radius * Mathf.Cos(angle) + midPoint.x;
+		target.y = radius * Mathf.Sin(angle) + midPoint.y;
+		return target;
 	}
 
 	bool checkIntersection () {
