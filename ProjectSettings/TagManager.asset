@@ -62,6 +62,10 @@ TagManager:
     userID: 4
     uniqueID: 2511236001
     locked: 0
+  - name: Items
+    userID: 6
+    uniqueID: 3101923623
+    locked: 0
   - name: Foreground
     userID: 3
     uniqueID: 1024582385
