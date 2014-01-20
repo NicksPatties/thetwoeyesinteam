@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 88685339}
   - 212: {fileID: 88685338}
+  - 114: {fileID: 88685340}
   m_Layer: 0
   m_Name: face
   m_TagString: Untagged
@@ -174,6 +175,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 153963344}
+--- !u!114 &88685340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 88685337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ca2a3454c32400caf891be77323091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outwardAppearance: 0
+  testingEnabled: 0
 --- !u!1 &92935521
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6c9c5b14a374e6e8298a1093f5ef3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testingEnabled: 0
 --- !u!82 &102888025
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1057,6 +1072,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 939617734}
   - 132: {fileID: 939617735}
+  - 114: {fileID: 939617736}
   m_Layer: 0
   m_Name: Action Prompt
   m_TagString: Untagged
@@ -1071,7 +1087,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 939617733}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .949999988, y: .170000002, z: 0}
+  m_LocalPosition: {x: .949999988, y: .109999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1062218198}
@@ -1083,9 +1099,7 @@ GUIText:
   m_GameObject: {fileID: 939617733}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: '
-
-    This is what the action is!'
+  m_Text: This is what the action is!
   m_Anchor: 2
   m_Alignment: 0
   m_PixelOffset: {x: 0, y: 0}
@@ -1100,6 +1114,18 @@ GUIText:
     rgba: 4294967295
   m_PixelCorrect: 1
   m_RichText: 1
+--- !u!114 &939617736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 939617733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f39da7911b94bb788abf9e7aa5b602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testingEnabled: 0
 --- !u!1 &959968337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,6 +1343,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1062218198}
+  - 114: {fileID: 1062218199}
   m_Layer: 0
   m_Name: UI Bottom Status Bar
   m_TagString: Untagged
@@ -1340,6 +1367,18 @@ Transform:
   - {fileID: 153963344}
   - {fileID: 102888022}
   m_Father: {fileID: 0}
+--- !u!114 &1062218199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1062218197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd1bfb05946c4126b78fca8b5352797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testingEnabled: 0
 --- !u!1 &1106900811
 GameObject:
   m_ObjectHideFlags: 0
@@ -2676,6 +2715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4fc12c397ac4ed4a1c38134d00c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testingEnabled: 0
 --- !u!1 &2029293843
 GameObject:
   m_ObjectHideFlags: 0

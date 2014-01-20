@@ -4,11 +4,12 @@ using System.Collections;
 public class ScoreScript : MonoBehaviour {
 	
 	int score;
+	public bool testingEnabled;
 
 
 	void Start () {
 		score = 0;
-
+		testingEnabled = false;
 		formatGUIText();
 	}
 
@@ -56,9 +57,13 @@ public class ScoreScript : MonoBehaviour {
 
 
 	void testScoreGUI(){
+		addPoints(100);
 	}
 
 
 	void Update () {
+		if (Input.GetKeyDown(KeyCode.Space) && testingEnabled)
+			testScoreGUI();
+
 	}
 }

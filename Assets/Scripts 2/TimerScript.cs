@@ -5,13 +5,13 @@ public class TimerScript : MonoBehaviour {
 
 	float time;
 	float freakOutThreshold;
-	bool  countingDown;
+	public bool testingEnabled;
  
 
 	void Start () {
 		time = 0.0f;
 		freakOutThreshold = 3.0f;
-		//countingDown = true;
+		testingEnabled = false;
 	}
 
 
@@ -88,7 +88,7 @@ public class TimerScript : MonoBehaviour {
 
 
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space))
+		if(Input.GetKeyDown(KeyCode.Space) && testingEnabled)
 			testTimer ();
 
 		// if time has not been expired
