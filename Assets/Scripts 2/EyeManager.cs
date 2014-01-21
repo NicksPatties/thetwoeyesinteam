@@ -22,8 +22,8 @@ public class EyeManager : MonoBehaviour {
 	private Transform cursorPoint;
 	private Vector2 newCursorPos;
 	public Vector2 cursorVelocity;
-	public float D1;
-	public float R2;
+	public float cursorToTargetDistance;
+	public float targetRadius;
 	public Vector2 cursorTarget;
 	#endregion
 
@@ -38,7 +38,7 @@ public class EyeManager : MonoBehaviour {
 
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
-		R2 = 0.5f;
+		targetRadius = 0.5f;
 	}
 	
 	// Update is called once per frame
@@ -90,7 +90,7 @@ public class EyeManager : MonoBehaviour {
 			//check if a new target needs to be acquired
 			if(cursorTarget == null) 
 				cursorTarget = getNewCursorTarget();
-			if(Vector2.Distance(cursorPos, cursorTarget) < R2 || Vector2.Distance(cursorPos, cursorTarget) > lrDistance)
+			if(Vector2.Distance(cursorPos, cursorTarget) < targetRadius || Vector2.Distance(cursorPos, cursorTarget) > lrDistance)
 				cursorTarget = getNewCursorTarget();
 
 			//determine which direction to move cursor
@@ -126,12 +126,15 @@ public class EyeManager : MonoBehaviour {
 				if (obj != null) {
 					lastObj = curObj;
 					curObj = obj.transform;
+
+					// Change this part to reflect when player finds an object.
 					curObj.GetComponent<SpriteRenderer>().color = Color.red;
 					//if target object changed without targeting empty space
 					if(lastObj != null && curObj != null && lastObj != curObj) {
 						lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 						lastObj = null;
 					}
+
 					return true;
 				}
 			}
@@ -141,11 +144,31 @@ public class EyeManager : MonoBehaviour {
 			if (obj.transform != null) {
 				lastObj = curObj;
 				curObj = obj.transform;
-				curObj.GetComponent<SpriteRenderer>().color = Color.red;
+				curObj.GetComponent<SpriteRenderer>().color = Color.green;
+				if(lastObj != null && curObj != null && lastObj != curObj) {
+					lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
+					lastObj = null;
+				}
 				return true;
 			}
 		}
-				
+		if (mode == 4) { // if in paint mode
+			if(canTarget) {
+				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+				if (obj != null) {
+					lastObj = curObj;
+					curObj = obj.transform;
+					curObj.GetComponent<SpriteRenderer>().color = Color.blue;
+					if(lastObj != null && curObj != null && lastObj != curObj) {
+						lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
+						lastObj = null;
+					}
+					return true;
+				}
+			}
+		}
+
+
 		return false;
 	}
 	
