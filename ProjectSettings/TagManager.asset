@@ -58,6 +58,10 @@ TagManager:
     userID: 2
     uniqueID: 1535931219
     locked: 0
+  - name: Items
+    userID: 6
+    uniqueID: 3101923623
+    locked: 0
   - name: Character
     userID: 4
     uniqueID: 2511236001
