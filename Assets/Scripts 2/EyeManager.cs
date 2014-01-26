@@ -126,6 +126,9 @@ public class EyeManager : MonoBehaviour {
 				if (obj != null) {
 					lastObj = curObj;
 					curObj = obj.transform;
+					GameItem gi = curObj.GetComponent<GameItem>();
+					string id = gi.id;
+					Debug.Log("name is: "+id);
 					curObj.GetComponent<SpriteRenderer>().color = Color.red;
 					//if target object changed without targeting empty space
 					if(lastObj != null && curObj != null && lastObj != curObj) {
