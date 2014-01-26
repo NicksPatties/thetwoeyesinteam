@@ -27,6 +27,9 @@ public class EyeManager : MonoBehaviour {
 	public Vector2 cursorTarget;
 	#endregion
 
+	//private GameObject taskManager;
+	private string[] curaction;
+
 	// Use this for initialization
 	void Start () {
 		leftEye = transform.Find("Left Eye");
@@ -39,10 +42,18 @@ public class EyeManager : MonoBehaviour {
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
 		R2 = 0.5f;
+
+		//curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
+		//Debug.Log("curaction[0] is: "+curaction);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (curaction == null){
+			curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
+			Debug.Log("curaction[0] is: "+curaction[0]);
+		}
+
 		R = Mathf.Abs(rightEye.transform.position.y - radiusMarker.transform.position.y);
 
 		// find distance between the 2 eyes
@@ -129,7 +140,10 @@ public class EyeManager : MonoBehaviour {
 					GameItem gi = curObj.GetComponent<GameItem>();
 					string id = gi.id;
 					Debug.Log("name is: "+id);
-					curObj.GetComponent<SpriteRenderer>().color = Color.red;
+					if (id != null && id == curaction[0]){
+						curObj.GetComponent<SpriteRenderer>().color = Color.red;
+					}
+					//curObj.GetComponent<SpriteRenderer>().color = Color.red;
 					//if target object changed without targeting empty space
 					if(lastObj != null && curObj != null && lastObj != curObj) {
 						lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
