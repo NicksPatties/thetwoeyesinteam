@@ -47,7 +47,7 @@ public class EyeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (curaction == null){
-			curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
+			curaction = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction;
 			Debug.Log("curaction[0] is: "+curaction[0]);
 		}
 
@@ -140,8 +140,8 @@ public class EyeManager : MonoBehaviour {
 					Debug.Log("name is: "+id);
 					if (id != null && id == curaction[0]){
 						curObj.GetComponent<SpriteRenderer>().color = Color.red;
-						GameObject.Find("TaskManager").GetComponent<TaskManager>().updateAction();
-						curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
+						GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
+						curaction = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction;
 						Debug.Log("updated curaction[0] is: "+curaction[0]);
 					}
 					//curObj.GetComponent<SpriteRenderer>().color = Color.red;
