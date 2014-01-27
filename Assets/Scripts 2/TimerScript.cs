@@ -4,14 +4,13 @@ using System.Collections;
 public class TimerScript : MonoBehaviour {
 
 	float time;
-	float freakOutThreshold;
-	public bool testingEnabled;
+	bool timerHasStopped;
  
 
 	void Start () {
 		time = 0.0f;
-		freakOutThreshold = 3.0f;
-		testingEnabled = false;
+		timerHasStopped = true;
+		formatTimer();
 	}
 
 
@@ -31,8 +30,6 @@ public class TimerScript : MonoBehaviour {
 
 
 	void formatTimer(){
-
-		if (time <= 0f) time = 0f;
 
 		// turn the float into a string that looks like xx:xx
 		string timerString = string.Format("{0:00.00}", time);
@@ -75,42 +72,24 @@ public class TimerScript : MonoBehaviour {
 	}
 
 
-	void flashTimer(){
-		gameObject.guiText.color = Color.red;
-	}
-
-
-	void testTimer(){
-
-		// test adding time
-		setTimer(5f);
-	}
-
-
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space) && testingEnabled)
-			testTimer ();
+
+		//switch timer on and off for testing purposes
+		if(Input.GetKeyDown(KeyCode.Space)){
+			if(timerHasStopped)
+				timerHasStopped = false;
+			else
+				timerHasStopped = true;
+		}
+
 
 		// if time has not been expired
-		if(!timeHasExpired()){
+		if(!timerHasStopped){
 
-			time = time - Time.deltaTime;
-
-			// if the player is running out of time
-			if(time < freakOutThreshold){
-
-				//flash the timer red
-				flashTimer ();
-			}
+			time = time + Time.deltaTime;
 
 			formatTimer();
 
-		}else{
-
-			//TODO: play a "you lose sound only once"
-			/*if(!audio.isPlaying){
-				audio.Play();
-			}*/
 		}
 	}
 }
