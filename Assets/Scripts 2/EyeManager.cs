@@ -29,6 +29,7 @@ public class EyeManager : MonoBehaviour {
 
 	//private GameObject taskManager;
 	private string[] curaction;
+	private bool taskSuccess = false;
 
 	// Use this for initialization
 	void Start () {
@@ -130,6 +131,13 @@ public class EyeManager : MonoBehaviour {
 		return target;
 	}
 
+	void updateCurAction() {
+		GameObject.Find("TaskManager").GetComponent<TaskManager>().actionIndex = GameObject.Find("TaskManager").GetComponent<TaskManager>().actionIndex + 1;
+		curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
+		taskSuccess = false;
+		Debug.Log("updated curaction[0] is: "+curaction[0]);
+	}
+
 	bool checkIntersection () {
 		if(mode == 1) { //if in find mode
 			if(canTarget) {
@@ -142,6 +150,9 @@ public class EyeManager : MonoBehaviour {
 					Debug.Log("name is: "+id);
 					if (id != null && id == curaction[0]){
 						curObj.GetComponent<SpriteRenderer>().color = Color.red;
+						GameObject.Find("TaskManager").GetComponent<TaskManager>().updateAction();
+						curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
+						Debug.Log("updated curaction[0] is: "+curaction[0]);
 					}
 					//curObj.GetComponent<SpriteRenderer>().color = Color.red;
 					//if target object changed without targeting empty space

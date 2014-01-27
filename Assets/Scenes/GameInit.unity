@@ -1274,6 +1274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curAction: []
+  actionIndex: 0
 --- !u!4 &1993747305
 Transform:
   m_ObjectHideFlags: 0
