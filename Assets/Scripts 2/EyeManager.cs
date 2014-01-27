@@ -27,7 +27,7 @@ public class EyeManager : MonoBehaviour {
 	public Vector2 cursorTarget;
 	#endregion
 
-	//private GameObject taskManager;
+	//this varable refers to the curAction in taskmanager
 	private string[] curaction;
 
 	// Use this for initialization
@@ -42,9 +42,6 @@ public class EyeManager : MonoBehaviour {
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
 		R2 = 0.5f;
-
-		//curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
-		//Debug.Log("curaction[0] is: "+curaction);
 	}
 	
 	// Update is called once per frame
@@ -137,11 +134,15 @@ public class EyeManager : MonoBehaviour {
 				if (obj != null) {
 					lastObj = curObj;
 					curObj = obj.transform;
+					//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 					GameItem gi = curObj.GetComponent<GameItem>();
 					string id = gi.id;
 					Debug.Log("name is: "+id);
 					if (id != null && id == curaction[0]){
 						curObj.GetComponent<SpriteRenderer>().color = Color.red;
+						GameObject.Find("TaskManager").GetComponent<TaskManager>().updateAction();
+						curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
+						Debug.Log("updated curaction[0] is: "+curaction[0]);
 					}
 					//curObj.GetComponent<SpriteRenderer>().color = Color.red;
 					//if target object changed without targeting empty space
