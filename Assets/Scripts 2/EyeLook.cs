@@ -67,13 +67,13 @@ public class EyeLook : MonoBehaviour {
 				velocityY += 0.05f;
 		}
 		else {
-			if(Input.GetKey(KeyCode.LeftArrow))
+			if(Input.GetKey(KeyCode.K))
 				velocityX -= 0.05f;
-			if(Input.GetKey(KeyCode.RightArrow))
+			if(Input.GetKey(KeyCode.Semicolon))
 				velocityX += 0.05f;
-			if(Input.GetKey(KeyCode.DownArrow))
+			if(Input.GetKey(KeyCode.L))
 				velocityY -= 0.05f;
-			if(Input.GetKey(KeyCode.UpArrow))
+			if(Input.GetKey(KeyCode.O))
 				velocityY += 0.05f;
 		}
 		
