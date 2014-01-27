@@ -321,9 +321,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 71352426}
   - 212: {fileID: 71352427}
-  m_Layer: 0
+  - 114: {fileID: 71352428}
+  - 61: {fileID: 71352429}
+  m_Layer: 8
   m_Name: Men's Bathroom Sign
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -362,6 +364,30 @@ SpriteRenderer:
   m_SortingLayerID: 3101923623
   m_Sprite: {fileID: 21300000, guid: 37b89df6474834699af026f6cd9aaf51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &71352428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 71352425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5591abfd0a04fa59a6cf7a39804409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: manrestroom
+  location: 
+--- !u!61 &71352429
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 71352425}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Size: {x: 4.13000011, y: 3.48000002}
+  m_Center: {x: 0, y: 0}
 --- !u!1 &78588822
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +470,46 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: e3e8b792495224eb6b1e22d2c3f6b28b, type: 3}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
+--- !u!1 &84512180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 84512182}
+  - 114: {fileID: 84512181}
+  m_Layer: 0
+  m_Name: TaskManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &84512181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 84512180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4492c73bd16894e35ab1e15169c0b3bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curAction: []
+  actionIndex: 0
+--- !u!4 &84512182
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 84512180}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &116701565
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,7 +682,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 259899411}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.9423218, y: -3.71991086, z: 0}
+  m_LocalPosition: {x: 19.2080669, y: -2.68110561, z: 0}
   m_LocalScale: {x: .103034593, y: .103034608, z: 1}
   m_Children:
   - {fileID: 1537785343}
@@ -1892,7 +1958,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 812390645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.7053299, y: -3.73712516, z: 0}
+  m_LocalPosition: {x: 20.7053299, y: -2.74252224, z: 0}
   m_LocalScale: {x: .103035003, y: .103035003, z: 1}
   m_Children:
   - {fileID: 6761336}
