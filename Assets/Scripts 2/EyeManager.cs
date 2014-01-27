@@ -27,9 +27,8 @@ public class EyeManager : MonoBehaviour {
 	public Vector2 cursorTarget;
 	#endregion
 
-	//private GameObject taskManager;
+	//this varable refers to the curAction in taskmanager
 	private string[] curaction;
-	private bool taskSuccess = false;
 
 	// Use this for initialization
 	void Start () {
@@ -43,9 +42,6 @@ public class EyeManager : MonoBehaviour {
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
 		R2 = 0.5f;
-
-		//curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
-		//Debug.Log("curaction[0] is: "+curaction);
 	}
 	
 	// Update is called once per frame
@@ -131,13 +127,6 @@ public class EyeManager : MonoBehaviour {
 		return target;
 	}
 
-	void updateCurAction() {
-		GameObject.Find("TaskManager").GetComponent<TaskManager>().actionIndex = GameObject.Find("TaskManager").GetComponent<TaskManager>().actionIndex + 1;
-		curaction = GameObject.Find("TaskManager").GetComponent<TaskManager>().curAction;
-		taskSuccess = false;
-		Debug.Log("updated curaction[0] is: "+curaction[0]);
-	}
-
 	bool checkIntersection () {
 		if(mode == 1) { //if in find mode
 			if(canTarget) {
@@ -145,6 +134,7 @@ public class EyeManager : MonoBehaviour {
 				if (obj != null) {
 					lastObj = curObj;
 					curObj = obj.transform;
+					//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 					GameItem gi = curObj.GetComponent<GameItem>();
 					string id = gi.id;
 					Debug.Log("name is: "+id);
