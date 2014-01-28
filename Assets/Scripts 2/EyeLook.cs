@@ -22,9 +22,9 @@ public class EyeLook : MonoBehaviour {
 	public float velocityX = 0F;
 	public float velocityY = 0F;
 	
-	public float posX;
-	public float posY;
-	public float temp;
+	private float posX;
+	private float posY;
+	private float temp;
 
 	private Transform topWallCheck;
 	private bool topWall = false;
@@ -65,6 +65,7 @@ public class EyeLook : MonoBehaviour {
 				velocityY -= 0.05f;
 			if(Input.GetKey(KeyCode.W))
 				velocityY += 0.05f;
+
 		}
 		else {
 			if(Input.GetKey(KeyCode.K))

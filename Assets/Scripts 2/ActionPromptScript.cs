@@ -42,7 +42,7 @@ public class ActionPromptScript : MonoBehaviour {
 
 
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space) && testingEnabled)
+		if (Input.GetKey(KeyCode.Space) && testingEnabled)
 			testActionPrompt();
 	}
 }
