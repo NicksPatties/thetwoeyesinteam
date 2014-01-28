@@ -803,6 +803,8 @@ MonoBehaviour:
   cursorToTargetDistance: 0
   targetRadius: 0
   cursorTarget: {x: 0, y: 0}
+  focusTime: 0
+  waitTime: 0
 --- !u!212 &287627400
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1819,7 +1821,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &766233874
 Transform:
   m_ObjectHideFlags: 0
@@ -3379,9 +3381,9 @@ GameObject:
   - 4: {fileID: 1877637103}
   - 212: {fileID: 1877637105}
   - 61: {fileID: 1877637104}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pants Fly
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
