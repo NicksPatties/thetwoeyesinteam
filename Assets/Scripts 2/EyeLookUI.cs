@@ -37,8 +37,8 @@ public class EyeLookUI : MonoBehaviour {
 		
 		RightEyeMaxX = 0.86f;
 		RightEyeMinX = 1.08f;
-		RightEyeMaxY = -4.48f;
-		RightEyeMinY = -4.67f;
+		RightEyeMaxY = -4.51f;
+		RightEyeMinY = -4.61f;
 
 		LeftEyeMaxX = -0.11f;
 		LeftEyeMinX = 0.14f;

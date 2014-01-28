@@ -9,7 +9,7 @@ public class TimerScript : MonoBehaviour {
 
 	void Start () {
 		time = 0.0f;
-		timerHasStopped = true;
+		timerHasStopped = false;
 		formatTimer();
 	}
 
