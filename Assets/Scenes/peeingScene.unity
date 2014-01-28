@@ -682,7 +682,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 259899411}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.1791649, y: -3.44527864, z: 0}
+  m_LocalPosition: {x: 19.2513847, y: -2.22965503, z: 0}
   m_LocalScale: {x: .103034593, y: .103034608, z: 1}
   m_Children:
   - {fileID: 1537785343}
@@ -799,8 +799,8 @@ MonoBehaviour:
   mode: 1
   lrDistance: 0
   cursorVelocity: {x: 0, y: 0}
-  D1: 0
-  R2: 0
+  cursorToTargetDistance: 0
+  targetRadius: 0
   cursorTarget: {x: 0, y: 0}
   focusTime: 0
   waitTime: 0
@@ -1761,7 +1761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &766233874
 Transform:
   m_ObjectHideFlags: 0
@@ -1901,7 +1901,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 812390645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.7049675, y: -3.52059078, z: 0}
+  m_LocalPosition: {x: 20.3017311, y: -2.23865986, z: 0}
   m_LocalScale: {x: .103035003, y: .103035003, z: 1}
   m_Children:
   - {fileID: 6761336}
@@ -3275,6 +3275,7 @@ GameObject:
   - 4: {fileID: 1877637103}
   - 212: {fileID: 1877637105}
   - 61: {fileID: 1877637104}
+  - 114: {fileID: 1877637106}
   m_Layer: 0
   m_Name: Pants Fly
   m_TagString: Untagged
@@ -3327,6 +3328,19 @@ SpriteRenderer:
   m_SortingLayerID: 3101923623
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &1877637106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1877637102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5591abfd0a04fa59a6cf7a39804409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: pantsfly
+  location: 
 --- !u!1 &1881395546
 GameObject:
   m_ObjectHideFlags: 0

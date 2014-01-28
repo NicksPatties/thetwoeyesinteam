@@ -11,6 +11,9 @@ public class TaskManagerChp3 : MonoBehaviour {
 	//init action index as 0, later we will increase it in order to trigger new action requirment
 	public int actionIndex = 0;
 
+	private GameObject action01;
+	private GameObject action02;
+
 	GameObject actionPrompt;
 	
 	void Start () {
@@ -23,6 +26,10 @@ public class TaskManagerChp3 : MonoBehaviour {
 
 		actionPrompt = GameObject.Find("Action Prompt");
 		actionPrompt.guiText.text = formatActionPromptText();
+
+		action01 = GameObject.Find("Action01");
+		action02 = GameObject.Find("Action02");
+		action02.active = false;
 	}
 
 	string formatActionPromptText(){
@@ -36,5 +43,14 @@ public class TaskManagerChp3 : MonoBehaviour {
 		actionPrompt.guiText.text = formatActionPromptText();
 
 		//TODO: I should probably change the scene in here...
+		//the code the delay a code execution
+		Invoke("changeEnvironment", 1); 
+	}
+
+	private void changeEnvironment(){
+		//GameObject action01 = GameObject.Find("Action01");
+		action01.active = false;
+		//GameObject action02 = GameObject.Find("Action02");
+		action02.active = true;
 	}
 }

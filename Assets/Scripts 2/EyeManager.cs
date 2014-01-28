@@ -141,9 +141,13 @@ public class EyeManager : MonoBehaviour {
 					string curAction = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
 					//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 					//TODO: figure out why some game objects that have the "GameItem" script attatched still return null here...
-					GameItem gi = curObj.GetComponent<GameItem>();
-					string id = gi.id;
-					Debug.Log("name is: "+id);
+					string id = null;
+					//For TODO: I temporaryly hacked this bug, need further research on it.
+					if (curObj){
+						GameItem gi = curObj.GetComponent<GameItem>();
+						id = gi.id;
+					}
+					//Debug.Log("name is: "+id);
 					if (id != null && id == curAction){
 						//wait for focusTime seconds before determining that players have made their selection
 						focusTime += Time.deltaTime;
