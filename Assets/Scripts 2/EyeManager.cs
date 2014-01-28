@@ -25,6 +25,8 @@ public class EyeManager : MonoBehaviour {
 	public float D1;
 	public float R2;
 	public Vector2 cursorTarget;
+	public float focusTime; //number of seconds the eyes have been on an object together
+	public float waitTime;  //the time in seconds the eyes must be on an object before moving to the next action
 	#endregion
 
 	//this varable refers to the curAction in taskmanager
@@ -42,6 +44,8 @@ public class EyeManager : MonoBehaviour {
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
 		R2 = 0.5f;
+		focusTime = 0f;
+		waitTime  = 2f;
 	}
 	
 	// Update is called once per frame
@@ -70,14 +74,21 @@ public class EyeManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.Alpha1))
 			mode = 1;
 		if(Input.GetKey(KeyCode.Alpha2))
-			mode = 2;
-		
+			mode = 2;	
 		if(Input.GetKey(KeyCode.Alpha3))
 			mode = 3;
 		if(Input.GetKey(KeyCode.Alpha4))
 			mode = 4;
 
 		isOverObject = checkIntersection();
+
+		/*TODO:check if an eye is hovering over an object
+		RaycastHit2D obj = Physics2D.Linecast(rightEye.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+		if(obj != null){
+			print ("The right eye is over an object!");
+			obj.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
+		}
+		*/
 
 		// if cursor leaves targetable object, undo highlighting, remove references
 		if(isOverObject == false && lastObj != null) {
@@ -135,14 +146,24 @@ public class EyeManager : MonoBehaviour {
 					lastObj = curObj;
 					curObj = obj.transform;
 					//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
+					//TODO: figure out why some game objects that have the "GameItem" script attatched still return null here...
 					GameItem gi = curObj.GetComponent<GameItem>();
 					string id = gi.id;
 					Debug.Log("name is: "+id);
 					if (id != null && id == curaction[0]){
-						curObj.GetComponent<SpriteRenderer>().color = Color.red;
-						GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
-						curaction = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction;
-						Debug.Log("updated curaction[0] is: "+curaction[0]);
+						//wait for focusTime seconds before determining that players have made their selection
+						focusTime += Time.deltaTime;
+						if(focusTime > waitTime){
+
+							//TODO: place a green check mark for great success!!
+							curObj.GetComponent<SpriteRenderer>().color = Color.red;
+							GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
+							curaction = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction;
+							Debug.Log("updated curaction[0] is: "+curaction[0]);
+
+							//reset focus time
+							focusTime = 0f;
+						}
 					}
 					//curObj.GetComponent<SpriteRenderer>().color = Color.red;
 					//if target object changed without targeting empty space
