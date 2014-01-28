@@ -322,7 +322,7 @@ GameObject:
   - 4: {fileID: 71352426}
   - 212: {fileID: 71352427}
   - 114: {fileID: 71352428}
-  - 61: {fileID: 71352429}
+  - 60: {fileID: 71352430}
   m_Layer: 8
   m_Name: Men's Bathroom Sign
   m_TagString: Object
@@ -337,8 +337,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 71352425}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.54121614, y: 1.2954762, z: 10}
-  m_LocalScale: {x: .394890785, y: .394891232, z: 1}
+  m_LocalPosition: {x: 1.52950203, y: 1.34734881, z: 10}
+  m_LocalScale: {x: .372721016, y: .373520344, z: 1}
   m_Children: []
   m_Father: {fileID: 337650997}
 --- !u!212 &71352427
@@ -377,8 +377,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: manrestroom
   location: 
---- !u!61 &71352429
-BoxCollider2D:
+--- !u!60 &71352430
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -386,8 +386,11 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 4.13000011, y: 3.48000002}
-  m_Center: {x: 0, y: 0}
+  m_Poly:
+    m_Paths:
+    - - {x: 2.06500006, y: -1.73000002}
+      - {x: -.0449999981, y: 1.74000001}
+      - {x: -2.06500006, y: -1.74000001}
 --- !u!1 &78588822
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +511,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2054633989}
   m_Father: {fileID: 0}
 --- !u!1 &116701565
 GameObject:
@@ -682,7 +686,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 259899411}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.2080669, y: -2.68110561, z: 0}
+  m_LocalPosition: {x: 15.6070986, y: -3.0122292, z: 0}
   m_LocalScale: {x: .103034593, y: .103034608, z: 1}
   m_Children:
   - {fileID: 1537785343}
@@ -715,9 +719,6 @@ MonoBehaviour:
   left: 1
   velocityX: 0
   velocityY: 0
-  posX: 0
-  posY: 0
-  temp: 0
 --- !u!212 &259899415
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -799,8 +800,8 @@ MonoBehaviour:
   mode: 1
   lrDistance: 0
   cursorVelocity: {x: 0, y: 0}
-  D1: 0
-  R2: 0
+  cursorToTargetDistance: 0
+  targetRadius: 0
   cursorTarget: {x: 0, y: 0}
 --- !u!212 &287627400
 SpriteRenderer:
@@ -1436,7 +1437,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2054633989}
+  - {fileID: 774377746}
   - {fileID: 1443004455}
   - {fileID: 623752269}
   - {fileID: 683285985}
@@ -1723,7 +1724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &699670325
 Transform:
   m_ObjectHideFlags: 0
@@ -1832,6 +1833,69 @@ Transform:
   - {fileID: 51105711}
   - {fileID: 1877637103}
   m_Father: {fileID: 0}
+--- !u!1 &774377745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 774377746}
+  - 132: {fileID: 774377748}
+  - 114: {fileID: 774377747}
+  m_Layer: 0
+  m_Name: Action Prompt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &774377746
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 774377745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .949999988, y: .109999999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 498828541}
+--- !u!114 &774377747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 774377745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f39da7911b94bb788abf9e7aa5b602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testingEnabled: 1
+--- !u!132 &774377748
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 774377745}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: This is what the action is!
+  m_Anchor: 2
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 18
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
 --- !u!1 &795393339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1925,9 +1989,6 @@ MonoBehaviour:
   left: 0
   velocityX: 0
   velocityY: 0
-  posX: 0
-  posY: 0
-  temp: 0
 --- !u!212 &812390648
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1958,7 +2019,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 812390645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.7053299, y: -2.74252224, z: 0}
+  m_LocalPosition: {x: 15.5397987, y: -2.19616556, z: 0}
   m_LocalScale: {x: .103035003, y: .103035003, z: 1}
   m_Children:
   - {fileID: 6761336}
@@ -2103,9 +2164,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 960897032}
   - 212: {fileID: 960897031}
-  m_Layer: 0
+  - 58: {fileID: 960897033}
+  m_Layer: 8
   m_Name: Women's Bathroom Sign
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2144,6 +2206,17 @@ Transform:
   m_LocalScale: {x: .381985307, y: .381984502, z: 1}
   m_Children: []
   m_Father: {fileID: 337650997}
+--- !u!58 &960897033
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 960897030}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Radius: 1.79499996
+  m_Center: {x: 0, y: 0}
 --- !u!1 &981261322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3673,7 +3746,7 @@ GameObject:
   - 132: {fileID: 2054633991}
   - 114: {fileID: 2054633990}
   m_Layer: 0
-  m_Name: Action Prompt
+  m_Name: Action Complete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3686,10 +3759,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2054633988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .949999988, y: .109999999, z: 0}
+  m_LocalPosition: {x: .949999988, y: 4.09820461, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 498828541}
+  m_Father: {fileID: 84512182}
 --- !u!114 &2054633990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3710,7 +3783,7 @@ GUIText:
   m_GameObject: {fileID: 2054633988}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: This is what the action is!
+  m_Text: Action Complete!
   m_Anchor: 2
   m_Alignment: 0
   m_PixelOffset: {x: 0, y: 0}
