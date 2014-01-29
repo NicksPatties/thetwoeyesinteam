@@ -75,7 +75,7 @@ public class EyeManager : MonoBehaviour {
 
 		isOverObject = checkIntersection();
 
-		/*TODO:check if an eye is hovering over an object
+		/*TODO:check if an eye is hovering over an object, use curObj to change the size of the object
 		RaycastHit2D obj = Physics2D.Linecast(rightEye.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 		if(obj != null){
 			print ("The right eye is over an object!");
@@ -96,9 +96,11 @@ public class EyeManager : MonoBehaviour {
 		cursorPos.x = cursorPoint.transform.position.x;
 		cursorPos.y = cursorPoint.transform.position.y;
 
-		if(canTarget) //if players are focused
+		if(canTarget){ //if players are focused
 			cursorPoint.transform.position = midPoint;
-		else { //if players are not focused, wander
+			cursorVelocity.x = 0f;
+			cursorVelocity.y = 0f;
+		}else{ //if players are not focused, wander
 			//check if a new target needs to be acquired
 			if(cursorTarget == null) 
 				cursorTarget = getNewCursorTarget();
@@ -146,22 +148,25 @@ public class EyeManager : MonoBehaviour {
 					if (curObj){
 						GameItem gi = curObj.GetComponent<GameItem>();
 						id = gi.id;
+						print ("Current object id is: " + id);
 					}
 					//Debug.Log("name is: "+id);
 					if (id != null && id == curAction){
 						//wait for focusTime seconds before determining that players have made their selection
+						//TODO: FIX THESE CONDITIONS
 						focusTime += Time.deltaTime;
 						if(focusTime > waitTime){
-
 							//TODO: place a green check mark for great success!!
 							curObj.GetComponent<SpriteRenderer>().color = Color.red;
 							GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
 							curAction = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
 							Debug.Log("updated curaction[0] is: "+curAction);
-
-							//reset focus time
 							focusTime = 0f;
 						}
+					}else{
+						//you haven't found anything, so reset the time
+						print ("I haven't found anything...");
+						//focusTime = 0f;
 					}
 					//if target object changed without targeting empty space
 					if(lastObj != null && curObj != null && lastObj != curObj) {
