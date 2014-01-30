@@ -15,6 +15,7 @@ public class TaskManagerChp3 : MonoBehaviour {
 	private GameObject action02;
 
 	GameObject actionPrompt;
+	TimerScript actionTimer;
 	
 	void Start () {
 		//init the actions in the level
@@ -31,6 +32,9 @@ public class TaskManagerChp3 : MonoBehaviour {
 		action01 = GameObject.Find("Action01");
 		action02 = GameObject.Find("Action02");
 		action02.active = false;
+
+		actionTimer = GameObject.Find("Timer").GetComponent<TimerScript>();
+
 	}
 
 	string formatActionPromptText(){
@@ -40,12 +44,17 @@ public class TaskManagerChp3 : MonoBehaviour {
 	
 	public void updateAction() {
 		actionIndex++;
-		curAction = actionList[actionIndex];
-		actionPrompt.guiText.text = formatActionPromptText();
+		if(actionIndex >= 4){
+			//stop the timer
+			print ("I should now stop the timer");
+			actionTimer.timerHasStopped = true;
 
-		//TODO: I should probably change the scene in here...
-		//the code the delay a code execution
-		Invoke("changeEnvironment", 1); 
+		}else{
+			curAction = actionList[actionIndex];
+			actionPrompt.guiText.text = formatActionPromptText();
+			//the code the delay a code execution
+			Invoke("changeEnvironment", 1); 
+		}
 	}
 
 	private void changeEnvironment(){

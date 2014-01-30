@@ -4,7 +4,7 @@ using System.Collections;
 public class TimerScript : MonoBehaviour {
 
 	float time;
-	bool timerHasStopped;
+	public bool timerHasStopped;
  
 
 	void Start () {
