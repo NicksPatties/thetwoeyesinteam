@@ -10,7 +10,7 @@ public class EyeManager : MonoBehaviour {
 	private Transform lastObj;
 	private Transform curObj;
 	
-	public int mode;
+	public string mode;//I feel like string is better here, since 1.string is not less comvenient than int for this case 2. u don't need comments for different modes to explain what action it corresponds
 
 	private float R;
 	public float lrDistance;
@@ -36,7 +36,7 @@ public class EyeManager : MonoBehaviour {
 		radiusMarker = rightEye.transform.Find("topWallCheck");
 		cursorPoint = transform.Find("Cursor");
 		objectCheck = cursorPoint.transform.Find("objectCheck");
-		mode = 1;
+		mode = "find";
 
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
@@ -65,13 +65,13 @@ public class EyeManager : MonoBehaviour {
 			canTarget = false;
 			
 		if(Input.GetKey(KeyCode.Alpha1))
-			mode = 1;
+			mode = "find";
 		if(Input.GetKey(KeyCode.Alpha2))
-			mode = 2;	
+			mode = "focus";	
 		if(Input.GetKey(KeyCode.Alpha3))
-			mode = 3;
+			mode = "trace";
 		if(Input.GetKey(KeyCode.Alpha4))
-			mode = 4;
+			mode = "paint";
 
 		isOverObject = checkIntersection();
 
@@ -134,13 +134,13 @@ public class EyeManager : MonoBehaviour {
 	}
 
 	bool checkIntersection () {
-		if(mode == 1) { //if in find mode
+		if(mode == "find") {
 			if(canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 				if (obj != null) {
 					lastObj = curObj;
 					curObj = obj.transform;
-					string curAction = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+					string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
 					//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 					//TODO: figure out why some game objects that have the "GameItem" script attatched still return null here...
 					string id = null;
@@ -151,7 +151,7 @@ public class EyeManager : MonoBehaviour {
 						print ("Current object id is: " + id);
 					}
 					//Debug.Log("name is: "+id);
-					if (id != null && id == curAction){
+					if (id != null && id == targetObjec){
 						//wait for focusTime seconds before determining that players have made their selection
 						//TODO: FIX THESE CONDITIONS
 						focusTime += Time.deltaTime;
@@ -159,8 +159,9 @@ public class EyeManager : MonoBehaviour {
 							//TODO: place a green check mark for great success!!
 							curObj.GetComponent<SpriteRenderer>().color = Color.red;
 							GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
-							curAction = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
-							Debug.Log("updated curaction[0] is: "+curAction);
+							targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+							mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
+							Debug.Log("updated curaction[0] is: "+targetObjec);
 							focusTime = 0f;
 						}
 					}else{
@@ -178,12 +179,49 @@ public class EyeManager : MonoBehaviour {
 				}
 			}
 		}
-		if (mode == 2) { //if in focus mode
+//		if (mode == "focus") {
+//			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+//			if (obj.transform != null) {
+//				lastObj = curObj;
+//				curObj = obj.transform;
+//				curObj.GetComponent<SpriteRenderer>().color = Color.green;
+//				if(lastObj != null && curObj != null && lastObj != curObj) {
+//					lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
+//					lastObj = null;
+//				}
+//				return true;
+//			}
+//		}
+		if (mode == "focus") {
 			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 			if (obj.transform != null) {
 				lastObj = curObj;
 				curObj = obj.transform;
-				curObj.GetComponent<SpriteRenderer>().color = Color.green;
+				string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+				string id = null;
+				if (curObj){
+					GameItem gi = curObj.GetComponent<GameItem>();
+					id = gi.id;
+					print ("Current object id is: " + id);
+				}
+				if (id != null && id == targetObjec){
+					//wait for focusTime seconds before determining that players have made their selection
+					//TODO: FIX THESE CONDITIONS
+					focusTime += Time.deltaTime;
+					if(focusTime > waitTime){
+						//TODO: place a green check mark for great success!!
+						curObj.GetComponent<SpriteRenderer>().color = Color.green;
+						GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
+						targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+						mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
+						Debug.Log("updated curaction[0] is: "+targetObjec);
+						focusTime = 0f;
+					}
+				}else{
+					//you haven't found anything, so reset the time
+					print ("I haven't found anything...");
+					//focusTime = 0f;
+				}
 				if(lastObj != null && curObj != null && lastObj != curObj) {
 					lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 					lastObj = null;
@@ -191,7 +229,7 @@ public class EyeManager : MonoBehaviour {
 				return true;
 			}
 		}
-		if (mode == 4) { // if in paint mode
+		if (mode == "paint") {
 			if(canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 				if (obj != null) {
