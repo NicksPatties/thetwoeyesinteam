@@ -514,6 +514,85 @@ Transform:
   m_Children:
   - {fileID: 2054633989}
   m_Father: {fileID: 0}
+--- !u!1 &109783332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 109783333}
+  - 212: {fileID: 109783336}
+  - 114: {fileID: 109783335}
+  - 60: {fileID: 109783334}
+  m_Layer: 8
+  m_Name: toilet
+  m_TagString: Object
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &109783333
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 109783332}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.72190285, y: 1.50515401, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 766233874}
+--- !u!60 &109783334
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 109783332}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Poly:
+    m_Paths:
+    - - {x: 2.06500006, y: -1.73000002}
+      - {x: -.0449999981, y: 1.74000001}
+      - {x: -2.06500006, y: -1.74000001}
+--- !u!114 &109783335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 109783332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5591abfd0a04fa59a6cf7a39804409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: toilet
+  location: 
+--- !u!212 &109783336
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 109783332}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortingLayerID: 3101923623
+  m_Sprite: {fileID: 21300002, guid: e5e275498558a2542bb0465fa5e30d9b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &116701565
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,7 +765,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 259899411}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.6070986, y: -3.0122292, z: 0}
+  m_LocalPosition: {x: 19.1876659, y: -3.18904734, z: 0}
   m_LocalScale: {x: .103034593, y: .103034608, z: 1}
   m_Children:
   - {fileID: 1537785343}
@@ -1833,6 +1912,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 51105711}
+  - {fileID: 109783333}
   - {fileID: 1877637103}
   m_Father: {fileID: 0}
 --- !u!1 &774377745
@@ -2021,7 +2101,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 812390645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.5397987, y: -2.19616556, z: 0}
+  m_LocalPosition: {x: 19.2529831, y: -2.12985945, z: 0}
   m_LocalScale: {x: .103035003, y: .103035003, z: 1}
   m_Children:
   - {fileID: 6761336}
@@ -3395,6 +3475,7 @@ GameObject:
   - 4: {fileID: 1877637103}
   - 212: {fileID: 1877637105}
   - 61: {fileID: 1877637104}
+  - 114: {fileID: 1877637106}
   m_Layer: 8
   m_Name: Pants Fly
   m_TagString: Object
@@ -3409,7 +3490,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1877637102}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.86008573, y: -4.96889973, z: 0}
+  m_LocalPosition: {x: -1.77166867, y: -4.10692644, z: 0}
   m_LocalScale: {x: .535414934, y: .535416603, z: 1}
   m_Children: []
   m_Father: {fileID: 766233874}
@@ -3445,8 +3526,21 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_SortingLayerID: 3101923623
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Sprite: {fileID: 21300000, guid: 308227f9ef2e34868b329e3466f53389, type: 3}
+  m_Color: {r: .219607845, g: .219607845, b: .219607845, a: 0}
+--- !u!114 &1877637106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1877637102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5591abfd0a04fa59a6cf7a39804409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: pantsfly
+  location: 
 --- !u!1 &1881395546
 GameObject:
   m_ObjectHideFlags: 0
