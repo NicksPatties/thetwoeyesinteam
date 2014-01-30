@@ -22,7 +22,7 @@ public class TaskManagerChp3 : MonoBehaviour {
 		actionList[1] = new string[2]{"pantsfly","find"};
 		actionList[2] = new string[2]{"toilet","focus"};
 		actionList[3] = new string[2]{"pantsfly", "find"};
-		actionList[4] = new string[2]{"done", "none"};
+		actionList[4] = new string[2]{"done", "you're"};
 		curAction = actionList[actionIndex];
 
 		actionPrompt = GameObject.Find("Action Prompt");
