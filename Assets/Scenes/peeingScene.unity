@@ -591,7 +591,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_SortingLayerID: 3101923623
-  m_Sprite: {fileID: 21300002, guid: e5e275498558a2542bb0465fa5e30d9b, type: 3}
+  m_Sprite: {fileID: 21300002, guid: 8ef95d64ca207f449917f64972ea5669, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &116701565
 GameObject:
