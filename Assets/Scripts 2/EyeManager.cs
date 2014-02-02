@@ -42,7 +42,7 @@ public class EyeManager : MonoBehaviour {
 		cursorVelocity.y = 0;
 		R = 0.5f;
 		focusTime = 0f;
-		waitTime  = 2f;
+		waitTime  = 2f; //TODO: rename this? to waitOnFocus
 		targetRadius = 0.5f;
 	}
 	
