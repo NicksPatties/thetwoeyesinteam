@@ -5,8 +5,8 @@ public class EyeLookUI : MonoBehaviour {
 
 	GameObject leftEye;
 	GameObject rightEye;
-	Vector2 eyePos;
-	bool    isLeftEye;
+	Vector2    eyePos;
+	bool       isLeftEye;
 
 	//boundaries of UI eye placement
 	//"right" and "left" is relative to the player's screen

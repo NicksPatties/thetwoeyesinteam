@@ -6,8 +6,7 @@ public class ResultsScreenScript : MonoBehaviour {
 	//variables that will be acquired from the gameplay
 	int score;
 	float remainingTime;
-
-
+	
 	//gameobjects of different elements of the results screen
 	GameObject successOrFailMessage;
 	GameObject stevensPortrait;
