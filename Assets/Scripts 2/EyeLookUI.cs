@@ -21,7 +21,19 @@ public class EyeLookUI : MonoBehaviour {
 	public float LeftEyeMinY;
 
 	void Start () {
+
+		// set these to default values first
 		eyePos = Vector2.zero;
+
+		RightEyeMaxX = 0f;
+		RightEyeMinX = 0f;
+		RightEyeMaxY = 0f;
+		RightEyeMinY = 0f;
+
+		LeftEyeMaxX = 0f;
+		LeftEyeMinX = 0f;
+		LeftEyeMaxY = 0f;
+		LeftEyeMinY = 0f;
 
 		//get the position of the player's left and right eye
 		leftEye = GameObject.Find("Player/Left Eye");
@@ -29,21 +41,23 @@ public class EyeLookUI : MonoBehaviour {
 
 		if(this.name.Equals("left eye")){
 			eyePos = leftEye.transform.position;
+
 			isLeftEye = true;
+	
+			LeftEyeMaxX = -0.04f; //these numbers were found by playing with
+			LeftEyeMinX = 0.22f;  //values in the Unity Editor
+			LeftEyeMaxY = -4.15f;
+			LeftEyeMinY = -4.39f;
 		}else{
 			eyePos = rightEye.transform.position;
-			isLeftEye = false;
-		}
-		
-		RightEyeMaxX = 0.86f;
-		RightEyeMinX = 1.08f;
-		RightEyeMaxY = -4.51f;
-		RightEyeMinY = -4.61f;
 
-		LeftEyeMaxX = -0.11f;
-		LeftEyeMinX = 0.14f;
-		LeftEyeMaxY = -4.5f;
-		LeftEyeMinY = -4.61f;
+			isLeftEye = false;
+
+			RightEyeMaxX = 0.86f;
+			RightEyeMinX = 1.08f;
+			RightEyeMaxY = -4.15f;
+			RightEyeMinY = -4.39f;
+		}
 	}
 	
 
