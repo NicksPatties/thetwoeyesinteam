@@ -9,11 +9,15 @@ public class EyeManager : MonoBehaviour {
 	private Transform objectCheck;
 	private Transform lastObj;
 	private Transform curObj;
-	
-	public string mode;//I feel like string is better here, since 1.string is not less comvenient than int for this case 2. u don't need comments for different modes to explain what action it corresponds
+
+	//I feel like string is better here, since
+	//1.string is not less comvenient than int for this case
+	//2. u don't need comments for different modes to explain what action it corresponds
+	//TODO: but what about enums?
+	public string mode;
 
 	private float R;
-	public float lrDistance;
+	public  float lrDistance;
 	private Vector2 midPoint;
 	private bool canTarget;
 	private bool isOverObject;
@@ -21,13 +25,15 @@ public class EyeManager : MonoBehaviour {
 	#region Cursor Variables
 	private Transform cursorPoint;
 	private Vector2 newCursorPos;
-	public Vector2 cursorVelocity;
-	public float cursorToTargetDistance;
-	public float targetRadius;
-	public Vector2 cursorTarget;
-	public float focusTime; //number of seconds the eyes have been on an object together
-	public float waitTime;  //the time in seconds the eyes must be on an object before moving to the next action
+	public  Vector2 cursorVelocity;
+	public  float cursorToTargetDistance;
+	public  float targetRadius;
+	public  Vector2 cursorTarget;
+	public  float focusTime; //number of seconds the cursor been on an object
+	public  float waitOnFocusTime;  //the time in seconds the cursor must be on an object before moving to the next action
 	#endregion
+
+	private bool objectHasIncreasedInSize; //TODO: fix this name
 
 	// Use this for initialization
 	void Start () {
@@ -42,10 +48,11 @@ public class EyeManager : MonoBehaviour {
 		cursorVelocity.y = 0;
 		R = 0.5f;
 		focusTime = 0f;
-		waitTime  = 2f;
+		waitOnFocusTime = 2f;
 		targetRadius = 0.5f;
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () {
 		R = Mathf.Abs(rightEye.transform.position.y - radiusMarker.transform.position.y);
@@ -75,21 +82,13 @@ public class EyeManager : MonoBehaviour {
 
 		isOverObject = checkIntersection();
 
-		/*TODO:check if an eye is hovering over an object, use curObj to change the size of the object
-		RaycastHit2D obj = Physics2D.Linecast(rightEye.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
-		if(obj != null){
-			print ("The right eye is over an object!");
-			obj.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
-		}
-		*/
-
 		// if cursor leaves targetable object, undo highlighting, remove references
 		if(isOverObject == false && lastObj != null) {
 			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 			lastObj = null;
 		}
-
 	}
+
 
 	void updateCursor() {
 		Vector2 cursorPos;
@@ -124,6 +123,7 @@ public class EyeManager : MonoBehaviour {
 		}
 	}
 
+
 	Vector2 getNewCursorTarget() {
 		Vector2 target;
 		float radius = Random.value*(lrDistance/4);
@@ -132,6 +132,7 @@ public class EyeManager : MonoBehaviour {
 		target.y = radius * Mathf.Sin(angle) + midPoint.y;
 		return target;
 	}
+
 
 	bool checkIntersection () {
 		if(mode == "find") {
@@ -142,20 +143,32 @@ public class EyeManager : MonoBehaviour {
 					curObj = obj.transform;
 					string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
 					//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
-					//TODO: figure out why some game objects that have the "GameItem" script attatched still return null here...
 					string id = null;
 					//For TODO: I temporaryly hacked this bug, need further research on it.
 					if (curObj){
 						GameItem gi = curObj.GetComponent<GameItem>();
 						id = gi.id;
-						print ("Current object id is: " + id);
 					}
-					//Debug.Log("name is: "+id);
+					/*TODO: finish implementing the cross and check mark appearing stuff
+					if(id != null){
+						if(!objectHasIncreasedInSize){
+							print ("I should increase the size of " + id + " right now.");
+							objectHasIncreasedInSize = true;
+						}
+						focusTime += Time.deltaTime;
+						if(focusTime > waitOnFocusTime){
+							if(id == targetObjec){
+								print("The check should appear right now");
+							}else{
+								print("The cross should appear right now");
+							}
+						}
+					}*/
 					if (id != null && id == targetObjec){
 						//wait for focusTime seconds before determining that players have made their selection
 						//TODO: FIX THESE CONDITIONS
 						focusTime += Time.deltaTime;
-						if(focusTime > waitTime){
+						if(focusTime > waitOnFocusTime){
 							//TODO: place a green check mark for great success!!
 							curObj.GetComponent<SpriteRenderer>().color = Color.red;
 							GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
@@ -164,10 +177,6 @@ public class EyeManager : MonoBehaviour {
 							Debug.Log("updated curaction[0] is: "+targetObjec);
 							focusTime = 0f;
 						}
-					}else{
-						//you haven't found anything, so reset the time
-						print ("I haven't found anything...");
-						//focusTime = 0f;
 					}
 					//if target object changed without targeting empty space
 					if(lastObj != null && curObj != null && lastObj != curObj) {
@@ -177,6 +186,10 @@ public class EyeManager : MonoBehaviour {
 
 					return true;
 				}
+			}else{ //if !cantTarget
+				//return items to default values
+				objectHasIncreasedInSize = false;
+				focusTime = 0f;
 			}
 		}
 //		if (mode == "focus") {
@@ -208,7 +221,7 @@ public class EyeManager : MonoBehaviour {
 					//wait for focusTime seconds before determining that players have made their selection
 					//TODO: FIX THESE CONDITIONS
 					focusTime += Time.deltaTime;
-					if(focusTime > waitTime){
+					if(focusTime > waitOnFocusTime){
 						//TODO: place a green check mark for great success!!
 						curObj.GetComponent<SpriteRenderer>().color = Color.green;
 						GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
@@ -244,8 +257,6 @@ public class EyeManager : MonoBehaviour {
 				}
 			}
 		}
-
-
 		return false;
 	}
 	

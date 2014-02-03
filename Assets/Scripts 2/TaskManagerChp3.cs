@@ -31,7 +31,7 @@ public class TaskManagerChp3 : MonoBehaviour {
 
 		action01 = GameObject.Find("Action01");
 		action02 = GameObject.Find("Action02");
-		action02.active = false;
+		action02.SetActive(false);
 
 		actionTimer = GameObject.Find("Timer").GetComponent<TimerScript>();
 
@@ -59,8 +59,8 @@ public class TaskManagerChp3 : MonoBehaviour {
 
 	private void changeEnvironment(){
 		//GameObject action01 = GameObject.Find("Action01");
-		action01.active = false;
+		action01.SetActive(false);
 		//GameObject action02 = GameObject.Find("Action02");
-		action02.active = true;
+		action02.SetActive(true);
 	}
 }

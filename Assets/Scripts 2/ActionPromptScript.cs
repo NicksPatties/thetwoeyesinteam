@@ -4,12 +4,10 @@ using System.Collections;
 public class ActionPromptScript : MonoBehaviour {
 
 	bool isVisible;
-	public bool testingEnabled;
 
 	
 	void Start () {
 		isVisible = true;
-		testingEnabled = false;
 	}
 
 
@@ -42,7 +40,5 @@ public class ActionPromptScript : MonoBehaviour {
 
 
 	void Update () {
-		if (Input.GetKey(KeyCode.Space) && testingEnabled)
-			testActionPrompt();
 	}
 }
