@@ -5,7 +5,8 @@ public class PeeStream : MonoBehaviour {
 	
 	public int maxParticles;
 	public float particleVelocity;
-
+	public Vector2 vel;
+	
 	private int particleCount;
 	private Transform peeParticle;
 	private Transform target;
@@ -39,7 +40,10 @@ public class PeeStream : MonoBehaviour {
 		pos.x = peeParticle.transform.position.x;
 		pos.y = peeParticle.transform.position.y;
 		pp.setPosition(pos);
-
+		vel.x = 0.01f;
+		vel.y = 0.01f;
+		pp.setVelocity(vel);
+		pp.correctRotation();
 
 		pee.Add(newPeeParticle);
 		particleCount++;
