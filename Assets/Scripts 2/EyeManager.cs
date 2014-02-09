@@ -35,6 +35,8 @@ public class EyeManager : MonoBehaviour {
 
 	private bool objectHasIncreasedInSize; //TODO: fix this name
 
+	private string[] targetObjects;
+
 	// Use this for initialization
 	void Start () {
 		leftEye = transform.Find("Left Eye");
@@ -133,7 +135,18 @@ public class EyeManager : MonoBehaviour {
 		return target;
 	}
 
-
+	bool checkActionCompleted () {
+		//string[] targetObjs = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+		int targetObjectNum = targetObjects.Length;
+		for (int i=0; i<targetObjectNum; i++){
+			if (targetObjects[i] != "done"){
+				Debug.Log("uwho is not done?: "+targetObjects[i]);
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	bool checkIntersection () {
 		if(mode == "find") {
 			if(canTarget) {
@@ -141,7 +154,8 @@ public class EyeManager : MonoBehaviour {
 				if (obj != null) {
 					lastObj = curObj;
 					curObj = obj.transform;
-					string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+					//string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+					targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
 					//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 					string id = null;
 					//For TODO: I temporaryly hacked this bug, need further research on it.
@@ -164,18 +178,33 @@ public class EyeManager : MonoBehaviour {
 							}
 						}
 					}*/
-					if (id != null && id == targetObjec){
+					//if (id != null && id == targetObject){
+					if (id != null){
 						//wait for focusTime seconds before determining that players have made their selection
 						//TODO: FIX THESE CONDITIONS
 						focusTime += Time.deltaTime;
 						if(focusTime > waitOnFocusTime){
 							//TODO: place a green check mark for great success!!
-							curObj.GetComponent<SpriteRenderer>().color = Color.red;
-							GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
-							targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
-							mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
-							Debug.Log("updated curaction[0] is: "+targetObjec);
-							focusTime = 0f;
+							//curObj.GetComponent<SpriteRenderer>().color = Color.red;
+							/**old code for action list read
+							//GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
+							//targetObject = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+							//mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
+							**/
+							int targetObjectNum = targetObjects.Length;
+							for (int i=0; i<targetObjectNum; i++){
+								if (targetObjects[i] == id){
+									curObj.GetComponent<SpriteRenderer>().color = Color.red;
+									targetObjects[i] = "done";
+								}
+							}
+							if (checkActionCompleted()){;
+								GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
+								targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+								mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+								Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+								focusTime = 0f;
+							}
 						}
 					}
 					//if target object changed without targeting empty space
@@ -192,42 +221,35 @@ public class EyeManager : MonoBehaviour {
 				focusTime = 0f;
 			}
 		}
-//		if (mode == "focus") {
-//			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
-//			if (obj.transform != null) {
-//				lastObj = curObj;
-//				curObj = obj.transform;
-//				curObj.GetComponent<SpriteRenderer>().color = Color.green;
-//				if(lastObj != null && curObj != null && lastObj != curObj) {
-//					lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
-//					lastObj = null;
-//				}
-//				return true;
-//			}
-//		}
 		if (mode == "focus") {
 			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 			if (obj.transform != null) {
 				lastObj = curObj;
 				curObj = obj.transform;
-				string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+				//string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+				string targetObject = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
 				string id = null;
 				if (curObj){
 					GameItem gi = curObj.GetComponent<GameItem>();
 					id = gi.id;
 					print ("Current object id is: " + id);
 				}
-				if (id != null && id == targetObjec){
+				if (id != null && id == targetObject){
 					//wait for focusTime seconds before determining that players have made their selection
 					//TODO: FIX THESE CONDITIONS
 					focusTime += Time.deltaTime;
 					if(focusTime > waitOnFocusTime){
 						//TODO: place a green check mark for great success!!
 						curObj.GetComponent<SpriteRenderer>().color = Color.green;
-						GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
-						targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
-						mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
-						Debug.Log("updated curaction[0] is: "+targetObjec);
+						/**old code for action list read
+						//GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
+						//targetObject = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+						//mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
+						**/
+						GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
+						targetObject = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
+						mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+						Debug.Log("updated curaction[0] is: "+targetObject);
 						focusTime = 0f;
 					}
 				}else{
