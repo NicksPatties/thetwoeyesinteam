@@ -73,16 +73,6 @@ public class TimerScript : MonoBehaviour {
 
 
 	void Update () {
-
-		//switch timer on and off for testing purposes
-		if(Input.GetKeyDown(KeyCode.Space)){
-			if(timerHasStopped)
-				timerHasStopped = false;
-			else
-				timerHasStopped = true;
-		}
-
-
 		// if time has not been expired
 		if(!timerHasStopped){
 

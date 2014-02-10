@@ -33,7 +33,9 @@ public class EyeManager : MonoBehaviour {
 	public  float waitOnFocusTime;  //the time in seconds the cursor must be on an object before moving to the next action
 	#endregion
 
-	private bool objectHasIncreasedInSize; //TODO: fix this name
+	private bool    objectHasIncreasedInSize;
+	public Vector3 oldScale;
+	private float   scaleSize;
 
 	private string[] targetObjects;
 
@@ -52,6 +54,9 @@ public class EyeManager : MonoBehaviour {
 		focusTime = 0f;
 		waitOnFocusTime = 2f;
 		targetRadius = 0.5f;
+
+		oldScale = Vector3.zero;
+		scaleSize = 1.3f;
 	}
 
 
@@ -84,8 +89,16 @@ public class EyeManager : MonoBehaviour {
 
 		isOverObject = checkIntersection();
 
-		// if cursor leaves targetable object, undo highlighting, remove references
+		// if cursor leaves targetable object, restart focus time, reset appearance, and remove references
 		if(isOverObject == false && lastObj != null) {
+			/*TODO: how is oldScale getting changed from line 187 to here?
+			print ("cursor has left the targetable object.");
+			print ("oldScale = " + oldScale);
+			print ("lastObj.localScale = " + lastObj.localScale);
+			print ("need to assign oldScale to lastObj.localScale");
+			*/
+			focusTime = 0f;
+			objectHasIncreasedInSize = false;
 			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 			lastObj = null;
 		}
@@ -140,7 +153,7 @@ public class EyeManager : MonoBehaviour {
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
 			if (targetObjects[i] != "done"){
-				Debug.Log("uwho is not done?: "+targetObjects[i]);
+				Debug.Log("who is not done?: "+targetObjects[i]);
 				return false;
 			}
 		}
@@ -151,53 +164,70 @@ public class EyeManager : MonoBehaviour {
 		if(mode == "find") {
 			if(canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
-				if (obj != null) {
+				if (obj) {
+
+					//get properties of the current object
 					lastObj = curObj;
 					curObj = obj.transform;
-					//string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
+					oldScale = curObj.localScale;
+
+					//find the target object
 					targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
-					//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 					string id = null;
-					//For TODO: I temporaryly hacked this bug, need further research on it.
 					if (curObj){
+
+						//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 						GameItem gi = curObj.GetComponent<GameItem>();
 						id = gi.id;
 					}
-					/*TODO: finish implementing the cross and check mark appearing stuff
-					if(id != null){
+
+					if (id != null){
 						if(!objectHasIncreasedInSize){
-							print ("I should increase the size of " + id + " right now.");
+
+							//increase the size of the object by a small amount
+							//TODO: fix the not being able to reset size problem
+							/*float curObjScaleX = curObj.localScale.x;
+							float curObjScaleY = curObj.localScale.y;
+							float curObjScaleZ = curObj.localScale.z;
+
+							Vector3 curObjScale = new Vector3(curObjScaleX, curObjScaleY, curObjScaleZ);
+
+							float oldScaleX = curObjScale.x;
+							float oldScaleY = curObjScale.y;
+							float oldScaleZ = curObjScale.z;
+
+							oldScale = new Vector3(oldScaleX, oldScaleY, oldScaleZ);
+							print ("curObj.localScale = " + curObj.localScale + ": saved in oldScale");
+						
+							float newScaleX = curObjScale.x * scaleSize;
+							float newScaleY = curObjScale.y * scaleSize;
+
+
+							print ("oldScale = " + oldScale);
+							curObj.localScale = new Vector3(newScaleX, newScaleY, oldScaleZ);*/
 							objectHasIncreasedInSize = true;
 						}
-						focusTime += Time.deltaTime;
-						if(focusTime > waitOnFocusTime){
-							if(id == targetObjec){
-								print("The check should appear right now");
-							}else{
-								print("The cross should appear right now");
-							}
-						}
-					}*/
-					//if (id != null && id == targetObject){
-					if (id != null){
+
 						//wait for focusTime seconds before determining that players have made their selection
-						//TODO: FIX THESE CONDITIONS
 						focusTime += Time.deltaTime;
 						if(focusTime > waitOnFocusTime){
-							//TODO: place a green check mark for great success!!
-							//curObj.GetComponent<SpriteRenderer>().color = Color.red;
-							/**old code for action list read
-							//GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
-							//targetObject = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
-							//mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
-							**/
+
 							int targetObjectNum = targetObjects.Length;
+
+							//check if the object is indeed the target object
 							for (int i=0; i<targetObjectNum; i++){
+
+								//if it is correct
 								if (targetObjects[i] == id){
-									curObj.GetComponent<SpriteRenderer>().color = Color.red;
+									curObj.GetComponent<SpriteRenderer>().color = Color.green;
 									targetObjects[i] = "done";
+
+								//if it's not correct
+								}else{
+									curObj.GetComponent<SpriteRenderer>().color = Color.red;
 								}
 							}
+
 							if (checkActionCompleted()){;
 								GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
 								targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
@@ -215,10 +245,6 @@ public class EyeManager : MonoBehaviour {
 
 					return true;
 				}
-			}else{ //if !cantTarget
-				//return items to default values
-				objectHasIncreasedInSize = false;
-				focusTime = 0f;
 			}
 		}
 		if (mode == "focus") {

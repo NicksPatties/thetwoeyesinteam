@@ -27,7 +27,7 @@ public class ChapterManager : MonoBehaviour {
 		arr = new string[1]{"manrestroom"};
 		al[0].targetObjects = arr;
 		al[0].actionName = "find";
-		arr = new string[2]{"toilet","pantsfly"};
+		arr = new string[1]{"pantsfly"};
 		al[1].actionName = "find";
 		al[1].targetObjects = arr;
 		arr = new string[1]{"toilet"};
