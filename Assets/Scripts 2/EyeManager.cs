@@ -152,8 +152,8 @@ public class EyeManager : MonoBehaviour {
 		//string[] targetObjs = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
-			if (targetObjects[i] != "done"){
-				Debug.Log("who is not done?: "+targetObjects[i]);
+			if (targetObjects[i] != "done"&&targetObjects[i] != null){
+				Debug.Log("what is not done?: "+targetObjects[i]);
 				return false;
 			}
 		}
@@ -223,6 +223,8 @@ public class EyeManager : MonoBehaviour {
 									targetObjects[i] = "done";
 
 								//if it's not correct
+								}else if(targetObjects[i] == null){
+
 								}else{
 									curObj.GetComponent<SpriteRenderer>().color = Color.red;
 								}

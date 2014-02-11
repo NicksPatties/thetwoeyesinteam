@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SimpleJSON;
 
 public class ChapterManager : MonoBehaviour {
 
-	private ActionList[] al;
+	private ActionList[] alist = new ActionList[5];
+	//private ActionList al;
 	//a reference for eyemanager to get the current action requirment, 
 	public ActionList curAction;
 	//init action index as 0, later we will increase it in order to trigger new action requirment
@@ -15,31 +17,59 @@ public class ChapterManager : MonoBehaviour {
 	GameObject actionPrompt;
 	TimerScript actionTimer;
 
+	public WWW www;
+	private int level = 3;
+	private bool loaded = false;
+
 	// Use this for initialization
 	void Start () {
-		al = new ActionList[5];
+		www = new WWW("file://"+Application.dataPath+"/ChaptersData/chapter"+level+".json");
+
+		alist = new ActionList[5];
 		string[] arr;
-		al[0] = new ActionList();
-		al[1] = new ActionList();
-		al[2] = new ActionList();
-		al[3] = new ActionList();
-		al[4] = new ActionList();
+		alist[0] = new ActionList();
+//		alist[1] = new ActionList();
+//		alist[2] = new ActionList();
+//		alist[3] = new ActionList();
+//		alist[4] = new ActionList();
 		arr = new string[1]{"manrestroom"};
-		al[0].targetObjects = arr;
-		al[0].actionName = "find";
-		arr = new string[1]{"pantsfly"};
-		al[1].actionName = "find";
-		al[1].targetObjects = arr;
-		arr = new string[1]{"toilet"};
-		al[2].actionName = "focus";
-		al[2].targetObjects = arr;
-		arr = new string[1]{"pantsfly"};
-		al[3].actionName = "find";
-		al[3].targetObjects = arr;
-		arr = new string[1]{"done"};
-		al[4].actionName = "you're";
-		al[4].targetObjects = arr;
-		curAction = al[actionIndex];
+		alist[0].targetObjects = arr;
+		alist[0].actionName = "find";
+//		arr = new string[1]{"pantsfly"};
+//		alist[1].actionName = "find";
+//		alist[1].targetObjects = arr;
+//		arr = new string[1]{"toilet"};
+//		alist[2].actionName = "focus";
+//		alist[2].targetObjects = arr;
+//		arr = new string[1]{"pantsfly"};
+//		alist[3].actionName = "find";
+//		alist[3].targetObjects = arr;
+//		arr = new string[1]{"done"};
+//		alist[4].actionName = "you're";
+//		alist[4].targetObjects = arr;
+		curAction = alist[actionIndex];
+
+
+//		www = new WWW("file://"+Application.dataPath+"/ChaptersData/chapter"+level+".json");
+//
+//		if (www.isDone)
+//		{
+//			var jsonData = JSON.Parse(www.text);
+//			//ActionList al;
+//			for(int i = 0; i<jsonData["actions"].Count; i++){
+//				al = new ActionList();
+//				string[] tObjects = new string[jsonData["actions"][i]["objects"].Count+1];
+//				for(int j = 0; j<jsonData["actions"][i]["objects"].Count; j++){
+//					tObjects[j] = jsonData["actions"][i]["objects"][j].Value;
+//					//al.targetObjects[j] = objects[j];
+//				}
+//				al.targetObjects = tObjects;
+//				al.actionName = jsonData["actions"][i]["type"].Value;
+//				alist[i] = al;
+//				Debug.Log("-------action is loaded for: "+i+"-------");
+//			}
+//		}
+//		curAction = alist[actionIndex];
 		
 		actionPrompt = GameObject.Find("Action Prompt");
 		actionPrompt.guiText.text = formatActionPromptText();
@@ -65,7 +95,7 @@ public class ChapterManager : MonoBehaviour {
 			actionTimer.timerHasStopped = true;
 			
 		}else{
-			curAction = al[actionIndex];
+			curAction = alist[actionIndex];
 			actionPrompt.guiText.text = formatActionPromptText();
 			//the code that delay a code execution
 			Invoke("changeEnvironment", 1); 
@@ -74,6 +104,32 @@ public class ChapterManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (loaded == false){
+				
+		
+				if (www.isDone)
+				{
+					var jsonData = JSON.Parse(www.text);
+					for(int i = 0; i<jsonData["actions"].Count; i++){
+						ActionList al = new ActionList();
+						string[] tObjects = new string[jsonData["actions"][i]["objects"].Count+1];
+						for(int j = 0; j<jsonData["actions"][i]["objects"].Count; j++){
+							tObjects[j] = jsonData["actions"][i]["objects"][j]["name"];
+//							Debug.Log("-------action "+i+" is loaded for object: "+j+"-------: "+tObjects[j]);
+						}
+						al.targetObjects = tObjects;
+						al.targetObjects[al.targetObjects.Length-1] = null;
+						al.actionName = jsonData["actions"][i]["type"];
+						alist[i] = al;
+//						Debug.Log("-------action is loaded for: "+i+"-------: "+alist[i].targetObjects[0]);
+					}
+					loaded = true;
+					curAction = alist[actionIndex];
+//					Debug.Log("-------current target is: "+curAction.targetObjects.Length);
+//					Debug.Log("-------current target is: "+curAction.targetObjects[0]);
+				}
+		}
+
 		GameObject player = GameObject.Find("Player");
 		float d = player.GetComponent<EyeManager>().lrDistance;
 		//Debug.Log("-------current left right distance is-------"+d);
