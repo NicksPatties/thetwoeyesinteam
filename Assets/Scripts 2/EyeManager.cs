@@ -36,6 +36,7 @@ public class EyeManager : MonoBehaviour {
 	private bool    objectHasIncreasedInSize;
 	public  Vector3 oldScale;
 	private float   scaleSize;
+	private string lastObjName;
 
 	private string[] targetObjects;
 
@@ -97,7 +98,7 @@ public class EyeManager : MonoBehaviour {
 			print ("lastObj.localScale = " + lastObj.localScale);
 			print ("need to assign oldScale to lastObj.localScale");
 			focusTime = 0f;
-			objectHasIncreasedInSize = false;
+			//objectHasIncreasedInSize = false;
 			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 			lastObj = null;
 		}
@@ -151,8 +152,8 @@ public class EyeManager : MonoBehaviour {
 		//string[] targetObjs = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
-			if (targetObjects[i] != "done"){
-				Debug.Log("who is not done?: "+targetObjects[i]);
+			if (targetObjects[i] != "done"&&targetObjects[i] != null){
+				Debug.Log("what is not done?: "+targetObjects[i]);
 				return false;
 			}
 		}
@@ -180,9 +181,14 @@ public class EyeManager : MonoBehaviour {
 						//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 						GameItem gi = curObj.GetComponent<GameItem>();
 						id = gi.id;
+						lastObjName = id;
 					}
 
 					if (id != null){
+
+						if(id != lastObjName){
+							objectHasIncreasedInSize = false;
+						}
 
 						if(!objectHasIncreasedInSize){
 
@@ -206,6 +212,7 @@ public class EyeManager : MonoBehaviour {
 
 							print ("oldScale = " + oldScale);
 							curObj.localScale = new Vector3(newScaleX, newScaleY, oldScaleZ);
+
 							objectHasIncreasedInSize = true;
 						}
 
@@ -224,6 +231,8 @@ public class EyeManager : MonoBehaviour {
 									targetObjects[i] = "done";
 
 								//if it's not correct
+								}else if(targetObjects[i] == null){
+
 								}else{
 									curObj.GetComponent<SpriteRenderer>().color = Color.red;
 								}

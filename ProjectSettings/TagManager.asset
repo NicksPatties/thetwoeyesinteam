@@ -26,8 +26,8 @@ TagManager:
   User Layer 10: Enemies
   User Layer 11: Pickups
   User Layer 12: Wall
-  User Layer 13: 
-  User Layer 14: 
+  User Layer 13: UI
+  User Layer 14: Text
   User Layer 15: 
   User Layer 16: 
   User Layer 17: 
@@ -69,6 +69,10 @@ TagManager:
   - name: Foreground
     userID: 3
     uniqueID: 1024582385
+    locked: 0
+  - name: Text
+    userID: 7
+    uniqueID: 1445363737
     locked: 0
   - name: UI
     userID: 5
