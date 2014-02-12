@@ -18,11 +18,12 @@ public class ChapterManager : MonoBehaviour {
 	TimerScript actionTimer;
 
 	public WWW www;
-	private int level = 3;
+	private int level = 3;//change this number to the target level for loading JSON data
 	private bool loaded = false;
 
 	// Use this for initialization
 	void Start () {
+		//load JSON file from a relative path
 		www = new WWW("file://"+Application.dataPath+"/ChaptersData/chapter"+level+".json");
 
 //		alist = new ActionList[5];
@@ -85,9 +86,7 @@ public class ChapterManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (loaded == false){
-				
-		
-				if (www.isDone)
+			if (www.isDone)//Once the JSON data is loaded, run this
 				{
 					var jsonData = JSON.Parse(www.text);
 					for(int i = 0; i<jsonData["actions"].Count; i++){
@@ -110,11 +109,13 @@ public class ChapterManager : MonoBehaviour {
 				}
 		}
 
+		//Here is the action prompt:) It has to be called after the JSON data is loaded
 		if (loaded == true){
 			actionPrompt = GameObject.Find("Action Prompt");
 			actionPrompt.guiText.text = formatActionPromptText();
 		}
 
+		//Here is the blur effect code. multiple conditions for different distance domain
 		GameObject player = GameObject.Find("Player");
 		float d = player.GetComponent<EyeManager>().lrDistance;
 		//Debug.Log("-------current left right distance is-------"+d);

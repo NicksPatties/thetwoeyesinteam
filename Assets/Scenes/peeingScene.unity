@@ -672,7 +672,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_SortingLayerID: 149272721
   m_Sprite: {fileID: 21300000, guid: fc6a7d3ba7fa7413f982f0117bfcee0c, type: 3}
@@ -751,7 +751,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_SortingLayerID: 149272721
   m_Sprite: {fileID: 21300000, guid: acd56f2f8b4fe46609a3ddb7b17d45a6, type: 3}
@@ -1083,7 +1083,7 @@ GameObject:
   - 4: {fileID: 316576686}
   - 212: {fileID: 316576687}
   - 114: {fileID: 316576688}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: left eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1119,7 +1119,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 2
   m_SortingLayerID: 149272721
   m_Sprite: {fileID: 21300000, guid: 81a9f3720fb464d1db92c15d4e048a39, type: 3}
@@ -1814,7 +1814,7 @@ GUIText:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 623752268}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Text: 0000000000
   m_Anchor: 0
@@ -1901,7 +1901,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 683285985}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Steven's Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2913,7 +2913,7 @@ GameObject:
   - 4: {fileID: 1372585085}
   - 212: {fileID: 1372585084}
   - 114: {fileID: 1372585086}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: right eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2938,7 +2938,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 2
   m_SortingLayerID: 149272721
   m_Sprite: {fileID: 21300000, guid: 81a9f3720fb464d1db92c15d4e048a39, type: 3}
@@ -3068,7 +3068,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_SortingLayerID: 149272721
   m_Sprite: {fileID: 21300000, guid: 27402d99c3ea34c55951b05a640691a2, type: 3}
@@ -3452,7 +3452,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_SortingLayerID: 149272721
   m_Sprite: {fileID: 21300000, guid: 0b4a8aa9c0f884b9d853c3ecc3a9dbf0, type: 3}
@@ -3771,7 +3771,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_SortingLayerID: 149272721
   m_Sprite: {fileID: 21300000, guid: 588a9d2fdae4d483ea70e4aa89316ae9, type: 3}
@@ -4078,7 +4078,7 @@ GameObject:
   - 124: {fileID: 1971773952}
   - 92: {fileID: 1971773951}
   - 81: {fileID: 1971773950}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: EyeBall Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4448,7 +4448,7 @@ GameObject:
   - 4: {fileID: 2141260322}
   - 212: {fileID: 2141260324}
   - 114: {fileID: 2141260323}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4497,7 +4497,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 3
   m_SortingLayerID: 149272721
   m_Sprite: {fileID: 21300000, guid: ad36a6f6f0c3f4484ab5bb3fa648d14f, type: 3}
