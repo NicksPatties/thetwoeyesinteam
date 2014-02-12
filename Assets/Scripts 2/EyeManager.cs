@@ -36,6 +36,7 @@ public class EyeManager : MonoBehaviour {
 	private bool    objectHasIncreasedInSize;
 	public Vector3 oldScale;
 	private float   scaleSize;
+	private string lastObjName;
 
 	private string[] targetObjects;
 
@@ -98,7 +99,7 @@ public class EyeManager : MonoBehaviour {
 			print ("need to assign oldScale to lastObj.localScale");
 			*/
 			focusTime = 0f;
-			objectHasIncreasedInSize = false;
+			//objectHasIncreasedInSize = false;
 			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 			lastObj = null;
 		}
@@ -179,14 +180,19 @@ public class EyeManager : MonoBehaviour {
 						//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 						GameItem gi = curObj.GetComponent<GameItem>();
 						id = gi.id;
+						lastObjName = id;
 					}
 
 					if (id != null){
+						if(id != lastObjName){
+							objectHasIncreasedInSize = false;
+						}
 						if(!objectHasIncreasedInSize){
 
 							//increase the size of the object by a small amount
 							//TODO: fix the not being able to reset size problem
-							/*float curObjScaleX = curObj.localScale.x;
+
+							float curObjScaleX = curObj.localScale.x;
 							float curObjScaleY = curObj.localScale.y;
 							float curObjScaleZ = curObj.localScale.z;
 
@@ -204,7 +210,8 @@ public class EyeManager : MonoBehaviour {
 
 
 							print ("oldScale = " + oldScale);
-							curObj.localScale = new Vector3(newScaleX, newScaleY, oldScaleZ);*/
+							curObj.localScale = new Vector3(newScaleX, newScaleY, oldScaleZ);
+
 							objectHasIncreasedInSize = true;
 						}
 
