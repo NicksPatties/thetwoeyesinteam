@@ -34,7 +34,7 @@ public class EyeManager : MonoBehaviour {
 	#endregion
 
 	private bool    objectHasIncreasedInSize;
-	public Vector3 oldScale;
+	public  Vector3 oldScale;
 	private float   scaleSize;
 
 	private string[] targetObjects;
@@ -91,12 +91,11 @@ public class EyeManager : MonoBehaviour {
 
 		// if cursor leaves targetable object, restart focus time, reset appearance, and remove references
 		if(isOverObject == false && lastObj != null) {
-			/*TODO: how is oldScale getting changed from line 187 to here?
+			//TODO: how is oldScale getting changed from line 187 to here?
 			print ("cursor has left the targetable object.");
 			print ("oldScale = " + oldScale);
 			print ("lastObj.localScale = " + lastObj.localScale);
 			print ("need to assign oldScale to lastObj.localScale");
-			*/
 			focusTime = 0f;
 			objectHasIncreasedInSize = false;
 			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
@@ -163,7 +162,9 @@ public class EyeManager : MonoBehaviour {
 	bool checkIntersection () {
 		if(mode == "find") {
 			if(canTarget) {
-				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position,
+				                                      objectCheck.position,
+				                                      1 << LayerMask.NameToLayer("Object"));
 				if (obj) {
 
 					//get properties of the current object
@@ -182,11 +183,12 @@ public class EyeManager : MonoBehaviour {
 					}
 
 					if (id != null){
+
 						if(!objectHasIncreasedInSize){
 
 							//increase the size of the object by a small amount
 							//TODO: fix the not being able to reset size problem
-							/*float curObjScaleX = curObj.localScale.x;
+							float curObjScaleX = curObj.localScale.x;
 							float curObjScaleY = curObj.localScale.y;
 							float curObjScaleZ = curObj.localScale.z;
 
@@ -202,9 +204,8 @@ public class EyeManager : MonoBehaviour {
 							float newScaleX = curObjScale.x * scaleSize;
 							float newScaleY = curObjScale.y * scaleSize;
 
-
 							print ("oldScale = " + oldScale);
-							curObj.localScale = new Vector3(newScaleX, newScaleY, oldScaleZ);*/
+							curObj.localScale = new Vector3(newScaleX, newScaleY, oldScaleZ);
 							objectHasIncreasedInSize = true;
 						}
 
