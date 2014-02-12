@@ -25,16 +25,16 @@ public class ChapterManager : MonoBehaviour {
 	void Start () {
 		www = new WWW("file://"+Application.dataPath+"/ChaptersData/chapter"+level+".json");
 
-		alist = new ActionList[5];
-		string[] arr;
-		alist[0] = new ActionList();
+//		alist = new ActionList[5];
+//		string[] arr;
+//		alist[0] = new ActionList();
 //		alist[1] = new ActionList();
 //		alist[2] = new ActionList();
 //		alist[3] = new ActionList();
 //		alist[4] = new ActionList();
-		arr = new string[1]{"manrestroom"};
-		alist[0].targetObjects = arr;
-		alist[0].actionName = "find";
+//		arr = new string[1]{"manrestroom"};
+//		alist[0].targetObjects = arr;
+//		alist[0].actionName = "find";
 //		arr = new string[1]{"pantsfly"};
 //		alist[1].actionName = "find";
 //		alist[1].targetObjects = arr;
@@ -47,32 +47,12 @@ public class ChapterManager : MonoBehaviour {
 //		arr = new string[1]{"done"};
 //		alist[4].actionName = "you're";
 //		alist[4].targetObjects = arr;
-		curAction = alist[actionIndex];
-
-
-//		www = new WWW("file://"+Application.dataPath+"/ChaptersData/chapter"+level+".json");
-//
-//		if (www.isDone)
-//		{
-//			var jsonData = JSON.Parse(www.text);
-//			//ActionList al;
-//			for(int i = 0; i<jsonData["actions"].Count; i++){
-//				al = new ActionList();
-//				string[] tObjects = new string[jsonData["actions"][i]["objects"].Count+1];
-//				for(int j = 0; j<jsonData["actions"][i]["objects"].Count; j++){
-//					tObjects[j] = jsonData["actions"][i]["objects"][j].Value;
-//					//al.targetObjects[j] = objects[j];
-//				}
-//				al.targetObjects = tObjects;
-//				al.actionName = jsonData["actions"][i]["type"].Value;
-//				alist[i] = al;
-//				Debug.Log("-------action is loaded for: "+i+"-------");
-//			}
-//		}
 //		curAction = alist[actionIndex];
-		
-		actionPrompt = GameObject.Find("Action Prompt");
-		actionPrompt.guiText.text = formatActionPromptText();
+
+		/*we haven't finish loading the JSON data here, so there is no data to load for UI text. I remove them to Updata()*/
+		//TODO find out a mechanics to listen to a event like onComplete
+		//actionPrompt = GameObject.Find("Action Prompt");
+		//actionPrompt.guiText.text = formatActionPromptText();
 		
 		action01 = GameObject.Find("Action01");
 		action02 = GameObject.Find("Action02");
@@ -128,6 +108,11 @@ public class ChapterManager : MonoBehaviour {
 //					Debug.Log("-------current target is: "+curAction.targetObjects.Length);
 //					Debug.Log("-------current target is: "+curAction.targetObjects[0]);
 				}
+		}
+
+		if (loaded == true){
+			actionPrompt = GameObject.Find("Action Prompt");
+			actionPrompt.guiText.text = formatActionPromptText();
 		}
 
 		GameObject player = GameObject.Find("Player");
