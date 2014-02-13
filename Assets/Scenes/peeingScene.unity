@@ -2889,8 +2889,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxParticles: 1
-  particleVelocity: 0
-  vel: {x: 0, y: 0}
+  particleVelocity: 1
+  emissionSpeed: 0
+  originalParticle: {fileID: 0}
+  target: {fileID: 0}
 --- !u!4 &1301550182
 Transform:
   m_ObjectHideFlags: 0
@@ -3672,8 +3674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b09d1eb89167ba4e99f4a32b1f1cbf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0}
-  blah: 0
+  targetPosition: {x: 0, y: 0}
+  maxVelocity: 0
 --- !u!4 &1739484552
 Transform:
   m_ObjectHideFlags: 0
