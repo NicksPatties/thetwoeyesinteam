@@ -4,7 +4,25 @@
 			"index":"1",
 			"objects":[
 				{
-					"name":"manrestroom"
+					"name":"modelA0",
+				}
+				{
+					"name":"modelA1",
+				}
+				{
+					"name":"modelA2",
+				}
+				{
+					"name":"modelA3",
+				}
+				{
+					"name":"modelA4",
+				}
+				{
+					"name":"modelA5",
+				}
+				{
+					"name":"modelA6",
 				}
 			],
 			"type":"paint"
@@ -13,7 +31,25 @@
 			"index":"2",
 			"objects":[
 				{
-					"name":"pantsfly"
+					"name":"outlineA0",
+				}
+				{
+					"name":"outlineA1",
+				}
+				{
+					"name":"outlineA2",
+				}
+				{
+					"name":"outlineA3",
+				}
+				{
+					"name":"outlineA4",
+				}
+				{
+					"name":"outlineA5",
+				}
+				{
+					"name":"outlineA6",
 				}
 			],
 			"type":"trace"
