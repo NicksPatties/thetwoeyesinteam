@@ -1,25 +1,31 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class PeeParticle : MonoBehaviour {
 
-	private GameObject self;
+	private Transform self;
 	private Vector2 position;
 	public Vector2 targetPosition;
 	public float maxVelocity;
 	public bool original;
 	public GameObject stream;
+	public PeeStream ps;
+	private bool active;
+	//public List<Transform> pee;
 
 	// Use this for initialization
 	void Start () {
 		stream = GameObject.Find("PeeStream");
-		self = this.gameObject;
+		ps = (PeeStream) stream.GetComponent(typeof(PeeStream));
+		//pee = ps.pee;
+		self = this.transform;
 		position.x = 0;
 		position.y = 0;
 		targetPosition.x = 0;
 		targetPosition.y = 0;
 		maxVelocity = 0;
 		original = false;
+		active = true;
 	}
 	
 	// Update is called once per frame
@@ -35,11 +41,14 @@ public class PeeParticle : MonoBehaviour {
 			}
 			if(targetPosition.x == transform.position.x && targetPosition.y == transform.position.y) {
 				resetPosition();
-				getTarget();
+				active = false;
+				ps.addToQueue(this);
+				//getTarget();
 			}
-
-			float step = maxVelocity * Time.deltaTime;
-			transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
+			if(active) {
+				float step = maxVelocity * Time.deltaTime;
+				transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
+			}
 		}
 	}
 
@@ -51,11 +60,11 @@ public class PeeParticle : MonoBehaviour {
 		}
 	}
 
-	void getTarget() {
+	public void getTarget() {
 		GameObject target = GameObject.Find("Cursor");
 		if(target != null){
-			targetPosition.x = target.transform.position.x;
-			targetPosition.y = target.transform.position.y;
+			targetPosition.x = target.transform.position.x+(Random.value/2-0.25f);
+			targetPosition.y = target.transform.position.y+(Random.value/2-0.25f);
 		}
 	}
 
@@ -70,6 +79,10 @@ public class PeeParticle : MonoBehaviour {
 
 	public void setOriginality() {
 		original = true;
+	}
+
+	public void setActive() {
+		active = true;
 	}
 
 	public void setPosition(Vector2 pos) {
