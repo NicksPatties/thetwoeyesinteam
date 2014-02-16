@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EyeManager : MonoBehaviour {
 
@@ -9,11 +10,7 @@ public class EyeManager : MonoBehaviour {
 	private Transform objectCheck;
 	private Transform lastObj;
 	private Transform curObj;
-
-	//I feel like string is better here, since
-	//1.string is not less comvenient than int for this case
-	//2. u don't need comments for different modes to explain what action it corresponds
-	//TODO: but what about enums?
+	
 	public string mode;
 
 	private float R;
@@ -38,7 +35,12 @@ public class EyeManager : MonoBehaviour {
 	private float   scaleSize;
 	private string lastObjName;
 
+	//for all actions
 	private string[] targetObjects;
+
+	//for paint
+	private string[] targetObjectsForPaint;
+	private RaycastHit2D[] paintedObjects;
 
 	// Use this for initialization
 	void Start () {
@@ -47,7 +49,7 @@ public class EyeManager : MonoBehaviour {
 		radiusMarker = rightEye.transform.Find("topWallCheck");
 		cursorPoint = transform.Find("Cursor");
 		objectCheck = cursorPoint.transform.Find("objectCheck");
-		mode = "find";
+		mode = "";
 
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
@@ -78,7 +80,10 @@ public class EyeManager : MonoBehaviour {
 			canTarget = true;
 		else
 			canTarget = false;
-			
+		if (mode == "")	{
+			mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+		}
+
 		if(Input.GetKey(KeyCode.Alpha1))
 			mode = "find";
 		if(Input.GetKey(KeyCode.Alpha2))
@@ -149,7 +154,7 @@ public class EyeManager : MonoBehaviour {
 		return target;
 	}
 
-	bool checkActionCompleted () {
+	bool checkFindCompleted () {
 		//string[] targetObjs = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
@@ -160,9 +165,27 @@ public class EyeManager : MonoBehaviour {
 		}
 		return true;
 	}
+
+	bool checkPaintCompleted () {
+		for (int i=0; i<targetObjectsForPaint.Length; i++){
+			if (targetObjectsForPaint[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
+				Debug.Log("what is unvisited?: "+targetObjects[i]);
+				return false;
+			}
+		}
+		for (int j=0; j<paintedObjects.Length; j++){
+			if (paintedObjects[j].transform){
+				paintedObjects[j].transform.GetComponent<SpriteRenderer>().color = Color.white;
+			}
+		}
+		Debug.Log("all are visited.");
+		targetObjectsForPaint = null;
+		return true;
+	}
 	
 	bool checkIntersection () {
-		if(mode == "find") {
+		targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+		if (mode == "find") {
 			if(canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 				if (obj) {
@@ -172,8 +195,6 @@ public class EyeManager : MonoBehaviour {
 					curObj = obj.transform;
 					oldScale = curObj.localScale;
 
-					//find the target object
-					targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
 					string id = null;
 					if (curObj){
 
@@ -237,7 +258,7 @@ public class EyeManager : MonoBehaviour {
 								}
 							}
 
-							if (checkActionCompleted()){;
+							if (checkFindCompleted()){;
 								GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
 								targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
 								mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
@@ -299,13 +320,150 @@ public class EyeManager : MonoBehaviour {
 				return true;
 			}
 		}
+
 		if (mode == "paint") {
-			if(canTarget) {
+			if (targetObjectsForPaint == null){
+				targetObjectsForPaint = new string[targetObjects.Length];
+				for (int i = 0; i<targetObjects.Length; i++){
+					targetObjectsForPaint[i] = "unvisited";
+					Debug.Log("-----------init all nodes as unvisited----------");
+				}
+			}
+			if (paintedObjects == null){
+				paintedObjects = new RaycastHit2D[targetObjects.Length];
+			}
+			if (canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 				if (obj != null) {
+					//get properties of the current object
 					lastObj = curObj;
 					curObj = obj.transform;
-					curObj.GetComponent<SpriteRenderer>().color = Color.blue;
+					string id = null;
+					if (curObj){
+						GameItem gi = curObj.GetComponent<GameItem>();
+						id = gi.id;
+						lastObjName = id;
+					}
+					if (id != null){
+						for (int i=0; i<targetObjects.Length; i++){	
+							//we are painting an unvisited node, so we set it green, and set it as visited
+							if (targetObjects[i] == id && targetObjectsForPaint[i] == "unvisited"){
+								curObj.GetComponent<SpriteRenderer>().color = Color.green;
+								targetObjectsForPaint[i] = "visited";
+								paintedObjects[i] = obj;
+								break;
+								Debug.Log("-----------this is visiting: "+id+"----------");
+							}
+							//we are painting a visited node, so we keep it green.
+							else if(targetObjects[i] == id && targetObjectsForPaint[i] == "visited"){
+								curObj.GetComponent<SpriteRenderer>().color = Color.green;
+								Debug.Log("-----------this is visited: "+id+"----------");
+								break;
+							}else if(targetObjects[i] == null){
+									
+							}
+							//we are painting something that is not inside the painting shape, so we set it red
+							else{
+								Debug.Log("-----------this makes it red: "+id+"----------");
+								curObj.GetComponent<SpriteRenderer>().color = Color.red;
+							}
+						}
+							
+						if (checkPaintCompleted()){
+							targetObjectsForPaint = null;
+							GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
+							targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+							mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+							focusTime = 0f;
+						}
+					}
+					return true;
+				}
+			}
+		}
+
+		if (mode == "trace") {
+			if (canTarget) {
+				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+				if (obj != null) {
+
+					//get properties of the current object
+					lastObj = curObj;
+					curObj = obj.transform;
+					//oldScale = curObj.localScale;
+
+					//find the target object
+					targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+					string id = null;
+					if (curObj){
+						//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
+						GameItem gi = curObj.GetComponent<GameItem>();
+						id = gi.id;
+						lastObjName = id;
+					}
+					if (id != null){
+						if(id != lastObjName){
+							objectHasIncreasedInSize = false;
+						}
+						if(!objectHasIncreasedInSize){
+							
+							//increase the size of the object by a small amount
+							//TODO: fix the not being able to reset size problem
+							
+							float curObjScaleX = curObj.localScale.x;
+							float curObjScaleY = curObj.localScale.y;
+							float curObjScaleZ = curObj.localScale.z;
+							
+							Vector3 curObjScale = new Vector3(curObjScaleX, curObjScaleY, curObjScaleZ);
+							
+							float oldScaleX = curObjScale.x;
+							float oldScaleY = curObjScale.y;
+							float oldScaleZ = curObjScale.z;
+							
+							oldScale = new Vector3(oldScaleX, oldScaleY, oldScaleZ);
+							print ("curObj.localScale = " + curObj.localScale + ": saved in oldScale");
+							
+							float newScaleX = curObjScale.x * scaleSize;
+							float newScaleY = curObjScale.y * scaleSize;
+							
+							
+							print ("oldScale = " + oldScale);
+							curObj.localScale = new Vector3(newScaleX, newScaleY, oldScaleZ);
+							
+							objectHasIncreasedInSize = true;
+						}
+						//wait for focusTime seconds before determining that players have made their selection
+						focusTime += Time.deltaTime;
+						if(focusTime > waitOnFocusTime){
+							
+							int targetObjectNum = targetObjects.Length;
+							
+							//check if the object is indeed the target object
+							for (int i=0; i<targetObjectNum; i++){
+								
+								//if it is correct
+								if (targetObjects[i] == id){
+									curObj.GetComponent<SpriteRenderer>().color = Color.green;
+									targetObjects[i] = "done";
+									
+									//if it's not correct
+								}else if(targetObjects[i] == null){
+									
+								}else{
+									curObj.GetComponent<SpriteRenderer>().color = Color.red;
+								}
+							}
+							
+							if (checkFindCompleted()){;
+								GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
+								targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+								mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+								Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+								focusTime = 0f;
+							}
+						}
+					}
 					if(lastObj != null && curObj != null && lastObj != curObj) {
 						lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 						lastObj = null;
@@ -314,6 +472,7 @@ public class EyeManager : MonoBehaviour {
 				}
 			}
 		}
+
 		return false;
 	}
 	

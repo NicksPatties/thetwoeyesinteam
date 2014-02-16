@@ -4,25 +4,25 @@
 			"index":"1",
 			"objects":[
 				{
-					"name":"modelA0",
-				}
+					"name":"modelA0"
+				},
 				{
-					"name":"modelA1",
-				}
+					"name":"modelA1"
+				},
 				{
-					"name":"modelA2",
-				}
+					"name":"modelA2"
+				},
 				{
-					"name":"modelA3",
-				}
+					"name":"modelA3"
+				},
 				{
-					"name":"modelA4",
-				}
+					"name":"modelA4"
+				},
 				{
-					"name":"modelA5",
-				}
+					"name":"modelA5"
+				},
 				{
-					"name":"modelA6",
+					"name":"modelA6"
 				}
 			],
 			"type":"paint"
@@ -31,25 +31,25 @@
 			"index":"2",
 			"objects":[
 				{
-					"name":"outlineA0",
-				}
+					"name":"outlineA0"
+				},
 				{
-					"name":"outlineA1",
-				}
+					"name":"outlineA1"
+				},
 				{
-					"name":"outlineA2",
-				}
+					"name":"outlineA2"
+				},
 				{
-					"name":"outlineA3",
-				}
+					"name":"outlineA3"
+				},
 				{
-					"name":"outlineA4",
-				}
+					"name":"outlineA4"
+				},
 				{
-					"name":"outlineA5",
-				}
+					"name":"outlineA5"
+				},
 				{
-					"name":"outlineA6",
+					"name":"outlineA6"
 				}
 			],
 			"type":"trace"

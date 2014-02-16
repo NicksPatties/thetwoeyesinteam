@@ -4,7 +4,7 @@ using SimpleJSON;
 
 public class ChapterManager : MonoBehaviour {
 
-	private ActionList[] alist = new ActionList[5];
+	private ActionList[] alist = new ActionList[9];
 	//private ActionList al;
 	//a reference for eyemanager to get the current action requirment, 
 	public ActionList curAction;
@@ -26,38 +26,16 @@ public class ChapterManager : MonoBehaviour {
 		//load JSON file from a relative path
 		www = new WWW("file://"+Application.dataPath+"/ChaptersData/chapter"+level+".json");
 
-//		alist = new ActionList[5];
-//		string[] arr;
-//		alist[0] = new ActionList();
-//		alist[1] = new ActionList();
-//		alist[2] = new ActionList();
-//		alist[3] = new ActionList();
-//		alist[4] = new ActionList();
-//		arr = new string[1]{"manrestroom"};
-//		alist[0].targetObjects = arr;
-//		alist[0].actionName = "find";
-//		arr = new string[1]{"pantsfly"};
-//		alist[1].actionName = "find";
-//		alist[1].targetObjects = arr;
-//		arr = new string[1]{"toilet"};
-//		alist[2].actionName = "focus";
-//		alist[2].targetObjects = arr;
-//		arr = new string[1]{"pantsfly"};
-//		alist[3].actionName = "find";
-//		alist[3].targetObjects = arr;
-//		arr = new string[1]{"done"};
-//		alist[4].actionName = "you're";
-//		alist[4].targetObjects = arr;
-//		curAction = alist[actionIndex];
-
 		/*we haven't finish loading the JSON data here, so there is no data to load for UI text. I remove them to Updata()*/
 		//TODO find out a mechanics to listen to a event like onComplete
 		//actionPrompt = GameObject.Find("Action Prompt");
 		//actionPrompt.guiText.text = formatActionPromptText();
-		
-		action01 = GameObject.Find("Action01");
-		action02 = GameObject.Find("Action02");
-		action02.SetActive(false);
+
+		if (level == 3){
+			action01 = GameObject.Find("Action01");
+			action02 = GameObject.Find("Action02");
+			action02.SetActive(false);
+		}
 		
 		actionTimer = GameObject.Find("Timer").GetComponent<TimerScript>();
 	}
@@ -156,7 +134,9 @@ public class ChapterManager : MonoBehaviour {
 	}
 
 	private void changeEnvironment(){
-		action01.SetActive(false);
-		action02.SetActive(true);
+		if (level == 3){
+			action01.SetActive(false);
+			action02.SetActive(true);
+		}
 	}
 }
