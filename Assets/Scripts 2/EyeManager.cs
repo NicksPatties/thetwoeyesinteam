@@ -81,7 +81,7 @@ public class EyeManager : MonoBehaviour {
 		else
 			canTarget = false;
 		if (mode == "")	{
-			mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+			mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 		}
 
 		if(Input.GetKey(KeyCode.Alpha1))
@@ -155,7 +155,7 @@ public class EyeManager : MonoBehaviour {
 	}
 
 	bool checkFindCompleted () {
-		//string[] targetObjs = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+		//string[] targetObjs = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
 			if (targetObjects[i] != "done"&&targetObjects[i] != null){
@@ -184,7 +184,7 @@ public class EyeManager : MonoBehaviour {
 	}
 	
 	bool checkIntersection () {
-		targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+		targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 		if (mode == "find") {
 			if(canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
@@ -259,9 +259,9 @@ public class EyeManager : MonoBehaviour {
 							}
 
 							if (checkFindCompleted()){;
-								GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
-								targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
-								mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+								GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+								targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+								mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 								Debug.Log("updated curaction[0] is: "+targetObjects[0]);
 								focusTime = 0f;
 							}
@@ -282,8 +282,7 @@ public class EyeManager : MonoBehaviour {
 			if (obj.transform != null) {
 				lastObj = curObj;
 				curObj = obj.transform;
-				//string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
-				string targetObject = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
+				string targetObject = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
 				string id = null;
 				if (curObj){
 					GameItem gi = curObj.GetComponent<GameItem>();
@@ -297,14 +296,9 @@ public class EyeManager : MonoBehaviour {
 					if(focusTime > waitOnFocusTime){
 						//TODO: place a green check mark for great success!!
 						curObj.GetComponent<SpriteRenderer>().color = Color.green;
-						/**old code for action list read
-						//GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
-						//targetObject = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
-						//mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
-						**/
-						GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
-						targetObject = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
-						mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+						targetObject = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
+						mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 						Debug.Log("updated curaction[0] is: "+targetObject);
 						focusTime = 0f;
 					}
@@ -371,9 +365,9 @@ public class EyeManager : MonoBehaviour {
 							
 						if (checkPaintCompleted()){
 							targetObjectsForPaint = null;
-							GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
-							targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
-							mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
 							focusTime = 0f;
 						}
@@ -394,7 +388,7 @@ public class EyeManager : MonoBehaviour {
 					//oldScale = curObj.localScale;
 
 					//find the target object
-					targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+					targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 					string id = null;
 					if (curObj){
 						//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
@@ -456,9 +450,9 @@ public class EyeManager : MonoBehaviour {
 							}
 							
 							if (checkFindCompleted()){;
-								GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
-								targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
-								mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+								GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+								targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+								mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 								Debug.Log("updated curaction[0] is: "+targetObjects[0]);
 								focusTime = 0f;
 							}

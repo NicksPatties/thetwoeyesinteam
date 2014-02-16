@@ -484,7 +484,7 @@ GameObject:
   - 114: {fileID: 84512183}
   - 114: {fileID: 84512184}
   m_Layer: 0
-  m_Name: TaskManager
+  m_Name: ChapterManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
