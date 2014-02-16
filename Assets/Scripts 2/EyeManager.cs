@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EyeManager : MonoBehaviour {
 
@@ -9,11 +10,7 @@ public class EyeManager : MonoBehaviour {
 	private Transform objectCheck;
 	private Transform lastObj;
 	private Transform curObj;
-
-	//I feel like string is better here, since
-	//1.string is not less comvenient than int for this case
-	//2. u don't need comments for different modes to explain what action it corresponds
-	//TODO: but what about enums?
+	
 	public string mode;
 
 	private float R;
@@ -38,7 +35,17 @@ public class EyeManager : MonoBehaviour {
 	private float   scaleSize;
 	private string lastObjName;
 
+	//for all actions
 	private string[] targetObjects;
+
+	//for paint
+	private string[] targetObjectsForPaint;
+	private RaycastHit2D[] paintedObjects;
+
+	//for paint
+	private string[] targetObjectsForTrace;
+	private RaycastHit2D[] tracedObjects;
+	private int tracedIndex;
 
 	// Use this for initialization
 	void Start () {
@@ -47,7 +54,7 @@ public class EyeManager : MonoBehaviour {
 		radiusMarker = rightEye.transform.Find("topWallCheck");
 		cursorPoint = transform.Find("Cursor");
 		objectCheck = cursorPoint.transform.Find("objectCheck");
-		mode = "find";
+		mode = "";
 
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
@@ -78,7 +85,10 @@ public class EyeManager : MonoBehaviour {
 			canTarget = true;
 		else
 			canTarget = false;
-			
+		if (mode == "")	{
+			mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+		}
+
 		if(Input.GetKey(KeyCode.Alpha1))
 			mode = "find";
 		if(Input.GetKey(KeyCode.Alpha2))
@@ -148,8 +158,8 @@ public class EyeManager : MonoBehaviour {
 		return target;
 	}
 
-	bool checkActionCompleted () {
-		//string[] targetObjs = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
+	bool checkFindCompleted () {
+		//string[] targetObjs = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
 			if (targetObjects[i] != "done"&&targetObjects[i] != null){
@@ -159,9 +169,44 @@ public class EyeManager : MonoBehaviour {
 		}
 		return true;
 	}
+
+	bool checkPaintCompleted () {
+		for (int i=0; i<targetObjectsForPaint.Length; i++){
+			if (targetObjectsForPaint[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
+				Debug.Log("what is unvisited?: "+targetObjects[i]);
+				return false;
+			}
+		}
+		for (int j=0; j<paintedObjects.Length; j++){
+			if (paintedObjects[j].transform){
+				paintedObjects[j].transform.GetComponent<SpriteRenderer>().color = Color.white;
+			}
+		}
+		Debug.Log("all are visited.");
+		targetObjectsForPaint = null;
+		return true;
+	}
+
+	bool checkTraceCompleted () {
+		for (int i=0; i<targetObjectsForTrace.Length; i++){
+			if (targetObjectsForTrace[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
+				Debug.Log("what is unvisited?: "+targetObjects[i]);
+				return false;
+			}
+		}
+		for (int j=0; j<tracedObjects.Length; j++){
+			if (tracedObjects[j].transform){
+				tracedObjects[j].transform.GetComponent<SpriteRenderer>().color = Color.white;
+			}
+		}
+		Debug.Log("all are visited.");
+		targetObjectsForTrace = null;
+		return true;
+	}
 	
 	bool checkIntersection () {
-		if(mode == "find") {
+		targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+		if (mode == "find") {
 			if(canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position,
 				                                      objectCheck.position,
@@ -173,8 +218,6 @@ public class EyeManager : MonoBehaviour {
 					curObj = obj.transform;
 					oldScale = curObj.localScale;
 
-					//find the target object
-					targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
 					string id = null;
 					if (curObj){
 
@@ -238,10 +281,10 @@ public class EyeManager : MonoBehaviour {
 								}
 							}
 
-							if (checkActionCompleted()){;
-								GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
-								targetObjects = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects;
-								mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+							if (checkFindCompleted()){;
+								GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+								targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+								mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 								Debug.Log("updated curaction[0] is: "+targetObjects[0]);
 								focusTime = 0f;
 							}
@@ -257,13 +300,13 @@ public class EyeManager : MonoBehaviour {
 				}
 			}
 		}
+
 		if (mode == "focus") {
 			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 			if (obj.transform != null) {
 				lastObj = curObj;
 				curObj = obj.transform;
-				//string targetObjec = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
-				string targetObject = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
+				string targetObject = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
 				string id = null;
 				if (curObj){
 					GameItem gi = curObj.GetComponent<GameItem>();
@@ -277,14 +320,9 @@ public class EyeManager : MonoBehaviour {
 					if(focusTime > waitOnFocusTime){
 						//TODO: place a green check mark for great success!!
 						curObj.GetComponent<SpriteRenderer>().color = Color.green;
-						/**old code for action list read
-						//GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().updateAction();
-						//targetObject = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[0];
-						//mode = GameObject.Find("TaskManager").GetComponent<TaskManagerChp3>().curAction[1];
-						**/
-						GameObject.Find("TaskManager").GetComponent<ChapterManager>().updateAction();
-						targetObject = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
-						mode = GameObject.Find("TaskManager").GetComponent<ChapterManager>().curAction.actionName;
+						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+						targetObject = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
+						mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 						Debug.Log("updated curaction[0] is: "+targetObject);
 						focusTime = 0f;
 					}
@@ -300,21 +338,130 @@ public class EyeManager : MonoBehaviour {
 				return true;
 			}
 		}
+
 		if (mode == "paint") {
-			if(canTarget) {
+			if (targetObjectsForPaint == null){
+				targetObjectsForPaint = new string[targetObjects.Length];
+				for (int i = 0; i<targetObjects.Length; i++){
+					targetObjectsForPaint[i] = "unvisited";
+					Debug.Log("-----------init all nodes as unvisited----------");
+				}
+			}
+			if (paintedObjects == null){
+				paintedObjects = new RaycastHit2D[targetObjects.Length];
+			}
+			if (canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
 				if (obj != null) {
+					//get properties of the current object
 					lastObj = curObj;
 					curObj = obj.transform;
-					curObj.GetComponent<SpriteRenderer>().color = Color.blue;
-					if(lastObj != null && curObj != null && lastObj != curObj) {
-						lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
-						lastObj = null;
+					string id = null;
+					if (curObj){
+						GameItem gi = curObj.GetComponent<GameItem>();
+						id = gi.id;
+						lastObjName = id;
+					}
+					if (id != null){
+						for (int i=0; i<targetObjects.Length; i++){	
+							//we are painting an unvisited node, so we set it green, and set it as visited
+							if (targetObjects[i] == id && targetObjectsForPaint[i] == "unvisited"){
+								curObj.GetComponent<SpriteRenderer>().color = Color.green;
+								targetObjectsForPaint[i] = "visited";
+								paintedObjects[i] = obj;
+								break;
+								Debug.Log("-----------this is visiting: "+id+"----------");
+							}
+							//we are painting a visited node, so we keep it green.
+							else if(targetObjects[i] == id && targetObjectsForPaint[i] == "visited"){
+								curObj.GetComponent<SpriteRenderer>().color = Color.green;
+								Debug.Log("-----------this is visited: "+id+"----------");
+								break;
+							}else if(targetObjects[i] == null){
+									
+							}
+							//we are painting something that is not inside the painting shape, so we set it red
+							else{
+								Debug.Log("-----------this makes it red: "+id+"----------");
+								curObj.GetComponent<SpriteRenderer>().color = Color.red;
+							}
+						}
+							
+						if (checkPaintCompleted()){
+							targetObjectsForPaint = null;
+							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+							focusTime = 0f;
+						}
 					}
 					return true;
 				}
 			}
 		}
+
+		if (mode == "trace") {
+			if (targetObjectsForTrace == null){
+				targetObjectsForTrace = new string[targetObjects.Length];
+				for (int i = 0; i<targetObjects.Length; i++){
+					targetObjectsForTrace[i] = "unvisited";
+					Debug.Log("-----------init all nodes as unvisited----------");
+				}
+			}
+			if (tracedObjects == null){
+				tracedObjects = new RaycastHit2D[targetObjects.Length];
+			}
+			if (canTarget) {
+				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+				if (obj != null) {
+					//get properties of the current object
+					lastObj = curObj;
+					curObj = obj.transform;
+					string id = null;
+					if (curObj){
+						GameItem gi = curObj.GetComponent<GameItem>();
+						id = gi.id;
+						lastObjName = id;
+					}
+					if (id != null){
+						//we are tracing an unvisited node, so we set it green, and set it as visited
+						if (targetObjects[tracedIndex] == id && targetObjectsForTrace[tracedIndex] == "unvisited"){
+							curObj.GetComponent<SpriteRenderer>().color = Color.green;
+							targetObjectsForTrace[tracedIndex] = "visited";
+							tracedObjects[tracedIndex] = obj;
+							tracedIndex++;
+							Debug.Log("-----------this is visiting: "+id+"----------");
+						}
+						//we are tracing a visited node, so we keep it green.
+						for (int i=0; i<targetObjects.Length; i++){	
+							if(targetObjects[i] == id && targetObjectsForTrace[i] == "visited"){
+								curObj.GetComponent<SpriteRenderer>().color = Color.green;
+								Debug.Log("-----------this is visited: "+id+"----------");
+							}else if(targetObjects[i] == null){
+
+							}
+							//we are painting something that is not inside the painting shape, so we set it red
+							else{
+								Debug.Log("-----------this makes it red: "+id+"----------");
+								//curObj.GetComponent<SpriteRenderer>().color = Color.red;
+							}
+						}
+						
+						if (checkTraceCompleted()){
+							targetObjectsForPaint = null;
+							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+							focusTime = 0f;
+						}
+					}
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 	

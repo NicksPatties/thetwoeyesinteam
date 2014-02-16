@@ -484,7 +484,7 @@ GameObject:
   - 114: {fileID: 84512183}
   - 114: {fileID: 84512184}
   m_Layer: 0
-  m_Name: TaskManager
+  m_Name: ChapterManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1073,6 +1073,86 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: 2881ea4e113ed474e8f72372ac995a11, type: 3}
   m_Color: {r: .625, g: .625, b: .625, a: 1}
+--- !u!1 &312587524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 312587529}
+  - 20: {fileID: 312587528}
+  - 124: {fileID: 312587527}
+  - 92: {fileID: 312587526}
+  - 81: {fileID: 312587525}
+  m_Layer: 14
+  m_Name: Text Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &312587525
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 312587524}
+  m_Enabled: 0
+--- !u!92 &312587526
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 312587524}
+  m_Enabled: 1
+--- !u!124 &312587527
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 312587524}
+  m_Enabled: 0
+--- !u!20 &312587528
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 312587524}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: .300000012
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 5
+  m_Depth: 2
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294951144
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_HDR: 0
+  m_OcclusionCulling: 1
+--- !u!4 &312587529
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 312587524}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .690819502, y: .0442046151, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &316576685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,7 +1346,7 @@ GameObject:
   - 132: {fileID: 347349765}
   - 114: {fileID: 347349764}
   - 82: {fileID: 347349763}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2057,7 +2137,7 @@ GameObject:
   - 4: {fileID: 774377746}
   - 132: {fileID: 774377748}
   - 114: {fileID: 774377747}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Action Prompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3035,7 +3115,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1443004455}
   - 212: {fileID: 1443004456}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4083,7 +4163,7 @@ GameObject:
   - 124: {fileID: 1971773952}
   - 92: {fileID: 1971773951}
   - 81: {fileID: 1971773950}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: EyeBall Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4103,7 +4183,7 @@ Behaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1971773949}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!124 &1971773952
 Behaviour:
   m_ObjectHideFlags: 0
@@ -4132,10 +4212,10 @@ Camera:
   field of view: 53
   orthographic: 1
   orthographic size: 5
-  m_Depth: 1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294959848
+    m_Bits: 4294943464
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
