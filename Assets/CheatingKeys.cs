@@ -13,7 +13,7 @@ public class CheatingKeys : MonoBehaviour {
 		if(Input.GetKey(KeyCode.B)){//cheating mode for blur effect
 			GameObject mainCamera = GameObject.Find("Main Camera");
 			blurred = !blurred;
-			mainCamera.GetComponent<ChangableBlur>().enabled = blurred;
+			mainCamera.GetComponent<BlurOnCamera>().enabled = blurred;
 		}
 		if(Input.GetKey(KeyCode.C)){//cheating mode for eyeball following
 			GameObject rightEye = GameObject.Find("Right Eye");
