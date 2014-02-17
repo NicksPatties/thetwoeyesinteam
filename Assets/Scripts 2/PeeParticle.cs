@@ -11,13 +11,12 @@ public class PeeParticle : MonoBehaviour {
 	public GameObject stream;
 	public PeeStream ps;
 	private bool active;
-	//public List<Transform> pee;
+	public GameObject peeSplash;
 
 	// Use this for initialization
 	void Start () {
 		stream = GameObject.Find("PeeStream");
 		ps = (PeeStream) stream.GetComponent(typeof(PeeStream));
-		//pee = ps.pee;
 		self = this.transform;
 		position.x = 0;
 		position.y = 0;
@@ -26,13 +25,11 @@ public class PeeParticle : MonoBehaviour {
 		maxVelocity = 0;
 		original = false;
 		active = true;
+		//peeSplash = GameObject.Find("peeSplash");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//position.x+= velocity.x;
-		//position.y+= velocity.y;
-		//self.transform.position = position;
 		if(!original) {
 			if(maxVelocity == 0)
 				getVelocity();
@@ -41,16 +38,27 @@ public class PeeParticle : MonoBehaviour {
 			}
 			// When Pee Particle reaches target point
 			if(targetPosition.x == transform.position.x && targetPosition.y == transform.position.y) {
+				initiateSplash(this.transform.position);
 				resetPosition();
 				active = false;
 				ps.addToQueue(this);
-				//getTarget();
 			}
 			if(active && !original) {
 				float step = Random.value*maxVelocity * Time.deltaTime;
 				transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
 			}
 		}
+	}
+
+	void initiateSplash(Vector2 pos) {
+		GameObject newPeeSplash = (GameObject) Instantiate(peeSplash);
+		Quaternion rotate;
+		rotate.x = 0;
+		rotate.y = 0;
+		rotate.z = 0;
+		rotate.w = 0;
+		newPeeSplash.transform.rotation = rotate;
+		newPeeSplash.transform.position = pos;
 	}
 
 	void getVelocity() {
@@ -64,8 +72,8 @@ public class PeeParticle : MonoBehaviour {
 	public void getTarget() {
 		GameObject target = GameObject.Find("Cursor");
 		if(target != null){
-			targetPosition.x = target.transform.position.x+(Random.value/2-0.25f);
-			targetPosition.y = target.transform.position.y+(Random.value/2-0.25f);
+			targetPosition.x = target.transform.position.x+(Random.value/4-0.125f);
+			targetPosition.y = target.transform.position.y+(Random.value/4-0.125f);
 		}
 	}
 

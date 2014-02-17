@@ -6,37 +6,40 @@ public class PeeStream : MonoBehaviour {
 	public int maxParticles;
 	public float particleVelocity;
 	public float emissionSpeed;
-
-	private float emissionWaitTimer;
-	public int particleCount;
-	public Transform originalParticle;
-	public GameObject target;
-	public List<PeeParticle> pee;
-	public int listSize;
-	public PeeParticle originalPee;
+	public int particleDensity;
 	public Sprite[] peeSprites;
-	public SpriteRenderer sr;
+	public Sprite[] peeSprites2;
+	public bool circularParticle;
+	
+	public int particleCount;
+	private Transform originalParticle;
+	private GameObject target;
+	private List<PeeParticle> pee;
+	public int listSize;
+	private PeeParticle originalPee;
+
+	private SpriteRenderer sr;
 	
 	// Use this for initialization
 	void Start () {
 		//Change Foreground to the layer you want it to display on
 		//You could prob. make a public variable for this
-		emissionWaitTimer = 0f;
 		particleCount = 0;
 		originalParticle = transform.Find("PeeParticle");
 		target = GameObject.Find("Cursor");
 		pee = new List<PeeParticle>();
-		//peeSprites = new Sprite[10];
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (particleCount < maxParticles) {
+		if (particleCount < maxParticles && pee.Count < particleDensity) {
 			addParticle();
 		}
-		if(pee.Count > 2){
-			popFromQueue();
-			popFromQueue();
+
+		if(pee.Count > particleDensity) {
+			for(int i=0; i<particleDensity; i++) {
+				popFromQueue();
+			}
 		}
 		listSize = pee.Count;
 
@@ -45,8 +48,7 @@ public class PeeStream : MonoBehaviour {
 	}
 
 	void addParticle() {
-		Transform newPeeParticle;
-		newPeeParticle = (Transform) Instantiate(originalParticle);
+		Transform newPeeParticle = (Transform) Instantiate(originalParticle);
 		PeeParticle pp = (PeeParticle) newPeeParticle.GetComponent(typeof(PeeParticle));
 		Vector2 pos;
 		pos.x = transform.position.x;
@@ -55,9 +57,11 @@ public class PeeStream : MonoBehaviour {
 		pp.correctRotation();
 
 		sr = (SpriteRenderer) newPeeParticle.GetComponent(typeof(SpriteRenderer));
-		sr.sprite = peeSprites[(int) (Random.value*peeSprites.Length)];
+		if(circularParticle)
+			sr.sprite = peeSprites[(int) (Random.value*peeSprites.Length)];
+		else
+			sr.sprite = peeSprites2[(int) (Random.value*peeSprites2.Length)];
 
-		//pee.Add(newPeeParticle);
 		particleCount++;
 	}
 
@@ -66,8 +70,8 @@ public class PeeStream : MonoBehaviour {
 	}
 
 	public void popFromQueue() {
-		pee[0].setActive();
 		pee[0].getTarget();
+		pee[0].setActive();
 		pee.Remove(pee[0]);
 	}
 
