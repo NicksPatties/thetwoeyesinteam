@@ -33,7 +33,9 @@ public class PeeStream : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (particleCount < maxParticles && pee.Count < particleDensity) {
-			addParticle();
+			for(int i=0; i<particleDensity; i++) {
+				addParticle();
+			}
 		}
 
 		if(pee.Count > particleDensity) {

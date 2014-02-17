@@ -11,6 +11,7 @@ public class PeeParticle : MonoBehaviour {
 	public GameObject stream;
 	public PeeStream ps;
 	private bool active;
+	public bool enableSplash;
 	public GameObject peeSplash;
 
 	// Use this for initialization
@@ -25,20 +26,22 @@ public class PeeParticle : MonoBehaviour {
 		maxVelocity = 0;
 		original = false;
 		active = true;
-		//peeSplash = GameObject.Find("peeSplash");
+		//enableSplash = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(!original) {
-			if(maxVelocity == 0)
-				getVelocity();
+			//if(maxVelocity == 0)
+			getVelocity();
 			if (targetPosition.x == 0 && targetPosition.y == 0) {
 				getTarget();
 			}
 			// When Pee Particle reaches target point
 			if(targetPosition.x == transform.position.x && targetPosition.y == transform.position.y) {
-				initiateSplash(this.transform.position);
+				if(enableSplash){
+					initiateSplash(this.transform.position);
+				}
 				resetPosition();
 				active = false;
 				ps.addToQueue(this);
@@ -61,7 +64,7 @@ public class PeeParticle : MonoBehaviour {
 		newPeeSplash.transform.position = pos;
 	}
 
-	void getVelocity() {
+	public void getVelocity() {
 		if(stream != null) {
 			PeeStream ps = (PeeStream) stream.GetComponent(typeof(PeeStream));
 			if(ps != null)

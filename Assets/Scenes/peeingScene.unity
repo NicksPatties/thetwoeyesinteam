@@ -3140,7 +3140,7 @@ MonoBehaviour:
   maxParticles: 500
   particleVelocity: 10
   emissionSpeed: 0
-  particleDensity: 8
+  particleDensity: 4
   peeSprites:
   - {fileID: 21300000, guid: 3bfbe61db553512439189371b56938c9, type: 3}
   - {fileID: 21300030, guid: 3bfbe61db553512439189371b56938c9, type: 3}
@@ -3173,7 +3173,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1301550178}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: -.043961525, y: -2.16943979, z: -7.18283701}
+  m_LocalPosition: {x: .646744251, y: -2.16943979, z: -7.18283701}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1739484552}
@@ -3954,6 +3954,7 @@ MonoBehaviour:
   original: 0
   stream: {fileID: 0}
   ps: {fileID: 0}
+  enableSplash: 0
   peeSplash: {fileID: 100000, guid: c9a9e526ea05ffe4cb18053009a26439, type: 2}
 --- !u!4 &1739484552
 Transform:
