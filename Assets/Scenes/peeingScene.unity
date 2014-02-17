@@ -2994,7 +2994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7ce6e46f4798f48916e84301c1e329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxParticles: 100
+  maxParticles: 1000
   particleVelocity: 10
   emissionSpeed: 0
   particleCount: 0
@@ -3002,7 +3002,24 @@ MonoBehaviour:
   target: {fileID: 0}
   pee: []
   listSize: 0
-  temp: {fileID: 0}
+  originalPee: {fileID: 0}
+  peeSprites:
+  - {fileID: 21300000, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300030, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300004, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300006, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300008, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300010, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300012, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300014, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300016, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300018, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300008, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300022, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300024, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300004, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  - {fileID: 21300028, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  sr: {fileID: 0}
 --- !u!4 &1301550182
 Transform:
   m_ObjectHideFlags: 0
@@ -3822,8 +3839,8 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_SortingLayerID: 2511236001
-  m_Sprite: {fileID: 21300008, guid: e7d3a1e0e2fac4bd48b6734c2daf4fe1, type: 3}
-  m_Color: {r: 1, g: .894523382, b: .0441176295, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 3bfbe61db553512439189371b56938c9, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1751502749
 GameObject:
   m_ObjectHideFlags: 0

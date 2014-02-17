@@ -39,6 +39,7 @@ public class PeeParticle : MonoBehaviour {
 			if (targetPosition.x == 0 && targetPosition.y == 0) {
 				getTarget();
 			}
+			// When Pee Particle reaches target point
 			if(targetPosition.x == transform.position.x && targetPosition.y == transform.position.y) {
 				resetPosition();
 				active = false;
@@ -46,7 +47,7 @@ public class PeeParticle : MonoBehaviour {
 				//getTarget();
 			}
 			if(active && !original) {
-				float step = maxVelocity * Time.deltaTime;
+				float step = Random.value*maxVelocity * Time.deltaTime;
 				transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
 			}
 		}

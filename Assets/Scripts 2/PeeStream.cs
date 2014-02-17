@@ -13,8 +13,10 @@ public class PeeStream : MonoBehaviour {
 	public GameObject target;
 	public List<PeeParticle> pee;
 	public int listSize;
-	public PeeParticle temp;
-
+	public PeeParticle originalPee;
+	public Sprite[] peeSprites;
+	public SpriteRenderer sr;
+	
 	// Use this for initialization
 	void Start () {
 		//Change Foreground to the layer you want it to display on
@@ -24,7 +26,7 @@ public class PeeStream : MonoBehaviour {
 		originalParticle = transform.Find("PeeParticle");
 		target = GameObject.Find("Cursor");
 		pee = new List<PeeParticle>();
-
+		//peeSprites = new Sprite[10];
 	}
 	
 	// Update is called once per frame
@@ -38,8 +40,8 @@ public class PeeStream : MonoBehaviour {
 		}
 		listSize = pee.Count;
 
-		temp = (PeeParticle) originalParticle.GetComponent (typeof(PeeParticle));
-		temp.setOriginality();
+		originalPee = (PeeParticle) originalParticle.GetComponent (typeof(PeeParticle));
+		originalPee.setOriginality();
 	}
 
 	void addParticle() {
@@ -51,6 +53,9 @@ public class PeeStream : MonoBehaviour {
 		pos.y = transform.position.y;
 		pp.setPosition(pos);
 		pp.correctRotation();
+
+		sr = (SpriteRenderer) newPeeParticle.GetComponent(typeof(SpriteRenderer));
+		sr.sprite = peeSprites[(int) (Random.value*peeSprites.Length)];
 
 		//pee.Add(newPeeParticle);
 		particleCount++;
