@@ -529,6 +529,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curAction: {fileID: 0}
   actionIndex: 0
+--- !u!1 &84564785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 84564786}
+  m_Layer: 0
+  m_Name: PeeSplash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &84564786
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 84564785}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: -.682194173, y: 2.41262242e-05, z: 1.61459231}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1301550182}
 --- !u!1 &109783332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,7 +1570,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 353057295}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08ce99007b0d145e1a99ebfca900218a, type: 3}
   m_Name: 
@@ -2968,12 +2994,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7ce6e46f4798f48916e84301c1e329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxParticles: 1000
+  maxParticles: 100
   particleVelocity: 10
   emissionSpeed: 0
   particleCount: 0
   originalParticle: {fileID: 0}
   target: {fileID: 0}
+  pee: []
+  listSize: 0
+  temp: {fileID: 0}
 --- !u!4 &1301550182
 Transform:
   m_ObjectHideFlags: 0
@@ -2985,6 +3014,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1739484552}
+  - {fileID: 84564786}
   m_Father: {fileID: 0}
 --- !u!1 &1372585083
 GameObject:
@@ -3759,6 +3789,7 @@ MonoBehaviour:
   maxVelocity: 0
   original: 0
   stream: {fileID: 0}
+  ps: {fileID: 0}
 --- !u!4 &1739484552
 Transform:
   m_ObjectHideFlags: 0
@@ -3766,7 +3797,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1739484550}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.3489387, y: 5.47990112e-07, z: -4.59687471}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1301550182}

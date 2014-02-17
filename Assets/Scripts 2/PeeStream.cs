@@ -13,6 +13,7 @@ public class PeeStream : MonoBehaviour {
 	public GameObject target;
 	public List<PeeParticle> pee;
 	public int listSize;
+	public PeeParticle temp;
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,7 @@ public class PeeStream : MonoBehaviour {
 		originalParticle = transform.Find("PeeParticle");
 		target = GameObject.Find("Cursor");
 		pee = new List<PeeParticle>();
+
 	}
 	
 	// Update is called once per frame
@@ -30,20 +32,14 @@ public class PeeStream : MonoBehaviour {
 		if (particleCount < maxParticles) {
 			addParticle();
 		}
-		popFromQueue();
-		listSize = pee.Count;
-		PeeParticle temp = (PeeParticle) originalParticle.GetComponent (typeof(PeeParticle));
-		temp.setOriginality();
-
-		foreach (PeeParticle piss in pee) {
-			PeeParticle pp = (PeeParticle) piss.GetComponent(typeof(PeeParticle));
-			/*if (pp.maxVelocity == 0)
-				pp.maxVelocity = particleVelocity;
-			if (pp.targetPosition.x == 0 && pp.targetPosition.y == 0) {
-				pp.targetPosition.x = target.transform.position.x;
-				pp.targetPosition.y = target.transform.position.y;
-			}*/
+		if(pee.Count > 2){
+			popFromQueue();
+			popFromQueue();
 		}
+		listSize = pee.Count;
+
+		temp = (PeeParticle) originalParticle.GetComponent (typeof(PeeParticle));
+		temp.setOriginality();
 	}
 
 	void addParticle() {

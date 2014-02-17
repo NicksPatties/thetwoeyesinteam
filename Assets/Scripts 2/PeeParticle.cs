@@ -45,7 +45,7 @@ public class PeeParticle : MonoBehaviour {
 				ps.addToQueue(this);
 				//getTarget();
 			}
-			if(active) {
+			if(active && !original) {
 				float step = maxVelocity * Time.deltaTime;
 				transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
 			}
