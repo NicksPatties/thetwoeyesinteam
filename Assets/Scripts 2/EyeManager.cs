@@ -28,6 +28,7 @@ public class EyeManager : MonoBehaviour {
 	public  Vector2 cursorTarget;
 	public  float focusTime; //number of seconds the cursor been on an object
 	public  float waitOnFocusTime;  //the time in seconds the cursor must be on an object before moving to the next action
+	public  float maxCursorVelocity;
 	#endregion
 
 	private bool    objectHasIncreasedInSize;
@@ -62,6 +63,7 @@ public class EyeManager : MonoBehaviour {
 		focusTime = 0f;
 		waitOnFocusTime = 2f;
 		targetRadius = 0.5f;
+		maxCursorVelocity = 5f;
 
 		oldScale = Vector3.zero;
 		scaleSize = 1.3f;
@@ -121,7 +123,8 @@ public class EyeManager : MonoBehaviour {
 		cursorPos.y = cursorPoint.transform.position.y;
 
 		if(canTarget){ //if players are focused
-			cursorPoint.transform.position = midPoint;
+			float step = maxCursorVelocity * Time.deltaTime;
+			cursorPoint.transform.position = Vector2.MoveTowards(cursorPoint.transform.position, midPoint, step);
 			cursorVelocity.x = 0f;
 			cursorVelocity.y = 0f;
 		}else{ //if players are not focused, wander
