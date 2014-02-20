@@ -1189,12 +1189,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 646978931}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08ce99007b0d145e1a99ebfca900218a, type: 3}
+  m_Script: {fileID: 11500000, guid: 28eaa981615b7734ab109bb3edb93d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 7
+  iterations: 1
   blurSpread: .899999976
   blurShader: {fileID: 4800000, guid: 57e6deea7c2924e22a5138e2b70bb4dc, type: 3}
 --- !u!81 &646978933
