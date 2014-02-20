@@ -58,7 +58,25 @@
 			"index":"3",
 			"objects":[
 				{
-					"name":"toilet"
+					"name":"insideOutlineA0"
+				},
+				{
+					"name":"insideOutlineA1"
+				},
+				{
+					"name":"insideOutlineA2"
+				},
+				{
+					"name":"insideOutlineA3"
+				},
+				{
+					"name":"insideOutlineA4"
+				},
+				{
+					"name":"insideOutlineA5"
+				},
+				{
+					"name":"insideOutlineA6"
 				}
 			],
 			"type":"paint"
@@ -67,7 +85,7 @@
 			"index":"4",
 			"objects":[
 				{
-					"name":"pantsfly"
+					"name":"model"
 				}
 			],
 			"type":"focus"
@@ -76,7 +94,7 @@
 			"index":"5",
 			"objects":[
 				{
-					"name":"pantsfly"
+					"name":"paint brush"
 				}
 			],
 			"type":"find"
@@ -85,7 +103,25 @@
 			"index":"6",
 			"objects":[
 				{
-					"name":"pantsfly"
+					"name":"dottedOutlineA0"
+				},
+				{
+					"name":"dottedOutlineA1"
+				},
+				{
+					"name":"dottedOutlineA2"
+				},
+				{
+					"name":"dottedOutlineA3"
+				},
+				{
+					"name":"dottedOutlineA4"
+				},
+				{
+					"name":"dottedOutlineA5"
+				},
+				{
+					"name":"dottedOutlineA6"
 				}
 			],
 			"type":"trace"
@@ -94,7 +130,25 @@
 			"index":"7",
 			"objects":[
 				{
-					"name":"pantsfly"
+					"name":"scanModelA0"
+				},
+				{
+					"name":"scanModelA1"
+				},
+				{
+					"name":"scanModelA2"
+				},
+				{
+					"name":"scanModelA3"
+				},
+				{
+					"name":"scanModelA4"
+				},
+				{
+					"name":"scanModelA5"
+				},
+				{
+					"name":"scanModelA6"
 				}
 			],
 			"type":"paint"
@@ -103,7 +157,25 @@
 			"index":"8",
 			"objects":[
 				{
-					"name":"pantsfly"
+					"name":"finishOutlineA0"
+				},
+				{
+					"name":"finishOutlineA1"
+				},
+				{
+					"name":"finishOutlineA2"
+				},
+				{
+					"name":"finishOutlineA3"
+				},
+				{
+					"name":"finishOutlineA4"
+				},
+				{
+					"name":"finishOutlineA5"
+				},
+				{
+					"name":"finishOutlineA6"
 				}
 			],
 			"type":"trace"

@@ -10,6 +10,29 @@ public class BlurController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		changeIteration();
+		//changeSpread();
+	}
+
+	void changeSpread() {
+		//Here is the blur effect code. multiple conditions for different distance domain
+		GameObject player = GameObject.Find("Player");
+		float d = player.GetComponent<EyeManager>().lrDistance;
+		//Debug.Log("-------current left right distance is-------"+d);
+		GameObject mainCamera = GameObject.Find("Blur Camera");
+
+		if (d>=0.0f&&d<=1.0f){
+			mainCamera.GetComponent<BlurOnCamera>().blurSpread = 0.0f;
+			mainCamera.GetComponent<BlurOnCamera>().enabled = false;
+		}else{
+			mainCamera.GetComponent<BlurOnCamera>().enabled = true;
+		}
+		if (d>1.0f){
+			mainCamera.GetComponent<BlurOnCamera>().blurSpread = (float)(0.99*(d)/16);
+		}
+	}
+
+	void changeIteration() {
 		//Here is the blur effect code. multiple conditions for different distance domain
 		GameObject player = GameObject.Find("Player");
 		float d = player.GetComponent<EyeManager>().lrDistance;

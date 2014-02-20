@@ -43,10 +43,11 @@ public class EyeManager : MonoBehaviour {
 	private string[] targetObjectsForPaint;
 	private RaycastHit2D[] paintedObjects;
 
-	//for paint
+	//for trace
 	private string[] targetObjectsForTrace;
 	private RaycastHit2D[] tracedObjects;
 	private int tracedIndex;
+	private bool invisibled;
 
 	// Use this for initialization
 	void Start () {
@@ -411,6 +412,21 @@ public class EyeManager : MonoBehaviour {
 					Debug.Log("-----------init all nodes as unvisited----------");
 				}
 			}
+			if (invisibled == false){
+				for (int i = tracedIndex; i<targetObjects.Length; i++){
+					string s = "OutlineOldGuyNode"+i.ToString();
+					if (GameObject.Find(s)){
+						GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
+					}
+				}
+				for (int i = 0; i<= tracedIndex; i++){
+					string s1 = "OutlineOldGuyNode"+i.ToString();
+					if (GameObject.Find(s1)){
+						GameObject.Find(s1).GetComponent<SpriteRenderer>().enabled = true;
+					}
+				}
+				invisibled = true;
+			}
 			if (tracedObjects == null){
 				tracedObjects = new RaycastHit2D[targetObjects.Length];
 			}
@@ -434,6 +450,7 @@ public class EyeManager : MonoBehaviour {
 							tracedObjects[tracedIndex] = obj;
 							tracedIndex++;
 							Debug.Log("-----------this is visiting: "+id+"----------");
+							invisibled = false;
 						}
 						//we are tracing a visited node, so we keep it green.
 						for (int i=0; i<targetObjects.Length; i++){	
