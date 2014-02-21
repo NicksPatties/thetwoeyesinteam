@@ -4,24 +4,24 @@ using System.Collections.Generic;
 
 public class EyeManager : MonoBehaviour {
 
+	#region Player Variables
 	private Transform leftEye;
 	private Transform rightEye;
-	private Transform radiusMarker;
-	private Transform objectCheck;
+	private Transform radiusMarker;   //helps calculate the radius of the player's eyeball
 	private Transform lastObj;
 	private Transform curObj;
-	
-	public string mode;
-
-	private float R;
+	private float eyeballRadius;
 	public  float lrDistance;
 	private Vector2 midPoint;
 	private bool canTarget;
 	private bool isOverObject;
+	#endregion
+
+	public string mode; //TODO: should THIS be the enum?
 
 	#region Cursor Variables
 	private Transform cursorPoint;
-	private Vector2 newCursorPos;
+	private Transform cursorCollider; //used to check if eyes are focused on something
 	public  Vector2 cursorVelocity;
 	public  float cursorToTargetDistance;
 	public  float targetRadius;
@@ -31,23 +31,19 @@ public class EyeManager : MonoBehaviour {
 	public  float maxCursorVelocity;
 	#endregion
 
-	private bool    objectHasIncreasedInSize;
-	public  Vector3 oldScale;
-	private float   scaleSize;
-	private string lastObjName;
-
 	//for all actions
+	//TODO: separate EyeManager, ActionManager (single action), and ChapterManager (the whole chapter)
 	private string[] targetObjects;
 
-	//for paint
-	private string[] targetObjectsForPaint;
+	//for paint //TODO: change the name of "paint" to "scan," because it makes more sense
+	private string[] targetObjectsForPaint; //TODO: perhaps this should be an array of GameObjects instead?
 	private RaycastHit2D[] paintedObjects;
 
 	//for trace
 	private string[] targetObjectsForTrace;
 	private RaycastHit2D[] tracedObjects;
 	private int tracedIndex;
-	private bool invisibled;
+	private bool invisible;
 
 	// Use this for initialization
 	void Start () {
@@ -55,25 +51,22 @@ public class EyeManager : MonoBehaviour {
 		rightEye = transform.Find("Right Eye");
 		radiusMarker = rightEye.transform.Find("topWallCheck");
 		cursorPoint = transform.Find("Cursor");
-		objectCheck = cursorPoint.transform.Find("objectCheck");
+		cursorCollider = cursorPoint.transform.Find("objectCheck");
 		mode = "";
 
 		cursorVelocity.x = 0;
 		cursorVelocity.y = 0;
-		R = 0.5f;
 		focusTime = 0f;
 		waitOnFocusTime = 2f;
 		targetRadius = 0.5f;
 		maxCursorVelocity = 5f;
 
-		oldScale = Vector3.zero;
-		scaleSize = 1.3f;
+		eyeballRadius = Mathf.Abs(rightEye.transform.position.y - radiusMarker.transform.position.y);
 	}
 
 
 	// Update is called once per frame
 	void Update () {
-		R = Mathf.Abs(rightEye.transform.position.y - radiusMarker.transform.position.y);
 
 		// find distance between the 2 eyes
 		lrDistance = Vector2.Distance(rightEye.transform.position, leftEye.transform.position);
@@ -84,36 +77,25 @@ public class EyeManager : MonoBehaviour {
 		// update cursor position with the midPoint
 		updateCursor();
 
-		if(lrDistance < R)
+		if(lrDistance < eyeballRadius)
 			canTarget = true;
 		else
 			canTarget = false;
+
+		//TODO: Move this to new ActionManager
 		if (mode == "")	{
 			mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 		}
 
-		if(Input.GetKey(KeyCode.Alpha1))
-			mode = "find";
-		if(Input.GetKey(KeyCode.Alpha2))
-			mode = "focus";	
-		if(Input.GetKey(KeyCode.Alpha3))
-			mode = "trace";
-		if(Input.GetKey(KeyCode.Alpha4))
-			mode = "paint";
-
+		//TODO: EVERYTHING
 		isOverObject = checkIntersection();
 
 		// if cursor leaves targetable object, restart focus time, reset appearance, and remove references
 		if(isOverObject == false && lastObj != null) {
-			//TODO: how is oldScale getting changed from line 187 to here?
-			print ("cursor has left the targetable object.");
-			print ("oldScale = " + oldScale);
-			print ("lastObj.localScale = " + lastObj.localScale);
-			print ("need to assign oldScale to lastObj.localScale");
 			focusTime = 0f;
-			//objectHasIncreasedInSize = false;
 			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 			lastObj = null;
+			print("lastObj nullified.");
 		}
 	}
 
@@ -146,6 +128,7 @@ public class EyeManager : MonoBehaviour {
 			else if(cursorPos.y < cursorTarget.y)
 				cursorVelocity.y += 0.001f;
 
+			Vector2 newCursorPos;
 			newCursorPos.x = cursorPoint.transform.position.x + cursorVelocity.x;
 			newCursorPos.y = cursorPoint.transform.position.y + cursorVelocity.y;
 			cursorPoint.transform.position = newCursorPos;
@@ -213,14 +196,13 @@ public class EyeManager : MonoBehaviour {
 		if (mode == "find") {
 			if(canTarget) {
 				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position,
-				                                      objectCheck.position,
+				                                      cursorCollider.position,
 				                                      1 << LayerMask.NameToLayer("Object"));
 				if (obj) {
 
 					//get properties of the current object
 					lastObj = curObj;
 					curObj = obj.transform;
-					oldScale = curObj.localScale;
 
 					string id = null;
 					if (curObj){
@@ -228,40 +210,10 @@ public class EyeManager : MonoBehaviour {
 						//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 						GameItem gi = curObj.GetComponent<GameItem>();
 						id = gi.id;
-						lastObjName = id;
 					}
 
 					if (id != null){
-
-						if(id != lastObjName){
-							objectHasIncreasedInSize = false;
-						}
-
-						if(!objectHasIncreasedInSize){
-
-							//increase the size of the object by a small amount
-							//TODO: fix the not being able to reset size problem
-							float curObjScaleX = curObj.localScale.x;
-							float curObjScaleY = curObj.localScale.y;
-							float curObjScaleZ = curObj.localScale.z;
-
-							Vector3 curObjScale = new Vector3(curObjScaleX, curObjScaleY, curObjScaleZ);
-
-							float oldScaleX = curObjScale.x;
-							float oldScaleY = curObjScale.y;
-							float oldScaleZ = curObjScale.z;
-
-							oldScale = new Vector3(oldScaleX, oldScaleY, oldScaleZ);
-							print ("curObj.localScale = " + curObj.localScale + ": saved in oldScale");
-						
-							float newScaleX = curObjScale.x * scaleSize;
-							float newScaleY = curObjScale.y * scaleSize;
-
-							print ("oldScale = " + oldScale);
-							curObj.localScale = new Vector3(newScaleX, newScaleY, oldScaleZ);
-
-							objectHasIncreasedInSize = true;
-						}
+					
 
 						//wait for focusTime seconds before determining that players have made their selection
 						focusTime += Time.deltaTime;
@@ -306,7 +258,7 @@ public class EyeManager : MonoBehaviour {
 		}
 
 		if (mode == "focus") {
-			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, cursorCollider.position, 1 << LayerMask.NameToLayer("Object"));
 			if (obj.transform != null) {
 				lastObj = curObj;
 				curObj = obj.transform;
@@ -322,7 +274,6 @@ public class EyeManager : MonoBehaviour {
 					//TODO: FIX THESE CONDITIONS
 					focusTime += Time.deltaTime;
 					if(focusTime > waitOnFocusTime){
-						//TODO: place a green check mark for great success!!
 						curObj.GetComponent<SpriteRenderer>().color = Color.green;
 						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 						targetObject = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
@@ -355,7 +306,7 @@ public class EyeManager : MonoBehaviour {
 				paintedObjects = new RaycastHit2D[targetObjects.Length];
 			}
 			if (canTarget) {
-				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, cursorCollider.position, 1 << LayerMask.NameToLayer("Object"));
 				if (obj != null) {
 					//get properties of the current object
 					lastObj = curObj;
@@ -364,7 +315,6 @@ public class EyeManager : MonoBehaviour {
 					if (curObj){
 						GameItem gi = curObj.GetComponent<GameItem>();
 						id = gi.id;
-						lastObjName = id;
 					}
 					if (id != null){
 						for (int i=0; i<targetObjects.Length; i++){	
@@ -413,7 +363,7 @@ public class EyeManager : MonoBehaviour {
 					Debug.Log("-----------init all nodes as unvisited----------");
 				}
 			}
-			if (invisibled == false){
+			if (invisible == false){
 				for (int i = tracedIndex; i<targetObjects.Length; i++){
 					string s = "OutlineOldGuyNode"+i.ToString();
 					if (GameObject.Find(s)){
@@ -426,13 +376,13 @@ public class EyeManager : MonoBehaviour {
 						GameObject.Find(s1).GetComponent<SpriteRenderer>().enabled = true;
 					}
 				}
-				invisibled = true;
+				invisible = true;
 			}
 			if (tracedObjects == null){
 				tracedObjects = new RaycastHit2D[targetObjects.Length];
 			}
 			if (canTarget) {
-				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, objectCheck.position, 1 << LayerMask.NameToLayer("Object"));
+				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, cursorCollider.position, 1 << LayerMask.NameToLayer("Object"));
 				if (obj != null) {
 					//get properties of the current object
 					lastObj = curObj;
@@ -441,7 +391,6 @@ public class EyeManager : MonoBehaviour {
 					if (curObj){
 						GameItem gi = curObj.GetComponent<GameItem>();
 						id = gi.id;
-						lastObjName = id;
 					}
 					if (id != null){
 						//we are tracing an unvisited node, so we set it green, and set it as visited
@@ -451,7 +400,7 @@ public class EyeManager : MonoBehaviour {
 							tracedObjects[tracedIndex] = obj;
 							tracedIndex++;
 							Debug.Log("-----------this is visiting: "+id+"----------");
-							invisibled = false;
+							invisible = false;
 						}
 						//we are tracing a visited node, so we keep it green.
 						for (int i=0; i<targetObjects.Length; i++){	

@@ -1755,7 +1755,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294959864
+    m_Bits: 4294943480
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -2233,14 +2233,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c6a4b2451f1dc48b235ba94eee5d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 1
   lrDistance: 0
+  mode: 1
   cursorVelocity: {x: 0, y: 0}
   cursorToTargetDistance: 0
   targetRadius: 0
   cursorTarget: {x: 0, y: 0}
   focusTime: 0
   waitOnFocusTime: 0
+  maxCursorVelocity: 0
   oldScale: {x: 0, y: 0, z: 0}
 --- !u!212 &1404744231
 SpriteRenderer:
