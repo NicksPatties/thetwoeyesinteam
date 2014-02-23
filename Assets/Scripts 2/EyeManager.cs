@@ -37,7 +37,7 @@ public class EyeManager : MonoBehaviour {
 
 	//for paint //TODO: change the name of "paint" to "scan," because it makes more sense
 	private string[] targetObjectsForPaint; //TODO: perhaps this should be an array of GameObjects instead?
-	private RaycastHit2D[] paintedObjects;
+	private Transform[] paintedObjects;
 
 	//for trace
 	private string[] targetObjectsForTrace;
@@ -82,7 +82,7 @@ public class EyeManager : MonoBehaviour {
 		else
 			canTarget = false;
 
-		//TODO: Move this to new ActionManager
+		//this is moved to actionmanager, but we still need a reference here
 		if (mode == "")	{
 			mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 		}
@@ -91,7 +91,7 @@ public class EyeManager : MonoBehaviour {
 		isOverObject = checkIntersection();
 
 		// if cursor leaves targetable object, restart focus time, reset appearance, and remove references
-		if(isOverObject == false && lastObj != null) {
+		if(isOverObject == false && lastObj != null && mode != "paint" && mode != "trace") {
 			focusTime = 0f;
 			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 			lastObj = null;
@@ -145,293 +145,52 @@ public class EyeManager : MonoBehaviour {
 		return target;
 	}
 
-	bool checkFindCompleted () {
-		//string[] targetObjs = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-		int targetObjectNum = targetObjects.Length;
-		for (int i=0; i<targetObjectNum; i++){
-			if (targetObjects[i] != "done"&&targetObjects[i] != null){
-				Debug.Log("what is not done?: "+targetObjects[i]);
-				return false;
-			}
-		}
-		return true;
-	}
-
-	bool checkPaintCompleted () {
-		for (int i=0; i<targetObjectsForPaint.Length; i++){
-			if (targetObjectsForPaint[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
-				Debug.Log("what is unvisited?: "+targetObjects[i]);
-				return false;
-			}
-		}
-		for (int j=0; j<paintedObjects.Length; j++){
-			if (paintedObjects[j].transform){
-				paintedObjects[j].transform.GetComponent<SpriteRenderer>().color = Color.white;
-			}
-		}
-		Debug.Log("all are visited.");
-		targetObjectsForPaint = null;
-		return true;
-	}
-
-	bool checkTraceCompleted () {
-		for (int i=0; i<targetObjectsForTrace.Length; i++){
-			if (targetObjectsForTrace[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
-				Debug.Log("what is unvisited?: "+targetObjects[i]);
-				return false;
-			}
-		}
-		for (int j=0; j<tracedObjects.Length; j++){
-			if (tracedObjects[j].transform){
-				tracedObjects[j].transform.GetComponent<SpriteRenderer>().color = Color.white;
-			}
-		}
-		Debug.Log("all are visited.");
-		targetObjectsForTrace = null;
-		return true;
-	}
-	
 	bool checkIntersection () {
-		targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-		if (mode == "find") {
-			if(canTarget) {
-				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position,
+		if(canTarget) {
+			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position,
 				                                      cursorCollider.position,
 				                                      1 << LayerMask.NameToLayer("Object"));
-				if (obj) {
-
-					//get properties of the current object
-					lastObj = curObj;
-					curObj = obj.transform;
-
-					string id = null;
-					if (curObj){
-
-						//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
-						GameItem gi = curObj.GetComponent<GameItem>();
-						id = gi.id;
-					}
-
-					if (id != null){
-					
-
-						//wait for focusTime seconds before determining that players have made their selection
-						focusTime += Time.deltaTime;
-						if(focusTime > waitOnFocusTime){
-
-							int targetObjectNum = targetObjects.Length;
-
-							//check if the object is indeed the target object
-							for (int i=0; i<targetObjectNum; i++){
-
-								//if it is correct
-								if (targetObjects[i] == id){
-									curObj.GetComponent<SpriteRenderer>().color = Color.green;
-									targetObjects[i] = "done";
-
-								//if it's not correct
-								}else if(targetObjects[i] == null){
-
-								}else{
-									curObj.GetComponent<SpriteRenderer>().color = Color.red;
-								}
-							}
-
-							if (checkFindCompleted()){;
-								GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-								targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-								mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-								Debug.Log("updated curaction[0] is: "+targetObjects[0]);
-								focusTime = 0f;
-							}
-						}
-					}
-					//if target object changed without targeting empty space
-					if(lastObj != null && curObj != null && lastObj != curObj) {
-						lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
-						lastObj = null;
-					}
-
-					return true;
-				}
-			}
-		}
-
-		if (mode == "focus") {
-			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, cursorCollider.position, 1 << LayerMask.NameToLayer("Object"));
-			if (obj.transform != null) {
+			if (obj) {	
 				lastObj = curObj;
 				curObj = obj.transform;
-				string targetObject = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
-				string id = null;
+
+				string objectName = null;
 				if (curObj){
-					GameItem gi = curObj.GetComponent<GameItem>();
-					id = gi.id;
-					print ("Current object id is: " + id);
+				//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
+					GameItem gameItem = curObj.GetComponent<GameItem>();
+					objectName = gameItem.id;
 				}
-				if (id != null && id == targetObject){
-					//wait for focusTime seconds before determining that players have made their selection
-					//TODO: FIX THESE CONDITIONS
-					focusTime += Time.deltaTime;
-					if(focusTime > waitOnFocusTime){
+					
+				focusTime += Time.deltaTime;
+				bool isRightObject = false;
+				bool isActionComplete = false;
+				if(focusTime > waitOnFocusTime){
+					isRightObject = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkCorrectness(objectName,curObj);
+					if (isRightObject){
 						curObj.GetComponent<SpriteRenderer>().color = Color.green;
-						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-						targetObject = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects[0];
-						mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-						Debug.Log("updated curaction[0] is: "+targetObject);
+						focusTime = 0f;
+						if (mode == "find"){
+							Debug.Log("in find intersection checking");
+							isActionComplete = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkFindCompleted();
+						}else if (mode == "focus"){
+
+						}else if (mode == "paint"){
+							Debug.Log("in paint intersection checking");
+							isActionComplete = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkPaintCompleted();
+						}else if (mode == "trace"){
+							Debug.Log("in trace intersection checking");
+							isActionComplete = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkTraceCompleted();
+						}else{
+							Debug.Log("Do we have 5th mode?");
+						}
+					}else{
+						curObj.GetComponent<SpriteRenderer>().color = Color.red;
 						focusTime = 0f;
 					}
-				}else{
-					//you haven't found anything, so reset the time
-					print ("I haven't found anything...");
-					//focusTime = 0f;
-				}
-				if(lastObj != null && curObj != null && lastObj != curObj) {
-					lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
-					lastObj = null;
 				}
 				return true;
 			}
 		}
-
-		if (mode == "paint") {
-			if (targetObjectsForPaint == null){
-				targetObjectsForPaint = new string[targetObjects.Length];
-				for (int i = 0; i<targetObjects.Length; i++){
-					targetObjectsForPaint[i] = "unvisited";
-					Debug.Log("-----------init all nodes as unvisited----------");
-				}
-			}
-			if (paintedObjects == null){
-				paintedObjects = new RaycastHit2D[targetObjects.Length];
-			}
-			if (canTarget) {
-				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, cursorCollider.position, 1 << LayerMask.NameToLayer("Object"));
-				if (obj != null) {
-					//get properties of the current object
-					lastObj = curObj;
-					curObj = obj.transform;
-					string id = null;
-					if (curObj){
-						GameItem gi = curObj.GetComponent<GameItem>();
-						id = gi.id;
-					}
-					if (id != null){
-						for (int i=0; i<targetObjects.Length; i++){	
-							//we are painting an unvisited node, so we set it green, and set it as visited
-							if (targetObjects[i] == id && targetObjectsForPaint[i] == "unvisited"){
-								curObj.GetComponent<SpriteRenderer>().color = Color.green;
-								targetObjectsForPaint[i] = "visited";
-								paintedObjects[i] = obj;
-								break;
-								Debug.Log("-----------this is visiting: "+id+"----------");
-							}
-							//we are painting a visited node, so we keep it green.
-							else if(targetObjects[i] == id && targetObjectsForPaint[i] == "visited"){
-								curObj.GetComponent<SpriteRenderer>().color = Color.green;
-								Debug.Log("-----------this is visited: "+id+"----------");
-								break;
-							}else if(targetObjects[i] == null){
-									
-							}
-							//we are painting something that is not inside the painting shape, so we set it red
-							else{
-								Debug.Log("-----------this makes it red: "+id+"----------");
-								curObj.GetComponent<SpriteRenderer>().color = Color.red;
-							}
-						}
-							
-						if (checkPaintCompleted()){
-							targetObjectsForPaint = null;
-							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
-							focusTime = 0f;
-						}
-					}
-					return true;
-				}
-			}
-		}
-
-		if (mode == "trace") {
-			if (targetObjectsForTrace == null){
-				targetObjectsForTrace = new string[targetObjects.Length];
-				for (int i = 0; i<targetObjects.Length; i++){
-					targetObjectsForTrace[i] = "unvisited";
-					Debug.Log("-----------init all nodes as unvisited----------");
-				}
-			}
-			if (invisible == false){
-				for (int i = tracedIndex; i<targetObjects.Length; i++){
-					string s = "OutlineOldGuyNode"+i.ToString();
-					if (GameObject.Find(s)){
-						GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
-					}
-				}
-				for (int i = 0; i<= tracedIndex; i++){
-					string s1 = "OutlineOldGuyNode"+i.ToString();
-					if (GameObject.Find(s1)){
-						GameObject.Find(s1).GetComponent<SpriteRenderer>().enabled = true;
-					}
-				}
-				invisible = true;
-			}
-			if (tracedObjects == null){
-				tracedObjects = new RaycastHit2D[targetObjects.Length];
-			}
-			if (canTarget) {
-				RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position, cursorCollider.position, 1 << LayerMask.NameToLayer("Object"));
-				if (obj != null) {
-					//get properties of the current object
-					lastObj = curObj;
-					curObj = obj.transform;
-					string id = null;
-					if (curObj){
-						GameItem gi = curObj.GetComponent<GameItem>();
-						id = gi.id;
-					}
-					if (id != null){
-						//we are tracing an unvisited node, so we set it green, and set it as visited
-						if (targetObjects[tracedIndex] == id && targetObjectsForTrace[tracedIndex] == "unvisited"){
-							curObj.GetComponent<SpriteRenderer>().color = Color.green;
-							targetObjectsForTrace[tracedIndex] = "visited";
-							tracedObjects[tracedIndex] = obj;
-							tracedIndex++;
-							Debug.Log("-----------this is visiting: "+id+"----------");
-							invisible = false;
-						}
-						//we are tracing a visited node, so we keep it green.
-						for (int i=0; i<targetObjects.Length; i++){	
-							if(targetObjects[i] == id && targetObjectsForTrace[i] == "visited"){
-								curObj.GetComponent<SpriteRenderer>().color = Color.green;
-								Debug.Log("-----------this is visited: "+id+"----------");
-							}else if(targetObjects[i] == null){
-
-							}
-							//we are painting something that is not inside the painting shape, so we set it red
-							else{
-								Debug.Log("-----------this makes it red: "+id+"----------");
-								//curObj.GetComponent<SpriteRenderer>().color = Color.red;
-							}
-						}
-						
-						if (checkTraceCompleted()){
-							targetObjectsForPaint = null;
-							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
-							focusTime = 0f;
-						}
-					}
-					return true;
-				}
-			}
-		}
-
 		return false;
 	}
-	
 }

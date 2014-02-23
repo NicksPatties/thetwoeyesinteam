@@ -557,9 +557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29da14d4efd0644f3a96d427d6ec6bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObjects: []
-  actionName: 
-  environment: 
 --- !u!114 &84512184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,8 +1032,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c6a4b2451f1dc48b235ba94eee5d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 1
   lrDistance: 0
+  mode: 1
   cursorVelocity: {x: 0, y: 0}
   cursorToTargetDistance: 0
   targetRadius: 0
@@ -1044,7 +1041,6 @@ MonoBehaviour:
   focusTime: 0
   waitOnFocusTime: 0
   maxCursorVelocity: 0
-  oldScale: {x: 0, y: 0, z: 0}
 --- !u!212 &287627400
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1594,9 +1590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ce99007b0d145e1a99ebfca900218a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 1
-  blurSpread: .899999976
-  blurShader: {fileID: 4800000, guid: 57e6deea7c2924e22a5138e2b70bb4dc, type: 3}
 --- !u!1 &386597983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,6 +1716,44 @@ GUIText:
     rgba: 4294967295
   m_PixelCorrect: 1
   m_RichText: 1
+--- !u!1 &428587495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 428587497}
+  - 114: {fileID: 428587496}
+  m_Layer: 0
+  m_Name: ActionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &428587496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 428587495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a316a4b21a2c44eb1be9ffb85edef11d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &428587497
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 428587495}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .690819502, y: .0442046151, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &433467887
 GameObject:
   m_ObjectHideFlags: 0
