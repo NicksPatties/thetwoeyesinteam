@@ -167,23 +167,6 @@ public class ActionManager : MonoBehaviour {
 						Debug.Log("-----------init all trace nodes as unvisited----------");
 					}
 				}
-				if (invisible == false){
-					for (int i = tracedIndex; i<targetObjects.Length; i++){
-						string s = "OutlineOldGuyNode"+i.ToString();
-						if (GameObject.Find(s)){
-							GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
-						}
-						Debug.Log("-----------"+s+" is disabled----------");
-					}
-					for (int i = 0; i<= tracedIndex; i++){
-						string s1 = "OutlineOldGuyNode"+i.ToString();
-						if (GameObject.Find(s1)){
-							GameObject.Find(s1).GetComponent<SpriteRenderer>().enabled = true;
-						}
-						Debug.Log("-----------"+s1+" is enabled----------");
-					}
-					invisible = true;
-				}
 				if (tracedObjects == null){
 					tracedObjects = new Transform[targetObjects.Length];
 				}
@@ -200,39 +183,34 @@ public class ActionManager : MonoBehaviour {
 					if(targetObjects[i] == objectName && targetObjectsForTrace[i] == "visited"){
 						obj.GetComponent<SpriteRenderer>().color = Color.green;
 						Debug.Log("-----------this is visited: "+objectName+"----------");
+						if (checkTraceCompleted()){
+							targetObjectsForTrace = null;
+							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+							GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
+							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+						}
+						if (invisible == false){
+							for (int j = 0; j<targetObjects.Length; j++){
+								string s = "OutlineOldGuyNode"+j.ToString();
+								if (GameObject.Find(s)){
+									if (j <= tracedIndex){
+										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = true;
+									}else{
+										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
+									}
+								}
+							}
+							invisible = true;
+						}
 					}else if(targetObjects[i] == null){
 						
 					}
 					else{
 						Debug.Log("-----------this makes it red: "+objectName+"----------");
-						obj.GetComponent<SpriteRenderer>().color = Color.red;
+						//obj.GetComponent<SpriteRenderer>().color = Color.red;
 					}
-				}
-				if (invisible == false){
-					for (int i = tracedIndex; i<targetObjects.Length; i++){
-						string s = "OutlineOldGuyNode"+i.ToString();
-						if (GameObject.Find(s)){
-							GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
-						}
-						Debug.Log("-----------"+s+" is disabled----------");
-					}
-					for (int i = 0; i<= tracedIndex; i++){
-						string s1 = "OutlineOldGuyNode"+i.ToString();
-						if (GameObject.Find(s1)){
-							GameObject.Find(s1).GetComponent<SpriteRenderer>().enabled = true;
-						}
-						Debug.Log("-----------"+s1+" is enabled----------");
-					}
-					invisible = true;
-				}
-				
-				if (checkTraceCompleted()){
-					targetObjectsForTrace = null;
-					GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-					targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-					mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-					GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
-					Debug.Log("updated curaction[0] is: "+targetObjects[0]);
 				}
 				return true;
 			}
