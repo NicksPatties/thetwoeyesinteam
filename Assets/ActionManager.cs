@@ -22,7 +22,6 @@ public class ActionManager : MonoBehaviour {
 	private bool invisible;
 
 	public bool checkFindCompleted () {
-		//string[] targetObjs = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
 			if (targetObjects[i] != "done"&&targetObjects[i] != null){
@@ -70,12 +69,9 @@ public class ActionManager : MonoBehaviour {
 	public bool checkCorrectness(string objectName, Transform obj){
 		if (objectName != null){
 			targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-//			Debug.Log("curaction[0] is: "+targetObjects[0]);
-
 			if (mode == "find"){
 				int targetObjectNum = targetObjects.Length;
 				for (int i=0; i<targetObjectNum; i++){
-							
 					//if it is correct
 					if (targetObjects[i] == objectName){
 						obj.GetComponent<SpriteRenderer>().color = Color.green;
@@ -85,7 +81,7 @@ public class ActionManager : MonoBehaviour {
 							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 							GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
-							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+							Debug.Log("-------Find complete, next target is: "+targetObjects[0]+ " in mode: "+mode+"--------");
 						}
 					//if it's not correct
 					}else if(targetObjects[i] == null){
@@ -101,7 +97,7 @@ public class ActionManager : MonoBehaviour {
 					targetObjectsForScan = new string[targetObjects.Length];
 					for (int i = 0; i<targetObjects.Length; i++){
 						targetObjectsForScan[i] = "unvisited";
-						Debug.Log("-----------init all scan nodes as unvisited----------");
+						Debug.Log("-----------before scan starts, init all scan nodes as unvisited----------");
 					}
 				}
 				if (scannedObjects == null){
@@ -114,22 +110,23 @@ public class ActionManager : MonoBehaviour {
 						obj.GetComponent<SpriteRenderer>().color = Color.green;
 						targetObjectsForScan[i] = "visited";
 						scannedObjects[i] = obj;
-						Debug.Log("focusTimefocusTime-----------this is visiting: "+objectName+"----------");
+						Debug.Log("-----------this is visiting: "+objectName+"----------");
 						if (checkScanCompleted()){
+							//disable rendering after scan complete
 							for (int k = 0; k<targetObjects.Length; k++){
 								string s = "ModelOldGuyNode"+k.ToString();
 								if (GameObject.Find(s)){
 									GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
 								}
-								Debug.Log("-----------"+s+" is disabled----------");
+								Debug.Log("---------Scan complete, so "+s+" is disabled----------");
 							}
+							//clean the targetObjectFor Scan array after scan complete
 							targetObjectsForScan = null;
 							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 							GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
-							Debug.Log("updated current mode is: "+mode);
-							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+							Debug.Log("-------Scan complete, next target is: "+targetObjects[0]+ " in mode: "+mode+"--------");
 							for (int j = 0; j<targetObjects.Length; j++){
 								string s = "OutlineOldGuyNode"+j.ToString();
 								if (GameObject.Find(s)){
@@ -146,14 +143,14 @@ public class ActionManager : MonoBehaviour {
 					//we are scanning a visited node, so we keep it green.
 					else if(targetObjects[i] == objectName && targetObjectsForScan[i] == "visited"){
 						obj.GetComponent<SpriteRenderer>().color = Color.green;
-						Debug.Log("-----------this is visited: "+objectName+"----------");
+						Debug.Log("-----------Right object, but it is visited already: "+objectName+"----------");
 						break;
 					}else if(targetObjects[i] == null){
 							
 					}
 					//we are scanning something that is not inside the scanning shape, so we set it red
 					else{
-						Debug.Log("-----------this makes it red: "+objectName+"----------");
+						Debug.Log("-----------WRONG OBJECT!!! this makes it red: "+objectName+"----------");
 						obj.GetComponent<SpriteRenderer>().color = Color.red;
 					}
 				}
@@ -164,7 +161,7 @@ public class ActionManager : MonoBehaviour {
 					targetObjectsForTrace = new string[targetObjects.Length];
 					for (int i = 0; i<targetObjects.Length; i++){
 						targetObjectsForTrace[i] = "unvisited";
-						Debug.Log("-----------init all trace nodes as unvisited----------");
+						Debug.Log("-----------before trace starts, init all trace nodes as unvisited----------");
 					}
 				}
 				if (tracedObjects == null){
@@ -177,41 +174,79 @@ public class ActionManager : MonoBehaviour {
 					tracedIndex++;
 					Debug.Log("-----------this is visiting: "+objectName+"----------");
 					invisible = false;
-				}
-				//we are tracing a visited node, so we keep it green.
-				for (int i=0; i<targetObjects.Length; i++){	
-					if(targetObjects[i] == objectName && targetObjectsForTrace[i] == "visited"){
-						obj.GetComponent<SpriteRenderer>().color = Color.green;
-						Debug.Log("-----------this is visited: "+objectName+"----------");
-						if (checkTraceCompleted()){
-							targetObjectsForTrace = null;
-							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-							GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
-							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
-						}
-						if (invisible == false){
-							for (int j = 0; j<targetObjects.Length; j++){
-								string s = "OutlineOldGuyNode"+j.ToString();
-								if (GameObject.Find(s)){
-									if (j <= tracedIndex){
-										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = true;
-									}else{
-										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
-									}
+					if (checkTraceCompleted()){
+						targetObjectsForTrace = null;
+						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+						targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+						mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+						GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
+						Debug.Log("-------Trace complete, next target is: "+targetObjects[0]+ " in mode: "+mode+"--------");
+					}
+					if (invisible == false){
+						for (int j = 0; j<targetObjects.Length; j++){
+							string s = "OutlineOldGuyNode"+j.ToString();
+							if (GameObject.Find(s)){
+								if (j <= tracedIndex){
+									GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = true;
+								}else{
+									GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
 								}
 							}
-							invisible = true;
 						}
-					}else if(targetObjects[i] == null){
-						
+						invisible = true;
 					}
-					else{
-						Debug.Log("-----------this makes it red: "+objectName+"----------");
-						//obj.GetComponent<SpriteRenderer>().color = Color.red;
+				}else{
+					for (int i=0; i<targetObjects.Length; i++){	
+						if(targetObjects[i] == objectName && targetObjectsForTrace[i] == "visited"){
+							break;
+						}
+						if (i==targetObjects.Length-1){
+							Debug.Log("-----------this makes it red: "+objectName+"----------");
+							obj.GetComponent<SpriteRenderer>().color = Color.red;
+						}
 					}
 				}
+				//we are tracing a visited node, so we keep it green.
+//				for (int i=0; i<targetObjects.Length; i++){	
+//					if(targetObjects[i] == objectName && targetObjectsForTrace[i] == "visited"){
+//						break;
+//					}else{
+//						Debug.Log("-----------this makes it red: "+objectName+"----------");
+//						obj.GetComponent<SpriteRenderer>().color = Color.red;
+//					}
+//				}
+						//obj.GetComponent<SpriteRenderer>().color = Color.green;
+						//Debug.Log("-----------this is visited: "+objectName+"----------");
+//						if (checkTraceCompleted()){
+//							targetObjectsForTrace = null;
+//							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+//							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+//							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+//							GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
+//							Debug.Log("-------Trace complete, next target is: "+targetObjects[0]+ " in mode: "+mode+"--------");
+//						}
+//						//make next node visible, keep others invisible
+//						if (invisible == false){
+//							for (int j = 0; j<targetObjects.Length; j++){
+//								string s = "OutlineOldGuyNode"+j.ToString();
+//								if (GameObject.Find(s)){
+//									if (j <= tracedIndex){
+//										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = true;
+//									}else{
+//										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
+//									}
+//								}
+//							}
+//							invisible = true;
+//						}
+//					}else if(targetObjects[i] == null){
+//						
+//					}
+//					else{
+//						Debug.Log("-----------this makes it red: "+objectName+"----------");
+//						obj.GetComponent<SpriteRenderer>().color = Color.red;
+//					}
+//				}
 				return true;
 			}
 		}	

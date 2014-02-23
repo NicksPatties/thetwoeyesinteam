@@ -131,6 +131,7 @@ public class EyeManager : MonoBehaviour {
 		return target;
 	}
 
+	//is this short enough hahaha
 	bool checkIntersection () {
 		if(canTarget) {
 			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position,
