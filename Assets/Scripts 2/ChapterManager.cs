@@ -18,7 +18,7 @@ public class ChapterManager : MonoBehaviour {
 	TimerScript actionTimer;
 
 	public WWW www;
-	private int level = 3;//change this number to the target level for loading JSON data
+	private int level = 4;//change this number to the target level for loading JSON data
 	private bool loaded = false;
 
 	// Use this for initialization

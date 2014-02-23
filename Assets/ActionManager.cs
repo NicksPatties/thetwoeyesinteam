@@ -12,18 +12,14 @@ public class ActionManager : MonoBehaviour {
 	private Transform lastObj;
 	private string[] targetObjects;
 	private string mode = "";
-	//for paint //TODO: change the name of "paint" to "scan," because it makes more sense
-	private string[] targetObjectsForPaint; //TODO: perhaps this should be an array of GameObjects instead?
-	private Transform[] paintedObjects;
-	
-	//for trace
+
+	private string[] targetObjectsForScan; //TODO: perhaps this should be an array of GameObjects instead?
+	private Transform[] scannedObjects;
+
 	private string[] targetObjectsForTrace;
 	private Transform[] tracedObjects;
 	private int tracedIndex;
 	private bool invisible;
-
-//	public  float focusTime; //number of seconds the cursor been on an object
-//	public  float waitOnFocusTime;  //the time in seconds the cursor must be on an object before moving to the next action
 
 	public bool checkFindCompleted () {
 		//string[] targetObjs = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
@@ -37,20 +33,20 @@ public class ActionManager : MonoBehaviour {
 		return true;
 	}
 
-	public bool checkPaintCompleted () {
-		for (int i=0; i<targetObjectsForPaint.Length; i++){
-			if (targetObjectsForPaint[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
+	public bool checkScanCompleted () {
+		for (int i=0; i<targetObjectsForScan.Length; i++){
+			if (targetObjectsForScan[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
 				Debug.Log("what is unvisited?: "+targetObjects[i]);
 				return false;
 			}
 		}
-		for (int j=0; j<paintedObjects.Length; j++){
-			if (paintedObjects[j]){
-				paintedObjects[j].GetComponent<SpriteRenderer>().color = Color.white;
+		for (int j=0; j<scannedObjects.Length; j++){
+			if (scannedObjects[j]){
+				scannedObjects[j].GetComponent<SpriteRenderer>().color = Color.white;
 			}
 		}
 		Debug.Log("all are visited.");
-		targetObjectsForPaint = null;
+		targetObjectsForScan = null;
 		return true;
 	}
 
@@ -100,26 +96,26 @@ public class ActionManager : MonoBehaviour {
 				}
 				return true;
 			}
-			if (mode == "paint"){
-				if (targetObjectsForPaint == null){
-					targetObjectsForPaint = new string[targetObjects.Length];
+			if (mode == "scan"){
+				if (targetObjectsForScan == null){
+					targetObjectsForScan = new string[targetObjects.Length];
 					for (int i = 0; i<targetObjects.Length; i++){
-						targetObjectsForPaint[i] = "unvisited";
-						Debug.Log("-----------init all paint nodes as unvisited----------");
+						targetObjectsForScan[i] = "unvisited";
+						Debug.Log("-----------init all scan nodes as unvisited----------");
 					}
 				}
-				if (paintedObjects == null){
-					paintedObjects = new Transform[targetObjects.Length];
+				if (scannedObjects == null){
+					scannedObjects = new Transform[targetObjects.Length];
 				}
 				//if it is correct
 				for (int i=0; i<targetObjects.Length; i++){	
-					//we are painting an unvisited node, so we set it green, and set it as visited
-					if (targetObjects[i] == objectName && targetObjectsForPaint[i] == "unvisited"){
+					//we are scanning an unvisited node, so we set it green, and set it as visited
+					if (targetObjects[i] == objectName && targetObjectsForScan[i] == "unvisited"){
 						obj.GetComponent<SpriteRenderer>().color = Color.green;
-						targetObjectsForPaint[i] = "visited";
-						paintedObjects[i] = obj;
+						targetObjectsForScan[i] = "visited";
+						scannedObjects[i] = obj;
 						Debug.Log("focusTimefocusTime-----------this is visiting: "+objectName+"----------");
-						if (checkPaintCompleted()){
+						if (checkScanCompleted()){
 							for (int k = 0; k<targetObjects.Length; k++){
 								string s = "ModelOldGuyNode"+k.ToString();
 								if (GameObject.Find(s)){
@@ -127,7 +123,7 @@ public class ActionManager : MonoBehaviour {
 								}
 								Debug.Log("-----------"+s+" is disabled----------");
 							}
-							targetObjectsForPaint = null;
+							targetObjectsForScan = null;
 							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
@@ -147,30 +143,20 @@ public class ActionManager : MonoBehaviour {
 						}
 						break;
 					}
-					//we are painting a visited node, so we keep it green.
-					else if(targetObjects[i] == objectName && targetObjectsForPaint[i] == "visited"){
+					//we are scanning a visited node, so we keep it green.
+					else if(targetObjects[i] == objectName && targetObjectsForScan[i] == "visited"){
 						obj.GetComponent<SpriteRenderer>().color = Color.green;
 						Debug.Log("-----------this is visited: "+objectName+"----------");
 						break;
 					}else if(targetObjects[i] == null){
 							
 					}
-					//we are painting something that is not inside the painting shape, so we set it red
+					//we are scanning something that is not inside the scanning shape, so we set it red
 					else{
 						Debug.Log("-----------this makes it red: "+objectName+"----------");
 						obj.GetComponent<SpriteRenderer>().color = Color.red;
 					}
 				}
-					
-//				if (checkPaintCompleted()){
-//					targetObjectsForPaint = null;
-//					GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-//					targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-//					mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-//					GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
-//					Debug.Log("updated current mode is: "+mode);
-//					Debug.Log("updated curaction[0] is: "+targetObjects[0]);
-//				}
 				return true;
 			}
 			if (mode == "trace"){

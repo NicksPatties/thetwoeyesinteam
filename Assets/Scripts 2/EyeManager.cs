@@ -31,20 +31,6 @@ public class EyeManager : MonoBehaviour {
 	public  float maxCursorVelocity;
 	#endregion
 
-	//for all actions
-	//TODO: separate EyeManager, ActionManager (single action), and ChapterManager (the whole chapter)
-	private string[] targetObjects;
-
-	//for paint //TODO: change the name of "paint" to "scan," because it makes more sense
-	private string[] targetObjectsForPaint; //TODO: perhaps this should be an array of GameObjects instead?
-	private Transform[] paintedObjects;
-
-	//for trace
-	private string[] targetObjectsForTrace;
-	private RaycastHit2D[] tracedObjects;
-	private int tracedIndex;
-	private bool invisible;
-
 	// Use this for initialization
 	void Start () {
 		leftEye = transform.Find("Left Eye");
@@ -91,7 +77,7 @@ public class EyeManager : MonoBehaviour {
 		isOverObject = checkIntersection();
 
 		// if cursor leaves targetable object, restart focus time, reset appearance, and remove references
-		if(isOverObject == false && lastObj != null && mode != "paint" && mode != "trace") {
+		if(isOverObject == false && lastObj != null && mode != "scan" && mode != "trace") {
 			focusTime = 0f;
 			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
 			lastObj = null;
@@ -156,7 +142,6 @@ public class EyeManager : MonoBehaviour {
 
 				string objectName = null;
 				if (curObj){
-				//for getting object id. I don't use "name" is because name is a build-in property of all Unity game objects
 					GameItem gameItem = curObj.GetComponent<GameItem>();
 					objectName = gameItem.id;
 				}

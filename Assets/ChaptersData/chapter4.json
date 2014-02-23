@@ -25,7 +25,7 @@
 					"name":"modelA6"
 				}
 			],
-			"type":"paint"
+			"type":"scan"
 		},
 		{
 			"index":"2",
@@ -79,7 +79,7 @@
 					"name":"insideOutlineA6"
 				}
 			],
-			"type":"paint"
+			"type":"scan"
 		},
 		{
 			"index":"4",
@@ -151,7 +151,7 @@
 					"name":"scanModelA6"
 				}
 			],
-			"type":"paint"
+			"type":"scan"
 		},
 		{
 			"index":"8",
