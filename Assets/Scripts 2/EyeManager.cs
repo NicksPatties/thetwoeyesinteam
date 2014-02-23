@@ -167,24 +167,6 @@ public class EyeManager : MonoBehaviour {
 				if(focusTime > waitOnFocusTime){
 					isRightObject = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkCorrectness(objectName,curObj);
 					if (isRightObject){
-						curObj.GetComponent<SpriteRenderer>().color = Color.green;
-						focusTime = 0f;
-						if (mode == "find"){
-							Debug.Log("in find intersection checking");
-							isActionComplete = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkFindCompleted();
-						}else if (mode == "focus"){
-
-						}else if (mode == "paint"){
-							Debug.Log("in paint intersection checking");
-							isActionComplete = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkPaintCompleted();
-						}else if (mode == "trace"){
-							Debug.Log("in trace intersection checking");
-							isActionComplete = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkTraceCompleted();
-						}else{
-							Debug.Log("Do we have 5th mode?");
-						}
-					}else{
-						curObj.GetComponent<SpriteRenderer>().color = Color.red;
 						focusTime = 0f;
 					}
 				}

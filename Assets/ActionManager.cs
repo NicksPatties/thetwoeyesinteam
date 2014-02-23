@@ -119,6 +119,32 @@ public class ActionManager : MonoBehaviour {
 						targetObjectsForPaint[i] = "visited";
 						paintedObjects[i] = obj;
 						Debug.Log("focusTimefocusTime-----------this is visiting: "+objectName+"----------");
+						if (checkPaintCompleted()){
+							for (int k = 0; k<targetObjects.Length; k++){
+								string s = "ModelOldGuyNode"+k.ToString();
+								if (GameObject.Find(s)){
+									GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
+								}
+								Debug.Log("-----------"+s+" is disabled----------");
+							}
+							targetObjectsForPaint = null;
+							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+							GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
+							Debug.Log("updated current mode is: "+mode);
+							Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+							for (int j = 0; j<targetObjects.Length; j++){
+								string s = "OutlineOldGuyNode"+j.ToString();
+								if (GameObject.Find(s)){
+									if (j <= tracedIndex){
+										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = true;
+									}else{
+										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
+									}
+								}
+							}
+						}
 						break;
 					}
 					//we are painting a visited node, so we keep it green.
@@ -136,15 +162,15 @@ public class ActionManager : MonoBehaviour {
 					}
 				}
 					
-				if (checkPaintCompleted()){
-					targetObjectsForPaint = null;
-					GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-					targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-					mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-					GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
-					Debug.Log("updated current mode is: "+mode);
-					Debug.Log("updated curaction[0] is: "+targetObjects[0]);
-				}
+//				if (checkPaintCompleted()){
+//					targetObjectsForPaint = null;
+//					GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+//					targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+//					mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+//					GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
+//					Debug.Log("updated current mode is: "+mode);
+//					Debug.Log("updated curaction[0] is: "+targetObjects[0]);
+//				}
 				return true;
 			}
 			if (mode == "trace"){
