@@ -206,47 +206,6 @@ public class ActionManager : MonoBehaviour {
 						}
 					}
 				}
-				//we are tracing a visited node, so we keep it green.
-//				for (int i=0; i<targetObjects.Length; i++){	
-//					if(targetObjects[i] == objectName && targetObjectsForTrace[i] == "visited"){
-//						break;
-//					}else{
-//						Debug.Log("-----------this makes it red: "+objectName+"----------");
-//						obj.GetComponent<SpriteRenderer>().color = Color.red;
-//					}
-//				}
-						//obj.GetComponent<SpriteRenderer>().color = Color.green;
-						//Debug.Log("-----------this is visited: "+objectName+"----------");
-//						if (checkTraceCompleted()){
-//							targetObjectsForTrace = null;
-//							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
-//							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
-//							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
-//							GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
-//							Debug.Log("-------Trace complete, next target is: "+targetObjects[0]+ " in mode: "+mode+"--------");
-//						}
-//						//make next node visible, keep others invisible
-//						if (invisible == false){
-//							for (int j = 0; j<targetObjects.Length; j++){
-//								string s = "OutlineOldGuyNode"+j.ToString();
-//								if (GameObject.Find(s)){
-//									if (j <= tracedIndex){
-//										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = true;
-//									}else{
-//										GameObject.Find(s).GetComponent<SpriteRenderer>().enabled = false;
-//									}
-//								}
-//							}
-//							invisible = true;
-//						}
-//					}else if(targetObjects[i] == null){
-//						
-//					}
-//					else{
-//						Debug.Log("-----------this makes it red: "+objectName+"----------");
-//						obj.GetComponent<SpriteRenderer>().color = Color.red;
-//					}
-//				}
 				return true;
 			}
 		}	

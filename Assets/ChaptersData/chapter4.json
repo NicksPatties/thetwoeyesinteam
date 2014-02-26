@@ -94,7 +94,7 @@
 			"index":"5",
 			"objects":[
 				{
-					"name":"paint brush"
+					"name":"paintbrush"
 				}
 			],
 			"type":"find"
@@ -122,6 +122,24 @@
 				},
 				{
 					"name":"dottedOutlineA6"
+				},
+				{
+					"name":"dottedOutlineA7"
+				},
+				{
+					"name":"dottedOutlineA8"
+				},
+				{
+					"name":"dottedOutlineA9"
+				},
+				{
+					"name":"dottedOutlineA10"
+				},
+				{
+					"name":"dottedOutlineA11"
+				},
+				{
+					"name":"dottedOutlineA12"
 				}
 			],
 			"type":"trace"
