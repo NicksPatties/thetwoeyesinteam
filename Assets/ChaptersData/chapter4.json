@@ -158,15 +158,6 @@
 				},
 				{
 					"name":"scanModelA3"
-				},
-				{
-					"name":"scanModelA4"
-				},
-				{
-					"name":"scanModelA5"
-				},
-				{
-					"name":"scanModelA6"
 				}
 			],
 			"type":"scan"

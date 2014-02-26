@@ -131,6 +131,29 @@ public class EyeManager : MonoBehaviour {
 		return target;
 	}
 
+	void getObjectInfo(RaycastHit2D obj) {
+		if (obj) {	
+			lastObj = curObj;
+			curObj = obj.transform;
+			
+			string objectName = null;
+			if (curObj){
+				GameItem gameItem = curObj.GetComponent<GameItem>();
+				objectName = gameItem.id;
+			}
+			
+			focusTime += Time.deltaTime;
+			bool isRightObject = false;
+			bool isActionComplete = false;
+			if(focusTime > waitOnFocusTime){
+				isRightObject = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkCorrectness(objectName,curObj);
+				if (isRightObject){
+					focusTime = 0f;
+				}
+			}
+		}
+	}
+
 	//is this short enough hahaha
 	bool checkIntersection () {
 		if(canTarget) {
@@ -138,24 +161,25 @@ public class EyeManager : MonoBehaviour {
 				                                      cursorCollider.position,
 				                                      1 << LayerMask.NameToLayer("Object"));
 			if (obj) {	
-				lastObj = curObj;
-				curObj = obj.transform;
-
-				string objectName = null;
-				if (curObj){
-					GameItem gameItem = curObj.GetComponent<GameItem>();
-					objectName = gameItem.id;
-				}
-					
-				focusTime += Time.deltaTime;
-				bool isRightObject = false;
-				bool isActionComplete = false;
-				if(focusTime > waitOnFocusTime){
-					isRightObject = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkCorrectness(objectName,curObj);
-					if (isRightObject){
-						focusTime = 0f;
-					}
-				}
+				getObjectInfo(obj);
+//				lastObj = curObj;
+//				curObj = obj.transform;
+//
+//				string objectName = null;
+//				if (curObj){
+//					GameItem gameItem = curObj.GetComponent<GameItem>();
+//					objectName = gameItem.id;
+//				}
+//					
+//				focusTime += Time.deltaTime;
+//				bool isRightObject = false;
+//				bool isActionComplete = false;
+//				if(focusTime > waitOnFocusTime){
+//					isRightObject = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkCorrectness(objectName,curObj);
+//					if (isRightObject){
+//						focusTime = 0f;
+//					}
+//				}
 				return true;
 			}
 		}
