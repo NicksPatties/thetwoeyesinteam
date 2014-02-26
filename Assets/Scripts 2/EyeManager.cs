@@ -73,16 +73,42 @@ public class EyeManager : MonoBehaviour {
 			mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
 		}
 
-		//TODO: EVERYTHING
 		isOverObject = checkIntersection();
 
-		// if cursor leaves targetable object, restart focus time, reset appearance, and remove references
-		if(isOverObject == false && lastObj != null && mode != "scan" && mode != "trace") {
-			focusTime = 0f;
-			lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
-			lastObj = null;
-			print("lastObj nullified.");
+		if(isOverObject) {
+			string objectName = null;
+			if (curObj){
+				objectName = curObj.GetComponent<GameItem>().id;
+			}
+			
+			focusTime += Time.deltaTime;
+			bool isRightObject = false;
+			bool isActionComplete = false;
+			if(focusTime > waitOnFocusTime){
+				isRightObject = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkCorrectness(objectName,curObj);
+				if (isRightObject){
+					focusTime = 0f;
+				}
+			}
 		}
+
+		//TODO: Scan and Trace's highlighting should be handled separately
+		if(isOverObject == false && lastObj != null && mode != "scan" && mode != "trace") {
+			resetObject();
+		}
+
+		if(isOverObject == true && lastObj != null && lastObj != curObj) {
+			resetObject();
+		}
+	}
+
+
+	// if cursor leaves targetable object, restart focus time, reset appearance, and remove references
+	void resetObject() {
+		focusTime = 0f;
+		lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
+		lastObj = null;
+		print("lastObj nullified.");
 	}
 
 
@@ -130,59 +156,23 @@ public class EyeManager : MonoBehaviour {
 		target.y = radius * Mathf.Sin(angle) + midPoint.y;
 		return target;
 	}
+	
 
-	void getObjectInfo(RaycastHit2D obj) {
+	//is this short enough hahaha
+	//It is now.
+	bool checkIntersection () {
+		RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position,
+			                                      cursorCollider.position,
+			                                      1 << LayerMask.NameToLayer("Object"));
 		if (obj) {	
 			lastObj = curObj;
 			curObj = obj.transform;
-			
-			string objectName = null;
-			if (curObj){
-				GameItem gameItem = curObj.GetComponent<GameItem>();
-				objectName = gameItem.id;
-			}
-			
-			focusTime += Time.deltaTime;
-			bool isRightObject = false;
-			bool isActionComplete = false;
-			if(focusTime > waitOnFocusTime){
-				isRightObject = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkCorrectness(objectName,curObj);
-				if (isRightObject){
-					focusTime = 0f;
-				}
-			}
+			return true;
 		}
-	}
-
-	//is this short enough hahaha
-	bool checkIntersection () {
-		if(canTarget) {
-			RaycastHit2D obj = Physics2D.Linecast(cursorPoint.transform.position,
-				                                      cursorCollider.position,
-				                                      1 << LayerMask.NameToLayer("Object"));
-			if (obj) {	
-				getObjectInfo(obj);
-//				lastObj = curObj;
-//				curObj = obj.transform;
-//
-//				string objectName = null;
-//				if (curObj){
-//					GameItem gameItem = curObj.GetComponent<GameItem>();
-//					objectName = gameItem.id;
-//				}
-//					
-//				focusTime += Time.deltaTime;
-//				bool isRightObject = false;
-//				bool isActionComplete = false;
-//				if(focusTime > waitOnFocusTime){
-//					isRightObject = GameObject.Find("ActionManager").GetComponent<ActionManager>().checkCorrectness(objectName,curObj);
-//					if (isRightObject){
-//						focusTime = 0f;
-//					}
-//				}
-				return true;
-			}
+		else {
+			lastObj = curObj;
+			curObj = null;
+			return false;
 		}
-		return false;
 	}
 }
