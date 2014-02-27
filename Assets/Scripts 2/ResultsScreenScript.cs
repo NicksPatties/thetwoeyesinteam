@@ -4,34 +4,26 @@ using System.Collections;
 public class ResultsScreenScript : MonoBehaviour {
 
 	//variables that will be acquired from the gameplay
-	int score;
-	float remainingTime;
+	public float finalTime;
 	
 	//gameobjects of different elements of the results screen
-	GameObject successOrFailMessage;
-	GameObject stevensPortrait;
-	GameObject timeBonusText;
-	GameObject timeBonusIcon;
-	GameObject totalScoreText;
-	GameObject totalScoreIcon;
+	public Transform successOrFailMessage;
+	public Transform stevensPortrait;
+	public Transform timeBonusText;
+	public Transform timeBonusIcon;
+	public Transform totalScoreText;
+	public Transform totalScoreIcon;
 
 
 	void Start () {
-		score = 0;
 		remainingTime = 0f;
 
-		successOrFailMessage = GameObject.Find("Success or Fail Message");
-		stevensPortrait = GameObject.Find ("Steven's Portrait");
-		timeBonusText = GameObject.Find ("Time Bonus Text");
-		totalScoreText = GameObject.Find("Total Score Text");
-		totalScoreIcon = GameObject.Find("Total Score Icon");
+		successOrFailMessage = transform.Find("Success or Fail Message");
+		stevensPortrait = transform.Find ("Steven's Portrait");
+		timeBonusText = transform.Find ("Time Bonus Text");
+		totalScoreText = transform.Find("Total Score Text");
+		totalScoreIcon = transform.Find("Total Score Icon");
 
-
-		//testing to see if I'm grabbing the correct game objects
-		print (successOrFailMessage);
-		print (stevensPortrait);
-		print (totalScoreText);
-		print (totalScoreIcon);
 
 	}
 
@@ -44,9 +36,8 @@ public class ResultsScreenScript : MonoBehaviour {
 	 * output: void
 	 * 		assigns the score and remaining time to use for final score calculations
 	 */
-	void setScoreAndRemainingTime(int s, float rt){
-		score = s;
-		remainingTime = rt;
+	void setFinalTime(float rt){
+		finalTime = rt;
 	}
 
 
