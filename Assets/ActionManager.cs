@@ -13,6 +13,8 @@ public class ActionManager : MonoBehaviour {
 	private string[] targetObjects;
 	private string mode = "";
 
+	private float focusingTime;
+
 	private string[] targetObjectsForScan; //TODO: perhaps this should be an array of GameObjects instead?
 	private Transform[] scannedObjects;
 
@@ -21,7 +23,7 @@ public class ActionManager : MonoBehaviour {
 	private int tracedIndex;
 	private bool invisible;
 
-	public bool checkFindCompleted () {
+	public bool checkFindComplete () {
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
 			if (targetObjects[i] != "done"&&targetObjects[i] != null){
@@ -32,7 +34,17 @@ public class ActionManager : MonoBehaviour {
 		return true;
 	}
 
-	public bool checkScanCompleted () {
+	public bool checkFocusComplete () {
+		Debug.Log("---------what is not done?: "+focusingTime.ToString());
+		if (focusingTime >= 8.00f){
+			focusingTime = 0f;
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public bool checkScanComplete () {
 		for (int i=0; i<targetObjectsForScan.Length; i++){
 			if (targetObjectsForScan[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
 				Debug.Log("what is unvisited?: "+targetObjects[i]);
@@ -49,7 +61,7 @@ public class ActionManager : MonoBehaviour {
 		return true;
 	}
 
-	public bool checkTraceCompleted () {
+	public bool checkTraceComplete () {
 		for (int i=0; i<targetObjectsForTrace.Length; i++){
 			if (targetObjectsForTrace[i] == "unvisited"&&targetObjects[i] != ""&&targetObjects[i] != null){
 				Debug.Log("what is unvisited?: "+targetObjects[i]);
@@ -66,6 +78,10 @@ public class ActionManager : MonoBehaviour {
 		return true;
 	}
 
+	public void resetFocusTime() {
+		focusingTime = 0f;
+	}
+
 	public bool checkCorrectness(string objectName, Transform obj){
 		if (objectName != null){
 			targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
@@ -76,7 +92,7 @@ public class ActionManager : MonoBehaviour {
 					if (targetObjects[i] == objectName){
 						obj.GetComponent<SpriteRenderer>().color = Color.green;
 						targetObjects[i] = "done";
-						if (checkFindCompleted()){;
+						if (checkFindComplete()){;
 							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
@@ -89,6 +105,22 @@ public class ActionManager : MonoBehaviour {
 					}else{
 						obj.GetComponent<SpriteRenderer>().color = Color.red;
 					}
+				}
+				return true;
+			}
+			if (mode == "focus"){
+				if (targetObjects[0] == objectName){
+					focusingTime += 2;
+					obj.GetComponent<SpriteRenderer>().color = Color.green;
+					if (checkFocusComplete()) {
+						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
+						targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
+						mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
+						GameObject.Find("Player").GetComponent<EyeManager>().mode = mode;
+						Debug.Log("-------Focus complete, next target is: "+targetObjects[0]+ " in mode: "+mode+"--------");
+					}
+				}else{
+					focusingTime = 0f;
 				}
 				return true;
 			}
@@ -111,7 +143,7 @@ public class ActionManager : MonoBehaviour {
 						targetObjectsForScan[i] = "visited";
 						scannedObjects[i] = obj;
 						Debug.Log("-----------this is visiting: "+objectName+"----------");
-						if (checkScanCompleted()){
+						if (checkScanComplete()){
 							//disable rendering after scan complete
 							for (int k = 0; k<targetObjects.Length; k++){
 								string s = "ModelOldGuyNode"+k.ToString();
@@ -174,7 +206,7 @@ public class ActionManager : MonoBehaviour {
 					tracedIndex++;
 					Debug.Log("-----------this is visiting: "+objectName+"----------");
 					invisible = false;
-					if (checkTraceCompleted()){
+					if (checkTraceComplete()){
 						targetObjectsForTrace = null;
 						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 						targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
