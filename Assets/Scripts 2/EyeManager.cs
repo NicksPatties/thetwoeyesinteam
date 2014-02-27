@@ -107,6 +107,7 @@ public class EyeManager : MonoBehaviour {
 	void resetObject() {
 		focusTime = 0f;
 		lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
+		GameObject.Find("ActionManager").GetComponent<ActionManager>().resetFocusTime();
 		lastObj = null;
 		print("lastObj nullified.");
 	}

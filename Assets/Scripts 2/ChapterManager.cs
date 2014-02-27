@@ -72,18 +72,14 @@ public class ChapterManager : MonoBehaviour {
 						string[] tObjects = new string[jsonData["actions"][i]["objects"].Count+1];
 						for(int j = 0; j<jsonData["actions"][i]["objects"].Count; j++){
 							tObjects[j] = jsonData["actions"][i]["objects"][j]["name"];
-//							Debug.Log("-------action "+i+" is loaded for object: "+j+"-------: "+tObjects[j]);
 						}
 						al.targetObjects = tObjects;
 						al.targetObjects[al.targetObjects.Length-1] = null;
 						al.actionName = jsonData["actions"][i]["type"];
 						alist[i] = al;
-//						Debug.Log("-------action is loaded for: "+i+"-------: "+alist[i].targetObjects[0]);
 					}
 					loaded = true;
 					curAction = alist[actionIndex];
-//					Debug.Log("-------current target is: "+curAction.targetObjects.Length);
-//					Debug.Log("-------current target is: "+curAction.targetObjects[0]);
 				}
 		}
 
