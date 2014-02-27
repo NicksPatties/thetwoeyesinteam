@@ -3,10 +3,13 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour {
 
-	GameObject check;
-	GameObject cross;
-	GameObject great;
-	GameObject nope;
+	//these are assigned in the Unity Editor
+	public GameObject check;
+	public GameObject cross;
+	public GameObject great;
+	public GameObject nope;
+	public GameObject statusBar;
+
 	GameObject[] allUI; //a convenience array to do actions to all UI elements
 
 	//status bar gameObjects
@@ -17,9 +20,6 @@ public class UIManager : MonoBehaviour {
 	Vector3 sbBGOffscreenPos;
 	Vector3 sbTextOffscreenPos;
 
-	//objects in the game world
-	GameObject sign;
-
 	//animation variables
 	float fadeSpeed;
 	bool  selected;
@@ -28,11 +28,6 @@ public class UIManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		check = GameObject.Find ("ui checkmark");
-		cross = GameObject.Find ("ui cross");
-		great = GameObject.Find ("ui great!");
-		nope  = GameObject.Find ("ui nope");
-		sign  = GameObject.Find ("sign");
 		allUI = new GameObject[4];
 
 		allUI[0] = check;
@@ -273,41 +268,5 @@ public class UIManager : MonoBehaviour {
 
 	
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Q)){
-
-			//positive feedback
-			StartCoroutine(makeUIAppearAtTopCenter(great, true));
-		}
-
-		if(Input.GetKeyDown(KeyCode.W)){
-
-			//negative feedback
-			StartCoroutine(makeUIAppearAtTopCenter(nope, false));
-		}
-
-		if(Input.GetKeyDown(KeyCode.E)){
-
-			//make checkmark appear
-			Vector3 pos = sign.transform.position;
-			StartCoroutine(makeCheckmarkOrCrossAppear(pos, true));
-		}
-
-		if(Input.GetKeyDown(KeyCode.R)){
-
-			//make cross appear
-			Vector3 pos = sign.transform.position;
-			StartCoroutine(makeCheckmarkOrCrossAppear(pos, false));
-		}
-
-		if(Input.GetKeyDown(KeyCode.T)){
-			if(selected){
-				selected = false;
-			}else{
-				selected = true;
-			}
-
-			StartCoroutine(increaseOrDecreaseInSize(sign, selected));
-		}
-	
 	}
 }
