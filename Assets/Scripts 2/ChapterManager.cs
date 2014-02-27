@@ -21,6 +21,8 @@ public class ChapterManager : MonoBehaviour {
 	private int level = 3;//change this number to the target level for loading JSON data
 	private bool loaded = false;
 
+	AudioManager am;
+
 	// Use this for initialization
 	void Start () {
 		//load JSON file from a relative path
@@ -38,6 +40,8 @@ public class ChapterManager : MonoBehaviour {
 		}
 		
 		actionTimer = GameObject.Find("Timer").GetComponent<TimerScript>();
+
+		am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 	}
 
 	string formatActionPromptText(){
@@ -56,7 +60,7 @@ public class ChapterManager : MonoBehaviour {
 			curAction = alist[actionIndex];
 			actionPrompt.guiText.text = formatActionPromptText();
 			//the code that delay a code execution
-			Invoke("changeEnvironment", 1); 
+			Invoke("changeEnvironment", 1);
 		}
 	}
 	
@@ -94,6 +98,7 @@ public class ChapterManager : MonoBehaviour {
 		if (level == 3){
 			action01.SetActive(false);
 			action02.SetActive(true);
+			am.changeAmbiance(am.background, am.background2);
 		}
 	}
 }

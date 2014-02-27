@@ -33,6 +33,7 @@ public class EyeManager : MonoBehaviour {
 
 	UIManager ui;
 	bool hasIncreasedInSize; //an object has already increased in size
+	AudioManager am;
 
 	// Use this for initialization
 	void Start () {
@@ -53,6 +54,7 @@ public class EyeManager : MonoBehaviour {
 		eyeballRadius = Mathf.Abs(rightEye.transform.position.y - radiusMarker.transform.position.y);
 		ui = GameObject.Find("UIManager").GetComponent<UIManager>();
 		hasIncreasedInSize = false;
+		am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 	}
 
 
@@ -89,6 +91,7 @@ public class EyeManager : MonoBehaviour {
 			//make the item grow in size
 			if (focusTime == 0f && !hasIncreasedInSize){
 				ui.increaseOrDecreaseInSize(curObj, true);
+				//am.playLookingAtObject();
 				hasIncreasedInSize = true;
 			}
 
