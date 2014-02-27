@@ -52,7 +52,6 @@ public class ChapterManager : MonoBehaviour {
 			//stop the timer
 			print ("I should now stop the timer");
 			actionTimer.timerHasStopped = true;
-			
 		}else{
 			curAction = alist[actionIndex];
 			actionPrompt.guiText.text = formatActionPromptText();

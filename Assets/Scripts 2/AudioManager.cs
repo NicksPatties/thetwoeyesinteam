@@ -3,26 +3,19 @@ using System.Collections;
 
 public class AudioManager : MonoBehaviour {
 
-	// gameObjects that play audio
-	GameObject background;
-	GameObject background2;
-	GameObject checkmark;
-	GameObject cross;
-	GameObject player;
+	// gameObjects that play audio, assigned in Unity Editor
+	public GameObject background;
+	public GameObject background2;
+	public GameObject checkmark;
+	public GameObject cross;
+	public GameObject player;
 
 	AudioSource[] playerVO; //all of the VO in the player object
 	AudioSource[] stevenFindsCorrectObject;
 	AudioSource[] stevenFindsIncorrectObject;
 	AudioSource[] stevenLooksAtObject;
 
-
 	void Start () {
-		//assign the variables to the gameObjects that have the audio sources
-		background  = GameObject.Find("background");
-		background2 = GameObject.Find("background2");
-		checkmark   = GameObject.Find("ui checkmark");
-		cross       = GameObject.Find("ui cross");
-		player	    = GameObject.Find("player");
 
 		playerVO = player.GetComponents<AudioSource>();
 		assignVOBanks();
@@ -107,6 +100,7 @@ public class AudioManager : MonoBehaviour {
 		for(; currentVolume > 0f; currentVolume -= 0.1f){
 
 			oldBackground.audio.volume = currentVolume;
+			newBackground.audio.volume = currentVolume - 1;
 			yield return new WaitForSeconds(0.05f);
 		}
 

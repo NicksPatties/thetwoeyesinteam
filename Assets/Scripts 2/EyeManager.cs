@@ -31,6 +31,9 @@ public class EyeManager : MonoBehaviour {
 	public  float maxCursorVelocity;
 	#endregion
 
+	UIManager ui;
+	bool hasIncreasedInSize; //an object has already increased in size
+
 	// Use this for initialization
 	void Start () {
 		leftEye = transform.Find("Left Eye");
@@ -48,6 +51,8 @@ public class EyeManager : MonoBehaviour {
 		maxCursorVelocity = 5f;
 
 		eyeballRadius = Mathf.Abs(rightEye.transform.position.y - radiusMarker.transform.position.y);
+		ui = GameObject.Find("UIManager").GetComponent<UIManager>();
+		hasIncreasedInSize = false;
 	}
 
 
@@ -80,7 +85,13 @@ public class EyeManager : MonoBehaviour {
 			if (curObj){
 				objectName = curObj.GetComponent<GameItem>().id;
 			}
-			
+
+			//make the item grow in size
+			if (focusTime == 0f && !hasIncreasedInSize){
+				ui.increaseOrDecreaseInSize(curObj, true);
+				hasIncreasedInSize = true;
+			}
+
 			focusTime += Time.deltaTime;
 			bool isRightObject = false;
 			bool isActionComplete = false;
@@ -106,7 +117,9 @@ public class EyeManager : MonoBehaviour {
 	// if cursor leaves targetable object, restart focus time, reset appearance, and remove references
 	void resetObject() {
 		focusTime = 0f;
-		lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
+		//lastObj.transform.GetComponent<SpriteRenderer>().color = Color.white;
+		ui.increaseOrDecreaseInSize(lastObj, false);
+		hasIncreasedInSize = false;
 		GameObject.Find("ActionManager").GetComponent<ActionManager>().resetFocusTime();
 		lastObj = null;
 		print("lastObj nullified.");

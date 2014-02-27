@@ -124,6 +124,7 @@ public class UIManager : MonoBehaviour {
 	}
 
 
+	//TODO: these rotation functions are now busted for some reason, an easier way would be to do animations?
 	IEnumerator returnToZeroDegrees(GameObject go){
 		float   angle  = 0f;            // just default values
 		Vector3 axis   = Vector3.right; // these two vars will be replaced
@@ -131,10 +132,13 @@ public class UIManager : MonoBehaviour {
 		int iterations = 4; //higher number means slower animation
 
 		go.transform.rotation.ToAngleAxis(out angle, out axis);
+		print ("angle: " + angle);
 		float step = angle/iterations;
+		print ("step: " + step);
 
 
 		while(angle > 0f){
+			print ("angle: " + angle);
 			go.transform.Rotate (-step, 0f, 0f);
 			angle -= step;
 			yield return new WaitForFixedUpdate();
@@ -177,20 +181,21 @@ public class UIManager : MonoBehaviour {
 	 * 
 	 * output: none
 	 */
-	void makeUIAppearAtTopCenter(GameObject go, bool positiveFeedback){
+	public void makeUIAppearAtTopCenter(GameObject go, bool positiveFeedback){
 		StartCoroutine(makeUIAppearAtTopCenterCO(go, positiveFeedback));
 	}
 	IEnumerator makeUIAppearAtTopCenterCO(GameObject go, bool positiveFeedback){
 
-		if(positiveFeedback){
-			StartCoroutine(rotate360degrees(go, 40f, 2));
-		}
+		//TODO: in the future, fix this function, or replace it
+		//if(positiveFeedback){
+		//	StartCoroutine(rotate360degrees(go, 60f, 2));
+		//}
 
 		//make the sprite appear
 		StartCoroutine(fadeIn (go, fadeSpeed));
 
 		//wait a bit
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1f);
 
 		//fade the sprite out
 		StartCoroutine(fadeOut(go, fadeSpeed));
@@ -209,7 +214,7 @@ public class UIManager : MonoBehaviour {
 	 * 
 	 * output: none
 	 */
-	void makeCheckmarkOrCrossAppear(Vector3 newPosition, bool correctObject){
+	public void makeCheckmarkOrCrossAppear(Vector3 newPosition, bool correctObject){
 		StartCoroutine(makeCheckmarkOrCrossAppearCO(newPosition, correctObject));
 	}
 	IEnumerator makeCheckmarkOrCrossAppearCO(Vector3 newPosition, bool correctObject){
@@ -226,14 +231,15 @@ public class UIManager : MonoBehaviour {
 		go.transform.position = newPosition;
 
 		//rotate the checkmark by 90 degrees immediately
-		go.transform.rotation = Quaternion.AngleAxis(90f, Vector3.right);
+		//go.transform.rotation = Quaternion.AngleAxis(90f, Vector3.right);
 
 		//make visible immediately
 		Color c = go.renderer.material.color;
 		go.renderer.material.color = new Color(c.r, c.g, c.b, 1f);
 
+		//TODO: Recall, these functions are all fuckey so I'm commenting them out
 		//rotate it back to 0 degrees
-		StartCoroutine(returnToZeroDegrees(go));
+		//StartCoroutine(returnToZeroDegrees(go));
 
 		//wait a little bit
 		yield return new WaitForSeconds(1.5f);
@@ -252,11 +258,11 @@ public class UIManager : MonoBehaviour {
 	 * 		isSelected - true if the object is selected by the eyeManager's cursor, false
 	 * 			if not, chooses to increase or decrease the size of the object
 	 */
-	void increaseOrDecreaseInSize(GameObject go, bool grow){
+	public void increaseOrDecreaseInSize(Transform go, bool grow){
 		StartCoroutine(increaseOrDecreaseInSizeCO(go, grow));
 	}
-	IEnumerator increaseOrDecreaseInSizeCO(GameObject go, bool grow){
-		Vector3 originalSize = go.transform.localScale;
+	IEnumerator increaseOrDecreaseInSizeCO(Transform go, bool grow){
+		Vector3 originalSize = go.localScale;
 		Vector3 changedSize  = originalSize;
 		print("originalSize: " + originalSize);
 		
@@ -278,7 +284,8 @@ public class UIManager : MonoBehaviour {
 	
 	void Update () {
 		if(Input.GetKey(KeyCode.I)){
-			makeUIAppearAtTopCenter(great, true);
+			//makeUIAppearAtTopCenter(great, true);
+			makeCheckmarkOrCrossAppear(Vector3.zero, check);
 		}
 	}
 }

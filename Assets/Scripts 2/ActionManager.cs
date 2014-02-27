@@ -93,10 +93,13 @@ public class ActionManager : MonoBehaviour {
 				for (int i=0; i<targetObjectNum; i++){
 					//if it is correct
 					if (targetObjects[i] == objectName){
-						obj.GetComponent<SpriteRenderer>().color = Color.green;
-						targetObjects[i] = "done";
-						if (checkFindComplete()){
 
+						//show the checkmark when you find the correct object
+						ui.makeCheckmarkOrCrossAppear(obj.position, true);
+						ui.makeUIAppearAtTopCenter(ui.great, true);
+						targetObjects[i] = "done";
+
+						if (checkFindComplete()){
 							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
@@ -107,7 +110,9 @@ public class ActionManager : MonoBehaviour {
 					}else if(targetObjects[i] == null){
 							
 					}else{
-						obj.GetComponent<SpriteRenderer>().color = Color.red;
+						//make the cross appear
+						ui.makeCheckmarkOrCrossAppear(obj.position, false);
+						ui.makeUIAppearAtTopCenter(ui.nope, false);
 					}
 				}
 				return true;
@@ -115,8 +120,11 @@ public class ActionManager : MonoBehaviour {
 			if (mode == "focus"){
 				if (targetObjects[0] == objectName){
 					focusingTime += 2;
-					obj.GetComponent<SpriteRenderer>().color = Color.green;
 					if (checkFocusComplete()) {
+
+						//show the checkmark once you're done focusing
+						ui.makeCheckmarkOrCrossAppear(obj.position, true);
+
 						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 						targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 						mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;
