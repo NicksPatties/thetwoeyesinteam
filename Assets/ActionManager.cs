@@ -2,11 +2,7 @@
 using System.Collections;
 
 public class ActionManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-
-	}
+	UIManager ui;
 
 	private Transform curObj;
 	private Transform lastObj;
@@ -23,6 +19,12 @@ public class ActionManager : MonoBehaviour {
 	private int tracedIndex;
 	private bool invisible;
 
+
+	void Start () {
+		ui = GameObject.Find("UIManager").GetComponent<UIManager>();
+	}
+
+
 	public bool checkFindComplete () {
 		int targetObjectNum = targetObjects.Length;
 		for (int i=0; i<targetObjectNum; i++){
@@ -33,6 +35,7 @@ public class ActionManager : MonoBehaviour {
 		}
 		return true;
 	}
+
 
 	public bool checkFocusComplete () {
 		Debug.Log("---------what is not done?: "+focusingTime.ToString());
@@ -92,7 +95,8 @@ public class ActionManager : MonoBehaviour {
 					if (targetObjects[i] == objectName){
 						obj.GetComponent<SpriteRenderer>().color = Color.green;
 						targetObjects[i] = "done";
-						if (checkFindComplete()){;
+						if (checkFindComplete()){
+
 							GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 							targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
 							mode = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.actionName;

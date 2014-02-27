@@ -13,6 +13,8 @@ public class BlurOnCamera : MonoBehaviour {
 	public float blurSpread = 0.9f;
 	public Shader blurShader = null;
 
+	public float value = 0.5f;
+
 	static Material m_Material = null;
 	protected Material material {
 		get {
@@ -48,7 +50,17 @@ public class BlurOnCamera : MonoBehaviour {
 	public void FourTapCone (RenderTexture source, RenderTexture dest, int iteration)
 	{
 		//float off = 0.5f + iteration*blurSpread;
-		float off = iteration*blurSpread;
+//		GameObject player = GameObject.Find("Player");
+//		float off = player.GetComponent<EyeManager>().lrDistance/8.0f;
+//		GameObject mainCamera = GameObject.Find("Blur Camera");
+//		if (player.GetComponent<EyeManager>().lrDistance>=0.0f&&player.GetComponent<EyeManager>().lrDistance<=0.02f){
+//			mainCamera.GetComponent<BlurOnCamera>().blurSpread = 0.0f;
+//			mainCamera.GetComponent<BlurOnCamera>().enabled = false;
+//		}else{
+//			mainCamera.GetComponent<BlurOnCamera>().enabled = true;
+//		}
+		//float off = iteration*blurSpread;
+		float off = value;
 		Graphics.BlitMultiTap (source, dest, material,
 		                       new Vector2(-off, -off),
 		                       new Vector2(-off,  off),
@@ -60,7 +72,7 @@ public class BlurOnCamera : MonoBehaviour {
 	// Downsamples the texture to a quarter resolution.
 	private void DownSample4x (RenderTexture source, RenderTexture dest)
 	{
-		float off = 1.0f;
+		float off = 0.01f;
 		Graphics.BlitMultiTap (source, dest, material,
 		                       new Vector2(-off, -off),
 		                       new Vector2(-off,  off),
