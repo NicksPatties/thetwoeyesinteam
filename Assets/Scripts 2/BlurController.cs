@@ -23,13 +23,15 @@ public class BlurController : MonoBehaviour {
 		//Debug.Log("-------current left right distance is-------"+d);
 		GameObject mainCamera = GameObject.Find("Blur Camera");
 
-		if (d>=0.0f&&d<=0.03f){
-			//mainCamera.GetComponent<BlurOnCamera>().blurSpread = 0.0f;
+		if (d>=0.0f&&d<=0.1f){
 			mainCamera.GetComponent<BlurOnCamera>().enabled = false;
 		}else{
 			mainCamera.GetComponent<BlurOnCamera>().enabled = true;
 		}
-		if (d>0.02f){
+		if (d>=0.1f&&d<=2.0f){
+			mainCamera.GetComponent<BlurOnCamera>().value = d/10.0f*0.2f;
+		}
+		if (d>2.0f){
 			mainCamera.GetComponent<BlurOnCamera>().value = d/10.0f;
 			Debug.Log("-------current distance is-------"+d);
 			Debug.Log("-------current blurSpreade is-------"+mainCamera.GetComponent<BlurOnCamera>().blurSpread);

@@ -72,7 +72,7 @@ public class BlurOnCamera : MonoBehaviour {
 	// Downsamples the texture to a quarter resolution.
 	private void DownSample4x (RenderTexture source, RenderTexture dest)
 	{
-		float off = 1.0f;
+		float off = 0.01f;
 		Graphics.BlitMultiTap (source, dest, material,
 		                       new Vector2(-off, -off),
 		                       new Vector2(-off,  off),
