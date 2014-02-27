@@ -10,7 +10,7 @@ public class PeeParticle : MonoBehaviour {
 	public bool original;
 	public GameObject stream;
 	public PeeStream ps;
-	private bool active;
+	private bool moving;
 	public bool enableSplash;
 	public GameObject peeSplash;
 
@@ -25,7 +25,7 @@ public class PeeParticle : MonoBehaviour {
 		targetPosition.y = 0;
 		maxVelocity = 0;
 		original = false;
-		active = true;
+		moving = true;
 		//enableSplash = false;
 	}
 	
@@ -43,10 +43,10 @@ public class PeeParticle : MonoBehaviour {
 					initiateSplash(this.transform.position);
 				}
 				resetPosition();
-				active = false;
+				moving = false;
 				ps.addToQueue(this);
 			}
-			if(active && !original) {
+			if(moving && !original) {
 				float step = Random.value*maxVelocity * Time.deltaTime;
 				transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
 			}
@@ -93,8 +93,8 @@ public class PeeParticle : MonoBehaviour {
 		original = true;
 	}
 
-	public void setActive() {
-		active = true;
+	public void setMoving() {
+		moving = true;
 	}
 
 	public void setPosition(Vector2 pos) {

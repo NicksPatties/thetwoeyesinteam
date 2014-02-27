@@ -1,37 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ResultsScreenScript : MonoBehaviour {
 
 	//variables that will be acquired from the gameplay
-	int score;
-	float remainingTime;
+	public float finalTime;
+	public bool enable;
+	private bool enabled;
 	
 	//gameobjects of different elements of the results screen
-	GameObject successOrFailMessage;
-	GameObject stevensPortrait;
-	GameObject timeBonusText;
-	GameObject timeBonusIcon;
-	GameObject totalScoreText;
-	GameObject totalScoreIcon;
-
+	private Transform backDrop;
+	private Transform successOrFailMessage;
+	private Transform stevensPortrait;
+	private Transform timeText;
+	private Transform timeIcon;
+	private Transform bestTime;
+	private Transform timeToBeat;
+	private Transform achievementsText;
+	public List<Transform> achievements;
+	private Transform replayButton;
+	private Transform menuButton;
+	private Transform nextButton;
 
 	void Start () {
-		score = 0;
-		remainingTime = 0f;
+		finalTime = 0f;
+		enable = true;
 
-		successOrFailMessage = GameObject.Find("Success or Fail Message");
-		stevensPortrait = GameObject.Find ("Steven's Portrait");
-		timeBonusText = GameObject.Find ("Time Bonus Text");
-		totalScoreText = GameObject.Find("Total Score Text");
-		totalScoreIcon = GameObject.Find("Total Score Icon");
+		backDrop = transform.Find("Back Drop");
+		successOrFailMessage = transform.Find("Success or Fail Message");
+		stevensPortrait = transform.Find ("Steven's Portrait");
+		timeIcon = transform.Find("Time Icon");
+		timeText = transform.Find("Time Text");
+		bestTime = transform.Find("Best Time");
+		timeToBeat = transform.Find("Time To Beat");
 
+		achievementsText = transform.Find("Achievements");
+		achievements = new List<Transform>();
 
-		//testing to see if I'm grabbing the correct game objects
-		print (successOrFailMessage);
-		print (stevensPortrait);
-		print (totalScoreText);
-		print (totalScoreIcon);
+		replayButton = transform.Find("Replay Button");
+		menuButton = transform.Find("Menu Button");
+		nextButton = transform.Find("Next Button");
 
 	}
 
@@ -44,13 +53,53 @@ public class ResultsScreenScript : MonoBehaviour {
 	 * output: void
 	 * 		assigns the score and remaining time to use for final score calculations
 	 */
-	void setScoreAndRemainingTime(int s, float rt){
-		score = s;
-		remainingTime = rt;
+	void setFinalTime(float ft){
+		finalTime = ft;
 	}
 
 
 	void Update () {
-	
+
+		if (enable && !enabled) {
+			enableChildren();
+		}
+		if (!enable && enabled) {
+			disableChildren();
+		}
+
+	}
+
+	void enableChildren() {
+		achievementsText.gameObject.SetActive(true);
+		backDrop.gameObject.SetActive(true);
+		bestTime.gameObject.SetActive(true);
+		menuButton.gameObject.SetActive(true);
+		replayButton.gameObject.SetActive(true);
+		nextButton.gameObject.SetActive(true);
+		successOrFailMessage.gameObject.SetActive(true);
+		timeIcon.gameObject.SetActive(true);
+		timeText.gameObject.SetActive(true);
+		timeToBeat.gameObject.SetActive(true);
+		stevensPortrait.gameObject.SetActive(true);
+
+
+		enabled = true;
+	}
+
+
+	void disableChildren() {
+		achievementsText.gameObject.SetActive(false);
+		backDrop.gameObject.SetActive(false);
+		bestTime.gameObject.SetActive(false);
+		menuButton.gameObject.SetActive(false);
+		replayButton.gameObject.SetActive(false);
+		nextButton.gameObject.SetActive(false);
+		successOrFailMessage.gameObject.SetActive(false);
+		timeIcon.gameObject.SetActive(false);
+		timeText.gameObject.SetActive(false);
+		timeToBeat.gameObject.SetActive(false);
+		stevensPortrait.gameObject.SetActive(false);
+
+		enabled = false;
 	}
 }
