@@ -167,7 +167,7 @@ public class UIManager : MonoBehaviour {
 
 
 	/*
-	 * makeNopeUIAppear
+	 * makeUIAppearAtTopCenter
 	 * 		Just as it says; the negative feedback at the top center of the screen appears.
 	 * 		Future versions can have a gameObject passed into the funtion
 	 * 
@@ -177,7 +177,10 @@ public class UIManager : MonoBehaviour {
 	 * 
 	 * output: none
 	 */
-	IEnumerator makeUIAppearAtTopCenter(GameObject go, bool positiveFeedback){
+	void makeUIAppearAtTopCenter(GameObject go, bool positiveFeedback){
+		StartCoroutine(makeUIAppearAtTopCenterCO(go, positiveFeedback));
+	}
+	IEnumerator makeUIAppearAtTopCenterCO(GameObject go, bool positiveFeedback){
 
 		if(positiveFeedback){
 			StartCoroutine(rotate360degrees(go, 40f, 2));
@@ -191,7 +194,7 @@ public class UIManager : MonoBehaviour {
 
 		//fade the sprite out
 		StartCoroutine(fadeOut(go, fadeSpeed));
-	}
+	} 
 
 
 	/*
@@ -206,7 +209,10 @@ public class UIManager : MonoBehaviour {
 	 * 
 	 * output: none
 	 */
-	IEnumerator makeCheckmarkOrCrossAppear(Vector3 newPosition, bool correctObject){
+	void makeCheckmarkOrCrossAppear(Vector3 newPosition, bool correctObject){
+		StartCoroutine(makeCheckmarkOrCrossAppearCO(newPosition, correctObject));
+	}
+	IEnumerator makeCheckmarkOrCrossAppearCO(Vector3 newPosition, bool correctObject){
 
 		//select whether to use the X or the Check
 		GameObject go;
@@ -219,7 +225,7 @@ public class UIManager : MonoBehaviour {
 		//set the location of the checkmark to the input location
 		go.transform.position = newPosition;
 
-		//rotate the checkmark by 95 degrees immediately
+		//rotate the checkmark by 90 degrees immediately
 		go.transform.rotation = Quaternion.AngleAxis(90f, Vector3.right);
 
 		//make visible immediately
@@ -246,7 +252,10 @@ public class UIManager : MonoBehaviour {
 	 * 		isSelected - true if the object is selected by the eyeManager's cursor, false
 	 * 			if not, chooses to increase or decrease the size of the object
 	 */
-	IEnumerator increaseOrDecreaseInSize(GameObject go, bool grow){
+	void increaseOrDecreaseInSize(GameObject go, bool grow){
+		StartCoroutine(increaseOrDecreaseInSizeCO(go, grow));
+	}
+	IEnumerator increaseOrDecreaseInSizeCO(GameObject go, bool grow){
 		Vector3 originalSize = go.transform.localScale;
 		Vector3 changedSize  = originalSize;
 		print("originalSize: " + originalSize);
@@ -268,5 +277,8 @@ public class UIManager : MonoBehaviour {
 
 	
 	void Update () {
+		if(Input.GetKey(KeyCode.I)){
+			makeUIAppearAtTopCenter(great, true);
+		}
 	}
 }
