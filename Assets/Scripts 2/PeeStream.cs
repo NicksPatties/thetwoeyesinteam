@@ -73,7 +73,7 @@ public class PeeStream : MonoBehaviour {
 
 	public void popFromQueue() {
 		pee[0].getTarget();
-		pee[0].setActive();
+		pee[0].setMoving();
 		pee.Remove(pee[0]);
 	}
 
