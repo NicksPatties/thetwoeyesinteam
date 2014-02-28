@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour {
 	public GameObject background;
 	public GameObject background2;
 	public GameObject checkmark;
+	public GameObject focusTimer;
+	public bool focusTimerIsPlaying;
 	public GameObject cross;
 	public GameObject player;
 
@@ -34,6 +36,7 @@ public class AudioManager : MonoBehaviour {
 
 		//begin playing the background ambiance
 		background.audio.Play();
+		focusTimerIsPlaying = false;
 	}
 
 
@@ -57,7 +60,7 @@ public class AudioManager : MonoBehaviour {
 
 	//TODO: Lark suggests these functions should also be able to pass in a sound
 	//that we want to play, which is probably a good idea as well
-	void playFoundCorrectObject(){
+	public void playFoundCorrectObject(){
 		checkmark.audio.Play();
 	
 		//random index
@@ -69,7 +72,7 @@ public class AudioManager : MonoBehaviour {
 	}
 
 
-	void playFoundIncorrectObject(){
+	public void playFoundIncorrectObject(){
 		cross.audio.Play();
 
 		//random index
@@ -82,7 +85,7 @@ public class AudioManager : MonoBehaviour {
 	}
 
 
-	void playLookingAtObject(){
+	public void playLookingAtObject(){
 		int i = Random.Range(0, stevenLooksAtObject.Length);
 		stevenLooksAtObject[i].Play();
 	}
@@ -90,41 +93,16 @@ public class AudioManager : MonoBehaviour {
 
 	// probably should cange this to a fadein/fadeout, since this function assumes that
 	// both audio files have the same volume
-	IEnumerator changeAmbiance(GameObject oldBackground, GameObject newBackground){
+	public void changeAmbiance(GameObject oldBackground, GameObject newBackground){
 
 		//set the new background ambiance volume to 0 and begin playing
-		newBackground.audio.volume = 0f;
+		oldBackground.audio.Stop();
 		newBackground.audio.Play();
-
-		float currentVolume = oldBackground.audio.volume;
-		for(; currentVolume > 0f; currentVolume -= 0.1f){
-
-			oldBackground.audio.volume = currentVolume;
-			newBackground.audio.volume = currentVolume - 1;
-			yield return new WaitForSeconds(0.05f);
-		}
 
 	}
 
 
 	void Update () {
-		//testing different functions in here
-		if(Input.GetKeyDown(KeyCode.A)){
-			playFoundCorrectObject();
-		}
-		
-		if(Input.GetKeyDown(KeyCode.S)){
-			playFoundIncorrectObject();
-		}
-		
-		if(Input.GetKeyDown(KeyCode.D)){
-			playLookingAtObject();
-		}
-		
-		if(Input.GetKeyDown(KeyCode.F)){
-			StartCoroutine(changeAmbiance(background, background2));
-		}
-		
 	}
 }
 

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ActionManager : MonoBehaviour {
 	UIManager ui;
+	AudioManager am;
 
 	private Transform curObj;
 	private Transform lastObj;
@@ -22,6 +23,7 @@ public class ActionManager : MonoBehaviour {
 
 	void Start () {
 		ui = GameObject.Find("UIManager").GetComponent<UIManager>();
+		am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 	}
 
 
@@ -97,6 +99,9 @@ public class ActionManager : MonoBehaviour {
 						//show the checkmark when you find the correct object
 						ui.makeCheckmarkOrCrossAppear(obj.position, true);
 						ui.makeUIAppearAtTopCenter(ui.great, true);
+						am.playFoundCorrectObject();
+
+
 						targetObjects[i] = "done";
 
 						if (checkFindComplete()){
@@ -113,6 +118,7 @@ public class ActionManager : MonoBehaviour {
 						//make the cross appear
 						ui.makeCheckmarkOrCrossAppear(obj.position, false);
 						ui.makeUIAppearAtTopCenter(ui.nope, false);
+						am.playFoundIncorrectObject();
 					}
 				}
 				return true;
@@ -120,10 +126,15 @@ public class ActionManager : MonoBehaviour {
 			if (mode == "focus"){
 				if (targetObjects[0] == objectName){
 					focusingTime += 2;
+					if(!am.focusTimerIsPlaying){
+						am.focusTimer.audio.Play();
+						am.focusTimerIsPlaying = true;
+					}
 					if (checkFocusComplete()) {
 
 						//show the checkmark once you're done focusing
 						ui.makeCheckmarkOrCrossAppear(obj.position, true);
+						am.playFoundCorrectObject();
 
 						GameObject.Find("ChapterManager").GetComponent<ChapterManager>().updateAction();
 						targetObjects = GameObject.Find("ChapterManager").GetComponent<ChapterManager>().curAction.targetObjects;
@@ -132,6 +143,8 @@ public class ActionManager : MonoBehaviour {
 						Debug.Log("-------Focus complete, next target is: "+targetObjects[0]+ " in mode: "+mode+"--------");
 					}
 				}else{
+					am.focusTimer.audio.Stop ();
+					am.focusTimerIsPlaying = false;
 					focusingTime = 0f;
 				}
 				return true;
