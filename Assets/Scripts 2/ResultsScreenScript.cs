@@ -13,10 +13,10 @@ public class ResultsScreenScript : MonoBehaviour {
 	private Transform backDrop;
 	private Transform successOrFailMessage;
 	private Transform stevensPortrait;
-	private Transform timeText;
+	private Transform playerTime;
 	private Transform timeIcon;
 	private Transform bestTime;
-	private Transform timeToBeat;
+	private Transform targetTime;
 	private Transform achievementsText;
 	public List<Transform> achievements;
 	private Transform replayButton;
@@ -31,9 +31,9 @@ public class ResultsScreenScript : MonoBehaviour {
 		successOrFailMessage = transform.Find("Success or Fail Message");
 		stevensPortrait = transform.Find ("Steven's Portrait");
 		timeIcon = transform.Find("Time Icon");
-		timeText = transform.Find("Time Text");
+		playerTime = transform.Find("PlayerTime");
 		bestTime = transform.Find("Best Time");
-		timeToBeat = transform.Find("Time To Beat");
+		targetTime = transform.Find("targetTime");
 
 		achievementsText = transform.Find("Achievements");
 		achievements = new List<Transform>();
@@ -67,6 +67,10 @@ public class ResultsScreenScript : MonoBehaviour {
 			disableChildren();
 		}
 
+		//if(enabled) {
+		//	playerTime = Timer1.timerSprite(Timer1.formatTime(finalTime), playerTime.gameObject).transform;
+
+		//}
 	}
 
 	void enableChildren() {
@@ -78,10 +82,9 @@ public class ResultsScreenScript : MonoBehaviour {
 		nextButton.gameObject.SetActive(true);
 		successOrFailMessage.gameObject.SetActive(true);
 		timeIcon.gameObject.SetActive(true);
-		timeText.gameObject.SetActive(true);
-		timeToBeat.gameObject.SetActive(true);
+		playerTime.gameObject.SetActive(true);
+		targetTime.gameObject.SetActive(true);
 		stevensPortrait.gameObject.SetActive(true);
-
 
 		enabled = true;
 	}
@@ -96,8 +99,8 @@ public class ResultsScreenScript : MonoBehaviour {
 		nextButton.gameObject.SetActive(false);
 		successOrFailMessage.gameObject.SetActive(false);
 		timeIcon.gameObject.SetActive(false);
-		timeText.gameObject.SetActive(false);
-		timeToBeat.gameObject.SetActive(false);
+		playerTime.gameObject.SetActive(false);
+		targetTime.gameObject.SetActive(false);
 		stevensPortrait.gameObject.SetActive(false);
 
 		enabled = false;
